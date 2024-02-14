@@ -19,8 +19,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         <input
           type={type}
           className={cn(
-            'flex h-10 w-full rounded-md px-3 py-2 text-white text-sm border bg-transparent border-white/20 bg-gradient-to-b from-white/10 to-white/0 transition-[border-color]',
-            'placeholder:text-white/60 focus-visible:border-white focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
+            'flex h-10 w-full rounded-md px-3 py-2 text-white text-sm border bg-transparent border-white/20 bg-gradient-to-b from-white/10 to-white/0 transition-[box-shadow]',
+            'placeholder:text-white/60 focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
             { ['pl-10']: PrefixIcon },
             className
           )}
