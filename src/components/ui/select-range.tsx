@@ -1,5 +1,6 @@
 import { getNumber } from '@/lib/utils';
 import * as SliderPrimitive from '@radix-ui/react-slider';
+import millify from 'millify';
 import { useState } from 'react';
 import { Input } from './input';
 import { Select, SelectContent, SelectTrigger } from './select';
@@ -11,6 +12,7 @@ export interface SelectRangeProps
   defaultValue: number[];
   min: number;
   max: number;
+  showInput?: boolean;
 }
 
 const thumbStyling =
@@ -22,30 +24,45 @@ const SelectRange = ({
   min,
   max,
   defaultValue,
+  showInput = true,
   ...props
 }: SelectRangeProps) => {
   const [value, setValue] = useState(defaultValue);
 
+  const minValueBlur = () =>
+    setValue((value) => [Math.min(value[0], value[1] - 5), value[1]]);
+
+  const maxValueBlur = () =>
+    setValue((value) => [
+      value[0],
+      Math.min(max, Math.max(value[0] + 5, value[1])),
+    ]);
+
   return (
-    <Select>
+    <Select
+      onOpenChange={() => {
+        minValueBlur();
+        maxValueBlur();
+      }}
+    >
       <SelectTrigger className='w-72'>
         {Icon}
-        {label} {`(${value[0]} - ${value[1]})`}
+        {label} {`(${millify(value[0])} - ${millify(value[1])})`}
       </SelectTrigger>
-      <SelectContent viewportClass='flex flex-row items-center gap-2'>
-        <Input
-          value={value[0]}
-          onChange={(e) => {
-            const newValue = getNumber(e.currentTarget.value);
-            if (newValue === null) return;
+      <SelectContent viewportClass='flex flex-row py-4 px-3 items-center gap-2'>
+        {showInput && (
+          <Input
+            value={value[0]}
+            onChange={(e) => {
+              const newValue = getNumber(e.currentTarget.value);
+              if (newValue === null) return;
 
-            setValue((value) => [newValue, value[1]]);
-          }}
-          onBlur={() =>
-            setValue((value) => [Math.min(value[0], value[1] - 5), value[1]])
-          }
-          className='px-2 py-1 w-12 text-center h-max'
-        />
+              setValue((value) => [newValue, value[1]]);
+            }}
+            onBlur={minValueBlur}
+            className='px-2 py-1 w-12 text-center h-max'
+          />
+        )}
 
         <SliderPrimitive.Root
           className={
@@ -66,22 +83,19 @@ const SelectRange = ({
           <SliderPrimitive.Thumb className={thumbStyling} />
         </SliderPrimitive.Root>
 
-        <Input
-          value={value[1]}
-          onChange={(e) => {
-            const newValue = getNumber(e.currentTarget.value);
-            if (newValue === null) return;
+        {showInput && (
+          <Input
+            value={value[1]}
+            onChange={(e) => {
+              const newValue = getNumber(e.currentTarget.value);
+              if (newValue === null) return;
 
-            setValue((value) => [value[0], newValue]);
-          }}
-          onBlur={() =>
-            setValue((value) => [
-              value[0],
-              Math.min(max, Math.max(value[0] + 5, value[1])),
-            ])
-          }
-          className='px-2 py-1 w-12 text-center h-max'
-        />
+              setValue((value) => [value[0], newValue]);
+            }}
+            onBlur={maxValueBlur}
+            className='px-2 py-1 w-12 text-center h-max'
+          />
+        )}
       </SelectContent>
     </Select>
   );

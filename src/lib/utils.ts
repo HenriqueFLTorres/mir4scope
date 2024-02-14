@@ -11,7 +11,6 @@ export function getNumber(input: string | number) {
   input = Number(input);
 
   const validNumber = Number.isInteger(input);
-  console.log(input, validNumber);
 
   return validNumber ? input : null;
 }
