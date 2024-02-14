@@ -12,7 +12,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     const PrefixIcon = prefix;
 
     return (
-      <div className='flex w-full relative'>
+      <div className='flex relative'>
         {PrefixIcon ? (
           <PrefixIcon className='absolute w-6 h-6 left-2 top-2' />
         ) : null}

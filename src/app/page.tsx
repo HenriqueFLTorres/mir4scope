@@ -1,4 +1,5 @@
 'use client';
+import EXP from '@/components/icon/EXP';
 import Search from '@/components/icon/Search';
 import Skill from '@/components/icon/Skill';
 import { Input } from '@/components/ui/input';
@@ -9,6 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { SelectRange } from '@/components/ui/select-range';
 import { SelectIcon } from '@radix-ui/react-select';
 import Image from 'next/image';
 import { useState } from 'react';
@@ -96,6 +98,15 @@ export default function Home() {
           ))}
         </SelectContent>
       </Select>
+
+      <SelectRange
+        defaultValue={[90, 130]}
+        min={60}
+        max={170}
+        Icon={<EXP className='w-5 h-5' />}
+        label='Level'
+        step={5}
+      />
     </main>
   );
 }
