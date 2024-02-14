@@ -19,7 +19,7 @@ const SelectTrigger = React.forwardRef<
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
-      'flex group h-10 w-full select-none text-white font-medium items-center justify-between rounded-md border bg-gradient-to-b from-white/10 to-white/0 border-white/20 px-3 py-2 text-sm placeholder:text-white/60 transition-[box-shadow] [&>span]:line-clamp-1',
+      'flex group h-10 w-full select-none text-white font-medium items-center gap-3 rounded-md border bg-gradient-to-b from-white/10 to-white/0 border-white/20 px-3 py-2 text-sm placeholder:text-white/60 transition-[box-shadow] [&>span]:line-clamp-1',
       'focus:outline-none focus:ring-2 focus:ring-white disabled:cursor-not-allowed disabled:opacity-50',
       className
     )}
@@ -27,7 +27,7 @@ const SelectTrigger = React.forwardRef<
   >
     {children}
     <SelectPrimitive.Icon asChild>
-      <ChevronDown className='h-4 w-4 opacity-60 group-data-[state=open]:opacity-100 transition-[opacity,_transform] group-data-[state=open]:rotate-180' />
+      <ChevronDown className='h-4 ml-auto w-4 opacity-60 group-data-[state=open]:opacity-100 transition-[opacity,_transform] group-data-[state=open]:rotate-180' />
     </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>
 ));
@@ -109,24 +109,18 @@ SelectLabel.displayName = SelectPrimitive.Label.displayName;
 const SelectItem = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item> & {
-    Icon?: JSX.Element;
+    Icon: JSX.Element;
   }
 >(({ className, children, Icon, ...props }, ref) => (
   <SelectPrimitive.Item
     ref={ref}
     className={cn(
       'relative rounded flex w-full cursor-default select-none items-center p-2 text-sm outline-none focus:bg-white/10 focus:text-white data-[disabled]:pointer-events-none data-[disabled]:opacity-60',
-      { ['pl-6']: Icon },
       className
     )}
     {...props}
   >
-    {Icon ? (
-      <span className='absolute left-2 flex h-4 w-4 items-center justify-center'>
-        <SelectPrimitive.ItemIndicator>{Icon}</SelectPrimitive.ItemIndicator>
-      </span>
-    ) : null}
-
+    {Icon}
     <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
   </SelectPrimitive.Item>
 ));
