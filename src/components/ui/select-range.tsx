@@ -3,17 +3,20 @@ import * as SliderPrimitive from '@radix-ui/react-slider';
 import millify from 'millify';
 import { useState } from 'react';
 import { Input } from './input';
-import { Select, SelectContent, SelectTrigger } from './select';
+import { Popover, PopoverContent, PopoverTrigger } from './popover';
 
 export interface SelectRangeProps
-  extends Omit<SliderPrimitive.SliderProps, 'defaultValue' | 'min' | 'max' | 'step'> {
+  extends Omit<
+    SliderPrimitive.SliderProps,
+    'defaultValue' | 'min' | 'max' | 'step'
+  > {
   label: string;
   Icon: JSX.Element;
   defaultValue: number[];
   min: number;
   max: number;
   showInput?: boolean;
-  step: number
+  step: number;
 }
 
 const thumbStyling =
@@ -41,17 +44,17 @@ const SelectRange = ({
     ]);
 
   return (
-    <Select
+    <Popover
       onOpenChange={() => {
         minValueBlur();
         maxValueBlur();
       }}
     >
-      <SelectTrigger className='w-72'>
+      <PopoverTrigger className='w-72'>
         {Icon}
         {label} {`(${millify(value[0])} - ${millify(value[1])})`}
-      </SelectTrigger>
-      <SelectContent viewportClass='flex flex-row py-4 px-3 items-center gap-2'>
+      </PopoverTrigger>
+      <PopoverContent className='flex flex-row py-4 px-3 items-center gap-2'>
         {showInput && (
           <Input
             value={value[0]}
@@ -99,8 +102,8 @@ const SelectRange = ({
             className='px-2 py-1 w-14 text-center h-max'
           />
         )}
-      </SelectContent>
-    </Select>
+      </PopoverContent>
+    </Popover>
   );
 };
 

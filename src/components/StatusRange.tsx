@@ -3,7 +3,7 @@ import millify from 'millify';
 import { useState } from 'react';
 import { Checkbox } from './ui/checkbox';
 import { Input } from './ui/input';
-import { Select, SelectContent, SelectTrigger } from './ui/select';
+import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 
 export interface StatusRangeProps {
   label: string;
@@ -26,8 +26,8 @@ const StatusRange = ({ label, Icon }: StatusRangeProps) => {
   };
 
   return (
-    <Select>
-      <SelectTrigger
+    <Popover>
+      <PopoverTrigger
         className={cn('w-72 font-normal', {
           ['from-error-400/20 to-error-400/5 border-error-400 focus:ring-error-400']:
             value[0] > value[1] && hasMin && hasMax,
@@ -37,8 +37,8 @@ const StatusRange = ({ label, Icon }: StatusRangeProps) => {
         <span>
           {label} <b>{getLabel()}</b>
         </span>
-      </SelectTrigger>
-      <SelectContent viewportClass='flex w-full flex-col py-4 px-3 items-center gap-4'>
+      </PopoverTrigger>
+      <PopoverContent className='flex flex-col py-4 px-3 items-center gap-4'>
         <div className='flex w-full items-end gap-2'>
           <Input
             label='Min'
@@ -90,8 +90,8 @@ const StatusRange = ({ label, Icon }: StatusRangeProps) => {
             className='w-[1.875rem] h-[1.875rem]'
           />
         </div>
-      </SelectContent>
-    </Select>
+      </PopoverContent>
+    </Popover>
   );
 };
 

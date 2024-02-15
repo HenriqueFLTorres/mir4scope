@@ -1,9 +1,9 @@
 import { getNumber } from '@/lib/utils';
 import millify from 'millify';
 import { useState } from 'react';
-import { Input } from './ui/input';
-import { Select, SelectContent, SelectTrigger } from './ui/select';
 import Wemix from './icon/wemix';
+import { Input } from './ui/input';
+import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 
 const MAX_VALUE = 150000;
 
@@ -25,18 +25,18 @@ const PriceRange = () => {
   const hasValues = Number.isInteger(value[0]) && Number.isInteger(value[1]);
 
   return (
-    <Select
+    <Popover
       onOpenChange={() => {
         minValueBlur();
         maxValueBlur();
       }}
     >
-      <SelectTrigger className='w-72'>
+      <PopoverTrigger className='w-72'>
         <Wemix className='w-5 h-5' />
         Price{' '}
         {hasValues ? `(${millify(value[0])} - ${millify(value[1]!)})` : '(Any)'}
-      </SelectTrigger>
-      <SelectContent viewportClass='flex flex-row py-4 px-3 items-center gap-2'>
+      </PopoverTrigger>
+      <PopoverContent className='flex flex-row py-4 px-3 items-center gap-2'>
         <Input
           label='From'
           name='from'
@@ -66,8 +66,8 @@ const PriceRange = () => {
           onBlur={maxValueBlur}
           className='px-2 py-1 pl-8 w-full h-max'
         />
-      </SelectContent>
-    </Select>
+      </PopoverContent>
+    </Popover>
   );
 };
 
