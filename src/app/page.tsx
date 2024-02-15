@@ -1,10 +1,15 @@
 'use client';
+import Accuracy from '@/components/icon/Accuracy';
 import Codex from '@/components/icon/Codex';
+import EVA from '@/components/icon/EVA';
 import EXP from '@/components/icon/EXP';
 import PHYSATK from '@/components/icon/PHYSATK';
+import PHYSDEF from '@/components/icon/PHYSDef';
 import Power from '@/components/icon/Power';
 import Search from '@/components/icon/Search';
 import Skill from '@/components/icon/Skill';
+import SpellATK from '@/components/icon/SpellATK';
+import SPELLDEF from '@/components/icon/SPELLDEF';
 import { PriceRange } from '@/components/PriceRange';
 import { StatusRange } from '@/components/StatusRange';
 import { Input } from '@/components/ui/input';
@@ -45,8 +50,8 @@ export default function Home() {
   const [filter, setFilter] = useState<Filter>({ class: 'any' });
 
   return (
-    <main className='flex min-h-screen flex-col items-center justify-between p-24 bg-gradient-to-br from-[#44356A] to-[#272039]'>
-      <section className='flex gap-4 items-center flex-wrap'>
+    <main className='flex min-h-screen flex-col items-center p-24 bg-gradient-to-br from-[#44356A] to-[#272039]'>
+      <section className='flex w-full gap-4 items-center flex-wrap'>
         <Input
           prefix={<Search className='absolute w-6 h-6 left-2 bottom-2' />}
           placeholder='Search by player name'
@@ -134,8 +139,28 @@ export default function Home() {
         />
 
         <PriceRange />
+      </section>
 
+      <h2 className='my-8 mr-auto'>Stats Filter</h2>
+
+      <section className='flex gap-4 w-full items-center flex-wrap'>
         <StatusRange label='PHYS ATK' Icon={<PHYSATK className='w-5 h-5' />} />
+
+        <StatusRange
+          label='SPELL ATK'
+          Icon={<SpellATK className='w-5 h-5' />}
+        />
+
+        <StatusRange label='PHYS DEF' Icon={<PHYSDEF className='w-5 h-5' />} />
+
+        <StatusRange
+          label='SPELL DEF'
+          Icon={<SPELLDEF className='w-5 h-5' />}
+        />
+
+        <StatusRange label='EVA' Icon={<EVA className='w-5 h-5' />} />
+
+        <StatusRange label='Accuracy' Icon={<Accuracy className='w-5 h-5' />} />
       </section>
     </main>
   );

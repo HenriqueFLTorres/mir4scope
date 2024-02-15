@@ -1,4 +1,4 @@
-import { getNumber } from '@/lib/utils';
+import { cn, getNumber } from '@/lib/utils';
 import millify from 'millify';
 import { useState } from 'react';
 import { Checkbox } from './ui/checkbox';
@@ -27,7 +27,12 @@ const StatusRange = ({ label, Icon }: StatusRangeProps) => {
 
   return (
     <Select>
-      <SelectTrigger className='w-72 font-normal'>
+      <SelectTrigger
+        className={cn('w-72 font-normal', {
+          ['from-error-400/20 to-error-400/5 border-error-400 focus:ring-error-400']:
+            value[0] > value[1] && hasMin && hasMax,
+        })}
+      >
         {Icon}
         <span>
           {label} <b>{getLabel()}</b>
