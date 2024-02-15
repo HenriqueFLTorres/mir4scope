@@ -60,7 +60,7 @@ const SelectRange = ({
               setValue((value) => [newValue, value[1]]);
             }}
             onBlur={minValueBlur}
-            className='px-2 py-1 w-12 text-center h-max'
+            className='px-2 py-1 w-14 text-center h-max'
           />
         )}
 
@@ -93,7 +93,7 @@ const SelectRange = ({
               setValue((value) => [value[0], newValue]);
             }}
             onBlur={maxValueBlur}
-            className='px-2 py-1 w-12 text-center h-max'
+            className='px-2 py-1 w-14 text-center h-max'
           />
         )}
       </SelectContent>

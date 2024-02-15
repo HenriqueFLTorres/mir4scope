@@ -1,4 +1,5 @@
 'use client';
+import Codex from '@/components/icon/Codex';
 import EXP from '@/components/icon/EXP';
 import Power from '@/components/icon/Power';
 import Search from '@/components/icon/Search';
@@ -118,6 +119,15 @@ export default function Home() {
           label='Power'
           step={5000}
           showInput={false}
+        />
+
+        <SelectRange
+          defaultValue={[100, 2000]}
+          min={100}
+          max={2000}
+          Icon={<Codex className='w-5 h-5' />}
+          label='Codex'
+          step={10}
         />
       </section>
     </main>
