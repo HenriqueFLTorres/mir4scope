@@ -1,21 +1,26 @@
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
+import { Label } from './label';
 
 export interface InputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'prefix'> {
-  prefix?: JSX.ElementType;
+  prefix?: JSX.Element;
 }
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, prefix, ...props }, ref) => {
+type LabeledInputProps =
+  | (InputProps & { label: string; name: string })
+  | (InputProps & { label?: undefined });
+
+const Input = React.forwardRef<HTMLInputElement, LabeledInputProps>(
+  ({ className, type, prefix, name, label, ...props }, ref) => {
     const PrefixIcon = prefix;
 
     return (
-      <div className='flex relative'>
-        {PrefixIcon ? (
-          <PrefixIcon className='absolute w-6 h-6 left-2 top-2' />
-        ) : null}
+      <div className='flex flex-col gap-2 relative'>
+        {label && <Label htmlFor={name}>{label}</Label>}
+
+        {PrefixIcon}
         <input
           type={type}
           className={cn(
@@ -25,6 +30,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             className
           )}
           ref={ref}
+          id={name}
           {...props}
         />
       </div>

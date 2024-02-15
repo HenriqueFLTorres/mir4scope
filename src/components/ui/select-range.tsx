@@ -6,13 +6,14 @@ import { Input } from './input';
 import { Select, SelectContent, SelectTrigger } from './select';
 
 export interface SelectRangeProps
-  extends Omit<SliderPrimitive.SliderProps, 'defaultValue' | 'min' | 'max'> {
+  extends Omit<SliderPrimitive.SliderProps, 'defaultValue' | 'min' | 'max' | 'step'> {
   label: string;
   Icon: JSX.Element;
   defaultValue: number[];
   min: number;
   max: number;
   showInput?: boolean;
+  step: number
 }
 
 const thumbStyling =
@@ -25,17 +26,18 @@ const SelectRange = ({
   max,
   defaultValue,
   showInput = true,
+  step,
   ...props
 }: SelectRangeProps) => {
   const [value, setValue] = useState(defaultValue);
 
   const minValueBlur = () =>
-    setValue((value) => [Math.min(value[0], value[1] - 5), value[1]]);
+    setValue((value) => [Math.min(value[0], value[1] - step), value[1]]);
 
   const maxValueBlur = () =>
     setValue((value) => [
       value[0],
-      Math.min(max, Math.max(value[0] + 5, value[1])),
+      Math.min(max, Math.max(value[0] + step, value[1])),
     ]);
 
   return (
@@ -73,6 +75,7 @@ const SelectRange = ({
           defaultValue={defaultValue}
           max={max}
           min={min}
+          step={step}
           {...props}
         >
           <SliderPrimitive.Track className='relative h-2 w-full grow overflow-x-hidden rounded-full bg-white/20'>

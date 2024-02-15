@@ -4,6 +4,7 @@ import EXP from '@/components/icon/EXP';
 import Power from '@/components/icon/Power';
 import Search from '@/components/icon/Search';
 import Skill from '@/components/icon/Skill';
+import { PriceRange } from '@/components/PriceRange';
 import { Input } from '@/components/ui/input';
 import {
   Select,
@@ -45,7 +46,7 @@ export default function Home() {
     <main className='flex min-h-screen flex-col items-center justify-between p-24 bg-gradient-to-br from-[#44356A] to-[#272039]'>
       <section className='flex gap-4 items-center flex-wrap'>
         <Input
-          prefix={Search}
+          prefix={<Search className='absolute w-6 h-6 left-2 bottom-2' />}
           placeholder='Search by player name'
           spellCheck={false}
         />
@@ -129,6 +130,8 @@ export default function Home() {
           label='Codex'
           step={10}
         />
+
+        <PriceRange />
       </section>
     </main>
   );
