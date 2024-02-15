@@ -3,7 +3,7 @@ import millify from 'millify';
 import { useState } from 'react';
 import { Input } from './ui/input';
 import { Select, SelectContent, SelectTrigger } from './ui/select';
-import Wemix from './ui/wemix';
+import Wemix from './icon/wemix';
 
 const MAX_VALUE = 150000;
 

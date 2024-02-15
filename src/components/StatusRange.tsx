@@ -1,0 +1,93 @@
+import { getNumber } from '@/lib/utils';
+import millify from 'millify';
+import { useState } from 'react';
+import { Checkbox } from './ui/checkbox';
+import { Input } from './ui/input';
+import { Select, SelectContent, SelectTrigger } from './ui/select';
+
+export interface StatusRangeProps {
+  label: string;
+  Icon: JSX.Element;
+}
+
+const StatusRange = ({ label, Icon }: StatusRangeProps) => {
+  const [value, setValue] = useState<[number, number]>([0, 10000]);
+
+  const [hasMin, setHasMin] = useState(false);
+  const [hasMax, setHasMax] = useState(false);
+
+  const getLabel = () => {
+    if (hasMin && hasMax)
+      return `(${millify(value[0])} - ${millify(value[1])})`;
+    if (hasMin) return `+${millify(value[0])}`;
+    if (hasMax) return `< ${millify(value[1])}`;
+
+    return '(Any)';
+  };
+
+  return (
+    <Select>
+      <SelectTrigger className='w-72 font-normal'>
+        {Icon}
+        <span>
+          {label} <b>{getLabel()}</b>
+        </span>
+      </SelectTrigger>
+      <SelectContent viewportClass='flex w-full flex-col py-4 px-3 items-center gap-4'>
+        <div className='flex w-full items-end gap-2'>
+          <Input
+            label='Min'
+            name='min'
+            value={value[0]}
+            onChange={(e) => {
+              const newValue = getNumber(e.currentTarget.value);
+              if (newValue === null) return;
+
+              setValue((value) => [newValue, value[1]]);
+            }}
+            wrapperClass='w-full'
+            className='px-2 py-1 w-full h-max'
+            disabled={!hasMin}
+          />
+
+          <Checkbox
+            defaultChecked={false}
+            checked={hasMin}
+            onCheckedChange={(value) =>
+              setHasMin(value === 'indeterminate' ? false : value)
+            }
+            className='w-[1.875rem] h-[1.875rem]'
+          />
+        </div>
+
+        <div className='flex w-full items-end gap-2'>
+          <Input
+            label='Max'
+            name='max'
+            value={value[1]}
+            onChange={(e) => {
+              const newValue = getNumber(e.currentTarget.value);
+              if (newValue === null) return;
+
+              setValue((value) => [value[0], newValue]);
+            }}
+            wrapperClass='w-full'
+            className='px-2 py-1 w-full h-max'
+            disabled={!hasMax}
+          />
+
+          <Checkbox
+            defaultChecked={false}
+            checked={hasMax}
+            onCheckedChange={(value) =>
+              setHasMax(value === 'indeterminate' ? false : value)
+            }
+            className='w-[1.875rem] h-[1.875rem]'
+          />
+        </div>
+      </SelectContent>
+    </Select>
+  );
+};
+
+export { StatusRange };

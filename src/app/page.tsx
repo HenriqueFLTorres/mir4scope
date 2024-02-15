@@ -1,10 +1,12 @@
 'use client';
 import Codex from '@/components/icon/Codex';
 import EXP from '@/components/icon/EXP';
+import PHYSATK from '@/components/icon/PHYSATK';
 import Power from '@/components/icon/Power';
 import Search from '@/components/icon/Search';
 import Skill from '@/components/icon/Skill';
 import { PriceRange } from '@/components/PriceRange';
+import { StatusRange } from '@/components/StatusRange';
 import { Input } from '@/components/ui/input';
 import {
   Select,
@@ -132,6 +134,8 @@ export default function Home() {
         />
 
         <PriceRange />
+
+        <StatusRange label='PHYS ATK' Icon={<PHYSATK className='w-5 h-5' />} />
       </section>
     </main>
   );
