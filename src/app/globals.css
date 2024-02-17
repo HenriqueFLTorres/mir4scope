@@ -16,11 +16,55 @@
     @apply flex items-center justify-center;
   }
 
-  input[type='number']::-webkit-outer-spin-button,
-  input[type='number']::-webkit-inner-spin-button,
-  input[type='number'] {
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"] {
     -webkit-appearance: none;
     margin: 0;
     -moz-appearance: textfield !important;
+  }
+}
+
+@layer utilities {
+  .small-scroll::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  .small-scroll::-webkit-scrollbar-button {
+    width: 0px;
+    height: 0px;
+  }
+
+  .small-scroll::-webkit-scrollbar-thumb {
+    background: #ffffff;
+    border-radius: 100px;
+  }
+
+  .small-scroll::-webkit-scrollbar-thumb:hover {
+    background: #ffffff60;
+    border: 5px solid #ffffff60;
+  }
+
+  .small-scroll::-webkit-scrollbar-thumb:active {
+    background: #ffffff20;
+  }
+
+  .small-scroll::-webkit-scrollbar-track {
+    background: #ffffff00;
+    border: 0px solid #ffffff00;
+    border-radius: 100px;
+  }
+
+  .small-scroll::-webkit-scrollbar-track:hover {
+    background: #ffffff00;
+  }
+
+  .small-scroll::-webkit-scrollbar-track:active {
+    background: #ffffff00;
+  }
+
+  .small-scroll::-webkit-scrollbar-corner {
+    background: transparent;
   }
 }

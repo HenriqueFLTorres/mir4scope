@@ -12,8 +12,11 @@ const Popover = PopoverPrimitive.Root;
 const PopoverTrigger = ({
   className,
   children,
+  noIcon = false,
   ...props
-}: React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Trigger>) => (
+}: React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Trigger> & {
+  noIcon?: boolean;
+}) => (
   <PopoverPrimitive.Trigger
     className={cn(
       'flex group h-10 w-full select-none text-white font-medium items-center gap-3 rounded-md border bg-gradient-to-b from-white/10 to-white/0 border-white/20 px-3 py-2 text-sm placeholder:text-white/60 transition-[box-shadow] [&>span]:line-clamp-1',
@@ -23,9 +26,13 @@ const PopoverTrigger = ({
     {...props}
   >
     {children}
-    <Icon asChild>
-      <ChevronDown className='h-4 ml-auto w-4 opacity-60 group-data-[state=open]:opacity-100 transition-[opacity,_transform] group-data-[state=open]:rotate-180' />
-    </Icon>
+    {noIcon ? (
+      <></>
+    ) : (
+      <Icon asChild>
+        <ChevronDown className='h-4 ml-auto w-4 opacity-60 group-data-[state=open]:opacity-100 transition-[opacity,_transform] group-data-[state=open]:rotate-180' />
+      </Icon>
+    )}
   </PopoverPrimitive.Trigger>
 );
 
