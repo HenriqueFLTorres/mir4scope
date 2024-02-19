@@ -13,7 +13,8 @@ import SPELLDEF from "@/components/icon/SPELLDEF";
 import { PriceRange } from "@/components/PriceRange";
 import { SpiritSelector } from "@/components/SpiritSelector";
 import { StatusRange } from "@/components/StatusRange";
-import { TrainingSelector } from '@/components/TrainingSelector';
+import { TicketsSelector } from "@/components/TicketsSelector";
+import { TrainingSelector } from "@/components/TrainingSelector";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -171,6 +172,8 @@ export default function Home() {
         <SpiritSelector />
 
         <TrainingSelector />
+
+        <TicketsSelector />
       </section>
     </main>
   );
