@@ -1,4 +1,5 @@
 "use client";
+import { CraftingMaterialSelector } from "@/components/CraftingMaterials";
 import Accuracy from "@/components/icon/Accuracy";
 import Codex from "@/components/icon/Codex";
 import EVA from "@/components/icon/EVA";
@@ -11,7 +12,7 @@ import Skill from "@/components/icon/Skill";
 import SpellATK from "@/components/icon/SpellATK";
 import SPELLDEF from "@/components/icon/SPELLDEF";
 import { PriceRange } from "@/components/PriceRange";
-import { SkillsSelector } from '@/components/SkillsSelector';
+import { SkillsSelector } from "@/components/SkillsSelector";
 import { SpiritSelector } from "@/components/SpiritSelector";
 import { StatusRange } from "@/components/StatusRange";
 import { TicketsSelector } from "@/components/TicketsSelector";
@@ -177,6 +178,8 @@ export default function Home() {
         <TicketsSelector />
 
         <SkillsSelector />
+
+        <CraftingMaterialSelector />
       </section>
     </main>
   );
