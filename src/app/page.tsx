@@ -11,6 +11,7 @@ import Search from "@/components/icon/Search";
 import Skill from "@/components/icon/Skill";
 import SpellATK from "@/components/icon/SpellATK";
 import SPELLDEF from "@/components/icon/SPELLDEF";
+import NFTDisplay from "@/components/NFTDisplay";
 import { PriceRange } from "@/components/PriceRange";
 import { SkillsSelector } from "@/components/SkillsSelector";
 import { SpiritSelector } from "@/components/SpiritSelector";
@@ -181,6 +182,8 @@ export default function Home() {
 
         <CraftingMaterialSelector />
       </section>
+
+      <NFTDisplay />
     </main>
   );
 }
