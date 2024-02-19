@@ -11,6 +11,7 @@ import Skill from "@/components/icon/Skill";
 import SpellATK from "@/components/icon/SpellATK";
 import SPELLDEF from "@/components/icon/SPELLDEF";
 import { PriceRange } from "@/components/PriceRange";
+import { SkillsSelector } from '@/components/SkillsSelector';
 import { SpiritSelector } from "@/components/SpiritSelector";
 import { StatusRange } from "@/components/StatusRange";
 import { TicketsSelector } from "@/components/TicketsSelector";
@@ -174,6 +175,8 @@ export default function Home() {
         <TrainingSelector />
 
         <TicketsSelector />
+
+        <SkillsSelector />
       </section>
     </main>
   );
