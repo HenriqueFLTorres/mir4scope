@@ -18,29 +18,6 @@ import {
 import Image from "next/image";
 import Spirit from "./icon/Spirit";
 
-const frameworks = [
-  {
-    value: "next.js",
-    label: "Next.js",
-  },
-  {
-    value: "sveltekit",
-    label: "SvelteKit",
-  },
-  {
-    value: "nuxt.js",
-    label: "Nuxt.js",
-  },
-  {
-    value: "remix",
-    label: "Remix",
-  },
-  {
-    value: "astro",
-    label: "Astro",
-  },
-];
-
 const SPIRIT_LIST = {
   "Alluring Spirit Cat Lulu": "Legendary",
   "Bloodtip Drago": "Legendary",
@@ -165,7 +142,7 @@ function SpiritList({
           );
         }}
         data-filter={isSelected}
-        className="flex items-center justify-center rounded-full border border-transparent p-0 opacity-60 transition-[opacity,filter] aria-selected:bg-transparent data-[filter=true]:opacity-100 data-[filter=true]:drop-shadow-[0_0_8px_rgb(159,143,109)]"
+        className="flex cursor-pointer items-center justify-center rounded-full border border-transparent p-0 opacity-60 transition-[opacity,filter] aria-selected:bg-transparent data-[filter=true]:opacity-100 data-[filter=true]:drop-shadow-[0_0_8px_rgb(159,143,109)]"
       >
         <Image
           className="object-contain"
