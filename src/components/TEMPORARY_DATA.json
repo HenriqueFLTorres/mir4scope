@@ -1,466 +1,826 @@
 {
-  "firstID": 1915115,
-  "totalCount": 918,
+  "firstID": 1915397,
+  "totalCount": 326,
   "more": 1,
   "lists": [
     {
       "rowID": 1,
-      "seq": 1909546,
-      "transportID": 248543,
-      "nftID": "87114",
-      "sealedDT": 1700149237,
-      "characterName": "06RYAN83",
-      "class": 1,
-      "lv": 80,
-      "powerScore": 110635,
-      "price": 21000,
+      "seq": 1915397,
+      "transportID": 266271,
+      "nftID": "90876",
+      "sealedDT": 1708375468,
+      "characterName": "zBuffy",
+      "class": 6,
+      "lv": 95,
+      "powerScore": 141877,
+      "price": 29,
       "MirageScore": 0,
       "MiraX": 0,
       "Reinforce": 0,
       "stat": [
-        { "statName": "HP", "statValue": 55186 },
-        { "statName": "MP", "statValue": 7239 },
-        { "statName": "PHYS ATK", "statValue": 3893 },
-        { "statName": "Spell ATK", "statValue": 1059 },
-        { "statName": "PHYS DEF", "statValue": 2126 },
-        { "statName": "Spell DEF", "statValue": 2115 }
+        {
+          "statName": "HP",
+          "statValue": 76932
+        },
+        {
+          "statName": "MP",
+          "statValue": 9011
+        },
+        {
+          "statName": "PHYS ATK",
+          "statValue": 1212
+        },
+        {
+          "statName": "Spell ATK",
+          "statValue": 4696
+        },
+        {
+          "statName": "PHYS DEF",
+          "statValue": 2750
+        },
+        {
+          "statName": "Spell DEF",
+          "statValue": 2636
+        }
       ]
     },
     {
       "rowID": 2,
-      "seq": 1914972,
-      "transportID": 266124,
-      "nftID": "72225",
-      "sealedDT": 1678445996,
-      "characterName": "桃花谷小木偶",
-      "class": 4,
-      "lv": 120,
-      "powerScore": 380847,
-      "price": 12000,
+      "seq": 1915396,
+      "transportID": 265860,
+      "nftID": "90794",
+      "sealedDT": 1708293430,
+      "characterName": "MtzAmd",
+      "class": 3,
+      "lv": 106,
+      "powerScore": 150810,
+      "price": 53,
       "MirageScore": 0,
       "MiraX": 0,
       "Reinforce": 0,
       "stat": [
-        { "statName": "HP", "statValue": 176449 },
-        { "statName": "MP", "statValue": 23772 },
-        { "statName": "PHYS ATK", "statValue": 12045 },
-        { "statName": "Spell ATK", "statValue": 3205 },
-        { "statName": "PHYS DEF", "statValue": 7888 },
-        { "statName": "Spell DEF", "statValue": 7542 }
+        {
+          "statName": "HP",
+          "statValue": 74150
+        },
+        {
+          "statName": "MP",
+          "statValue": 9253
+        },
+        {
+          "statName": "PHYS ATK",
+          "statValue": 5127
+        },
+        {
+          "statName": "Spell ATK",
+          "statValue": 5100
+        },
+        {
+          "statName": "PHYS DEF",
+          "statValue": 3009
+        },
+        {
+          "statName": "Spell DEF",
+          "statValue": 2919
+        }
       ]
     },
     {
       "rowID": 3,
-      "seq": 1915023,
-      "transportID": 266123,
-      "nftID": "6073",
-      "sealedDT": 1642245014,
-      "characterName": "逍遥丶豆子",
-      "class": 4,
-      "lv": 153,
-      "powerScore": 382740,
-      "price": 8500,
+      "seq": 1915395,
+      "transportID": 266270,
+      "nftID": "90875",
+      "sealedDT": 1708375189,
+      "characterName": "KamadoKan",
+      "class": 5,
+      "lv": 90,
+      "powerScore": 146507,
+      "price": 35,
       "MirageScore": 0,
       "MiraX": 0,
       "Reinforce": 0,
       "stat": [
-        { "statName": "HP", "statValue": 172902 },
-        { "statName": "MP", "statValue": 20513 },
-        { "statName": "PHYS ATK", "statValue": 12725 },
-        { "statName": "Spell ATK", "statValue": 4219 },
-        { "statName": "PHYS DEF", "statValue": 7280 },
-        { "statName": "Spell DEF", "statValue": 7193 }
+        {
+          "statName": "HP",
+          "statValue": 79932
+        },
+        {
+          "statName": "MP",
+          "statValue": 9450
+        },
+        {
+          "statName": "PHYS ATK",
+          "statValue": 4381
+        },
+        {
+          "statName": "Spell ATK",
+          "statValue": 4268
+        },
+        {
+          "statName": "PHYS DEF",
+          "statValue": 2617
+        },
+        {
+          "statName": "Spell DEF",
+          "statValue": 2716
+        }
       ]
     },
     {
       "rowID": 4,
-      "seq": 1913382,
-      "transportID": 263575,
-      "nftID": "4455",
-      "sealedDT": 1641313163,
-      "characterName": "VX iop1590cc",
-      "class": 4,
-      "lv": 152,
-      "powerScore": 391239,
-      "price": 8000,
+      "seq": 1915394,
+      "transportID": 266094,
+      "nftID": "87180",
+      "sealedDT": 1700263706,
+      "characterName": "Lia Nea",
+      "class": 6,
+      "lv": 80,
+      "powerScore": 103374,
+      "price": 17,
       "MirageScore": 0,
       "MiraX": 0,
       "Reinforce": 0,
       "stat": [
-        { "statName": "HP", "statValue": 195781 },
-        { "statName": "MP", "statValue": 21194 },
-        { "statName": "PHYS ATK", "statValue": 11764 },
-        { "statName": "Spell ATK", "statValue": 4409 },
-        { "statName": "PHYS DEF", "statValue": 7762 },
-        { "statName": "Spell DEF", "statValue": 7598 }
+        {
+          "statName": "HP",
+          "statValue": 57152
+        },
+        {
+          "statName": "MP",
+          "statValue": 8195
+        },
+        {
+          "statName": "PHYS ATK",
+          "statValue": 511
+        },
+        {
+          "statName": "Spell ATK",
+          "statValue": 3095
+        },
+        {
+          "statName": "PHYS DEF",
+          "statValue": 1874
+        },
+        {
+          "statName": "Spell DEF",
+          "statValue": 1694
+        }
       ]
     },
     {
       "rowID": 5,
-      "seq": 1912992,
-      "transportID": 265510,
-      "nftID": "68726",
-      "sealedDT": 1674390308,
-      "characterName": "WasabiaiXX2",
-      "class": 2,
-      "lv": 152,
-      "powerScore": 389214,
-      "price": 6888,
+      "seq": 1915391,
+      "transportID": 266259,
+      "nftID": "90874",
+      "sealedDT": 1708372572,
+      "characterName": "bestabb",
+      "class": 6,
+      "lv": 92,
+      "powerScore": 126739,
+      "price": 22,
       "MirageScore": 0,
       "MiraX": 0,
       "Reinforce": 0,
       "stat": [
-        { "statName": "HP", "statValue": 178943 },
-        { "statName": "MP", "statValue": 25149 },
-        { "statName": "PHYS ATK", "statValue": 3949 },
-        { "statName": "Spell ATK", "statValue": 11499 },
-        { "statName": "PHYS DEF", "statValue": 7414 },
-        { "statName": "Spell DEF", "statValue": 7398 }
+        {
+          "statName": "HP",
+          "statValue": 64499
+        },
+        {
+          "statName": "MP",
+          "statValue": 8703
+        },
+        {
+          "statName": "PHYS ATK",
+          "statValue": 1114
+        },
+        {
+          "statName": "Spell ATK",
+          "statValue": 4325
+        },
+        {
+          "statName": "PHYS DEF",
+          "statValue": 2465
+        },
+        {
+          "statName": "Spell DEF",
+          "statValue": 2399
+        }
       ]
     },
     {
       "rowID": 6,
-      "seq": 1913569,
-      "transportID": 264908,
-      "nftID": "7049",
-      "sealedDT": 1642726999,
-      "characterName": "NourraG",
-      "class": 1,
-      "lv": 147,
-      "powerScore": 383086,
-      "price": 6350,
+      "seq": 1915385,
+      "transportID": 265925,
+      "nftID": "76328",
+      "sealedDT": 1683107668,
+      "characterName": "Cappuccino10",
+      "class": 4,
+      "lv": 107,
+      "powerScore": 156651,
+      "price": 98,
       "MirageScore": 0,
       "MiraX": 0,
       "Reinforce": 0,
       "stat": [
-        { "statName": "HP", "statValue": 171093 },
-        { "statName": "MP", "statValue": 26144 },
-        { "statName": "PHYS ATK", "statValue": 11722 },
-        { "statName": "Spell ATK", "statValue": 3551 },
-        { "statName": "PHYS DEF", "statValue": 7084 },
-        { "statName": "Spell DEF", "statValue": 7007 }
+        {
+          "statName": "HP",
+          "statValue": 84046
+        },
+        {
+          "statName": "MP",
+          "statValue": 10523
+        },
+        {
+          "statName": "PHYS ATK",
+          "statValue": 5037
+        },
+        {
+          "statName": "Spell ATK",
+          "statValue": 1336
+        },
+        {
+          "statName": "PHYS DEF",
+          "statValue": 3006
+        },
+        {
+          "statName": "Spell DEF",
+          "statValue": 2945
+        }
       ]
     },
     {
       "rowID": 7,
-      "seq": 1912197,
-      "transportID": 264197,
-      "nftID": "49712",
-      "sealedDT": 1657997116,
-      "characterName": "금강퇴",
-      "class": 3,
-      "lv": 152,
-      "powerScore": 376368,
-      "price": 5700,
+      "seq": 1915376,
+      "transportID": 266263,
+      "nftID": "90658",
+      "sealedDT": 1707963981,
+      "characterName": "DoMumoo",
+      "class": 4,
+      "lv": 96,
+      "powerScore": 146582,
+      "price": 42,
       "MirageScore": 0,
       "MiraX": 0,
       "Reinforce": 0,
       "stat": [
-        { "statName": "HP", "statValue": 168328 },
-        { "statName": "MP", "statValue": 26565 },
-        { "statName": "PHYS ATK", "statValue": 11313 },
-        { "statName": "Spell ATK", "statValue": 11165 },
-        { "statName": "PHYS DEF", "statValue": 7346 },
-        { "statName": "Spell DEF", "statValue": 7318 }
+        {
+          "statName": "HP",
+          "statValue": 74702
+        },
+        {
+          "statName": "MP",
+          "statValue": 10065
+        },
+        {
+          "statName": "PHYS ATK",
+          "statValue": 4711
+        },
+        {
+          "statName": "Spell ATK",
+          "statValue": 1325
+        },
+        {
+          "statName": "PHYS DEF",
+          "statValue": 3022
+        },
+        {
+          "statName": "Spell DEF",
+          "statValue": 2994
+        }
       ]
     },
     {
       "rowID": 8,
-      "seq": 1912149,
-      "transportID": 264599,
-      "nftID": "11341",
-      "sealedDT": 1644327309,
-      "characterName": "Ww丶PRAJOWMOD",
-      "class": 3,
-      "lv": 150,
-      "powerScore": 361854,
-      "price": 5500,
+      "seq": 1915373,
+      "transportID": 266236,
+      "nftID": "90614",
+      "sealedDT": 1707802737,
+      "characterName": "BrodaWTF",
+      "class": 5,
+      "lv": 91,
+      "powerScore": 139375,
+      "price": 24,
       "MirageScore": 0,
       "MiraX": 0,
       "Reinforce": 0,
       "stat": [
-        { "statName": "HP", "statValue": 177182 },
-        { "statName": "MP", "statValue": 21970 },
-        { "statName": "PHYS ATK", "statValue": 10761 },
-        { "statName": "Spell ATK", "statValue": 10614 },
-        { "statName": "PHYS DEF", "statValue": 7087 },
-        { "statName": "Spell DEF", "statValue": 7194 }
+        {
+          "statName": "HP",
+          "statValue": 76551
+        },
+        {
+          "statName": "MP",
+          "statValue": 10639
+        },
+        {
+          "statName": "PHYS ATK",
+          "statValue": 4471
+        },
+        {
+          "statName": "Spell ATK",
+          "statValue": 4263
+        },
+        {
+          "statName": "PHYS DEF",
+          "statValue": 2691
+        },
+        {
+          "statName": "Spell DEF",
+          "statValue": 2457
+        }
       ]
     },
     {
       "rowID": 9,
-      "seq": 1914029,
-      "transportID": 265293,
-      "nftID": "30907",
-      "sealedDT": 1650323653,
-      "characterName": "doToHard",
-      "class": 4,
-      "lv": 151,
-      "powerScore": 371813,
-      "price": 5480,
+      "seq": 1915370,
+      "transportID": 265933,
+      "nftID": "82328",
+      "sealedDT": 1691639299,
+      "characterName": "soupiranhabb",
+      "class": 3,
+      "lv": 115,
+      "powerScore": 189013,
+      "price": 57,
       "MirageScore": 0,
       "MiraX": 0,
       "Reinforce": 0,
       "stat": [
-        { "statName": "HP", "statValue": 159443 },
-        { "statName": "MP", "statValue": 20592 },
-        { "statName": "PHYS ATK", "statValue": 12245 },
-        { "statName": "Spell ATK", "statValue": 3614 },
-        { "statName": "PHYS DEF", "statValue": 7319 },
-        { "statName": "Spell DEF", "statValue": 7078 }
+        {
+          "statName": "HP",
+          "statValue": 106485
+        },
+        {
+          "statName": "MP",
+          "statValue": 12896
+        },
+        {
+          "statName": "PHYS ATK",
+          "statValue": 6248
+        },
+        {
+          "statName": "Spell ATK",
+          "statValue": 6190
+        },
+        {
+          "statName": "PHYS DEF",
+          "statValue": 3849
+        },
+        {
+          "statName": "Spell DEF",
+          "statValue": 3766
+        }
       ]
     },
     {
       "rowID": 10,
-      "seq": 1911506,
-      "transportID": 265264,
-      "nftID": "67637",
-      "sealedDT": 1673207892,
-      "characterName": "ぃMiekaelaい",
-      "class": 3,
-      "lv": 148,
-      "powerScore": 368092,
-      "price": 4900,
+      "seq": 1915368,
+      "transportID": 266260,
+      "nftID": "90872",
+      "sealedDT": 1708371299,
+      "characterName": "Haniee",
+      "class": 4,
+      "lv": 123,
+      "powerScore": 187263,
+      "price": 52,
       "MirageScore": 0,
       "MiraX": 0,
       "Reinforce": 0,
       "stat": [
-        { "statName": "HP", "statValue": 161311 },
-        { "statName": "MP", "statValue": 23344 },
-        { "statName": "PHYS ATK", "statValue": 11031 },
-        { "statName": "Spell ATK", "statValue": 10934 },
-        { "statName": "PHYS DEF", "statValue": 7695 },
-        { "statName": "Spell DEF", "statValue": 7290 }
+        {
+          "statName": "HP",
+          "statValue": 110475
+        },
+        {
+          "statName": "MP",
+          "statValue": 11687
+        },
+        {
+          "statName": "PHYS ATK",
+          "statValue": 6287
+        },
+        {
+          "statName": "Spell ATK",
+          "statValue": 1959
+        },
+        {
+          "statName": "PHYS DEF",
+          "statValue": 3663
+        },
+        {
+          "statName": "Spell DEF",
+          "statValue": 3614
+        }
       ]
     },
     {
       "rowID": 11,
-      "seq": 1913977,
-      "transportID": 265788,
-      "nftID": "35541",
-      "sealedDT": 1651904272,
-      "characterName": "DTM Deus",
-      "class": 5,
-      "lv": 149,
-      "powerScore": 350806,
-      "price": 4666,
+      "seq": 1915364,
+      "transportID": 265755,
+      "nftID": "33232",
+      "sealedDT": 1651040685,
+      "characterName": "Encara爪乇丂丂丨",
+      "class": 3,
+      "lv": 123,
+      "powerScore": 188436,
+      "price": 70,
       "MirageScore": 0,
       "MiraX": 0,
       "Reinforce": 0,
       "stat": [
-        { "statName": "HP", "statValue": 152116 },
-        { "statName": "MP", "statValue": 21952 },
-        { "statName": "PHYS ATK", "statValue": 10946 },
-        { "statName": "Spell ATK", "statValue": 10329 },
-        { "statName": "PHYS DEF", "statValue": 6972 },
-        { "statName": "Spell DEF", "statValue": 6858 }
+        {
+          "statName": "HP",
+          "statValue": 96289
+        },
+        {
+          "statName": "MP",
+          "statValue": 13064
+        },
+        {
+          "statName": "PHYS ATK",
+          "statValue": 6329
+        },
+        {
+          "statName": "Spell ATK",
+          "statValue": 6223
+        },
+        {
+          "statName": "PHYS DEF",
+          "statValue": 3823
+        },
+        {
+          "statName": "Spell DEF",
+          "statValue": 3601
+        }
       ]
     },
     {
       "rowID": 12,
-      "seq": 1912707,
-      "transportID": 263375,
-      "nftID": "60518",
-      "sealedDT": 1665816128,
-      "characterName": "DTM A3 ヤ",
-      "class": 4,
-      "lv": 146,
-      "powerScore": 377217,
-      "price": 4500,
+      "seq": 1915363,
+      "transportID": 264260,
+      "nftID": "10335",
+      "sealedDT": 1644063894,
+      "characterName": "FceX",
+      "class": 2,
+      "lv": 97,
+      "powerScore": 133570,
+      "price": 54,
       "MirageScore": 0,
       "MiraX": 0,
       "Reinforce": 0,
       "stat": [
-        { "statName": "HP", "statValue": 180030 },
-        { "statName": "MP", "statValue": 23992 },
-        { "statName": "PHYS ATK", "statValue": 11346 },
-        { "statName": "Spell ATK", "statValue": 3676 },
-        { "statName": "PHYS DEF", "statValue": 7168 },
-        { "statName": "Spell DEF", "statValue": 6888 }
+        {
+          "statName": "HP",
+          "statValue": 78349
+        },
+        {
+          "statName": "MP",
+          "statValue": 8846
+        },
+        {
+          "statName": "PHYS ATK",
+          "statValue": 883
+        },
+        {
+          "statName": "Spell ATK",
+          "statValue": 4335
+        },
+        {
+          "statName": "PHYS DEF",
+          "statValue": 2453
+        },
+        {
+          "statName": "Spell DEF",
+          "statValue": 2348
+        }
       ]
     },
     {
       "rowID": 13,
-      "seq": 1914785,
-      "transportID": 265623,
-      "nftID": "2452",
-      "sealedDT": 1640219083,
-      "characterName": "hoanganh7290",
-      "class": 2,
-      "lv": 152,
-      "powerScore": 375177,
-      "price": 3999,
+      "seq": 1915357,
+      "transportID": 265757,
+      "nftID": "32752",
+      "sealedDT": 1650893470,
+      "characterName": "VictorPYツ",
+      "class": 4,
+      "lv": 123,
+      "powerScore": 208041,
+      "price": 65,
       "MirageScore": 0,
       "MiraX": 0,
       "Reinforce": 0,
       "stat": [
-        { "statName": "HP", "statValue": 176156 },
-        { "statName": "MP", "statValue": 26424 },
-        { "statName": "PHYS ATK", "statValue": 3634 },
-        { "statName": "Spell ATK", "statValue": 11060 },
-        { "statName": "PHYS DEF", "statValue": 6922 },
-        { "statName": "Spell DEF", "statValue": 7151 }
+        {
+          "statName": "HP",
+          "statValue": 105955
+        },
+        {
+          "statName": "MP",
+          "statValue": 12709
+        },
+        {
+          "statName": "PHYS ATK",
+          "statValue": 7029
+        },
+        {
+          "statName": "Spell ATK",
+          "statValue": 1501
+        },
+        {
+          "statName": "PHYS DEF",
+          "statValue": 4473
+        },
+        {
+          "statName": "Spell DEF",
+          "statValue": 4385
+        }
       ]
     },
     {
       "rowID": 14,
-      "seq": 1913537,
-      "transportID": 265601,
-      "nftID": "34161",
-      "sealedDT": 1651359489,
-      "characterName": "Lamej69",
+      "seq": 1915353,
+      "transportID": 266051,
+      "nftID": "90227",
+      "sealedDT": 1706825059,
+      "characterName": "MOOM0 BELLO",
       "class": 1,
-      "lv": 120,
-      "powerScore": 322678,
-      "price": 3500,
+      "lv": 84,
+      "powerScore": 125901,
+      "price": 18,
       "MirageScore": 0,
       "MiraX": 0,
       "Reinforce": 0,
       "stat": [
-        { "statName": "HP", "statValue": 153260 },
-        { "statName": "MP", "statValue": 19959 },
-        { "statName": "PHYS ATK", "statValue": 10606 },
-        { "statName": "Spell ATK", "statValue": 2939 },
-        { "statName": "PHYS DEF", "statValue": 6127 },
-        { "statName": "Spell DEF", "statValue": 6030 }
+        {
+          "statName": "HP",
+          "statValue": 73466
+        },
+        {
+          "statName": "MP",
+          "statValue": 8595
+        },
+        {
+          "statName": "PHYS ATK",
+          "statValue": 3809
+        },
+        {
+          "statName": "Spell ATK",
+          "statValue": 780
+        },
+        {
+          "statName": "PHYS DEF",
+          "statValue": 2349
+        },
+        {
+          "statName": "Spell DEF",
+          "statValue": 2308
+        }
       ]
     },
     {
       "rowID": 15,
-      "seq": 1913508,
-      "transportID": 261118,
-      "nftID": "54638",
-      "sealedDT": 1661658021,
-      "characterName": "Dewi Nuwa",
-      "class": 3,
-      "lv": 150,
-      "powerScore": 347351,
-      "price": 3399,
+      "seq": 1915351,
+      "transportID": 264745,
+      "nftID": "90539",
+      "sealedDT": 1707599125,
+      "characterName": "sennpaisx7",
+      "class": 2,
+      "lv": 120,
+      "powerScore": 173073,
+      "price": 60,
       "MirageScore": 0,
       "MiraX": 0,
       "Reinforce": 0,
       "stat": [
-        { "statName": "HP", "statValue": 154724 },
-        { "statName": "MP", "statValue": 21620 },
-        { "statName": "PHYS ATK", "statValue": 10545 },
-        { "statName": "Spell ATK", "statValue": 10338 },
-        { "statName": "PHYS DEF", "statValue": 6774 },
-        { "statName": "Spell DEF", "statValue": 6533 }
+        {
+          "statName": "HP",
+          "statValue": 94879
+        },
+        {
+          "statName": "MP",
+          "statValue": 10814
+        },
+        {
+          "statName": "PHYS ATK",
+          "statValue": 1606
+        },
+        {
+          "statName": "Spell ATK",
+          "statValue": 5697
+        },
+        {
+          "statName": "PHYS DEF",
+          "statValue": 3602
+        },
+        {
+          "statName": "Spell DEF",
+          "statValue": 3449
+        }
       ]
     },
     {
       "rowID": 16,
-      "seq": 1912656,
-      "transportID": 264175,
-      "nftID": "88187",
-      "sealedDT": 1702221875,
-      "characterName": "Dymon",
-      "class": 4,
-      "lv": 150,
-      "powerScore": 372596,
-      "price": 3350,
+      "seq": 1915347,
+      "transportID": 265677,
+      "nftID": "90764",
+      "sealedDT": 1708273101,
+      "characterName": "mokiku",
+      "class": 2,
+      "lv": 105,
+      "powerScore": 165433,
+      "price": 38,
       "MirageScore": 0,
       "MiraX": 0,
       "Reinforce": 0,
       "stat": [
-        { "statName": "HP", "statValue": 177503 },
-        { "statName": "MP", "statValue": 21741 },
-        { "statName": "PHYS ATK", "statValue": 11252 },
-        { "statName": "Spell ATK", "statValue": 3249 },
-        { "statName": "PHYS DEF", "statValue": 7125 },
-        { "statName": "Spell DEF", "statValue": 7094 }
+        {
+          "statName": "HP",
+          "statValue": 81778
+        },
+        {
+          "statName": "MP",
+          "statValue": 12127
+        },
+        {
+          "statName": "PHYS ATK",
+          "statValue": 1377
+        },
+        {
+          "statName": "Spell ATK",
+          "statValue": 5378
+        },
+        {
+          "statName": "PHYS DEF",
+          "statValue": 3207
+        },
+        {
+          "statName": "Spell DEF",
+          "statValue": 3221
+        }
       ]
     },
     {
       "rowID": 17,
-      "seq": 1912819,
-      "transportID": 265002,
-      "nftID": "13119",
-      "sealedDT": 1644862510,
-      "characterName": "微信 GTA5AW",
-      "class": 4,
-      "lv": 140,
-      "powerScore": 338721,
-      "price": 3200,
+      "seq": 1915344,
+      "transportID": 266250,
+      "nftID": "90871",
+      "sealedDT": 1708370086,
+      "characterName": "T E R Z I",
+      "class": 5,
+      "lv": 77,
+      "powerScore": 106954,
+      "price": 18,
       "MirageScore": 0,
       "MiraX": 0,
       "Reinforce": 0,
       "stat": [
-        { "statName": "HP", "statValue": 152238 },
-        { "statName": "MP", "statValue": 22093 },
-        { "statName": "PHYS ATK", "statValue": 10906 },
-        { "statName": "Spell ATK", "statValue": 3198 },
-        { "statName": "PHYS DEF", "statValue": 6597 },
-        { "statName": "Spell DEF", "statValue": 6353 }
+        {
+          "statName": "HP",
+          "statValue": 60003
+        },
+        {
+          "statName": "MP",
+          "statValue": 8001
+        },
+        {
+          "statName": "PHYS ATK",
+          "statValue": 3210
+        },
+        {
+          "statName": "Spell ATK",
+          "statValue": 3147
+        },
+        {
+          "statName": "PHYS DEF",
+          "statValue": 1970
+        },
+        {
+          "statName": "Spell DEF",
+          "statValue": 1986
+        }
       ]
     },
     {
       "rowID": 18,
-      "seq": 1912196,
-      "transportID": 264941,
-      "nftID": "73271",
-      "sealedDT": 1679845010,
-      "characterName": "riSe85",
-      "class": 5,
-      "lv": 146,
-      "powerScore": 346496,
-      "price": 2700,
+      "seq": 1915340,
+      "transportID": 266194,
+      "nftID": "63069",
+      "sealedDT": 1667769140,
+      "characterName": "Nagtuz",
+      "class": 4,
+      "lv": 90,
+      "powerScore": 131367,
+      "price": 26,
       "MirageScore": 0,
       "MiraX": 0,
       "Reinforce": 0,
       "stat": [
-        { "statName": "HP", "statValue": 160985 },
-        { "statName": "MP", "statValue": 19023 },
-        { "statName": "PHYS ATK", "statValue": 10417 },
-        { "statName": "Spell ATK", "statValue": 10247 },
-        { "statName": "PHYS DEF", "statValue": 7111 },
-        { "statName": "Spell DEF", "statValue": 6860 }
+        {
+          "statName": "HP",
+          "statValue": 67648
+        },
+        {
+          "statName": "MP",
+          "statValue": 8783
+        },
+        {
+          "statName": "PHYS ATK",
+          "statValue": 4115
+        },
+        {
+          "statName": "Spell ATK",
+          "statValue": 1150
+        },
+        {
+          "statName": "PHYS DEF",
+          "statValue": 2566
+        },
+        {
+          "statName": "Spell DEF",
+          "statValue": 2589
+        }
       ]
     },
     {
       "rowID": 19,
-      "seq": 1912437,
-      "transportID": 265412,
-      "nftID": "48655",
-      "sealedDT": 1657298030,
-      "characterName": "popoiii",
-      "class": 6,
-      "lv": 120,
-      "powerScore": 300261,
-      "price": 2500,
+      "seq": 1915337,
+      "transportID": 265400,
+      "nftID": "56406",
+      "sealedDT": 1662896521,
+      "characterName": "cent 47",
+      "class": 4,
+      "lv": 102,
+      "powerScore": 161430,
+      "price": 36,
       "MirageScore": 0,
       "MiraX": 0,
       "Reinforce": 0,
       "stat": [
-        { "statName": "HP", "statValue": 128544 },
-        { "statName": "MP", "statValue": 16680 },
-        { "statName": "PHYS ATK", "statValue": 3599 },
-        { "statName": "Spell ATK", "statValue": 10249 },
-        { "statName": "PHYS DEF", "statValue": 6072 },
-        { "statName": "Spell DEF", "statValue": 6041 }
+        {
+          "statName": "HP",
+          "statValue": 85461
+        },
+        {
+          "statName": "MP",
+          "statValue": 11642
+        },
+        {
+          "statName": "PHYS ATK",
+          "statValue": 5414
+        },
+        {
+          "statName": "Spell ATK",
+          "statValue": 1348
+        },
+        {
+          "statName": "PHYS DEF",
+          "statValue": 3061
+        },
+        {
+          "statName": "Spell DEF",
+          "statValue": 2932
+        }
       ]
     },
     {
       "rowID": 20,
-      "seq": 1914555,
-      "transportID": 266015,
-      "nftID": "59960",
-      "sealedDT": 1665393821,
-      "characterName": "DCnguyet2406",
-      "class": 1,
-      "lv": 146,
-      "powerScore": 339745,
-      "price": 2400,
+      "seq": 1915335,
+      "transportID": 265716,
+      "nftID": "88199",
+      "sealedDT": 1702241990,
+      "characterName": "Cann0n3er",
+      "class": 4,
+      "lv": 111,
+      "powerScore": 171132,
+      "price": 43,
       "MirageScore": 0,
       "MiraX": 0,
       "Reinforce": 0,
       "stat": [
-        { "statName": "HP", "statValue": 171506 },
-        { "statName": "MP", "statValue": 20022 },
-        { "statName": "PHYS ATK", "statValue": 10550 },
-        { "statName": "Spell ATK", "statValue": 3542 },
-        { "statName": "PHYS DEF", "statValue": 6856 },
-        { "statName": "Spell DEF", "statValue": 6552 }
+        {
+          "statName": "HP",
+          "statValue": 100502
+        },
+        {
+          "statName": "MP",
+          "statValue": 11323
+        },
+        {
+          "statName": "PHYS ATK",
+          "statValue": 5446
+        },
+        {
+          "statName": "Spell ATK",
+          "statValue": 1535
+        },
+        {
+          "statName": "PHYS DEF",
+          "statValue": 3236
+        },
+        {
+          "statName": "Spell DEF",
+          "statValue": 3183
+        }
       ]
     }
   ]
