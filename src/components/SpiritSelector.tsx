@@ -132,12 +132,12 @@ function SpiritList({ list }: { list: [SpiritsType, "Legendary" | "Epic"][] }) {
       <CommandItem
         key={formattedName}
         value={spirit}
-        onSelect={(currentValue) => {
+        onSelect={() => {
           setListFilter((prev) => ({
             ...prev,
             spirits: isSelected
-              ? prev.spirits.filter((spirit) => spirit !== currentValue)
-              : [...prev.spirits, currentValue as SpiritsType],
+              ? prev.spirits.filter((curSpirit) => curSpirit !== spirit)
+              : [...prev.spirits, spirit as SpiritsType],
           }));
         }}
         data-filter={isSelected}
