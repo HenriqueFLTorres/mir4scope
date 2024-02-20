@@ -123,6 +123,10 @@ export default function Home() {
           min={60}
           max={170}
           Icon={<EXP className="h-5 w-5" />}
+          value={listFilter.level}
+          onValueChange={(value) =>
+            setListFilter((prev) => ({ ...prev, level: value }))
+          }
           label="Level"
           step={5}
         />
@@ -130,8 +134,12 @@ export default function Home() {
         <SelectRange
           defaultValue={[1e5, 9e5]}
           min={1e5}
-          max={9e5}
+          max={6e5}
           Icon={<Power className="h-5 w-5" />}
+          value={listFilter.power}
+          onValueChange={(value) =>
+            setListFilter((prev) => ({ ...prev, power: value }))
+          }
           label="Power"
           step={5000}
           showInput={false}
@@ -142,6 +150,10 @@ export default function Home() {
           min={100}
           max={2000}
           Icon={<Codex className="h-5 w-5" />}
+          value={listFilter.codex}
+          onValueChange={(value) =>
+            setListFilter((prev) => ({ ...prev, codex: value }))
+          }
           label="Codex"
           step={10}
         />
@@ -185,7 +197,7 @@ export default function Home() {
         <CraftingMaterialSelector />
       </section>
 
-      <pre className="text-xs text-white">
+      <pre className="fixed left-4 top-4 max-h-[90vh] overflow-auto rounded border border-white/15 bg-white/5 p-2 text-xs text-white backdrop-blur-lg">
         {JSON.stringify(listFilter, null, 2)}
       </pre>
 

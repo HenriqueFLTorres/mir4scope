@@ -2,8 +2,11 @@ import { atom } from "jotai";
 
 export type ListFiltersType = {
   class: 0 | 1 | 2 | 3 | 4 | 5 | 6;
-  materials: CraftingMaterialType;
+  level: number[];
+  power: number[];
+  codex: number[];
   priceRange: [number, number | undefined];
+  materials: CraftingMaterialType;
   skills: SkillsValueType;
   spirits: SpiritsType[];
   status: { [key in StatType]: [number | undefined, number | undefined] };
@@ -15,6 +18,9 @@ export type ListFiltersType = {
 
 export const ListFilterAtom = atom<ListFiltersType>({
   class: 0,
+  level: [60, 170],
+  power: [100e3, 600e3],
+  codex: [100, 2000],
   materials: {
     "Dragon Scale": { Legendary: 0, Epic: 0 },
     "Dragon Claw": { Legendary: 0, Epic: 0 },
