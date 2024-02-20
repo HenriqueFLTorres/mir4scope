@@ -40,7 +40,7 @@ type Mir4Classes =
   | "Darkist";
 
 type Filter = {
-  class: "any" | Mir4Classes;
+  class: 0 | 1 | 2 | 3 | 4 | 5 | 6;
 };
 
 const mir4Classes: Mir4Classes[] = [
@@ -52,8 +52,17 @@ const mir4Classes: Mir4Classes[] = [
   "Warrior",
 ];
 
+const classToKey: { [key in Mir4Classes]: number } = {
+  "Arbalist": 4,
+  "Darkist": 6,
+  "Lancer": 5,
+  "Sorcerer": 2,
+  "Taoist": 3,
+  "Warrior": 1,
+}
+
 export default function Home() {
-  const [filter, setFilter] = useState<Filter>({ class: "any" });
+  const [filter, setFilter] = useState<Filter>({ class: 0 });
 
   return (
     <main className="flex min-h-screen flex-col items-center bg-gradient-to-br from-[#44356A] to-[#272039] p-24">
@@ -65,14 +74,14 @@ export default function Home() {
         />
 
         <Select
-          defaultValue="any"
+          defaultValue={"0"}
           onValueChange={(value) =>
-            setFilter((prev) => ({ ...prev, class: value as Mir4Classes }))
+            setFilter((prev) => ({ ...prev, class: Number(value) as Filter["class"] }))
           }
-          value={filter.class}
+          value={String(filter.class)}
         >
           <SelectTrigger className="w-48">
-            {filter.class === "any" ? (
+            {filter.class === 0 ? (
               <Skill className="h-5 w-5" />
             ) : (
               <Image
@@ -89,7 +98,7 @@ export default function Home() {
             <SelectItem
               className="gap-2"
               Icon={<Skill className="h-5 w-5" />}
-              value="any"
+              value={"0"}
             >
               All Classes
             </SelectItem>
@@ -97,7 +106,7 @@ export default function Home() {
               <SelectItem
                 key={mir4Class}
                 className="gap-2 capitalize"
-                value={mir4Class}
+                value={String(classToKey[mir4Class])}
                 Icon={
                   <SelectIcon asChild>
                     <Image
