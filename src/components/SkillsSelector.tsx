@@ -3,34 +3,17 @@
 import { ChevronsUpDown } from "lucide-react";
 import * as React from "react";
 
+import { ListFilterAtom } from "@/atom/ListFilters";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useAtom } from "jotai";
 import Image from "next/image";
 import Skill from "./icon/Skill";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-
-type SkillsType =
-  | "Arrow Rain"
-  | "Quick Shot"
-  | "Painstrike Gale"
-  | "Illusion Arrow"
-  | "Burst Shell"
-  | "Flash Arrow"
-  | "Heavenly Bow"
-  | "Mind's Eye"
-  | "Ice Cage"
-  | "Obliterate Shell"
-  | "Venom Mist Shell"
-  | "Seeking Bolt"
-  | "Cloaking";
-
-type SkillsValueType = {
-  [key in SkillsType]: number;
-};
 
 const SKILL_LIST = [
   "Arrow Rain",
@@ -52,21 +35,6 @@ const MAX_SKILL_LEVEL = 10;
 
 export function SkillsSelector() {
   const [open, setOpen] = React.useState(false);
-  const [skillsValue, setSkillsValue] = React.useState<SkillsValueType>({
-    "Arrow Rain": 0,
-    "Quick Shot": 0,
-    "Painstrike Gale": 0,
-    "Illusion Arrow": 0,
-    "Burst Shell": 0,
-    "Flash Arrow": 0,
-    "Heavenly Bow": 0,
-    "Mind's Eye": 0,
-    "Ice Cage": 0,
-    "Obliterate Shell": 0,
-    "Venom Mist Shell": 0,
-    "Seeking Bolt": 0,
-    Cloaking: 0,
-  });
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -81,24 +49,13 @@ export function SkillsSelector() {
         <ChevronsUpDown className="ml-auto h-4 w-4 opacity-60 transition-[opacity] group-data-[state=open]:opacity-100" />
       </PopoverTrigger>
       <PopoverContent align="start" className="flex flex-col gap-4 p-3">
-        <SkillItem
-          skill={"Arrow Rain"}
-          skillsValue={skillsValue}
-          setSkillsValue={setSkillsValue}
-        />
+        <SkillItem skill={"Arrow Rain"} />
 
         <div className="grid grid-cols-2 gap-4">
           {SKILL_LIST.map((skill) => {
             if (skill === "Arrow Rain") return <></>;
 
-            return (
-              <SkillItem
-                key={skill}
-                skill={skill}
-                skillsValue={skillsValue}
-                setSkillsValue={setSkillsValue}
-              />
-            );
+            return <SkillItem key={skill} skill={skill} />;
           })}
         </div>
       </PopoverContent>
@@ -106,15 +63,9 @@ export function SkillsSelector() {
   );
 }
 
-function SkillItem({
-  skill,
-  skillsValue,
-  setSkillsValue,
-}: {
-  skill: SkillsType;
-  skillsValue: SkillsValueType;
-  setSkillsValue: React.Dispatch<React.SetStateAction<SkillsValueType>>;
-}) {
+function SkillItem({ skill }: { skill: SkillsType }) {
+  const [{ skills }, setListFilter] = useAtom(ListFilterAtom);
+
   const formattedName = skill
     .toLowerCase()
     .replace(/\'/g, "")
@@ -133,13 +84,17 @@ function SkillItem({
 
       <Input
         prefix={<span className="absolute bottom-2 left-3 font-bold">+</span>}
-        value={skillsValue[skill]}
+        value={skills[skill]}
         onChange={(e) => {
           let value = Number(e.target.value);
 
           if (value < 0 || Number.isNaN(value)) return;
           if (value > MAX_SKILL_LEVEL) value = MAX_SKILL_LEVEL;
-          setSkillsValue((prev) => ({ ...prev, [skill]: value }));
+
+          setListFilter((prev) => ({
+            ...prev,
+            skills: { ...prev.skills, [skill]: value },
+          }));
         }}
         defaultValue={0}
         className="h-8 w-16 p-1 pl-4 text-center"

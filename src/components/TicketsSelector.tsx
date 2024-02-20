@@ -3,32 +3,25 @@
 import { ChevronsUpDown } from "lucide-react";
 import * as React from "react";
 
-import { CommandItem } from "@/components/ui/command";
+import { ListFilterAtom } from "@/atom/ListFilters";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useAtom } from "jotai";
 import Image from "next/image";
 import MagicSquare from "./icon/MagicSquare";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 
-type TicketsType = "Raid" | "Raid Boss" | "Magic Square" | "Secret Peak";
 const tickets = ["Raid", "Raid Boss", "Magic Square", "Secret Peak"] as const;
 
 const MAX_TICKETS = 999;
 
 export function TicketsSelector() {
   const [open, setOpen] = React.useState(false);
-  const [ticketsValue, setTicketsValue] = React.useState<{
-    [key in TicketsType]: number;
-  }>({
-    Raid: 0,
-    "Raid Boss": 0,
-    "Magic Square": 0,
-    "Secret Peak": 0,
-  });
+  const [{ tickets: ticketsValue }, setListFilter] = useAtom(ListFilterAtom);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -67,7 +60,10 @@ export function TicketsSelector() {
 
                   if (value < 0 || Number.isNaN(value)) return;
                   if (value > MAX_TICKETS) value = MAX_TICKETS;
-                  setTicketsValue((prev) => ({ ...prev, [ticket]: value }));
+                  setListFilter((prev) => ({
+                    ...prev,
+                    tickets: { ...prev.tickets, [ticket]: value },
+                  }));
                 }}
                 defaultValue={0}
                 className="h-8 w-16 p-1 pl-4 text-center"

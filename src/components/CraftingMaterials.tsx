@@ -3,28 +3,19 @@
 import { ChevronsUpDown } from "lucide-react";
 import * as React from "react";
 
+import { ListFilterAtom } from "@/atom/ListFilters";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useAtom } from "jotai";
 import Image from "next/image";
 import Crafting from "./icon/Crafting";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 
 const MAX_MATERIAL_AMOUNT = 100;
-
-type MaterialsType =
-  | "Dragon Scale"
-  | "Dragon Claw"
-  | "Dragon Leather"
-  | "Dragon Horn"
-  | "Dragon Eye";
-
-type CraftingMaterialType = {
-  [key in MaterialsType]: { Legendary: number; Epic: number };
-};
 
 const CRAFTING_MATERIAL_LIST = [
   "Dragon Scale",
@@ -36,13 +27,6 @@ const CRAFTING_MATERIAL_LIST = [
 
 export function CraftingMaterialSelector() {
   const [open, setOpen] = React.useState(false);
-  const [materials, setMaterials] = React.useState<CraftingMaterialType>({
-    "Dragon Scale": { Legendary: 0, Epic: 0 },
-    "Dragon Claw": { Legendary: 0, Epic: 0 },
-    "Dragon Leather": { Legendary: 0, Epic: 0 },
-    "Dragon Horn": { Legendary: 0, Epic: 0 },
-    "Dragon Eye": { Legendary: 0, Epic: 0 },
-  });
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -59,24 +43,12 @@ export function CraftingMaterialSelector() {
       <PopoverContent align="start" className="flex gap-4 p-3">
         <div className="flex flex-col gap-4">
           {CRAFTING_MATERIAL_LIST.map((material) => (
-            <MaterialItem
-              key={material}
-              name={material}
-              rarity="Epic"
-              materials={materials}
-              setMaterials={setMaterials}
-            />
+            <MaterialItem key={material} name={material} rarity="Epic" />
           ))}
         </div>
         <div className="flex flex-col gap-4">
           {CRAFTING_MATERIAL_LIST.map((material) => (
-            <MaterialItem
-              key={material}
-              name={material}
-              rarity="Legendary"
-              materials={materials}
-              setMaterials={setMaterials}
-            />
+            <MaterialItem key={material} name={material} rarity="Legendary" />
           ))}
         </div>
       </PopoverContent>
@@ -87,14 +59,12 @@ export function CraftingMaterialSelector() {
 function MaterialItem({
   name,
   rarity,
-  materials,
-  setMaterials,
 }: {
   name: MaterialsType;
   rarity: "Legendary" | "Epic";
-  materials: CraftingMaterialType;
-  setMaterials: React.Dispatch<React.SetStateAction<CraftingMaterialType>>;
 }) {
+  const [{ materials }, setListFilter] = useAtom(ListFilterAtom);
+
   const formattedName = name.toLowerCase().replace(/\s/g, "_");
 
   return (
@@ -126,9 +96,12 @@ function MaterialItem({
           if (value < 0 || Number.isNaN(value)) return;
           if (value > MAX_MATERIAL_AMOUNT) value = MAX_MATERIAL_AMOUNT;
 
-          setMaterials((prev) => ({
+          setListFilter((prev) => ({
             ...prev,
-            [name]: { ...prev[name], [rarity]: value },
+            materials: {
+              ...prev.materials,
+              [name]: { ...prev.materials[name], [rarity]: value },
+            },
           }));
         }}
         defaultValue={0}

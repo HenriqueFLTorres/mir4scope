@@ -1,4 +1,5 @@
 "use client";
+import { ListFilterAtom, ListFiltersType } from "@/atom/ListFilters";
 import { CraftingMaterialSelector } from "@/components/CraftingMaterials";
 import Accuracy from "@/components/icon/Accuracy";
 import Codex from "@/components/icon/Codex";
@@ -27,21 +28,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { SelectRange } from "@/components/ui/select-range";
+import { classIndexToName } from "@/lib/utils";
 import { SelectIcon } from "@radix-ui/react-select";
+import { useAtom } from "jotai";
 import Image from "next/image";
-import { useState } from "react";
-
-type Mir4Classes =
-  | "Warrior"
-  | "Sorcerer"
-  | "Taoist"
-  | "Arbalist"
-  | "Lancer"
-  | "Darkist";
-
-type Filter = {
-  class: 0 | 1 | 2 | 3 | 4 | 5 | 6;
-};
 
 const mir4Classes: Mir4Classes[] = [
   "Arbalist",
@@ -53,16 +43,16 @@ const mir4Classes: Mir4Classes[] = [
 ];
 
 const classToKey: { [key in Mir4Classes]: number } = {
-  "Arbalist": 4,
-  "Darkist": 6,
-  "Lancer": 5,
-  "Sorcerer": 2,
-  "Taoist": 3,
-  "Warrior": 1,
-}
+  Arbalist: 4,
+  Darkist: 6,
+  Lancer: 5,
+  Sorcerer: 2,
+  Taoist: 3,
+  Warrior: 1,
+};
 
 export default function Home() {
-  const [filter, setFilter] = useState<Filter>({ class: 0 });
+  const [listFilter, setListFilter] = useAtom(ListFilterAtom);
 
   return (
     <main className="flex min-h-screen flex-col items-center bg-gradient-to-br from-[#44356A] to-[#272039] p-24">
@@ -76,19 +66,22 @@ export default function Home() {
         <Select
           defaultValue={"0"}
           onValueChange={(value) =>
-            setFilter((prev) => ({ ...prev, class: Number(value) as Filter["class"] }))
+            setListFilter((prev) => ({
+              ...prev,
+              class: Number(value) as ListFiltersType["class"],
+            }))
           }
-          value={String(filter.class)}
+          value={String(listFilter.class)}
         >
           <SelectTrigger className="w-48">
-            {filter.class === 0 ? (
+            {listFilter.class === 0 ? (
               <Skill className="h-5 w-5" />
             ) : (
               <Image
                 className="object-contain"
                 width={20}
                 height={20}
-                src={`/icon/${filter.class}.webp`}
+                src={`/icon/${classIndexToName(listFilter.class).toLowerCase()}.webp`}
                 alt=""
               />
             )}
@@ -162,14 +155,14 @@ export default function Home() {
         <StatusRange label="PHYS ATK" Icon={<PHYSATK className="h-5 w-5" />} />
 
         <StatusRange
-          label="SPELL ATK"
+          label="Spell ATK"
           Icon={<SpellATK className="h-5 w-5" />}
         />
 
         <StatusRange label="PHYS DEF" Icon={<PHYSDEF className="h-5 w-5" />} />
 
         <StatusRange
-          label="SPELL DEF"
+          label="Spell DEF"
           Icon={<SPELLDEF className="h-5 w-5" />}
         />
 
@@ -191,6 +184,10 @@ export default function Home() {
 
         <CraftingMaterialSelector />
       </section>
+
+      <pre className="text-xs text-white">
+        {JSON.stringify(listFilter, null, 2)}
+      </pre>
 
       <NFTDisplay />
     </main>

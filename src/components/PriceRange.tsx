@@ -1,28 +1,42 @@
-import { getNumber } from '@/lib/utils';
-import millify from 'millify';
-import { useState } from 'react';
-import Wemix from './icon/wemix';
-import { Input } from './ui/input';
-import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
+import { ListFilterAtom } from "@/atom/ListFilters";
+import { getNumber } from "@/lib/utils";
+import { useAtom } from "jotai";
+import millify from "millify";
+import Wemix from "./icon/wemix";
+import { Input } from "./ui/input";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 
 const MAX_VALUE = 150000;
 
 const PriceRange = () => {
-  const [value, setValue] = useState<[number, number | undefined]>([
-    0,
-    undefined,
-  ]);
+  const [{ priceRange }, setListFilter] = useAtom(ListFilterAtom);
 
   const minValueBlur = () =>
-    setValue((value) => [Math.min(value[0], value[1] ?? MAX_VALUE), value[1]]);
+    setListFilter((prev) => ({
+      ...prev,
+      priceRange: [
+        Math.min(prev.priceRange[0], prev.priceRange[1] ?? MAX_VALUE),
+        prev.priceRange[1],
+      ],
+    }));
 
   const maxValueBlur = () =>
-    setValue((value) => [
-      value[0],
-      Math.min(MAX_VALUE, Math.max(value[0] + 10, value[1] || value[0] + 10)),
-    ]);
+    setListFilter((prev) => ({
+      ...prev,
+      priceRange: [
+        prev.priceRange[0],
+        Math.min(
+          MAX_VALUE,
+          Math.max(
+            prev.priceRange[0] + 10,
+            prev.priceRange[1] || prev.priceRange[0] + 10,
+          ),
+        ),
+      ],
+    }));
 
-  const hasValues = Number.isInteger(value[0]) && Number.isInteger(value[1]);
+  const hasValues =
+    Number.isInteger(priceRange[0]) && Number.isInteger(priceRange[1]);
 
   return (
     <Popover
@@ -31,40 +45,48 @@ const PriceRange = () => {
         maxValueBlur();
       }}
     >
-      <PopoverTrigger className='w-72'>
-        <Wemix className='w-5 h-5' />
-        Price{' '}
-        {hasValues ? `(${millify(value[0])} - ${millify(value[1]!)})` : '(Any)'}
+      <PopoverTrigger className="w-72">
+        <Wemix className="h-5 w-5" />
+        Price{" "}
+        {hasValues
+          ? `(${millify(priceRange[0])} - ${millify(priceRange[1]!)})`
+          : "(Any)"}
       </PopoverTrigger>
-      <PopoverContent className='flex flex-row py-4 px-3 items-center gap-2'>
+      <PopoverContent className="flex flex-row items-center gap-2 px-3 py-4">
         <Input
-          label='From'
-          name='from'
-          prefix={<Wemix className='absolute w-4 h-4 left-2 bottom-2' />}
-          value={value[0]}
+          label="From"
+          name="from"
+          prefix={<Wemix className="absolute bottom-2 left-2 h-4 w-4" />}
+          value={priceRange[0]}
           onChange={(e) => {
             const newValue = getNumber(e.currentTarget.value);
             if (newValue === null) return;
 
-            setValue((value) => [newValue, value[1]]);
+            setListFilter((prev) => ({
+              ...prev,
+              priceRange: [newValue, prev.priceRange[1]],
+            }));
           }}
           onBlur={minValueBlur}
-          className='px-2 py-1 pl-8 w-full h-max'
+          className="h-max w-full px-2 py-1 pl-8"
         />
 
         <Input
-          label='To'
-          name='to'
-          prefix={<Wemix className='absolute w-4 h-4 left-2 bottom-2' />}
-          value={value[1]}
+          label="To"
+          name="to"
+          prefix={<Wemix className="absolute bottom-2 left-2 h-4 w-4" />}
+          value={priceRange[1]}
           onChange={(e) => {
             const newValue = getNumber(e.currentTarget.value);
             if (newValue === null) return;
 
-            setValue((value) => [value[0], newValue]);
+            setListFilter((prev) => ({
+              ...prev,
+              priceRange: [prev.priceRange[0], newValue],
+            }));
           }}
           onBlur={maxValueBlur}
-          className='px-2 py-1 pl-8 w-full h-max'
+          className="h-max w-full px-2 py-1 pl-8"
         />
       </PopoverContent>
     </Popover>

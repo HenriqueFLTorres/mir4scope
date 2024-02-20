@@ -3,6 +3,7 @@
 import { ChevronsUpDown } from "lucide-react";
 import * as React from "react";
 
+import { ListFilterAtom } from "@/atom/ListFilters";
 import {
   Command,
   CommandEmpty,
@@ -15,10 +16,13 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useAtom, useAtomValue } from "jotai";
 import Image from "next/image";
 import Spirit from "./icon/Spirit";
 
-const SPIRIT_LIST = {
+type spiritList = Partial<{ [key in SpiritsType]: "Legendary" | "Epic" }>;
+
+const SPIRIT_LIST: spiritList = {
   "Alluring Spirit Cat Lulu": "Legendary",
   "Bloodtip Drago": "Legendary",
   "Butterfly Fairy Dreamfly": "Legendary",
@@ -67,7 +71,7 @@ const SPIRIT_LIST = {
 
 export function SpiritSelector() {
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState<string[]>([]);
+  const { spirits } = useAtomValue(ListFilterAtom);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -78,7 +82,7 @@ export function SpiritSelector() {
         noIcon
       >
         <Spirit className="h-5 w-5" />
-        Spirits ({value ? `${value.length} selected` : "Any"})
+        Spirits ({spirits ? `${spirits.length} selected` : "Any"})
         <ChevronsUpDown className="ml-auto h-4 w-4 opacity-60 transition-[opacity] group-data-[state=open]:opacity-100" />
       </PopoverTrigger>
       <PopoverContent align="start" className="w-96">
@@ -91,11 +95,11 @@ export function SpiritSelector() {
               className="flex shrink-0 flex-col gap-2 [&>div]:flex [&>div]:w-full [&>div]:flex-wrap [&>div]:gap-2"
             >
               <SpiritList
-                list={Object.entries(SPIRIT_LIST).filter(
-                  ([, rarity]) => rarity !== "Epic",
-                )}
-                setValue={setValue}
-                value={value}
+                list={
+                  Object.entries(SPIRIT_LIST).filter(
+                    ([, rarity]) => rarity !== "Epic",
+                  ) as [SpiritsType, "Legendary"][]
+                }
               />
             </CommandGroup>
             <CommandGroup
@@ -103,11 +107,11 @@ export function SpiritSelector() {
               className="flex shrink-0 flex-col gap-2 [&>div]:flex [&>div]:w-full [&>div]:flex-wrap [&>div]:gap-2"
             >
               <SpiritList
-                list={Object.entries(SPIRIT_LIST).filter(
-                  ([, rarity]) => rarity !== "Legendary",
-                )}
-                setValue={setValue}
-                value={value}
+                list={
+                  Object.entries(SPIRIT_LIST).filter(
+                    ([, rarity]) => rarity !== "Legendary",
+                  ) as [SpiritsType, "Epic"][]
+                }
               />
             </CommandGroup>
           </div>
@@ -117,29 +121,24 @@ export function SpiritSelector() {
   );
 }
 
-function SpiritList({
-  list,
-  value,
-  setValue,
-}: {
-  list: [string, string][];
-  value: string[];
-  setValue: React.Dispatch<React.SetStateAction<string[]>>;
-}) {
+function SpiritList({ list }: { list: [SpiritsType, "Legendary" | "Epic"][] }) {
+  const [{ spirits }, setListFilter] = useAtom(ListFilterAtom);
+
   return list.map(([spirit, rarity]) => {
     const formattedName = spirit.toLowerCase().replace(/\s/g, "-");
-    const isSelected = value.includes(formattedName);
+    const isSelected = spirits.includes(spirit);
 
     return (
       <CommandItem
         key={formattedName}
-        value={formattedName}
+        value={spirit}
         onSelect={(currentValue) => {
-          setValue((prev) =>
-            isSelected
-              ? prev.filter((spirit) => spirit !== currentValue)
-              : [...prev, currentValue],
-          );
+          setListFilter((prev) => ({
+            ...prev,
+            spirits: isSelected
+              ? prev.spirits.filter((spirit) => spirit !== currentValue)
+              : [...prev.spirits, currentValue as SpiritsType],
+          }));
         }}
         data-filter={isSelected}
         className="flex cursor-pointer items-center justify-center rounded-full border border-transparent p-0 opacity-60 transition-[opacity,filter] aria-selected:bg-transparent data-[filter=true]:opacity-100 data-[filter=true]:drop-shadow-[0_0_8px_rgb(159,143,109)]"

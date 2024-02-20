@@ -3,25 +3,18 @@
 import { ChevronsUpDown } from "lucide-react";
 import * as React from "react";
 
+import { ListFilterAtom } from "@/atom/ListFilters";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useAtom } from "jotai";
 import Image from "next/image";
 import Constitution from "./icon/Constitution";
 import InnerForce from "./icon/InnerForce";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-
-type TrainingType =
-  | "Constitution"
-  | "Muscle Strength Manual"
-  | "Nine Yin Manual"
-  | "Nine Yang Manual"
-  | "Violet Mist Art"
-  | "Northern Profound Art"
-  | "Toad Stance";
 
 const TRAINING_LIST: { name: TrainingType; max: number }[] = [
   { name: "Constitution", max: 21 },
@@ -54,17 +47,7 @@ const getTrainingIcon = (training: TrainingType) => {
 
 export function TrainingSelector() {
   const [open, setOpen] = React.useState(false);
-  const [trainingValues, setTrainingValues] = React.useState<{
-    [key in TrainingType]: [number, number];
-  }>({
-    Constitution: [0, 21],
-    "Muscle Strength Manual": [0, 20],
-    "Nine Yin Manual": [0, 20],
-    "Nine Yang Manual": [0, 20],
-    "Violet Mist Art": [0, 12],
-    "Northern Profound Art": [0, 12],
-    "Toad Stance": [0, 12],
-  });
+  const [{ training }, setListFilter] = useAtom(ListFilterAtom);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -88,28 +71,34 @@ export function TrainingSelector() {
             {name}
 
             <Input
-              value={trainingValues[name][0]}
+              value={training[name][0]}
               onChange={(e) => {
                 let value = Number(e.target.value);
 
                 if (Number.isNaN(value)) return;
 
-                setTrainingValues((prev) => ({
+                setListFilter((prev) => ({
                   ...prev,
-                  [name]: [value, prev[name][1]],
+                  training: {
+                    ...prev.training,
+                    [name]: [value, prev.training[name][1]],
+                  },
                 }));
               }}
               onBlur={() => {
-                let value = trainingValues[name][0];
-                const maxValue = trainingValues[name][1];
+                let value = training[name][0];
+                const maxValue = training[name][1];
                 if (value < 0) value = 0;
                 if (value > maxValue) value = maxValue;
 
                 if (Number.isNaN(value)) return;
 
-                setTrainingValues((prev) => ({
+                setListFilter((prev) => ({
                   ...prev,
-                  [name]: [value, prev[name][1]],
+                  training: {
+                    ...prev.training,
+                    [name]: [value, prev.training[name][1]],
+                  },
                 }));
               }}
               defaultValue={0}
@@ -117,28 +106,34 @@ export function TrainingSelector() {
               wrapperClass="ml-auto"
             />
             <Input
-              value={trainingValues[name][1]}
+              value={training[name][1]}
               onChange={(e) => {
                 let value = Number(e.target.value);
 
                 if (Number.isNaN(value)) return;
 
-                setTrainingValues((prev) => ({
+                setListFilter((prev) => ({
                   ...prev,
-                  [name]: [prev[name][0], value],
+                  training: {
+                    ...prev.training,
+                    [name]: [prev.training[name][0], value],
+                  },
                 }));
               }}
               onBlur={() => {
-                let value = trainingValues[name][1];
-                const minValue = trainingValues[name][0];
+                let value = training[name][1];
+                const minValue = training[name][0];
                 if (value < minValue) value = minValue;
                 if (value > max) value = max;
 
                 if (Number.isNaN(value)) return;
 
-                setTrainingValues((prev) => ({
+                setListFilter((prev) => ({
                   ...prev,
-                  [name]: [prev[name][0], value],
+                  training: {
+                    ...prev.training,
+                    [name]: [prev.training[name][0], value],
+                  },
                 }));
               }}
               defaultValue={max}

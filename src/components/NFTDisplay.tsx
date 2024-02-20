@@ -1,4 +1,4 @@
-import { cn, getReadableNumber } from "@/lib/utils";
+import { classIndexToName, cn, getReadableNumber } from "@/lib/utils";
 import millify from "millify";
 import Image from "next/image";
 import TEMPORARY_DATA from "./TEMPORARY_DATA.json";
@@ -11,35 +11,6 @@ import Power from "./icon/Power";
 import SPELLDEF from "./icon/SPELLDEF";
 import SpellATK from "./icon/SpellATK";
 import Wemix from "./icon/wemix";
-
-function classIndexToName(index: number) {
-  switch (index) {
-    case 1:
-      return "Warrior";
-    case 2:
-      return "Sorcerer";
-    case 3:
-      return "Taoist";
-    case 4:
-      return "Arbalist";
-    case 5:
-      return "Lancer";
-    case 6:
-      return "Darkist";
-    default:
-      throw new Error(
-        `Unknown class index given to classIndexToName function: ${index}`,
-      );
-  }
-}
-
-type StatType =
-  | "PHYS ATK"
-  | "PHYS DEF"
-  | "Spell ATK"
-  | "Spell DEF"
-  | "EVA"
-  | "Accuracy";
 
 function getStatIcon(stat: StatType) {
   switch (stat) {
