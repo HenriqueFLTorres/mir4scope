@@ -1,3 +1,9 @@
+import Accuracy from "@/components/icon/Accuracy";
+import EVA from "@/components/icon/EVA";
+import PHYSATK from "@/components/icon/PHYSATK";
+import PHYSDEF from "@/components/icon/PHYSDEF";
+import SPELLDEF from "@/components/icon/SPELLDEF";
+import SpellATK from "@/components/icon/SpellATK";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -36,5 +42,24 @@ export function classIndexToName(index: number) {
       throw new Error(
         `Unknown class index given to classIndexToName function: ${index}`,
       );
+  }
+}
+
+export function getStatIcon(stat: StatType) {
+  switch (stat) {
+    case "PHYS ATK":
+      return PHYSATK;
+    case "PHYS DEF":
+      return PHYSDEF;
+    case "Spell ATK":
+      return SpellATK;
+    case "Spell DEF":
+      return SPELLDEF;
+    case "EVA":
+      return EVA;
+    case "Accuracy":
+      return Accuracy;
+    default:
+      throw new Error(`Unknown stat type: ${stat}`);
   }
 }

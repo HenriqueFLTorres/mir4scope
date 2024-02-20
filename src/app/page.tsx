@@ -1,6 +1,7 @@
 "use client";
 import { ListFilterAtom, ListFiltersType } from "@/atom/ListFilters";
 import { CraftingMaterialSelector } from "@/components/CraftingMaterials";
+import FilterChips from '@/components/FilterChips';
 import Accuracy from "@/components/icon/Accuracy";
 import Codex from "@/components/icon/Codex";
 import EVA from "@/components/icon/EVA";
@@ -197,9 +198,13 @@ export default function Home() {
         <CraftingMaterialSelector />
       </section>
 
-      <pre className="fixed left-4 top-4 max-h-[90vh] overflow-auto rounded border border-white/15 bg-white/5 p-2 text-xs text-white backdrop-blur-lg">
+      <FilterChips />
+
+      {/* <pre
+        className="fixed left-4 top-4 max-h-[90vh] overflow-auto rounded border border-white/15 bg-white/5 p-2 text-xs text-white backdrop-blur-lg"
+      >
         {JSON.stringify(listFilter, null, 2)}
-      </pre>
+      </pre> */}
 
       <NFTDisplay />
     </main>

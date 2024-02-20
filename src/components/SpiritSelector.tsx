@@ -22,7 +22,7 @@ import Spirit from "./icon/Spirit";
 
 type spiritList = Partial<{ [key in SpiritsType]: "Legendary" | "Epic" }>;
 
-const SPIRIT_LIST: spiritList = {
+export const SPIRIT_LIST: spiritList = {
   "Alluring Spirit Cat Lulu": "Legendary",
   "Bloodtip Drago": "Legendary",
   "Butterfly Fairy Dreamfly": "Legendary",

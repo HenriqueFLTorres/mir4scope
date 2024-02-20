@@ -16,7 +16,7 @@ export type ListFiltersType = {
   };
 };
 
-export const ListFilterAtom = atom<ListFiltersType>({
+export const LIST_FILTER_DEFAULT: ListFiltersType = {
   class: 0,
   level: [60, 170],
   power: [100e3, 600e3],
@@ -68,4 +68,6 @@ export const ListFilterAtom = atom<ListFiltersType>({
     "Northern Profound Art": [0, 12],
     "Toad Stance": [0, 12],
   },
-});
+}
+
+export const ListFilterAtom = atom<ListFiltersType>(LIST_FILTER_DEFAULT);

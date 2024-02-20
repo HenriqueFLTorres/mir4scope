@@ -1,4 +1,4 @@
-import { classIndexToName, cn, getReadableNumber } from "@/lib/utils";
+import { classIndexToName, cn, getReadableNumber, getStatIcon } from "@/lib/utils";
 import millify from "millify";
 import Image from "next/image";
 import TEMPORARY_DATA from "./TEMPORARY_DATA.json";
@@ -12,24 +12,7 @@ import SPELLDEF from "./icon/SPELLDEF";
 import SpellATK from "./icon/SpellATK";
 import Wemix from "./icon/wemix";
 
-function getStatIcon(stat: StatType) {
-  switch (stat) {
-    case "PHYS ATK":
-      return PHYSATK;
-    case "PHYS DEF":
-      return PHYSDEF;
-    case "Spell ATK":
-      return SpellATK;
-    case "Spell DEF":
-      return SPELLDEF;
-    case "EVA":
-      return EVA;
-    case "Accuracy":
-      return Accuracy;
-    default:
-      throw new Error(`Unknown stat type: ${stat}`);
-  }
-}
+
 
 function getCardRarity(powerScore: number) {
   if (powerScore >= 205000) return "legendary";
@@ -67,7 +50,7 @@ function GlassChip({
 
 const NFTDisplay = () => {
   return (
-    <section className="my-24 flex flex-col gap-8 md:grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+    <section className="mb-24 flex flex-col gap-8 md:grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
       {TEMPORARY_DATA.lists.map((data) => {
         return <NFTCard key={data.rowID} {...data} />;
       })}

@@ -56,7 +56,7 @@ const StatusRange = ({ label, Icon }: StatusRangeProps) => {
           <Input
             label="Min"
             name="min"
-            value={status[label][0]}
+            value={status[label][0] ?? 0}
             onChange={(e) => {
               const newValue = getNumber(e.currentTarget.value);
               if (newValue === null) return;
@@ -77,9 +77,16 @@ const StatusRange = ({ label, Icon }: StatusRangeProps) => {
           <Checkbox
             defaultChecked={false}
             checked={hasMin}
-            onCheckedChange={(value) =>
-              setHasMin(value === "indeterminate" ? false : value)
-            }
+            onCheckedChange={(value) => {
+              setHasMin(value === "indeterminate" ? false : value);
+              setListFilter((prev) => ({
+                ...prev,
+                status: {
+                  ...prev.status,
+                  [label]: [undefined, prev.status[label][1]],
+                },
+              }));
+            }}
             className="h-[1.875rem] w-[1.875rem]"
           />
         </div>
@@ -88,7 +95,7 @@ const StatusRange = ({ label, Icon }: StatusRangeProps) => {
           <Input
             label="Max"
             name="max"
-            value={status[label][1]}
+            value={status[label][1] ?? 0}
             onChange={(e) => {
               const newValue = getNumber(e.currentTarget.value);
               if (newValue === null) return;
@@ -109,9 +116,16 @@ const StatusRange = ({ label, Icon }: StatusRangeProps) => {
           <Checkbox
             defaultChecked={false}
             checked={hasMax}
-            onCheckedChange={(value) =>
-              setHasMax(value === "indeterminate" ? false : value)
-            }
+            onCheckedChange={(value) => {
+              setHasMax(value === "indeterminate" ? false : value);
+              setListFilter((prev) => ({
+                ...prev,
+                status: {
+                  ...prev.status,
+                  [label]: [prev.status[label][0], undefined],
+                },
+              }));
+            }}
             className="h-[1.875rem] w-[1.875rem]"
           />
         </div>
