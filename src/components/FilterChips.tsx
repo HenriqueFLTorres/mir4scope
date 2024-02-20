@@ -13,6 +13,7 @@ import { SPIRIT_LIST } from "./SpiritSelector";
 import Codex from "./icon/Codex";
 import EXP from "./icon/EXP";
 import Power from "./icon/Power";
+import Search from "./icon/Search";
 import Skill from "./icon/Skill";
 import Spirit from "./icon/Spirit";
 import Wemix from "./icon/wemix";
@@ -144,8 +145,10 @@ function SpiritChips() {
 }
 
 const FilterChips = () => {
-  const [{ class: mir4Class, level, power, codex, priceRange }, setListFilter] =
-    useAtom(ListFilterAtom);
+  const [
+    { search, class: mir4Class, level, power, codex, priceRange },
+    setListFilter,
+  ] = useAtom(ListFilterAtom);
 
   function handleClear(key: keyof ListFiltersType) {
     setListFilter((prev) => ({ ...prev, [key]: LIST_FILTER_DEFAULT[key] }));
@@ -153,6 +156,12 @@ const FilterChips = () => {
 
   return (
     <section className="mb-16 mt-6 flex flex-wrap gap-4">
+      {!!search && (
+        <FilterChip onClick={() => handleClear("search")}>
+          <Search className="h-5 w-5" /> {search}
+        </FilterChip>
+      )}
+
       {mir4Class !== 0 && (
         <FilterChip onClick={() => handleClear("class")}>
           <Skill className="h-5 w-5" /> {classIndexToName(mir4Class)}

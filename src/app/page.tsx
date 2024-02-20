@@ -1,7 +1,7 @@
 "use client";
 import { ListFilterAtom, ListFiltersType } from "@/atom/ListFilters";
 import { CraftingMaterialSelector } from "@/components/CraftingMaterials";
-import FilterChips from '@/components/FilterChips';
+import FilterChips from "@/components/FilterChips";
 import Accuracy from "@/components/icon/Accuracy";
 import Codex from "@/components/icon/Codex";
 import EVA from "@/components/icon/EVA";
@@ -62,6 +62,10 @@ export default function Home() {
           prefix={<Search className="absolute bottom-2 left-2 h-6 w-6" />}
           placeholder="Search by player name"
           spellCheck={false}
+          value={listFilter.search}
+          onChange={(e) =>
+            setListFilter((prev) => ({ ...prev, search: e.target.value }))
+          }
         />
 
         <Select
