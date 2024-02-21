@@ -11,30 +11,219 @@ datasource db {
 }
 
 model Nft {
-  id             Int     @id @default(autoincrement())
-  seq            Int
-  transport_id   Int
-  nft_id         Int
-  character_name String
+  id           Int @id @default(autoincrement())
+  seq          Int @unique
+  transport_id Int
+  nft_id       Int
+
+  character_name String @unique
   class          Int
   lvl            Int
-  power_score    Int
   price          Int
-  mirage_score   Int
-  mirax          Int
-  reinforce      Int
-  stats          Stats[]
+
+  power_score  Int
+  mirage_score Int
+  mirax        Int
+
+  worldName String
+  tradeType Int
+  reinforce Int
+
+  copper       String
+  energy       String
+  darksteel    String
+  speedups     String
+  dragonjade   Int
+  ancientcoins String
+  dragonsteel  Int
+
+  potential   Potential?
+  potentialId Int?
+  codex       Codex[]
+
+  equipedSpirits       SpiritSet[]
+  equipedMagicStones   MagicStoneSet[]
+  equipedMysticalPiece MysticalPieceSet[]
+  equipedSuccession    Succession[]
+
+  innerForce        GenericStat[] @relation("Inner Force")
+  constitutionLevel Int
+  collectName       String
+  collectLevel      Int
+
+  buildings GenericStat[]   @relation("Buildings")
+  stats     GenericStat[]   @relation("Stats")
+  equipItem EquipItem[]
+  inventory InventoryItem[]
+  skills    GenericStat[]   @relation("Skills")
+  spirits   Spirit[]
+  HolyStuff GenericStat[]   @relation("Holy Stuff")
 }
 
-model Stats {
-  id        Int  @id @default(autoincrement())
-  hp        Int
-  mp        Int
-  phys_atk  Int
-  spell_atk Int
-  phys_def  Int
-  spell_def Int
-  // TODO! implement other stats (EVA, Crit EVA, ...)
-  Nft       Nft? @relation(fields: [nftId], references: [id])
-  nftId     Int?
+model EquipItem {
+  id Int @id @default(autoincrement())
+
+  enhance    Int
+  refineStep Int    @default(0)
+  grade      Int
+  tier       Int
+  itemName   String
+  itemPath   String
+
+  Nft   Nft? @relation(fields: [nftId], references: [id], onDelete: Cascade)
+  nftId Int?
+}
+
+model InventoryItem {
+  id Int @id @default(autoincrement())
+
+  name    String
+  grade   Int
+  enhance Int
+  tier    Int
+
+  stack       Int
+  mainType    Int
+  subType     Int
+  tabCategory Int
+  itemPath    String
+
+  tranceStep Int
+  refineStep Int
+  uniqueNo   String
+  limited    String
+
+  Nft   Nft? @relation(fields: [nftId], references: [id], onDelete: Cascade)
+  nftId Int?
+}
+
+model SpiritSet {
+  id Int @id @default(autoincrement())
+
+  setIndex Int
+  slot     Spirit[]
+
+  Nft   Nft? @relation(fields: [nftId], references: [id], onDelete: Cascade)
+  nftId Int?
+}
+
+model Spirit {
+  id Int @id @default(autoincrement())
+
+  transcend Int
+  grade     Int
+  petName   String
+  iconPath  String
+
+  Nft   Nft? @relation(fields: [nftId], references: [id], onDelete: Cascade)
+  nftId Int?
+
+  SpiritSet SpiritSet[]
+}
+
+model MagicStoneSet {
+  id Int @id @default(autoincrement())
+
+  setIndex Int
+  slot     MagicStone[]
+
+  Nft   Nft? @relation(fields: [nftId], references: [id], onDelete: Cascade)
+  nftId Int?
+}
+
+model MagicStone {
+  id Int @id @default(autoincrement())
+
+  tranceStep Int
+  refineStep Int
+  grade      Int
+  tier       Int
+  itemName   String
+  itemPath   String
+
+  set MagicStoneSet[]
+}
+
+model MysticalPieceSet {
+  id Int @id @default(autoincrement())
+
+  setIndex Int
+  slot     MysticalPiece[]
+
+  Nft   Nft? @relation(fields: [nftId], references: [id], onDelete: Cascade)
+  nftId Int?
+}
+
+model MysticalPiece {
+  id Int @id @default(autoincrement())
+
+  tranceStep Int
+  RefineStep Int
+  grade      Int
+  tier       Int
+  itemName   String
+  itemPath   String
+
+  set MysticalPieceSet[]
+}
+
+model Succession {
+  id Int @id @default(autoincrement())
+
+  tranceStep Int
+  RefineStep Int
+  enhance    Int
+  grade      Int
+  tier       Int
+  itemName   String
+  itemPath   String
+
+  Nft   Nft? @relation(fields: [nftId], references: [id], onDelete: Cascade)
+  nftId Int?
+}
+
+model GenericStat {
+  id Int @id @default(autoincrement())
+
+  name  String
+  value String? 
+
+  NftBuildings    Nft? @relation("Buildings", fields: [nftIdBuildings], references: [id], onDelete: Cascade)
+  nftIdBuildings  Int?
+  NftInnerForce   Nft? @relation("Inner Force", fields: [nftIdInnerForce], references: [id], onDelete: Cascade)
+  nftIdInnerForce Int?
+  NftSkills       Nft? @relation("Skills", fields: [nftIdSkills], references: [id], onDelete: Cascade)
+  nftIdSkills     Int?
+  NftStats        Nft? @relation("Stats", fields: [nftIdStats], references: [id], onDelete: Cascade)
+  nftIdStats      Int?
+  NftHolyStuff    Nft? @relation("Holy Stuff", fields: [nftIdHolyStuff], references: [id], onDelete: Cascade)
+  nftIdHolyStuff  Int?
+}
+
+model Potential {
+  id Int @id @default(autoincrement())
+
+  total        Int
+  totalMax     Int
+  hunting      Int
+  huntingMax   Int
+  pvp          Int
+  pvpMax       Int
+  secondary    Int
+  secondaryMax Int
+
+  Nft   Nft? @relation(fields: [nftId], references: [id], onDelete: Cascade)
+  nftId Int? @unique
+}
+
+model Codex {
+  id Int @id @default(autoincrement())
+
+  codexName  String
+  totalCount Int
+  completed  Int
+  inprogress Int
+
+  Nft   Nft? @relation(fields: [nftId], references: [id], onDelete: Cascade)
+  nftId Int?
 }
