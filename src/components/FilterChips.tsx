@@ -65,7 +65,7 @@ function StatusChips() {
         LIST_FILTER_DEFAULT["status"][statusName],
       )
     )
-      return <></>;
+      return null;
 
     const StatIcon = getStatIcon(statusName);
     let label = "";

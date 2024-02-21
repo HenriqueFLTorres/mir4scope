@@ -53,7 +53,7 @@ export function SkillsSelector() {
 
         <div className="grid grid-cols-2 gap-4">
           {SKILL_LIST.map((skill) => {
-            if (skill === "Arrow Rain") return <></>;
+            if (skill === "Arrow Rain") return null;
 
             return <SkillItem key={skill} skill={skill} />;
           })}

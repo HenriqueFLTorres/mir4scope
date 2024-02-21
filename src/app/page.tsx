@@ -46,21 +46,7 @@ export default function Home() {
       <div className="mb-16 flex w-full gap-4">
         <button
           onClick={async () => {
-            const response = await fetch("api/dump", {
-              method: "POST",
-              body: JSON.stringify({
-                listType: "sale",
-                class: listFilter.class,
-                levMin: listFilter.level[0],
-                levMax: listFilter.level[1],
-                priceMin: listFilter.priceRange[0],
-                priceMax: listFilter.priceRange[1],
-                page: 1,
-                powerMin: listFilter.power[0],
-                powerMax: listFilter.power[1],
-                sort: listFilter.sort,
-              }),
-            });
+            const response = await fetch("api/dump");
             const data = await response.json();
 
             console.log(data);
