@@ -1,18 +1,15 @@
-import { classIndexToName, cn, getReadableNumber, getStatIcon } from "@/lib/utils";
+import {
+  classIndexToName,
+  cn,
+  getReadableNumber,
+  getStatIcon,
+} from "@/lib/utils";
 import millify from "millify";
 import Image from "next/image";
 import TEMPORARY_DATA from "./TEMPORARY_DATA.json";
-import Accuracy from "./icon/Accuracy";
 import Codex from "./icon/Codex";
-import EVA from "./icon/EVA";
-import PHYSATK from "./icon/PHYSATK";
-import PHYSDEF from "./icon/PHYSDEF";
 import Power from "./icon/Power";
-import SPELLDEF from "./icon/SPELLDEF";
-import SpellATK from "./icon/SpellATK";
 import Wemix from "./icon/wemix";
-
-
 
 function getCardRarity(powerScore: number) {
   if (powerScore >= 205000) return "legendary";
@@ -48,10 +45,10 @@ function GlassChip({
   );
 }
 
-const NFTDisplay = () => {
+const NFTDisplay = ({ nftData }: { nftData: any[] }) => {
   return (
     <section className="mb-24 flex flex-col gap-8 md:grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
-      {TEMPORARY_DATA.lists.map((data) => {
+      {nftData.map((data) => {
         return <NFTCard key={data.rowID} {...data} />;
       })}
     </section>

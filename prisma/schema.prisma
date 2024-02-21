@@ -1,0 +1,40 @@
+// schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+model Nft {
+  id             Int     @id @default(autoincrement())
+  seq            Int
+  transport_id   Int
+  nft_id         Int
+  character_name String
+  class          Int
+  lvl            Int
+  power_score    Int
+  price          Int
+  mirage_score   Int
+  mirax          Int
+  reinforce      Int
+  stats          Stats[]
+}
+
+model Stats {
+  id        Int  @id @default(autoincrement())
+  hp        Int
+  mp        Int
+  phys_atk  Int
+  spell_atk Int
+  phys_def  Int
+  spell_def Int
+  // TODO! implement other stats (EVA, Crit EVA, ...)
+  Nft       Nft? @relation(fields: [nftId], references: [id])
+  nftId     Int?
+}

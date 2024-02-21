@@ -1,216 +1,140 @@
 "use client";
-import { ListFilterAtom, ListFiltersType } from "@/atom/ListFilters";
-import { CraftingMaterialSelector } from "@/components/CraftingMaterials";
-import FilterChips from "@/components/FilterChips";
-import Accuracy from "@/components/icon/Accuracy";
-import Codex from "@/components/icon/Codex";
-import EVA from "@/components/icon/EVA";
+import { LIST_FILTER_DEFAULT, ListFilterAtom } from "@/atom/ListFilters";
 import EXP from "@/components/icon/EXP";
-import PHYSATK from "@/components/icon/PHYSATK";
-import PHYSDEF from "@/components/icon/PHYSDEF";
 import Power from "@/components/icon/Power";
 import Search from "@/components/icon/Search";
-import Skill from "@/components/icon/Skill";
-import SpellATK from "@/components/icon/SpellATK";
-import SPELLDEF from "@/components/icon/SPELLDEF";
+import MainFilters from "@/components/MainFilters";
 import NFTDisplay from "@/components/NFTDisplay";
-import { PriceRange } from "@/components/PriceRange";
-import { SkillsSelector } from "@/components/SkillsSelector";
-import { SpiritSelector } from "@/components/SpiritSelector";
-import { StatusRange } from "@/components/StatusRange";
-import { TicketsSelector } from "@/components/TicketsSelector";
-import { TrainingSelector } from "@/components/TrainingSelector";
-import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue,
 } from "@/components/ui/select";
-import { SelectRange } from "@/components/ui/select-range";
-import { classIndexToName } from "@/lib/utils";
-import { SelectIcon } from "@radix-ui/react-select";
 import { useAtom } from "jotai";
-import Image from "next/image";
+import {
+  ArrowDown01,
+  ArrowDown10,
+  ArrowDownWideNarrow,
+  Clock1,
+  Clock10,
+  FilterX,
+} from "lucide-react";
+import { useState } from "react";
 
-const mir4Classes: Mir4Classes[] = [
-  "Arbalist",
-  "Darkist",
-  "Lancer",
-  "Sorcerer",
-  "Taoist",
-  "Warrior",
-];
-
-const classToKey: { [key in Mir4Classes]: number } = {
-  Arbalist: 4,
-  Darkist: 6,
-  Lancer: 5,
-  Sorcerer: 2,
-  Taoist: 3,
-  Warrior: 1,
-};
+type nftStatName =
+  | "HP"
+  | "MP"
+  | "PHYS ATK"
+  | "Spell ATK"
+  | "PHYS DEF"
+  | "Spell DEF";
 
 export default function Home() {
   const [listFilter, setListFilter] = useAtom(ListFilterAtom);
+  const [nftData, setNFTData] = useState<{ totalCount?: number; lists: any[] }>(
+    {
+      totalCount: undefined,
+      lists: [],
+    },
+  );
 
   return (
-    <main className="flex min-h-screen flex-col items-center bg-gradient-to-br from-[#44356A] to-[#272039] p-24">
-      <section className="flex w-full flex-wrap items-center gap-4">
-        <Input
-          prefix={<Search className="absolute bottom-2 left-2 h-6 w-6" />}
-          placeholder="Search by player name"
-          spellCheck={false}
-          value={listFilter.search}
-          onChange={(e) =>
-            setListFilter((prev) => ({ ...prev, search: e.target.value }))
-          }
-        />
+    <main className="flex min-h-screen flex-col items-center gap-6 bg-gradient-to-br from-[#44356A] to-[#272039] p-24">
+      <MainFilters />
+
+      <div className="mb-16 flex w-full gap-4">
+        <button
+          onClick={async () => {
+            const response = await fetch("api/dump", {
+              method: "POST",
+              body: JSON.stringify({
+                listType: "sale",
+                class: listFilter.class,
+                levMin: listFilter.level[0],
+                levMax: listFilter.level[1],
+                priceMin: listFilter.priceRange[0],
+                priceMax: listFilter.priceRange[1],
+                page: 1,
+                powerMin: listFilter.power[0],
+                powerMax: listFilter.power[1],
+                sort: listFilter.sort,
+              }),
+            });
+            const data = await response.json();
+
+            console.log(data);
+          }}
+          className="h-10 w-full gap-2 rounded-lg border-2 border-[#7C71AA] bg-[#44356A] p-2 font-medium text-white"
+        >
+          <Search className="h-5 w-5" /> Update List
+        </button>
+
+        <button
+          onClick={() => setListFilter(LIST_FILTER_DEFAULT)}
+          className="h-10 shrink-0 gap-2 rounded-lg border-2 border-white/10 bg-white/5 p-2 px-12 font-medium text-white transition-colors hover:border-error-400/20 hover:bg-error-400/10"
+        >
+          <FilterX className="h-5 w-5" /> Clear Filters
+        </button>
 
         <Select
-          defaultValue={"0"}
           onValueChange={(value) =>
-            setListFilter((prev) => ({
-              ...prev,
-              class: Number(value) as ListFiltersType["class"],
-            }))
+            setListFilter((prev) => ({ ...prev, sort: value }))
           }
-          value={String(listFilter.class)}
+          defaultValue="latest"
         >
-          <SelectTrigger className="w-48">
-            {listFilter.class === 0 ? (
-              <Skill className="h-5 w-5" />
-            ) : (
-              <Image
-                className="object-contain"
-                width={20}
-                height={20}
-                src={`/icon/${classIndexToName(listFilter.class).toLowerCase()}.webp`}
-                alt=""
-              />
-            )}
-            <SelectValue placeholder="All Classes" />
+          <SelectTrigger className="w-72">
+            <ArrowDownWideNarrow className="h-5 w-5" />
+            Sort By
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="w-52" align="end">
             <SelectItem
               className="gap-2"
-              Icon={<Skill className="h-5 w-5" />}
-              value={"0"}
+              Icon={<Clock1 className="h-5 w-5" />}
+              value={"latest"}
             >
-              All Classes
+              Newest
             </SelectItem>
-            {mir4Classes.map((mir4Class) => (
-              <SelectItem
-                key={mir4Class}
-                className="gap-2 capitalize"
-                value={String(classToKey[mir4Class])}
-                Icon={
-                  <SelectIcon asChild>
-                    <Image
-                      className="object-contain"
-                      width={20}
-                      height={20}
-                      src={`/icon/${mir4Class}.webp`}
-                      alt=""
-                    />
-                  </SelectIcon>
-                }
-              >
-                {mir4Class}
-              </SelectItem>
-            ))}
+            <SelectItem
+              className="gap-2"
+              Icon={<Clock10 className="h-5 w-5" />}
+              value={"oldest"}
+            >
+              Oldest
+            </SelectItem>
+            <SelectItem
+              className="gap-2"
+              Icon={<ArrowDown01 className="h-5 w-5" />}
+              value={"pricehigh"}
+            >
+              Price Highest
+            </SelectItem>
+            <SelectItem
+              className="gap-2"
+              Icon={<ArrowDown10 className="h-5 w-5" />}
+              value={"pricelow"}
+            >
+              Price Lowest
+            </SelectItem>
+            <SelectItem
+              className="gap-2"
+              Icon={<EXP className="h-5 w-5" />}
+              value={"lvhigh"}
+            >
+              Level Highest
+            </SelectItem>
+            <SelectItem
+              className="gap-2"
+              Icon={<Power className="h-5 w-5" />}
+              value={"pshigh"}
+            >
+              Power Highest
+            </SelectItem>
           </SelectContent>
         </Select>
+      </div>
 
-        <SelectRange
-          defaultValue={[90, 130]}
-          min={60}
-          max={170}
-          Icon={<EXP className="h-5 w-5" />}
-          value={listFilter.level}
-          onValueChange={(value) =>
-            setListFilter((prev) => ({ ...prev, level: value }))
-          }
-          label="Level"
-          step={5}
-        />
-
-        <SelectRange
-          defaultValue={[1e5, 9e5]}
-          min={1e5}
-          max={6e5}
-          Icon={<Power className="h-5 w-5" />}
-          value={listFilter.power}
-          onValueChange={(value) =>
-            setListFilter((prev) => ({ ...prev, power: value }))
-          }
-          label="Power"
-          step={5000}
-          showInput={false}
-        />
-
-        <SelectRange
-          defaultValue={[100, 2000]}
-          min={100}
-          max={2000}
-          Icon={<Codex className="h-5 w-5" />}
-          value={listFilter.codex}
-          onValueChange={(value) =>
-            setListFilter((prev) => ({ ...prev, codex: value }))
-          }
-          label="Codex"
-          step={10}
-        />
-
-        <PriceRange />
-      </section>
-
-      <h2 className="my-8 mr-auto">Stats Filter</h2>
-
-      <section className="flex w-full flex-wrap items-center gap-4">
-        <StatusRange label="PHYS ATK" Icon={<PHYSATK className="h-5 w-5" />} />
-
-        <StatusRange
-          label="Spell ATK"
-          Icon={<SpellATK className="h-5 w-5" />}
-        />
-
-        <StatusRange label="PHYS DEF" Icon={<PHYSDEF className="h-5 w-5" />} />
-
-        <StatusRange
-          label="Spell DEF"
-          Icon={<SPELLDEF className="h-5 w-5" />}
-        />
-
-        <StatusRange label="EVA" Icon={<EVA className="h-5 w-5" />} />
-
-        <StatusRange label="Accuracy" Icon={<Accuracy className="h-5 w-5" />} />
-      </section>
-
-      <h2 className="my-8 mr-auto">Premium Filters</h2>
-
-      <section className="flex w-full flex-wrap items-center gap-4">
-        <SpiritSelector />
-
-        <TrainingSelector />
-
-        <TicketsSelector />
-
-        <SkillsSelector />
-
-        <CraftingMaterialSelector />
-      </section>
-
-      <FilterChips />
-
-      {/* <pre
-        className="fixed left-4 top-4 max-h-[90vh] overflow-auto rounded border border-white/15 bg-white/5 p-2 text-xs text-white backdrop-blur-lg"
-      >
-        {JSON.stringify(listFilter, null, 2)}
-      </pre> */}
-
-      <NFTDisplay />
+      <NFTDisplay nftData={nftData.lists} />
     </main>
   );
 }

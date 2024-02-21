@@ -27,7 +27,7 @@ function FilterChip({
   return (
     <Label
       className={cn(
-        "flex h-10 cursor-pointer items-center gap-2 rounded-full border border-white/10 bg-white/5 p-1 px-3 pr-2 text-sm font-medium text-white drop-shadow-sm transition-colors hover:border-error-400/30 hover:bg-error-400/10",
+        "flex h-10 cursor-pointer items-center gap-2 rounded-full border border-white/10 bg-white/5 p-1 px-3 pr-2 text-sm font-medium text-white drop-shadow-md transition-colors hover:border-error-400/30 hover:bg-error-400/10",
         className,
       )}
       {...props}
@@ -56,7 +56,7 @@ const isRangeEqual = (
 function StatusChips() {
   const [{ status }, setListFilter] = useAtom(ListFilterAtom);
 
-  return Object.entries(status).map(([stat, value]) => {
+  return Object.entries(status).map(([stat, value], index) => {
     const statusName = stat as StatType;
 
     if (
@@ -77,7 +77,7 @@ function StatusChips() {
 
     return (
       <FilterChip
-        key={stat}
+        key={`${stat}-${index}`}
         onClick={() =>
           setListFilter((prev) => ({
             ...prev,
@@ -155,7 +155,7 @@ const FilterChips = () => {
   }
 
   return (
-    <section className="mb-16 mt-6 flex flex-wrap gap-4">
+    <section className="flex flex-wrap gap-4">
       {!!search && (
         <FilterChip onClick={() => handleClear("search")}>
           <Search className="h-5 w-5" /> {search}
