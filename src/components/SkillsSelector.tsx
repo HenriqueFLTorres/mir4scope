@@ -74,7 +74,7 @@ function SkillItem({ skill }: { skill: SkillsType }) {
   return (
     <Label className="flex h-8 items-center gap-4" key={skill}>
       <Image
-        src={`/skills/arbalist/${formattedName}.webp`}
+        src={`/arbalist/${formattedName}.webp`}
         alt={skill}
         width={32}
         height={32}

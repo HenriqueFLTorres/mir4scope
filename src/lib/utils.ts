@@ -63,3 +63,29 @@ export function getStatIcon(stat: StatType) {
       throw new Error(`Unknown stat type: ${stat}`);
   }
 }
+
+export function gradeToRarity(grade: number) {
+  switch (grade) {
+    case 5:
+      return "legendary";
+    case 4:
+      return "epic";
+    case 3:
+      return "rare";
+    case 2:
+      return "uncommon";
+    default:
+      return "common";
+  }
+}
+
+export function handleTierValue(tier: number) {
+  switch (tier) {
+    case 5:
+      return "V";
+    case 4:
+      return "IV";
+    default:
+      return "I".repeat(tier);
+  }
+}

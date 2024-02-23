@@ -1,3 +1,5 @@
+"use client"
+
 import { ListFilterAtom, ListFiltersType } from "@/atom/ListFilters";
 import { CraftingMaterialSelector } from "@/components/CraftingMaterials";
 import FilterChips from "@/components/FilterChips";
