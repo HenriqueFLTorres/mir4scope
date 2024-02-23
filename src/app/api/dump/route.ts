@@ -12,6 +12,7 @@ import {
   Succession,
 } from "@prisma/client";
 import { NextResponse } from "next/server";
+import dataFromAPI from './allData';
 
 type EquipamentObject = {
   enhance: number;
@@ -136,8 +137,8 @@ async function getSkills(PROFILE_ID: number, classIndex: number) {
   if (code !== 200) throw new Error("Mir4 skills API Error");
 
   const skills: GenericStat[] = data.map(({ skillLevel, skillName }: any) => ({
-    name: skillLevel,
-    value: skillName,
+    name: skillName,
+    value: skillLevel,
   }));
 
   return skills;
@@ -425,153 +426,155 @@ async function getCodex(PROFILE_ID: number) {
 export async function GET() {
   const index = 1;
 
+  let allData: Prisma.NftCreateInput[] = []
+
   try {
-    const response = await fetch(
-      `https://webapi.mir4global.com/nft/lists?listType=sale&class=0&levMin=0&levMax=0&powerMin=0&powerMax=0&priceMin=0&priceMax=0&sort=latest&page=${index}&languageCode=en`,
-    );
-    const { code, data } = await response.json();
+    // const response = await fetch(
+    //   `https://webapi.mir4global.com/nft/lists?listType=sale&class=0&levMin=0&levMax=0&powerMin=0&powerMax=0&priceMin=0&priceMax=0&sort=latest&page=${index}&languageCode=en`,
+    // );
+    // const { code, data } = await response.json();
 
-    if (code !== 200) throw new Error("Mir4 API Error");
+    // if (code !== 200) throw new Error("Mir4 API Error");
 
-    const allData: Prisma.NftCreateInput[] = await Promise.all(
-      data.lists.map(async (nft) => {
-        const {
-          seq,
-          transportID,
-          nftID,
-          characterName,
-          class: mir4Class,
-          lv,
-          powerScore,
-          price,
-          MirageScore,
-          MiraX,
-          Reinforce,
-        } = nft;
+    // allData = await Promise.all(
+    //   data.lists.map(async (nft: any) => {
+    //     const {
+    //       seq,
+    //       transportID,
+    //       nftID,
+    //       characterName,
+    //       class: mir4Class,
+    //       lv,
+    //       powerScore,
+    //       price,
+    //       MirageScore,
+    //       MiraX,
+    //       Reinforce,
+    //     } = nft;
 
-        const PROFILE_ID = transportID;
+    //     const PROFILE_ID = transportID;
 
-        const { worldName, tradeType, equipamentObject } =
-          await getSummary(seq);
-        const inventory = await getInventory(PROFILE_ID);
-        const stats = await getStats(PROFILE_ID);
-        const skills = await getSkills(PROFILE_ID, mir4Class);
-        const { spirits, spiritSets } = await getSpirits(PROFILE_ID);
-        const magicStoneSets = await getMagicStones(PROFILE_ID);
-        const mysticalPieceSets = await getMysticalPieces(PROFILE_ID);
-        const succession = await getSucession(PROFILE_ID);
-        const { constitutionLevel, collectName, collectLevel, innerForce } =
-          await getTraining(PROFILE_ID);
-        const buildings = await getBuilding(PROFILE_ID);
-        const holyStuff = await getHolyStuff(PROFILE_ID);
-        const {
-          copper,
-          energy,
-          darksteel,
-          speedups,
-          dragonjade,
-          ancientcoins,
-          dragonsteel,
-        } = await getAssets(PROFILE_ID);
-        const potential = await getPotential(PROFILE_ID);
-        const codex = await getCodex(PROFILE_ID);
+    //     const { worldName, tradeType, equipamentObject } =
+    //       await getSummary(seq);
+    //     const inventory = await getInventory(PROFILE_ID);
+    //     const stats = await getStats(PROFILE_ID);
+    //     const skills = await getSkills(PROFILE_ID, mir4Class);
+    //     const { spirits, spiritSets } = await getSpirits(PROFILE_ID);
+    //     const magicStoneSets = await getMagicStones(PROFILE_ID);
+    //     const mysticalPieceSets = await getMysticalPieces(PROFILE_ID);
+    //     const succession = await getSucession(PROFILE_ID);
+    //     const { constitutionLevel, collectName, collectLevel, innerForce } =
+    //       await getTraining(PROFILE_ID);
+    //     const buildings = await getBuilding(PROFILE_ID);
+    //     const holyStuff = await getHolyStuff(PROFILE_ID);
+    //     const {
+    //       copper,
+    //       energy,
+    //       darksteel,
+    //       speedups,
+    //       dragonjade,
+    //       ancientcoins,
+    //       dragonsteel,
+    //     } = await getAssets(PROFILE_ID);
+    //     const potential = await getPotential(PROFILE_ID);
+    //     const codex = await getCodex(PROFILE_ID);
 
-        const createObject: Prisma.NftCreateInput = {
-          character_name: characterName,
-          class: mir4Class,
-          lvl: lv,
-          mirage_score: MirageScore,
-          mirax: MiraX,
-          nft_id: Number(nftID),
-          power_score: powerScore,
-          price,
-          reinforce: Reinforce,
-          seq,
-          transport_id: transportID,
-          copper,
-          energy,
-          darksteel,
-          speedups,
-          dragonjade,
-          ancientcoins,
-          dragonsteel,
-          constitutionLevel,
-          collectName,
-          collectLevel,
-          tradeType,
-          worldName,
-          equipItem: {
-            create: equipamentObject
-          },
-          innerForce: {
-            createMany: {
-              data: innerForce,
-            },
-          },
-          codex: {
-            createMany: {
-              data: codex,
-            },
-          },
-          buildings: {
-            createMany: { data: buildings },
-          },
-          skills: {
-            createMany: { data: skills },
-          },
-          stats: {
-            createMany: { data: stats },
-          },
-          inventory: {
-            createMany: { data: inventory },
-          },
-          potential: {
-            create: potential,
-          },
-          HolyStuff: {
-            createMany: { data: holyStuff },
-          },
-          spirits: {
-            createMany: {
-              data: spirits,
-            },
-          },
-          equipedMagicStones: {
-            create: Object.values(magicStoneSets).map(({ setIndex, slot }) => ({
-              setIndex,
-              slot: {
-                create: slot,
-              },
-            })),
-          },
-          equipedMysticalPiece: {
-            create: Object.values(mysticalPieceSets).map(
-              ({ setIndex, slot }) => ({
-                setIndex,
-                slot: {
-                  create: slot,
-                },
-              }),
-            ),
-          },
-          equipedSuccession: {
-            createMany: {
-              data: succession,
-            },
-          },
-          equipedSpirits: {
-            create: Object.values(spiritSets).map(({ setIndex, slot }) => ({
-              setIndex,
-              slot: {
-                create: slot,
-              },
-            })),
-          },
-        };
+    //     const createObject: Prisma.NftCreateInput = {
+    //       character_name: characterName,
+    //       class: mir4Class,
+    //       lvl: lv,
+    //       mirage_score: MirageScore,
+    //       mirax: MiraX,
+    //       nft_id: Number(nftID),
+    //       power_score: powerScore,
+    //       price,
+    //       reinforce: Reinforce,
+    //       seq,
+    //       transport_id: transportID,
+    //       copper,
+    //       energy,
+    //       darksteel,
+    //       speedups,
+    //       dragonjade,
+    //       ancientcoins,
+    //       dragonsteel,
+    //       constitutionLevel,
+    //       collectName,
+    //       collectLevel,
+    //       tradeType,
+    //       worldName,
+    //       equipItem: {
+    //         create: equipamentObject,
+    //       },
+    //       innerForce: {
+    //         createMany: {
+    //           data: innerForce,
+    //         },
+    //       },
+    //       codex: {
+    //         createMany: {
+    //           data: codex,
+    //         },
+    //       },
+    //       buildings: {
+    //         createMany: { data: buildings },
+    //       },
+    //       skills: {
+    //         createMany: { data: skills },
+    //       },
+    //       stats: {
+    //         createMany: { data: stats },
+    //       },
+    //       inventory: {
+    //         createMany: { data: inventory },
+    //       },
+    //       potential: {
+    //         create: potential,
+    //       },
+    //       HolyStuff: {
+    //         createMany: { data: holyStuff },
+    //       },
+    //       spirits: {
+    //         createMany: {
+    //           data: spirits,
+    //         },
+    //       },
+    //       equipedMagicStones: {
+    //         create: Object.values(magicStoneSets).map(({ setIndex, slot }) => ({
+    //           setIndex,
+    //           slot: {
+    //             create: slot,
+    //           },
+    //         })),
+    //       },
+    //       equipedMysticalPiece: {
+    //         create: Object.values(mysticalPieceSets).map(
+    //           ({ setIndex, slot }) => ({
+    //             setIndex,
+    //             slot: {
+    //               create: slot,
+    //             },
+    //           }),
+    //         ),
+    //       },
+    //       equipedSuccession: {
+    //         createMany: {
+    //           data: succession,
+    //         },
+    //       },
+    //       equipedSpirits: {
+    //         create: Object.values(spiritSets).map(({ setIndex, slot }) => ({
+    //           setIndex,
+    //           slot: {
+    //             create: slot,
+    //           },
+    //         })),
+    //       },
+    //     };
 
-        return createObject;
-      }),
-    );
+    //     return createObject;
+    //   }),
+    // );
 
     // await Promise.all(
     //   allData.map(async (data) => {
@@ -580,30 +583,20 @@ export async function GET() {
     //     });
     //   }),
     // );
-    await prisma.nft.createMany({
-      data: allData,
-    });
-
-    // await prisma.nft.createMany({
-    //   data: dataToCreate,
-    // });
-
-    // const fromthedb = await prisma.nft.findMany();
-    console.log("SUCCESS");
 
     return NextResponse.json(
       {
         success: true,
-        data: [],
+        data: allData,
       },
       { status: 200 },
     );
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.error(error);
     return NextResponse.json(
       {
         success: false,
-        message: err.message,
+        message: error,
       },
       { status: 500, statusText: "Server error" },
     );
