@@ -12,7 +12,6 @@ import {
   Succession,
 } from "@prisma/client";
 import { NextResponse } from "next/server";
-import dataFromAPI from './allData';
 
 type EquipamentObject = {
   enhance: number;
