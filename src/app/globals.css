@@ -43,6 +43,14 @@
     backface-visibility: hidden;
   }
 
+  .duration-back {
+    transition:
+      width 1s,
+      height 1s,
+      transform 500ms;
+    will-change: width, height, transform;
+  }
+
   .small-scroll::-webkit-scrollbar {
     width: 10px;
     height: 10px;

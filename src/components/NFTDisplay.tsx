@@ -1,5 +1,6 @@
 "use client";
 
+import { SPECIAL_ABILITIES_NAMES } from "@/lib/contants";
 import {
   classIndexToName,
   cn,
@@ -8,7 +9,13 @@ import {
   gradeToRarity,
   handleTierValue,
 } from "@/lib/utils";
-import { Codex as CodexType, EquipItem, GenericStat, Nft, Spirit } from '@prisma/client';
+import {
+  Codex as CodexType,
+  EquipItem,
+  GenericStat,
+  Nft,
+  Spirit,
+} from "@prisma/client";
 import Image from "next/image";
 import Codex from "./icon/Codex";
 import Power from "./icon/Power";
@@ -48,7 +55,16 @@ function GlassChip({
   );
 }
 
-type NftData = Nft & { stats: Pick<GenericStat, "name" | "value">[], codex: Pick<CodexType, "completed">[], equipItem: Pick<EquipItem, "enhance" | "itemPath" | "grade" | "refineStep" | "tier" | "itemName">[], skills: Pick<GenericStat, "name" | "value">[], spirits: Pick<Spirit, "grade" | "petName" | "transcend" | "iconPath">[] };
+type NftData = Nft & {
+  stats: Pick<GenericStat, "name" | "value">[];
+  codex: Pick<CodexType, "completed">[];
+  equipItem: Pick<
+    EquipItem,
+    "enhance" | "itemPath" | "grade" | "refineStep" | "tier" | "itemName"
+  >[];
+  skills: Pick<GenericStat, "name" | "value">[];
+  spirits: Pick<Spirit, "grade" | "petName" | "transcend" | "iconPath">[];
+};
 
 const NFTDisplay = ({ nftData }: { nftData: NftData[] }) => {
   return (
@@ -72,15 +88,15 @@ function NFTCard({
   skills,
   spirits,
   nft_id,
-  seq
+  seq,
 }: NftData) {
   const mir4Class = classIndexToName(classIndex);
 
   return (
-    <button className='relative flex w-72 h-[30rem] preserve-3d group'>
-      <div className='relative flex w-72 h-[30rem] preserve-3d rotate-y-180 duration-500'>
+    <button className="preserve-3d group group relative flex h-[25rem] w-72 hover:z-10">
+      <div className="preserve-3d group-hover:rotate-y-180 relative flex h-[25rem] w-72 duration-500">
         <div
-          className="w-full h-full overflow-hidden absolute rounded-lg border-4 shadow-inner drop-shadow-lg backface-hidden"
+          className="backface-hidden absolute h-full w-full overflow-hidden rounded-lg border-4 shadow-inner drop-shadow-lg"
           style={{ borderColor: getNFTColor(power_score) }}
         >
           <Image
@@ -125,7 +141,7 @@ function NFTCard({
               .filter(({ name }) => !["HP", "MP"].includes(name))
               .map(({ name, value }) => {
                 const StatIcon = getStatIcon(name as StatType);
-                if (value == undefined) return null
+                if (value == undefined) return null;
 
                 return (
                   <li
@@ -158,7 +174,12 @@ function NFTCard({
               </GlassChip>
 
               <GlassChip className="w-max">
-                <Codex className="h-4 w-4" /> {codex.reduce((accumulator, currentValue) => accumulator + currentValue.completed, 0)}
+                <Codex className="h-4 w-4" />{" "}
+                {codex.reduce(
+                  (accumulator, currentValue) =>
+                    accumulator + currentValue.completed,
+                  0,
+                )}
               </GlassChip>
             </div>
 
@@ -168,97 +189,168 @@ function NFTCard({
           </footer>
         </div>
         <div
-          className="w-full h-full overflow-hidden rounded-lg border-4 shadow-inner drop-shadow-lg absolute rotate-y-180 backface-hidden"
+          className="group-hover:rotate-y-180 rotate-y-180 backface-hidden absolute flex h-full w-full flex-col items-center gap-6 overflow-hidden rounded-lg border-4 bg-black p-4 shadow-inner drop-shadow-lg duration-500 group-hover:z-10 group-hover:h-[42rem] group-hover:w-96"
           style={{ borderColor: getNFTColor(power_score) }}
         >
           <Image
             fill
             src={`/${getCardRarity(power_score)}-card.webp`}
             alt=""
-            className="pointer-events-none absolute z-[-1] h-[22rem] w-72 object-cover"
+            className="pointer-events-none absolute z-[-1] h-[22rem] w-72 object-cover opacity-20 blur-md group-hover:h-[42rem] group-hover:w-96"
           />
-          <ul className="flex flex-wrap items-center gap-2 p-1">
-            {equipItem.map(({ enhance, grade, itemPath, refineStep, itemName, tier }, index) => (
-              <li
-                key={index}
-                className="flex items-center w-10 h-10 relative text-sm text-white font-bold [&>span]:drop-shadow-[0_0_2px_rgb(0,0,0)] gap-2 p-1"
-              >
-                <div className='w-10 h-10 flex items-center justify-center shrink-0'>
-                  <Image
-                    width={40}
-                    height={40}
-                    src={`/item-bg-${gradeToRarity(grade)}.webp`}
-                    alt=""
-                    className="object-contain absolute"
-                  />
-                  <Image
-                    width={32}
-                    height={32}
-                    src={itemPath}
-                    alt={itemName}
-                    className="object-contain absolute"
-                  />
-                </div>
-                {enhance > 0 ? <span className='absolute -top-1 text-xs -right-1'>+{enhance}</span> : null}
-                {/* <span>{refineStep}</span> */}
-                <span className='border-[#9f916c] border-2 -bottom-1 -left-1 bg-[#333] text-xs rounded-full w-5 shrink-0 h-5 flex items-center justify-center absolute'>{handleTierValue(tier)}</span>
-              </li>
-            ))}
-          </ul>
 
-          <ul className="flex flex-wrap items-center gap-1 p-1">
-            {skills.map(({ name, value }, index) => (
-              <li
-                key={index}
-                className="flex items-center w-10 h-10 relative text-sm text-white font-bold [&>span]:drop-shadow-[0_0_2px_rgb(0,0,0)] gap-2 p-1"
-              >
-                <div className='w-10 h-10 flex items-center justify-center shrink-0'>
-                  <Image
-                    width={40}
-                    height={40}
-                    src={`/item-bg-${Number(value) > 7 ? "epic" : "rare"}.webp`}
-                    alt=""
-                    className="object-contain absolute"
-                  />
-                  <Image
-                    width={32}
-                    height={32}
-                    src={`/skills/${name.toLowerCase().replace(/\s/g, "_")}.webp`}
-                    alt={name}
-                    className="object-contain absolute"
-                  />
-                </div>
-                <span className='border-[#9f916c] border-2 -bottom-1 -left-1 bg-[#333] text-xs rounded-full w-5 shrink-0 h-5 flex items-center justify-center absolute'>{value}</span>
-              </li>
-            ))}
-          </ul>
+          <section className="flex flex-col gap-2">
+            <h3 className="mx-4 w-max text-xs uppercase">Equipment</h3>
+            <ul className="grid w-max grid-cols-5 items-center gap-3 p-1">
+              {equipItem
+                .filter(({ itemName }) => !itemName.includes("Dragon Majestic"))
+                .map(
+                  (
+                    { enhance, grade, itemPath, refineStep, itemName, tier },
+                    index,
+                  ) => (
+                    <li
+                      key={index}
+                      className="relative flex h-10 w-10 items-center gap-2 p-1 text-sm font-bold text-white [&>span]:drop-shadow-[0_0_2px_rgb(0,0,0)]"
+                    >
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center">
+                        <Image
+                          width={40}
+                          height={40}
+                          src={`/item-bg-${gradeToRarity(grade)}.webp`}
+                          alt=""
+                          className="absolute object-contain"
+                        />
+                        <Image
+                          width={32}
+                          height={32}
+                          src={itemPath}
+                          alt={itemName}
+                          className="absolute object-contain"
+                        />
+                      </div>
+                      {enhance > 0 ? (
+                        <span className="absolute -right-1 -top-1 text-xs">
+                          +{enhance}
+                        </span>
+                      ) : null}
+                      <span className="absolute -bottom-1 -left-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 border-[#9f916c] bg-[#333] text-xs">
+                        {handleTierValue(tier)}
+                      </span>
+                    </li>
+                  ),
+                )}
+            </ul>
 
-          <ul className="flex flex-wrap items-center gap-1 p-1">
-            {spirits.map(({ grade, iconPath, petName, transcend }, index) => (
-              <li
-                key={index}
-                className="flex items-center w-10 h-10 relative text-sm text-white font-bold [&>span]:drop-shadow-[0_0_2px_rgb(0,0,0)] gap-2 p-1"
-              >
-                <div className='w-10 h-10 flex items-center justify-center shrink-0'>
-                  <Image
-                    width={40}
-                    height={40}
-                    src={`/item-bg-${gradeToRarity(grade)}.webp`}
-                    alt=""
-                    className="object-contain absolute"
-                  />
-                  <Image
-                    width={32}
-                    height={32}
-                    src={iconPath}
-                    alt={petName}
-                    className="object-contain absolute"
-                  />
-                </div>
-                {transcend > 1 ? <span className='border-[#9f916c] border-2 -bottom-1 -left-1 bg-[#333] text-xs rounded-full w-5 shrink-0 h-5 flex items-center justify-center absolute'>{transcend}</span> : null}
-              </li>
-            ))}
-          </ul>
+            <h3 className="mx-4 w-max text-xs uppercase">Artifacts</h3>
+            <ul className="grid w-max grid-cols-5 items-center gap-3 p-1">
+              {equipItem
+                .filter(({ itemName }) => itemName.includes("Dragon Majestic"))
+                .map(
+                  (
+                    { enhance, grade, itemPath, refineStep, itemName, tier },
+                    index,
+                  ) => (
+                    <li
+                      key={index}
+                      className="relative flex h-10 w-10 items-center gap-2 p-1 text-sm font-bold text-white [&>span]:drop-shadow-[0_0_2px_rgb(0,0,0)]"
+                    >
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center">
+                        <Image
+                          width={40}
+                          height={40}
+                          src={`/item-bg-${gradeToRarity(grade)}.webp`}
+                          alt=""
+                          className="absolute object-contain"
+                        />
+                        <Image
+                          width={32}
+                          height={32}
+                          src={itemPath}
+                          alt={itemName}
+                          className="absolute object-contain"
+                        />
+                      </div>
+                      {enhance > 0 ? (
+                        <span className="absolute -right-1 -top-1 text-xs">
+                          +{enhance}
+                        </span>
+                      ) : null}
+                      <span className="absolute -bottom-1 -left-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 border-[#9f916c] bg-[#333] text-xs">
+                        {handleTierValue(tier)}
+                      </span>
+                    </li>
+                  ),
+                )}
+            </ul>
+          </section>
+
+          <div className="flex flex-col items-center">
+            <h3 className="ml-4 mr-auto w-max text-xs uppercase">Skills</h3>
+            <ul className="mb-3 mt-1 flex gap-3 p-1">
+              {skills
+                .filter(({ name }) => !SPECIAL_ABILITIES_NAMES.includes(name))
+                .slice(1, 7)
+                .map(({ name, value }, index) => (
+                  <SkillFragment key={index} name={name} value={value} />
+                ))}
+            </ul>
+            <SkillFragment
+              name={
+                skills.find(({ name }) =>
+                  SPECIAL_ABILITIES_NAMES.includes(name),
+                )?.name ?? ""
+              }
+              value={
+                skills.find(({ name }) =>
+                  SPECIAL_ABILITIES_NAMES.includes(name),
+                )?.value ?? null
+              }
+              large
+            />
+            <ul className="mt-3 flex justify-around gap-3 p-1">
+              {skills
+                .filter(({ name }) => !SPECIAL_ABILITIES_NAMES.includes(name))
+                .slice(6)
+                .map(({ name, value }, index) => (
+                  <SkillFragment key={index} name={name} value={value} />
+                ))}
+            </ul>
+          </div>
+
+          <section className="flex flex-col justify-center gap-1">
+            <h3 className="ml-4 mr-auto w-max text-xs uppercase">Spirits</h3>
+            <ul className="flex flex-wrap items-center justify-center gap-2 p-1">
+              {spirits.map(({ grade, iconPath, petName, transcend }, index) => (
+                <li
+                  key={index}
+                  className="relative flex h-10 w-10 items-center gap-2 p-1 text-sm font-bold text-white [&>span]:drop-shadow-[0_0_2px_rgb(0,0,0)]"
+                >
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center">
+                    <Image
+                      width={40}
+                      height={40}
+                      src={`/item-bg-${gradeToRarity(grade)}.webp`}
+                      alt=""
+                      className="absolute object-contain"
+                    />
+                    <Image
+                      width={32}
+                      height={32}
+                      src={iconPath}
+                      alt={petName}
+                      className="absolute object-contain"
+                    />
+                  </div>
+                  {transcend > 1 ? (
+                    <span className="absolute -bottom-1 -left-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 border-[#9f916c] bg-[#333] text-xs">
+                      {transcend}
+                    </span>
+                  ) : null}
+                </li>
+              ))}
+            </ul>
+          </section>
         </div>
       </div>
     </button>
@@ -266,3 +358,38 @@ function NFTCard({
 }
 
 export default NFTDisplay;
+
+function SkillFragment({
+  name,
+  value,
+  large = false,
+}: {
+  name: string;
+  value: string | null;
+  large?: boolean;
+}) {
+  return (
+    <li
+      className={cn(
+        "relative flex h-10 w-10 items-center gap-2 rounded-full border-2 border-[#9f916c] text-sm font-bold text-white [&>span]:drop-shadow-[0_0_2px_rgb(0,0,0)]",
+        { ["h-14 w-14 border-4"]: large },
+      )}
+    >
+      <Image
+        width={large ? 56 : 40}
+        height={large ? 56 : 40}
+        src={`/skills/${name.replace(/\'/g, "").toLowerCase().replace(/\s/g, "-")}.webp`}
+        alt={name}
+        className="object-contain"
+      />
+      <span
+        className={cn(
+          "absolute -bottom-1 -left-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 border-[#9f916c] bg-[#333] text-xs",
+          { ["-bottom-2 -left-2 h-7 w-7 text-sm"]: large },
+        )}
+      >
+        {value}
+      </span>
+    </li>
+  );
+}
