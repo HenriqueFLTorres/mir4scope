@@ -1,10 +1,8 @@
-import prisma from "@/lib/prisma";
 import {
+  Assets,
   Codex,
   GenericStat,
-  MagicStone,
-  MysticalPiece,
-  Nft,
+  InventoryItem,
   Potential,
   Prisma,
   Spirit,
@@ -22,23 +20,7 @@ type EquipamentObject = {
   itemPath: string;
 };
 
-type InventoryItem = {
-  name: string;
-  grade: number;
-  enhance: number;
-  tier: number;
-  stack: number;
-  mainType: number;
-  subType: number;
-  tabCategory: number;
-  itemPath: string;
-  tranceStep: number;
-  refineStep: number;
-  uniqueNo: string;
-  limited: string;
-};
-
-async function getSummary(PROFILE_ID: number) {
+export async function getSummary(PROFILE_ID: number) {
   const response = await fetch(
     `https://webapi.mir4global.com/nft/character/summary?seq=${PROFILE_ID}&languageCode=en`,
   );
@@ -66,7 +48,7 @@ async function getSummary(PROFILE_ID: number) {
   };
 }
 
-async function getInventory(PROFILE_ID: number) {
+export async function getInventory(PROFILE_ID: number) {
   const response = await fetch(
     `https://webapi.mir4global.com/nft/character/inven?transportID=${PROFILE_ID}&languageCode=en`,
   );
@@ -74,42 +56,42 @@ async function getInventory(PROFILE_ID: number) {
 
   if (code !== 200) throw new Error("Mir4 inventory API Error");
 
-  const formattedInventory: InventoryItem[] = inventory.map(
-    ({
-      enhance,
-      stack,
-      tranceStep,
-      RefineStep,
-      limited,
-      uniqueNo,
-      itemName,
-      grade,
-      mainType,
-      subType,
-      tabCategory,
-      tier,
-      itemPath,
-    }: any) => ({
-      enhance: Number(enhance),
-      refineStep: Number(RefineStep),
-      grade: Number(grade),
-      tier: Number(tier),
-      name: itemName,
-      stack,
-      mainType,
-      subType,
-      tabCategory,
-      itemPath,
-      tranceStep,
-      uniqueNo,
-      limited,
-    }),
-  );
+  const formattedInventory: InventoryItem[] = inventory
+    .filter(({ tabCategory }: any) => tabCategory == 0 || tabCategory == 3)
+    .map(
+      ({
+        itemUID,
+        itemID,
+        enhance,
+        stack,
+        tranceStep,
+        RefineStep,
+        itemName,
+        grade,
+        tabCategory,
+        tier,
+        itemPath,
+      }: any) =>
+        ({
+          itemUID,
+          itemID,
+          enhance: Number(enhance),
+          refineStep: Number(RefineStep),
+          grade: Number(grade),
+          tier: Number(tier),
+          name: itemName,
+          stack,
+          tabCategory,
+          itemPath,
+          tranceStep,
+          powerScore: 0,
+        }) as Omit<InventoryItem, "nftId">,
+    );
 
   return formattedInventory;
 }
 
-async function getStats(PROFILE_ID: number) {
+export async function getStats(PROFILE_ID: number) {
   const response = await fetch(
     `https://webapi.mir4global.com/nft/character/stats?transportID=${PROFILE_ID}&languageCode=en`,
   );
@@ -127,7 +109,7 @@ async function getStats(PROFILE_ID: number) {
   return stats;
 }
 
-async function getSkills(PROFILE_ID: number, classIndex: number) {
+export async function getSkills(PROFILE_ID: number, classIndex: number) {
   const response = await fetch(
     `https://webapi.mir4global.com/nft/character/skills?transportID=${PROFILE_ID}&class=${classIndex}&languageCode=en`,
   );
@@ -143,7 +125,7 @@ async function getSkills(PROFILE_ID: number, classIndex: number) {
   return skills;
 }
 
-async function getSpirits(PROFILE_ID: number) {
+export async function getSpirits(PROFILE_ID: number) {
   const response = await fetch(
     `https://webapi.mir4global.com/nft/character/spirit?transportID=${PROFILE_ID}&languageCode=en`,
   );
@@ -160,25 +142,29 @@ async function getSpirits(PROFILE_ID: number) {
     }),
   );
 
-  const spiritSets: Omit<SpiritSet, "id" | "nftId">[] = Object.entries(
-    data.equip,
-  ).map(([slot, petSets]: any) => ({
-    setIndex: Number(slot),
-    slot: Object.values(petSets).map(
-      ({ transcend, grade, petName, iconPath }: any) =>
-        ({
-          transcend,
-          grade,
-          petName,
-          iconPath,
-        }) as Spirit,
-    ),
-  }));
+  const spiritSets: Omit<SpiritSet, "id" | "nftId" | "slotIDs">[] =
+    Object.entries(data.equip).map(([slot, petSets]: any) => ({
+      setIndex: Number(slot),
+      slot: Object.values(petSets).map(
+        ({ transcend, grade, petName, iconPath }: any) =>
+          ({
+            transcend,
+            grade,
+            petName,
+            iconPath,
+          }) as Spirit,
+      ),
+    }));
 
   return { spirits, spiritSets };
 }
 
-async function getMagicStones(PROFILE_ID: number) {
+export async function getMagicStones(
+  PROFILE_ID: number,
+  mir4Class: number,
+  inventory: InventoryItem[],
+  seq: number,
+) {
   const response = await fetch(
     `https://webapi.mir4global.com/nft/character/magicstone?transportID=${PROFILE_ID}&languageCode=en`,
   );
@@ -186,25 +172,76 @@ async function getMagicStones(PROFILE_ID: number) {
 
   if (code !== 200) throw new Error("Mir4 magic stone API Error");
 
-  const magicStoneSets: { setIndex: number; slot: Omit<MagicStone, "id">[] }[] =
-    Object.entries(data.equipItem).map(([slot, equipItems]: any) => ({
+  const magicStoneSets = Object.entries(data.equipItem).map(
+    ([slot, magicStones]: any) => ({
       setIndex: Number(slot),
-      slot: Object.values(equipItems).map(
-        ({ tranceStep, RefineStep, grade, tier, itemName, itemPath }: any) => ({
+      slot: Object.values(magicStones).map(
+        ({
           tranceStep,
+          RefineStep,
+          grade,
+          tier,
+          itemName,
+          itemPath,
+          itemIdx,
+        }: any) => ({
+          tranceStep: Number(tranceStep ?? 0),
           refineStep: RefineStep,
           grade: Number(grade),
           tier: Number(tier),
-          itemName: itemName as string,
+          name: itemName as string,
           itemPath: itemPath as string,
+          itemIdx,
+          enhance: 0,
+          powerScore: 0,
+          stack: 1,
+          tabCategory: 3,
         }),
       ),
-    }));
+    }),
+  );
 
-  return magicStoneSets;
+  const formattedSets = await Promise.all(
+    magicStoneSets.map(async (currentItem) => ({
+      setIndex: currentItem.setIndex,
+      slot: await Promise.all(
+        currentItem.slot.map(async ({ itemIdx, ...restSlot }) => {
+          const itemUID = inventory.find(
+            (item) => item.itemID === itemIdx!,
+          )?.itemUID;
+
+          if (itemUID == undefined || Number(itemUID) < 0) {
+            throw new Error("Magic stone not found in inventory.");
+          }
+
+          const { powerScore, details } = await getItemDetail(
+            PROFILE_ID,
+            itemUID,
+            mir4Class,
+            seq,
+          );
+
+          return {
+            ...restSlot,
+            itemUID,
+            itemID: itemIdx,
+            powerScore,
+            details,
+          } as any;
+        }),
+      ),
+    })),
+  );
+
+  return formattedSets;
 }
 
-async function getMysticalPieces(PROFILE_ID: number) {
+export async function getMysticalPieces(
+  PROFILE_ID: number,
+  mir4Class: number,
+  inventory: InventoryItem[],
+  seq: number,
+) {
   const response = await fetch(
     `https://webapi.mir4global.com/nft/character/mysticalpiece?transportID=${PROFILE_ID}&languageCode=en`,
   );
@@ -212,27 +249,71 @@ async function getMysticalPieces(PROFILE_ID: number) {
 
   if (code !== 200) throw new Error("Mir4 mystical piece API Error");
 
-  const mysticalPieceSets: {
-    setIndex: number;
-    slot: Omit<MysticalPiece, "id">[];
-  }[] = Object.entries(data.equipItem).map(([slot, mysticalSets]: any) => ({
-    setIndex: Number(slot),
-    slot: Object.values(mysticalSets).map(
-      ({ tranceStep, RefineStep, grade, tier, itemName, itemPath }: any) => ({
-        tranceStep,
-        RefineStep,
-        grade: Number(grade),
-        tier: Number(tier),
-        itemName: itemName as string,
-        itemPath: itemPath as string,
-      }),
-    ),
-  }));
+  const mysticalPieceSets = Object.entries(data.equipItem).map(
+    ([slot, mysticalPiece]: any) => ({
+      setIndex: Number(slot),
+      slot: Object.values(mysticalPiece).map(
+        ({
+          tranceStep,
+          RefineStep,
+          grade,
+          tier,
+          itemName,
+          itemPath,
+          itemIdx,
+        }: any) => ({
+          tranceStep: Number(tranceStep ?? 0),
+          refineStep: RefineStep,
+          grade: Number(grade),
+          tier: Number(tier),
+          name: itemName as string,
+          itemPath: itemPath as string,
+          itemIdx,
+          enhance: 0,
+          powerScore: 0,
+          stack: 1,
+          tabCategory: 3,
+        }),
+      ),
+    }),
+  );
 
-  return mysticalPieceSets;
+  const formattedSets = await Promise.all(
+    mysticalPieceSets.map(async (currentItem) => ({
+      setIndex: currentItem.setIndex,
+      slot: await Promise.all(
+        currentItem.slot.map(async ({ itemIdx, ...restSlot }) => {
+          const itemUID = inventory.find(
+            (item) => item.itemID === itemIdx!,
+          )?.itemUID;
+
+          if (itemUID == undefined || Number(itemUID) < 0) {
+            throw new Error("Mystical piece not found in inventory.");
+          }
+
+          const { powerScore, details } = await getItemDetail(
+            PROFILE_ID,
+            itemUID,
+            mir4Class,
+            seq,
+          );
+
+          return {
+            ...restSlot,
+            itemUID,
+            itemID: itemIdx,
+            powerScore,
+            details,
+          } as any;
+        }),
+      ),
+    })),
+  );
+
+  return formattedSets;
 }
 
-async function getSucession(PROFILE_ID: number) {
+export async function getSucession(PROFILE_ID: number) {
   const response = await fetch(
     `https://webapi.mir4global.com/nft/character/succession?transportID=${PROFILE_ID}&languageCode=en`,
   );
@@ -265,7 +346,7 @@ async function getSucession(PROFILE_ID: number) {
   return succession;
 }
 
-async function getTraining(PROFILE_ID: number) {
+export async function getTraining(PROFILE_ID: number) {
   const response = await fetch(
     `https://webapi.mir4global.com/nft/character/training?transportID=${PROFILE_ID}&languageCode=en`,
   );
@@ -296,7 +377,7 @@ async function getTraining(PROFILE_ID: number) {
   };
 }
 
-async function getBuilding(PROFILE_ID: number) {
+export async function getBuilding(PROFILE_ID: number) {
   const response = await fetch(
     `https://webapi.mir4global.com/nft/character/building?transportID=${PROFILE_ID}&languageCode=en`,
   );
@@ -314,7 +395,7 @@ async function getBuilding(PROFILE_ID: number) {
   return buildings;
 }
 
-async function getHolyStuff(PROFILE_ID: number) {
+export async function getHolyStuff(PROFILE_ID: number) {
   const response = await fetch(
     `https://webapi.mir4global.com/nft/character/holystuff?transportID=${PROFILE_ID}&languageCode=en`,
   );
@@ -332,7 +413,7 @@ async function getHolyStuff(PROFILE_ID: number) {
   return holyStuffList;
 }
 
-async function getAssets(PROFILE_ID: number) {
+export async function getAssets(PROFILE_ID: number) {
   const response = await fetch(
     `https://webapi.mir4global.com/nft/character/assets?transportID=${PROFILE_ID}&languageCode=en`,
   );
@@ -359,19 +440,10 @@ async function getAssets(PROFILE_ID: number) {
     dragonjade: Number(dragonjade),
     ancientcoins: acientcoins,
     dragonsteel,
-  } as Pick<
-    Nft,
-    | "copper"
-    | "energy"
-    | "darksteel"
-    | "speedups"
-    | "dragonjade"
-    | "ancientcoins"
-    | "dragonsteel"
-  >;
+  } as Assets;
 }
 
-async function getPotential(PROFILE_ID: number) {
+export async function getPotential(PROFILE_ID: number) {
   const response = await fetch(
     `https://webapi.mir4global.com/nft/character/potential?transportID=${PROFILE_ID}&languageCode=en`,
   );
@@ -402,7 +474,7 @@ async function getPotential(PROFILE_ID: number) {
   } as Omit<Potential, "id" | "nftId">;
 }
 
-async function getCodex(PROFILE_ID: number) {
+export async function getCodex(PROFILE_ID: number) {
   const response = await fetch(
     `https://webapi.mir4global.com/nft/character/codex?transportID=${PROFILE_ID}&languageCode=en`,
   );
@@ -422,171 +494,223 @@ async function getCodex(PROFILE_ID: number) {
   return AllCodex;
 }
 
+export async function getItemDetail(
+  PROFILE_ID: number,
+  ITEM_ID: string,
+  mir4Class: number,
+  seq: number,
+) {
+  try {
+    const response = await fetch(
+      `https://webapi.mir4global.com/nft/character/itemdetail?transportID=${PROFILE_ID}&class=${mir4Class}&itemUID=${ITEM_ID}&languageCode=en`,
+    );
+    const { code, data } = await response.json();
+
+    return {
+      powerScore: data.powerScore,
+      details: [
+        ...data.options.map((option: any) => ({
+          name: option.optionName,
+          value: `${option.optionValue + option.tranceValue}${option.optionFormat}`,
+        })),
+        ...data.addOptions.map((option: any) => ({
+          name: option.optionName,
+          value: `${option.optionValue + option.optionTranceStep}${option.optionAddFormat}`,
+        })),
+      ],
+    };
+  } catch (error) {
+    throw new Error("Mir4 item detail API Error");
+  }
+}
+
 export async function GET() {
   const index = 1;
 
-  let allData: Prisma.NftCreateInput[] = []
+  if (prisma == undefined) throw new Error("Prisma client is undefined");
+
+  let allData: Prisma.NftCreateManyInput[] = [];
 
   try {
-    // const response = await fetch(
-    //   `https://webapi.mir4global.com/nft/lists?listType=sale&class=0&levMin=0&levMax=0&powerMin=0&powerMax=0&priceMin=0&priceMax=0&sort=latest&page=${index}&languageCode=en`,
-    // );
-    // const { code, data } = await response.json();
+    const response = await fetch(
+      `https://webapi.mir4global.com/nft/lists?listType=sale&class=0&levMin=0&levMax=0&powerMin=0&powerMax=0&priceMin=0&priceMax=0&sort=latest&page=${index}&languageCode=en`,
+      {
+        cache: "no-cache",
+      },
+    );
+    const { code, data } = await response.json();
 
-    // if (code !== 200) throw new Error("Mir4 API Error");
+    if (code !== 200) throw new Error("Mir4 API Error");
 
-    // allData = await Promise.all(
-    //   data.lists.map(async (nft: any) => {
-    //     const {
-    //       seq,
-    //       transportID,
-    //       nftID,
-    //       characterName,
-    //       class: mir4Class,
-    //       lv,
-    //       powerScore,
-    //       price,
-    //       MirageScore,
-    //       MiraX,
-    //       Reinforce,
-    //     } = nft;
+    await prisma.nft.deleteMany();
+    await prisma.assets.deleteMany();
+    await prisma.spirit.deleteMany();
+    await prisma.genericStat.deleteMany();
+    await prisma.potential.deleteMany();
+    await prisma.codex.deleteMany();
+    await prisma.equipItem.deleteMany();
+    await prisma.inventoryItem.deleteMany();
+    await prisma.succession.deleteMany();
 
-    //     const PROFILE_ID = transportID;
+    allData = await Promise.all(
+      data.lists.map(async (nft: any) => {
+        const {
+          seq,
+          transportID,
+          nftID,
+          characterName,
+          class: mir4Class,
+          lv,
+          powerScore,
+          price,
+          MirageScore,
+          MiraX,
+          Reinforce,
+        } = nft;
 
-    //     const { worldName, tradeType, equipamentObject } =
-    //       await getSummary(seq);
-    //     const inventory = await getInventory(PROFILE_ID);
-    //     const stats = await getStats(PROFILE_ID);
-    //     const skills = await getSkills(PROFILE_ID, mir4Class);
-    //     const { spirits, spiritSets } = await getSpirits(PROFILE_ID);
-    //     const magicStoneSets = await getMagicStones(PROFILE_ID);
-    //     const mysticalPieceSets = await getMysticalPieces(PROFILE_ID);
-    //     const succession = await getSucession(PROFILE_ID);
-    //     const { constitutionLevel, collectName, collectLevel, innerForce } =
-    //       await getTraining(PROFILE_ID);
-    //     const buildings = await getBuilding(PROFILE_ID);
-    //     const holyStuff = await getHolyStuff(PROFILE_ID);
-    //     const {
-    //       copper,
-    //       energy,
-    //       darksteel,
-    //       speedups,
-    //       dragonjade,
-    //       ancientcoins,
-    //       dragonsteel,
-    //     } = await getAssets(PROFILE_ID);
-    //     const potential = await getPotential(PROFILE_ID);
-    //     const codex = await getCodex(PROFILE_ID);
+        const PROFILE_ID = transportID;
 
-    //     const createObject: Prisma.NftCreateInput = {
-    //       character_name: characterName,
-    //       class: mir4Class,
-    //       lvl: lv,
-    //       mirage_score: MirageScore,
-    //       mirax: MiraX,
-    //       nft_id: Number(nftID),
-    //       power_score: powerScore,
-    //       price,
-    //       reinforce: Reinforce,
-    //       seq,
-    //       transport_id: transportID,
-    //       copper,
-    //       energy,
-    //       darksteel,
-    //       speedups,
-    //       dragonjade,
-    //       ancientcoins,
-    //       dragonsteel,
-    //       constitutionLevel,
-    //       collectName,
-    //       collectLevel,
-    //       tradeType,
-    //       worldName,
-    //       equipItem: {
-    //         create: equipamentObject,
-    //       },
-    //       innerForce: {
-    //         createMany: {
-    //           data: innerForce,
-    //         },
-    //       },
-    //       codex: {
-    //         createMany: {
-    //           data: codex,
-    //         },
-    //       },
-    //       buildings: {
-    //         createMany: { data: buildings },
-    //       },
-    //       skills: {
-    //         createMany: { data: skills },
-    //       },
-    //       stats: {
-    //         createMany: { data: stats },
-    //       },
-    //       inventory: {
-    //         createMany: { data: inventory },
-    //       },
-    //       potential: {
-    //         create: potential,
-    //       },
-    //       HolyStuff: {
-    //         createMany: { data: holyStuff },
-    //       },
-    //       spirits: {
-    //         createMany: {
-    //           data: spirits,
-    //         },
-    //       },
-    //       equipedMagicStones: {
-    //         create: Object.values(magicStoneSets).map(({ setIndex, slot }) => ({
-    //           setIndex,
-    //           slot: {
-    //             create: slot,
-    //           },
-    //         })),
-    //       },
-    //       equipedMysticalPiece: {
-    //         create: Object.values(mysticalPieceSets).map(
-    //           ({ setIndex, slot }) => ({
-    //             setIndex,
-    //             slot: {
-    //               create: slot,
-    //             },
-    //           }),
-    //         ),
-    //       },
-    //       equipedSuccession: {
-    //         createMany: {
-    //           data: succession,
-    //         },
-    //       },
-    //       equipedSpirits: {
-    //         create: Object.values(spiritSets).map(({ setIndex, slot }) => ({
-    //           setIndex,
-    //           slot: {
-    //             create: slot,
-    //           },
-    //         })),
-    //       },
-    //     };
+        const { worldName, tradeType } = await getSummary(seq);
 
-    //     return createObject;
-    //   }),
-    // );
+        const { constitutionLevel, collectName, collectLevel } =
+          await getTraining(PROFILE_ID);
+        const {
+          copper,
+          energy,
+          darksteel,
+          speedups,
+          dragonjade,
+          ancientcoins,
+          dragonsteel,
+        } = await getAssets(PROFILE_ID);
+        const potential = await getPotential(PROFILE_ID);
 
-    // await Promise.all(
-    //   allData.map(async (data) => {
-    //     await prisma.nft.create({
-    //       data: data,
-    //     });
-    //   }),
-    // );
+        const assetsCreate = await prisma?.assets.create({
+          data: {
+            copper,
+            energy,
+            darksteel,
+            speedups,
+            dragonjade,
+            ancientcoins,
+            dragonsteel,
+          },
+          select: {
+            id: true,
+          },
+        });
+
+        if (!assetsCreate?.id) throw new Error("Assets were not created.");
+
+        const potentialCreate = await prisma?.potential.create({
+          data: potential,
+          select: {
+            id: true,
+          },
+        });
+
+        if (!potentialCreate?.id) throw new Error("Potential was not created.");
+
+        const createObject: Prisma.NftCreateManyInput = {
+          character_name: characterName,
+          class: mir4Class,
+          lvl: lv,
+          mirage_score: MirageScore,
+          mirax: MiraX,
+          nft_id: Number(nftID),
+          power_score: powerScore,
+          price,
+          reinforce: Reinforce,
+          seq,
+          transport_id: transportID,
+          constitutionLevel,
+          collectName,
+          collectLevel,
+          tradeType,
+          worldName,
+          assetsId: assetsCreate?.id,
+          potentialId: potentialCreate?.id,
+        };
+
+        return createObject;
+      }),
+    );
+
+    await prisma.nft.createMany({
+      data: allData,
+    });
+
+    await Promise.all(
+      allData.map(async ({ seq, transport_id, class: mir4Class }) => {
+        const PROFILE_ID = transport_id;
+
+        const createdNFT = await prisma?.nft.findFirst({
+          where: {
+            transport_id,
+            seq,
+          },
+          select: {
+            id: true,
+          },
+        });
+
+        const inventory = await getInventory(PROFILE_ID);
+        const { equipamentObject } = await getSummary(seq);
+        const skills = await getSkills(PROFILE_ID, mir4Class);
+        const stats = await getStats(PROFILE_ID);
+        const { innerForce } = await getTraining(PROFILE_ID);
+        const codex = await getCodex(PROFILE_ID);
+        const { spirits } = await getSpirits(PROFILE_ID);
+        const holyStuff = await getHolyStuff(PROFILE_ID); 
+
+        const createEquipment = prisma!.equipItem.createMany({
+          data: equipamentObject.map((object) => ({
+            ...object,
+            nftId: createdNFT?.id,
+          })),
+        });
+
+        const createCodex = prisma!.codex.createMany({
+          data: codex.map((object) => ({
+            ...object,
+            nftId: createdNFT?.id,
+          })),
+        });
+
+        const updateNFT = prisma!.nft.update({
+          where: {
+            id: createdNFT?.id,
+          },
+          data: {
+            inventory: {
+              create: inventory,
+            },
+            spirits: {
+              create: spirits,
+            },
+            skills: {
+              create: skills,
+            },
+            stats: {
+              create: stats,
+            },
+            innerForce: {
+              create: innerForce,
+            },
+            HolyStuff: {
+              create: holyStuff,
+            },
+          },
+        });
+
+        await prisma?.$transaction([createEquipment, createCodex, updateNFT]);
+      }),
+    );
 
     return NextResponse.json(
       {
         success: true,
-        data: allData,
+        data: [],
       },
       { status: 200 },
     );
