@@ -27,13 +27,13 @@ function FilterChip({
   return (
     <Label
       className={cn(
-        "flex h-10 cursor-pointer items-center gap-2 rounded-full border border-white/10 bg-white/5 p-1 px-3 pr-2 text-sm font-medium text-white drop-shadow-md transition-colors hover:border-error-400/30 hover:bg-error-400/10",
+        "flex h-10 cursor-pointer items-center gap-2 rounded-full border border-black/20 bg-black/10 p-1 px-3 pr-2 text-sm font-medium text-white drop-shadow-md transition-colors focus-within:border-error-400/30 focus-within:bg-error-400/10 focus-within:ring-2 focus-within:ring-error-400 hover:border-error-400/30 hover:bg-error-400/10",
         className,
       )}
       {...props}
     >
       {children}
-      <button className="rounded p-0.5">
+      <button className="rounded p-0.5 outline-none">
         <X className="h-4 w-4" />
       </button>
     </Label>

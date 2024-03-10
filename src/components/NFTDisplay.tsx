@@ -112,7 +112,7 @@ function NFTCard({
 
           <div
             className={
-              "absolute left-0 top-0 z-[-1] h-44 w-full bg-gradient-to-b to-white/0 opacity-75"
+              "absolute left-0 top-0 z-[-1] h-44 w-full bg-gradient-to-b to-black/0 opacity-75"
             }
             style={{
               backgroundImage: `linear-gradient(to bottom, ${getNFTColor(power_score)}, rgba(0,0,0,0))`,
@@ -121,7 +121,7 @@ function NFTCard({
 
           <div
             className={
-              "absolute bottom-0 left-0 z-[-1] h-44 w-full bg-gradient-to-t to-white/0 opacity-75"
+              "absolute bottom-0 left-0 z-[-1] h-44 w-full bg-gradient-to-t to-black/0 opacity-75"
             }
             style={{
               backgroundImage: `linear-gradient(to top, ${getNFTColor(power_score)}, rgba(0,0,0,0))`,

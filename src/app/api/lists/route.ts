@@ -28,12 +28,6 @@ const sortFilters = [
 ];
 
 export async function GET() {
-  return NextResponse.json(
-    {
-      success: false,
-    },
-    { status: 500, statusText: "Server error." },
-  );
   // const filters = (await request.json()) as {
   //   [key in string]: string | number;
   // };
