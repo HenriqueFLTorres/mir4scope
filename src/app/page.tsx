@@ -1,10 +1,7 @@
 import Search from "@/components/icon/Search";
 import MainFilters from "@/components/MainFilters";
-import NFTDisplay from '@/components/NFTDisplay';
-import SortList from '@/components/SortList';
-import {
-  FilterX
-} from "lucide-react";
+import SortList from "@/components/SortList";
+import { FilterX } from "lucide-react";
 
 type nftStatName =
   | "HP"
@@ -15,22 +12,28 @@ type nftStatName =
   | "Spell DEF";
 
 async function getData() {
-  const res = await fetch('http://localhost:3000/api/lists', { cache: 'no-cache' })
-
+  const res = await fetch("http://localhost:3000/api/simple-test");
   if (!res.ok) {
-    const data = await res.json();
-    throw new Error('Failed to fetch data')
+    throw new Error("Failed to fetch data");
   }
 
-  return res.json()
+  return res.json();
 }
 
 export default async function Home() {
   // const [listFilter, setListFilter] = useAtom(ListFilterAtom);
-  const { success, data } = await getData();
+  const { data, fetchedAt } = await getData();
+  const whenFetched = new Date(fetchedAt);
+  const myDate = new Date(data.datetime);
 
   return (
     <main className="flex min-h-screen flex-col items-center gap-6 bg-gradient-to-br from-[#44356A] to-[#272039] p-24">
+      <p className="text-xl font-bold text-white">
+        Time is: {myDate.toTimeString()}
+      </p>
+      <p className="text-xl font-bold text-white">
+        Fetched: {whenFetched.toTimeString()}
+      </p>
       <MainFilters />
 
       <div className="mb-16 flex w-full gap-4">
@@ -56,7 +59,7 @@ export default async function Home() {
         <SortList />
       </div>
 
-      <NFTDisplay nftData={data} />
+      {/* <NFTDisplay nftData={data} /> */}
     </main>
   );
 }
