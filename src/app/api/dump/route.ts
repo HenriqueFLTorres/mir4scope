@@ -20,7 +20,7 @@ type EquipamentObject = {
   itemPath: string;
 };
 
-export async function getSummary(PROFILE_ID: number) {
+async function getSummary(PROFILE_ID: number) {
   const response = await fetch(
     `https://webapi.mir4global.com/nft/character/summary?seq=${PROFILE_ID}&languageCode=en`,
   );
@@ -48,7 +48,7 @@ export async function getSummary(PROFILE_ID: number) {
   };
 }
 
-export async function getInventory(PROFILE_ID: number) {
+async function getInventory(PROFILE_ID: number) {
   const response = await fetch(
     `https://webapi.mir4global.com/nft/character/inven?transportID=${PROFILE_ID}&languageCode=en`,
   );
@@ -91,7 +91,7 @@ export async function getInventory(PROFILE_ID: number) {
   return formattedInventory;
 }
 
-export async function getStats(PROFILE_ID: number) {
+async function getStats(PROFILE_ID: number) {
   const response = await fetch(
     `https://webapi.mir4global.com/nft/character/stats?transportID=${PROFILE_ID}&languageCode=en`,
   );
@@ -109,7 +109,7 @@ export async function getStats(PROFILE_ID: number) {
   return stats;
 }
 
-export async function getSkills(PROFILE_ID: number, classIndex: number) {
+async function getSkills(PROFILE_ID: number, classIndex: number) {
   const response = await fetch(
     `https://webapi.mir4global.com/nft/character/skills?transportID=${PROFILE_ID}&class=${classIndex}&languageCode=en`,
   );
@@ -125,7 +125,7 @@ export async function getSkills(PROFILE_ID: number, classIndex: number) {
   return skills;
 }
 
-export async function getSpirits(PROFILE_ID: number) {
+async function getSpirits(PROFILE_ID: number) {
   const response = await fetch(
     `https://webapi.mir4global.com/nft/character/spirit?transportID=${PROFILE_ID}&languageCode=en`,
   );
@@ -159,7 +159,7 @@ export async function getSpirits(PROFILE_ID: number) {
   return { spirits, spiritSets };
 }
 
-export async function getMagicStones(
+async function getMagicStones(
   PROFILE_ID: number,
   mir4Class: number,
   inventory: InventoryItem[],
@@ -236,7 +236,7 @@ export async function getMagicStones(
   return formattedSets;
 }
 
-export async function getMysticalPieces(
+async function getMysticalPieces(
   PROFILE_ID: number,
   mir4Class: number,
   inventory: InventoryItem[],
@@ -313,7 +313,7 @@ export async function getMysticalPieces(
   return formattedSets;
 }
 
-export async function getSucession(PROFILE_ID: number) {
+async function getSucession(PROFILE_ID: number) {
   const response = await fetch(
     `https://webapi.mir4global.com/nft/character/succession?transportID=${PROFILE_ID}&languageCode=en`,
   );
@@ -346,7 +346,7 @@ export async function getSucession(PROFILE_ID: number) {
   return succession;
 }
 
-export async function getTraining(PROFILE_ID: number) {
+async function getTraining(PROFILE_ID: number) {
   const response = await fetch(
     `https://webapi.mir4global.com/nft/character/training?transportID=${PROFILE_ID}&languageCode=en`,
   );
@@ -377,7 +377,7 @@ export async function getTraining(PROFILE_ID: number) {
   };
 }
 
-export async function getBuilding(PROFILE_ID: number) {
+async function getBuilding(PROFILE_ID: number) {
   const response = await fetch(
     `https://webapi.mir4global.com/nft/character/building?transportID=${PROFILE_ID}&languageCode=en`,
   );
@@ -395,7 +395,7 @@ export async function getBuilding(PROFILE_ID: number) {
   return buildings;
 }
 
-export async function getHolyStuff(PROFILE_ID: number) {
+async function getHolyStuff(PROFILE_ID: number) {
   const response = await fetch(
     `https://webapi.mir4global.com/nft/character/holystuff?transportID=${PROFILE_ID}&languageCode=en`,
   );
@@ -413,7 +413,7 @@ export async function getHolyStuff(PROFILE_ID: number) {
   return holyStuffList;
 }
 
-export async function getAssets(PROFILE_ID: number) {
+async function getAssets(PROFILE_ID: number) {
   const response = await fetch(
     `https://webapi.mir4global.com/nft/character/assets?transportID=${PROFILE_ID}&languageCode=en`,
   );
@@ -443,7 +443,7 @@ export async function getAssets(PROFILE_ID: number) {
   } as Assets;
 }
 
-export async function getPotential(PROFILE_ID: number) {
+async function getPotential(PROFILE_ID: number) {
   const response = await fetch(
     `https://webapi.mir4global.com/nft/character/potential?transportID=${PROFILE_ID}&languageCode=en`,
   );
@@ -474,7 +474,7 @@ export async function getPotential(PROFILE_ID: number) {
   } as Omit<Potential, "id" | "nftId">;
 }
 
-export async function getCodex(PROFILE_ID: number) {
+async function getCodex(PROFILE_ID: number) {
   const response = await fetch(
     `https://webapi.mir4global.com/nft/character/codex?transportID=${PROFILE_ID}&languageCode=en`,
   );
@@ -494,7 +494,7 @@ export async function getCodex(PROFILE_ID: number) {
   return AllCodex;
 }
 
-export async function getItemDetail(
+async function getItemDetail(
   PROFILE_ID: number,
   ITEM_ID: string,
   mir4Class: number,
