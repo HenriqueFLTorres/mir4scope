@@ -2,6 +2,13 @@ import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
+  return NextResponse.json(
+    {
+      success: false,
+    },
+    { status: 500, statusText: "Server error." },
+  );
+
   try {
     await prisma.nft.deleteMany();
     await prisma.assets.deleteMany();

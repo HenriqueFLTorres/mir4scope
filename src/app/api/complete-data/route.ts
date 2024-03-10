@@ -10,6 +10,13 @@ import {
 } from "../dump/route";
 
 export async function GET() {
+  return NextResponse.json(
+    {
+      success: false,
+    },
+    { status: 500, statusText: "Server error." },
+  );
+
   try {
     const currentNFTs = await prisma.nft.findMany({
       take: 20,

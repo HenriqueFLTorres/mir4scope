@@ -527,6 +527,13 @@ export async function getItemDetail(
 export async function GET() {
   const index = 1;
 
+  return NextResponse.json(
+    {
+      success: false,
+    },
+    { status: 500, statusText: "Server error." },
+  );
+
   if (prisma == undefined) throw new Error("Prisma client is undefined");
 
   let allData: Prisma.NftCreateManyInput[] = [];
