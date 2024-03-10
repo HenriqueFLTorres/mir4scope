@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 
-export async function GET() {
+export const dynamic = "force-dynamic";
+
+export async function GET(request: Request) {
   const dateAPI = await fetch(
     "http://worldtimeapi.org/api/timezone/America/Sao_Paulo",
   );
