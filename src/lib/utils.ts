@@ -2,8 +2,8 @@ import Accuracy from "@/components/icon/Accuracy";
 import EVA from "@/components/icon/EVA";
 import PHYSATK from "@/components/icon/PHYSATK";
 import PHYSDEF from "@/components/icon/PHYSDEF";
-import SPELLDEF from "@/components/icon/SPELLDEF";
 import SpellATK from "@/components/icon/SpellATK";
+import SPELLDEF from "@/components/icon/SpellDEF";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -12,13 +12,14 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function getNumber(input: string | number) {
-  input = input.toString();
-  input = input.replace(/\D/g, "");
-  input = Number(input);
+  let newValue = input;
+  newValue = newValue.toString();
+  newValue = newValue.replace(/\D/g, "");
+  newValue = Number(newValue);
 
-  const validNumber = Number.isInteger(input);
+  const validNumber = Number.isInteger(newValue);
 
-  return validNumber ? input : null;
+  return validNumber ? newValue : null;
 }
 
 export const getReadableNumber = (number: number) =>

@@ -31,8 +31,8 @@ import EVA from "./icon/EVA";
 import PHYSATK from "./icon/PHYSATK";
 import PHYSDEF from "./icon/PHYSDEF";
 import Power from "./icon/Power";
-import SPELLDEF from "./icon/SPELLDEF";
 import SpellATK from "./icon/SpellATK";
+import SPELLDEF from "./icon/SpellDEF";
 
 const mir4Classes: Mir4Classes[] = [
   "Arbalist",

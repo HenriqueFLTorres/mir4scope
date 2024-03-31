@@ -30,7 +30,7 @@ const getTrainingIcon = (training: TrainingType) => {
   switch (training) {
     case "Constitution":
       return <Constitution className="h-8 w-12" />;
-    default:
+    default: {
       const formattedName = training.toLowerCase().replace(/\s/g, "_");
 
       return (
@@ -42,6 +42,7 @@ const getTrainingIcon = (training: TrainingType) => {
           className="h-8 object-contain"
         />
       );
+    }
   }
 };
 

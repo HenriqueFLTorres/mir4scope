@@ -25,11 +25,13 @@ const StatusRange = ({ label, Icon }: StatusRangeProps) => {
       Number.isInteger(status[label][0]) &&
       Number.isInteger(status[label][1])
     )
-      return `(${millify(status[label][0]!)} - ${millify(status[label][1]!)})`;
+      return `(${millify(status[label][0] ?? 0)} - ${millify(
+        status[label][1] ?? 0,
+      )})`;
     if (hasMin && Number.isInteger(status[label][0]))
-      return `+${millify(status[label][0]!)}`;
+      return `+${millify(status[label][0] ?? 0)}`;
     if (hasMax && Number.isInteger(status[label][1]))
-      return `< ${millify(status[label][1]!)}`;
+      return `< ${millify(status[label][1] ?? 0)}`;
 
     return "(Any)";
   };
@@ -38,10 +40,10 @@ const StatusRange = ({ label, Icon }: StatusRangeProps) => {
     <Popover>
       <PopoverTrigger
         className={cn("w-72 font-normal", {
-          ["border-error-400 from-error-400/20 to-error-400/5 focus:ring-error-400"]:
+          "border-error-400 from-error-400/20 to-error-400/5 focus:ring-error-400":
             Number.isInteger(status[label][0]) &&
             Number.isInteger(status[label][1]) &&
-            status[label][0]! > status[label][1]! &&
+            (status[label][0] ?? 0) > (status[label][1] ?? 0) &&
             hasMin &&
             hasMax,
         })}

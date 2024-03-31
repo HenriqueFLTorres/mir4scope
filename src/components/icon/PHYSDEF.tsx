@@ -7,6 +7,8 @@ const PHYSDEF = (props: SVGProps<SVGSVGElement>) => (
     viewBox="0 0 18 20"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    aria-label="PHYS DEF Icon"
+    role="img"
     {...props}
   >
     <path

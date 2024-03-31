@@ -7,6 +7,8 @@ const Wemix = (props: SVGProps<SVGSVGElement>) => (
     viewBox="0 0 20 20"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    aria-label="Wemix Icon"
+    role="img"
     {...props}
   >
     <g>

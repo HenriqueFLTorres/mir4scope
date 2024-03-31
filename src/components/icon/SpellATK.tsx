@@ -7,6 +7,8 @@ const SpellATK = (props: SVGProps<SVGSVGElement>) => (
     viewBox="0 0 23 20"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    aria-label="Spell ATK Icon"
+    role="img"
     {...props}
   >
     <path

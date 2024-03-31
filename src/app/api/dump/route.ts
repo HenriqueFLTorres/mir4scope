@@ -57,7 +57,7 @@ async function getInventory(PROFILE_ID: number) {
   if (code !== 200) throw new Error("Mir4 inventory API Error");
 
   const formattedInventory: InventoryItem[] = inventory
-    .filter(({ tabCategory }: any) => tabCategory == 0 || tabCategory == 3)
+    .filter(({ tabCategory }: any) => tabCategory === 0 || tabCategory === 3)
     .map(
       ({
         itemUID,
@@ -206,11 +206,14 @@ async function getMagicStones(
       setIndex: currentItem.setIndex,
       slot: await Promise.all(
         currentItem.slot.map(async ({ itemIdx, ...restSlot }) => {
+          if (!itemIdx)
+            throw new Error("Magic stone without itemIdx in inventory.");
+
           const itemUID = inventory.find(
-            (item) => item.itemID === itemIdx!,
+            (item) => item.itemID === itemIdx,
           )?.itemUID;
 
-          if (itemUID == undefined || Number(itemUID) < 0) {
+          if (itemUID === undefined || Number(itemUID) < 0) {
             throw new Error("Magic stone not found in inventory.");
           }
 
@@ -283,11 +286,14 @@ async function getMysticalPieces(
       setIndex: currentItem.setIndex,
       slot: await Promise.all(
         currentItem.slot.map(async ({ itemIdx, ...restSlot }) => {
+          if (!itemIdx)
+            throw new Error("Mystical piece without itemIdx in inventory.");
+
           const itemUID = inventory.find(
-            (item) => item.itemID === itemIdx!,
+            (item) => item.itemID === itemIdx,
           )?.itemUID;
 
-          if (itemUID == undefined || Number(itemUID) < 0) {
+          if (itemUID === undefined || Number(itemUID) < 0) {
             throw new Error("Mystical piece not found in inventory.");
           }
 
@@ -537,202 +543,4 @@ export async function GET() {
     },
     { status: 500, statusText: "Server error." },
   );
-
-  if (prisma == undefined) throw new Error("Prisma client is undefined");
-
-  let allData: Prisma.NftCreateManyInput[] = [];
-
-  try {
-    const response = await fetch(
-      `https://webapi.mir4global.com/nft/lists?listType=sale&class=0&levMin=0&levMax=0&powerMin=0&powerMax=0&priceMin=0&priceMax=0&sort=latest&page=${index}&languageCode=en`,
-      {
-        cache: "no-cache",
-      },
-    );
-    const { code, data } = await response.json();
-
-    if (code !== 200) throw new Error("Mir4 API Error");
-
-    await prisma.nft.deleteMany();
-    await prisma.assets.deleteMany();
-    await prisma.spirit.deleteMany();
-    await prisma.genericStat.deleteMany();
-    await prisma.potential.deleteMany();
-    await prisma.codex.deleteMany();
-    await prisma.equipItem.deleteMany();
-    await prisma.inventoryItem.deleteMany();
-    await prisma.succession.deleteMany();
-
-    allData = await Promise.all(
-      data.lists.map(async (nft: any) => {
-        const {
-          seq,
-          transportID,
-          nftID,
-          characterName,
-          class: mir4Class,
-          lv,
-          powerScore,
-          price,
-          MirageScore,
-          MiraX,
-          Reinforce,
-        } = nft;
-
-        const PROFILE_ID = transportID;
-
-        const { worldName, tradeType } = await getSummary(seq);
-
-        const { constitutionLevel, collectName, collectLevel } =
-          await getTraining(PROFILE_ID);
-        const {
-          copper,
-          energy,
-          darksteel,
-          speedups,
-          dragonjade,
-          ancientcoins,
-          dragonsteel,
-        } = await getAssets(PROFILE_ID);
-        const potential = await getPotential(PROFILE_ID);
-
-        const assetsCreate = await prisma?.assets.create({
-          data: {
-            copper,
-            energy,
-            darksteel,
-            speedups,
-            dragonjade,
-            ancientcoins,
-            dragonsteel,
-          },
-          select: {
-            id: true,
-          },
-        });
-
-        if (!assetsCreate?.id) throw new Error("Assets were not created.");
-
-        const potentialCreate = await prisma?.potential.create({
-          data: potential,
-          select: {
-            id: true,
-          },
-        });
-
-        if (!potentialCreate?.id) throw new Error("Potential was not created.");
-
-        const createObject: Prisma.NftCreateManyInput = {
-          character_name: characterName,
-          class: mir4Class,
-          lvl: lv,
-          mirage_score: MirageScore,
-          mirax: MiraX,
-          nft_id: Number(nftID),
-          power_score: powerScore,
-          price,
-          reinforce: Reinforce,
-          seq,
-          transport_id: transportID,
-          constitutionLevel,
-          collectName,
-          collectLevel,
-          tradeType,
-          worldName,
-          assetsId: assetsCreate?.id,
-          potentialId: potentialCreate?.id,
-        };
-
-        return createObject;
-      }),
-    );
-
-    await prisma.nft.createMany({
-      data: allData,
-    });
-
-    await Promise.all(
-      allData.map(async ({ seq, transport_id, class: mir4Class }) => {
-        const PROFILE_ID = transport_id;
-
-        const createdNFT = await prisma?.nft.findFirst({
-          where: {
-            transport_id,
-            seq,
-          },
-          select: {
-            id: true,
-          },
-        });
-
-        const inventory = await getInventory(PROFILE_ID);
-        const { equipamentObject } = await getSummary(seq);
-        const skills = await getSkills(PROFILE_ID, mir4Class);
-        const stats = await getStats(PROFILE_ID);
-        const { innerForce } = await getTraining(PROFILE_ID);
-        const codex = await getCodex(PROFILE_ID);
-        const { spirits } = await getSpirits(PROFILE_ID);
-        const holyStuff = await getHolyStuff(PROFILE_ID);
-
-        const createEquipment = prisma!.equipItem.createMany({
-          data: equipamentObject.map((object) => ({
-            ...object,
-            nftId: createdNFT?.id,
-          })),
-        });
-
-        const createCodex = prisma!.codex.createMany({
-          data: codex.map((object) => ({
-            ...object,
-            nftId: createdNFT?.id,
-          })),
-        });
-
-        const updateNFT = prisma!.nft.update({
-          where: {
-            id: createdNFT?.id,
-          },
-          data: {
-            inventory: {
-              create: inventory,
-            },
-            spirits: {
-              create: spirits,
-            },
-            skills: {
-              create: skills,
-            },
-            stats: {
-              create: stats,
-            },
-            innerForce: {
-              create: innerForce,
-            },
-            HolyStuff: {
-              create: holyStuff,
-            },
-          },
-        });
-
-        await prisma?.$transaction([createEquipment, createCodex, updateNFT]);
-      }),
-    );
-
-    return NextResponse.json(
-      {
-        success: true,
-        data: [],
-      },
-      { status: 200 },
-    );
-  } catch (error) {
-    console.error(error);
-    return NextResponse.json(
-      {
-        success: false,
-        message: error,
-      },
-      { status: 500, statusText: "Server error" },
-    );
-  }
 }

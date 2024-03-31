@@ -19,7 +19,7 @@ import type {
 import Image from "next/image";
 import Codex from "./icon/Codex";
 import Power from "./icon/Power";
-import Wemix from "./icon/wemix";
+import Wemix from "./icon/Wemix";
 
 function getCardRarity(powerScore: number) {
   if (powerScore >= 205000) return "legendary";
@@ -93,7 +93,10 @@ function NFTCard({
   const mir4Class = classIndexToName(classIndex);
 
   return (
-    <button className="preserve-3d group group relative flex h-[25rem] w-72 hover:z-10">
+    <button
+      type="button"
+      className="preserve-3d group group relative flex h-[25rem] w-72 hover:z-10"
+    >
       <div className="preserve-3d group-hover:rotate-y-180 relative flex h-[25rem] w-72 duration-500">
         <div
           className="backface-hidden absolute h-full w-full overflow-hidden rounded-lg border-4 shadow-inner drop-shadow-lg"
@@ -145,7 +148,7 @@ function NFTCard({
               .filter(({ name }) => !["HP", "MP"].includes(name))
               .map(({ name, value }) => {
                 const StatIcon = getStatIcon(name as StatType);
-                if (value == undefined) return null;
+                if (value === undefined) return null;
 
                 return (
                   <li
@@ -209,12 +212,16 @@ function NFTCard({
               {equipItem
                 .filter(({ itemName }) => !itemName.includes("Dragon Majestic"))
                 .map(
-                  (
-                    { enhance, grade, itemPath, refineStep, itemName, tier },
-                    index,
-                  ) => (
+                  ({
+                    enhance,
+                    grade,
+                    itemPath,
+                    refineStep,
+                    itemName,
+                    tier,
+                  }) => (
                     <li
-                      key={index}
+                      key={itemName}
                       className="relative flex h-10 w-10 items-center gap-2 p-1 text-sm font-bold text-white [&>span]:drop-shadow-[0_0_2px_rgb(0,0,0)]"
                     >
                       <div className="flex h-10 w-10 shrink-0 items-center justify-center">
@@ -251,12 +258,16 @@ function NFTCard({
               {equipItem
                 .filter(({ itemName }) => itemName.includes("Dragon Majestic"))
                 .map(
-                  (
-                    { enhance, grade, itemPath, refineStep, itemName, tier },
-                    index,
-                  ) => (
+                  ({
+                    enhance,
+                    grade,
+                    itemPath,
+                    refineStep,
+                    itemName,
+                    tier,
+                  }) => (
                     <li
-                      key={index}
+                      key={itemName}
                       className="relative flex h-10 w-10 items-center gap-2 p-1 text-sm font-bold text-white [&>span]:drop-shadow-[0_0_2px_rgb(0,0,0)]"
                     >
                       <div className="flex h-10 w-10 shrink-0 items-center justify-center">
@@ -295,8 +306,8 @@ function NFTCard({
               {skills
                 .filter(({ name }) => !SPECIAL_ABILITIES_NAMES.includes(name))
                 .slice(1, 7)
-                .map(({ name, value }, index) => (
-                  <SkillFragment key={index} name={name} value={value} />
+                .map(({ name, value }) => (
+                  <SkillFragment key={name} name={name} value={value} />
                 ))}
             </ul>
             <SkillFragment
@@ -316,8 +327,8 @@ function NFTCard({
               {skills
                 .filter(({ name }) => !SPECIAL_ABILITIES_NAMES.includes(name))
                 .slice(6)
-                .map(({ name, value }, index) => (
-                  <SkillFragment key={index} name={name} value={value} />
+                .map(({ name, value }) => (
+                  <SkillFragment key={name} name={name} value={value} />
                 ))}
             </ul>
           </div>
@@ -325,9 +336,9 @@ function NFTCard({
           <section className="flex flex-col justify-center gap-1">
             <h3 className="ml-4 mr-auto w-max text-xs uppercase">Spirits</h3>
             <ul className="flex flex-wrap items-center justify-center gap-2 p-1">
-              {spirits.map(({ grade, iconPath, petName, transcend }, index) => (
+              {spirits.map(({ grade, iconPath, petName, transcend }) => (
                 <li
-                  key={index}
+                  key={petName}
                   className="relative flex h-10 w-10 items-center gap-2 p-1 text-sm font-bold text-white [&>span]:drop-shadow-[0_0_2px_rgb(0,0,0)]"
                 >
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center">
@@ -376,7 +387,7 @@ function SkillFragment({
     <li
       className={cn(
         "relative flex h-10 w-10 items-center gap-2 rounded-full border-2 border-[#9f916c] text-sm font-bold text-white [&>span]:drop-shadow-[0_0_2px_rgb(0,0,0)]",
-        { ["h-14 w-14 border-4"]: large },
+        { "h-14 w-14 border-4": large },
       )}
     >
       <Image
@@ -392,7 +403,7 @@ function SkillFragment({
       <span
         className={cn(
           "absolute -bottom-1 -left-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 border-[#9f916c] bg-[#333] text-xs",
-          { ["-bottom-2 -left-2 h-7 w-7 text-sm"]: large },
+          { "-bottom-2 -left-2 h-7 w-7 text-sm": large },
         )}
       >
         {value}

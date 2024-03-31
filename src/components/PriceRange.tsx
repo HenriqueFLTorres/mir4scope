@@ -2,7 +2,7 @@ import { ListFilterAtom } from "@/atom/ListFilters";
 import { getNumber } from "@/lib/utils";
 import { useAtom } from "jotai";
 import millify from "millify";
-import Wemix from "./icon/wemix";
+import Wemix from "./icon/Wemix";
 import { Input } from "./ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 
@@ -49,7 +49,7 @@ const PriceRange = () => {
         <Wemix className="h-5 w-5" />
         Price{" "}
         {hasValues
-          ? `(${millify(priceRange[0])} - ${millify(priceRange[1]!)})`
+          ? `(${millify(priceRange[0])} - ${millify(priceRange[1] ?? 0)})`
           : "(Any)"}
       </PopoverTrigger>
       <PopoverContent className="flex flex-row items-center gap-2 px-3 py-4">

@@ -16,7 +16,7 @@ import Power from "./icon/Power";
 import Search from "./icon/Search";
 import Skill from "./icon/Skill";
 import Spirit from "./icon/Spirit";
-import Wemix from "./icon/wemix";
+import Wemix from "./icon/Wemix";
 import { Label } from "./ui/label";
 
 function FilterChip({
@@ -33,7 +33,7 @@ function FilterChip({
       {...props}
     >
       {children}
-      <button className="rounded p-0.5 outline-none">
+      <button type="button" className="rounded p-0.5 outline-none">
         <X className="h-4 w-4" />
       </button>
     </Label>
@@ -60,10 +60,7 @@ function StatusChips() {
     const statusName = stat as StatType;
 
     if (
-      isRangeEqual(
-        status[statusName],
-        LIST_FILTER_DEFAULT["status"][statusName],
-      )
+      isRangeEqual(status[statusName], LIST_FILTER_DEFAULT.status[statusName])
     )
       return null;
 
@@ -71,19 +68,19 @@ function StatusChips() {
     let label = "";
 
     if (Number.isInteger(value[0]) && Number.isInteger(value[1]))
-      label = `(${millify(value[0]!)} - ${millify(value[1]!)})`;
-    else if (Number.isInteger(value[0])) label = `+${millify(value[0]!)}`;
-    else if (Number.isInteger(value[1])) label = `< ${millify(value[1]!)}`;
+      label = `(${millify(value[0] ?? 0)} - ${millify(value[1] ?? 0)})`;
+    else if (Number.isInteger(value[0])) label = `+${millify(value[0] ?? 0)}`;
+    else if (Number.isInteger(value[1])) label = `< ${millify(value[1] ?? 0)}`;
 
     return (
       <FilterChip
-        key={`${stat}-${index}`}
+        key={`${stat}-${value}`}
         onClick={() =>
           setListFilter((prev) => ({
             ...prev,
             status: {
               ...prev.status,
-              [statusName]: LIST_FILTER_DEFAULT["status"][statusName],
+              [statusName]: LIST_FILTER_DEFAULT.status[statusName],
             },
           }))
         }
@@ -168,27 +165,27 @@ const FilterChips = () => {
         </FilterChip>
       )}
 
-      {!isRangeEqual(level, LIST_FILTER_DEFAULT["level"]) && (
+      {!isRangeEqual(level, LIST_FILTER_DEFAULT.level) && (
         <FilterChip onClick={() => handleClear("level")}>
           <EXP className="h-5 w-5" /> {level[0]} - {level[1]}
         </FilterChip>
       )}
 
-      {!isRangeEqual(power, LIST_FILTER_DEFAULT["power"]) && (
+      {!isRangeEqual(power, LIST_FILTER_DEFAULT.power) && (
         <FilterChip onClick={() => handleClear("power")}>
           <Power className="h-5 w-5" /> {millify(power[0])} -{" "}
           {millify(power[1])}
         </FilterChip>
       )}
 
-      {!isRangeEqual(codex, LIST_FILTER_DEFAULT["codex"]) && (
+      {!isRangeEqual(codex, LIST_FILTER_DEFAULT.codex) && (
         <FilterChip onClick={() => handleClear("codex")}>
           <Codex className="h-5 w-5" /> {millify(codex[0])} -{" "}
           {millify(codex[1])}
         </FilterChip>
       )}
 
-      {!isRangeEqual(priceRange, LIST_FILTER_DEFAULT["priceRange"]) && (
+      {!isRangeEqual(priceRange, LIST_FILTER_DEFAULT.priceRange) && (
         <FilterChip onClick={() => handleClear("priceRange")}>
           <Wemix className="h-5 w-5" /> {priceRange[0]} - {priceRange[1]}
         </FilterChip>

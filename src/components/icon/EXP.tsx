@@ -7,6 +7,8 @@ const EXP = (props: SVGProps<SVGSVGElement>) => (
     viewBox="0 0 17 20"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    aria-label="EXP Icon"
+    role="img"
     {...props}
   >
     <path

@@ -7,6 +7,8 @@ const SPELLDEF = (props: SVGProps<SVGSVGElement>) => (
     viewBox="0 0 18 20"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    aria-label="Spell DEF Icon"
+    role="img"
     {...props}
   >
     <path
