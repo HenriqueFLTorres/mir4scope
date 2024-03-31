@@ -1,8 +1,8 @@
 import { atom } from "jotai";
 
 export type ListFiltersType = {
-  search: string,
-  sort: string,
+  search: string;
+  sort: string;
   class: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   level: number[];
   power: number[];
@@ -72,6 +72,6 @@ export const LIST_FILTER_DEFAULT: ListFiltersType = {
     "Northern Profound Art": [0, 12],
     "Toad Stance": [0, 12],
   },
-}
+};
 
 export const ListFilterAtom = atom<ListFiltersType>(LIST_FILTER_DEFAULT);

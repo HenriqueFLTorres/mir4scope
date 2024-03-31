@@ -1,6 +1,6 @@
 "use client";
 
-import { ListFilterAtom } from '@/atom/ListFilters';
+import { ListFilterAtom } from "@/atom/ListFilters";
 import EXP from "@/components/icon/EXP";
 import Power from "@/components/icon/Power";
 import {
@@ -9,13 +9,13 @@ import {
   SelectItem,
   SelectTrigger,
 } from "@/components/ui/select";
-import { useAtom } from 'jotai';
+import { useAtom } from "jotai";
 import {
   ArrowDown01,
   ArrowDown10,
   ArrowDownWideNarrow,
   Clock1,
-  Clock10
+  Clock10,
 } from "lucide-react";
 
 function SortList() {

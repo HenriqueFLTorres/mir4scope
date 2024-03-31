@@ -1,4 +1,4 @@
-import {
+import type {
   Assets,
   Codex,
   GenericStat,
@@ -511,11 +511,15 @@ async function getItemDetail(
       details: [
         ...data.options.map((option: any) => ({
           name: option.optionName,
-          value: `${option.optionValue + option.tranceValue}${option.optionFormat}`,
+          value: `${option.optionValue + option.tranceValue}${
+            option.optionFormat
+          }`,
         })),
         ...data.addOptions.map((option: any) => ({
           name: option.optionName,
-          value: `${option.optionValue + option.optionTranceStep}${option.optionAddFormat}`,
+          value: `${option.optionValue + option.optionTranceStep}${
+            option.optionAddFormat
+          }`,
         })),
       ],
     };
@@ -668,7 +672,7 @@ export async function GET() {
         const { innerForce } = await getTraining(PROFILE_ID);
         const codex = await getCodex(PROFILE_ID);
         const { spirits } = await getSpirits(PROFILE_ID);
-        const holyStuff = await getHolyStuff(PROFILE_ID); 
+        const holyStuff = await getHolyStuff(PROFILE_ID);
 
         const createEquipment = prisma!.equipItem.createMany({
           data: equipamentObject.map((object) => ({

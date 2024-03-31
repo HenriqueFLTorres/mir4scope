@@ -4,7 +4,7 @@ import PHYSATK from "@/components/icon/PHYSATK";
 import PHYSDEF from "@/components/icon/PHYSDEF";
 import SPELLDEF from "@/components/icon/SPELLDEF";
 import SpellATK from "@/components/icon/SpellATK";
-import { clsx, type ClassValue } from "clsx";
+import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {

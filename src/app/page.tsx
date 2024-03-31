@@ -1,7 +1,7 @@
-import Search from "@/components/icon/Search";
 import MainFilters from "@/components/MainFilters";
 import NFTDisplay from "@/components/NFTDisplay";
 import SortList from "@/components/SortList";
+import Search from "@/components/icon/Search";
 import { FilterX } from "lucide-react";
 
 type nftStatName =

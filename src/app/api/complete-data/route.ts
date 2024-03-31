@@ -1,5 +1,5 @@
 import prisma from "@/lib/prisma";
-import { Prisma, Spirit } from "@prisma/client";
+import type { Prisma, Spirit } from "@prisma/client";
 import { NextResponse } from "next/server";
 import {
   getBuilding,

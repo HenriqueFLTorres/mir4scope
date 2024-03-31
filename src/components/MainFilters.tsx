@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { ListFilterAtom, ListFiltersType } from "@/atom/ListFilters";
+import { ListFilterAtom, type ListFiltersType } from "@/atom/ListFilters";
 import { CraftingMaterialSelector } from "@/components/CraftingMaterials";
 import FilterChips from "@/components/FilterChips";
 import { PriceRange } from "@/components/PriceRange";
@@ -86,7 +86,9 @@ function MainFilters() {
                 className="object-contain"
                 width={20}
                 height={20}
-                src={`/icon/${classIndexToName(listFilter.class).toLowerCase()}.webp`}
+                src={`/icon/${classIndexToName(
+                  listFilter.class,
+                ).toLowerCase()}.webp`}
                 alt=""
               />
             )}

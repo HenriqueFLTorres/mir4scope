@@ -1,10 +1,10 @@
 import {
   LIST_FILTER_DEFAULT,
   ListFilterAtom,
-  ListFiltersType,
+  type ListFiltersType,
 } from "@/atom/ListFilters";
 import { classIndexToName, cn, getStatIcon } from "@/lib/utils";
-import * as LabelPrimitive from "@radix-ui/react-label";
+import type * as LabelPrimitive from "@radix-ui/react-label";
 import { useAtom } from "jotai";
 import { X } from "lucide-react";
 import millify from "millify";

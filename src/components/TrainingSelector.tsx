@@ -73,7 +73,7 @@ export function TrainingSelector() {
             <Input
               value={training[name][0]}
               onChange={(e) => {
-                let value = Number(e.target.value);
+                const value = Number(e.target.value);
 
                 if (Number.isNaN(value)) return;
 
@@ -108,7 +108,7 @@ export function TrainingSelector() {
             <Input
               value={training[name][1]}
               onChange={(e) => {
-                let value = Number(e.target.value);
+                const value = Number(e.target.value);
 
                 if (Number.isNaN(value)) return;
 
