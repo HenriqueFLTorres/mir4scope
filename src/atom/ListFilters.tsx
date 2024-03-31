@@ -1,4 +1,5 @@
 import { atom } from "jotai";
+import type { NftStats } from "../../prisma-types";
 
 export type ListFiltersType = {
   search: string;
@@ -11,7 +12,9 @@ export type ListFiltersType = {
   materials: CraftingMaterialType;
   skills: SkillsValueType;
   spirits: SpiritsType[];
-  status: { [key in StatType]: [number | undefined, number | undefined] };
+  status: Partial<{
+    [key in keyof NftStats]: [number | undefined, number | undefined];
+  }>;
   tickets: { [key in TicketsType]: number };
   training: {
     [key in TrainingType]: [number, number];
@@ -49,14 +52,7 @@ export const LIST_FILTER_DEFAULT: ListFiltersType = {
     Cloaking: 0,
   },
   spirits: [],
-  status: {
-    "PHYS ATK": [undefined, undefined],
-    "PHYS DEF": [undefined, undefined],
-    "Spell ATK": [undefined, undefined],
-    "Spell DEF": [undefined, undefined],
-    EVA: [undefined, undefined],
-    Accuracy: [undefined, undefined],
-  },
+  status: {},
   tickets: {
     Raid: 0,
     "Raid Boss": 0,

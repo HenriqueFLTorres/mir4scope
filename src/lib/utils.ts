@@ -6,6 +6,7 @@ import SpellATK from "@/components/icon/SpellATK";
 import SPELLDEF from "@/components/icon/SpellDEF";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import type { NftStats } from "../../prisma-types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -46,7 +47,7 @@ export function classIndexToName(index: number) {
   }
 }
 
-export function getStatIcon(stat: StatType) {
+export function getStatIcon(stat: keyof NftStats) {
   switch (stat) {
     case "PHYS ATK":
       return PHYSATK;
@@ -65,8 +66,8 @@ export function getStatIcon(stat: StatType) {
   }
 }
 
-export function gradeToRarity(grade: number) {
-  switch (grade) {
+export function gradeToRarity(grade: number | string) {
+  switch (Number(grade)) {
     case 5:
       return "legendary";
     case 4:
@@ -80,13 +81,16 @@ export function gradeToRarity(grade: number) {
   }
 }
 
-export function handleTierValue(tier: number) {
-  switch (tier) {
+export function handleTierValue(tier: string | number) {
+  const tierNumber = Number(tier);
+  if (!Number.isInteger(tierNumber)) return "";
+
+  switch (tierNumber) {
     case 5:
       return "V";
     case 4:
       return "IV";
     default:
-      return "I".repeat(tier);
+      return "I".repeat(tierNumber);
   }
 }

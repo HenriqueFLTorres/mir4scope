@@ -9,6 +9,7 @@ import { useAtom } from "jotai";
 import { X } from "lucide-react";
 import millify from "millify";
 import Image from "next/image";
+import type { NftStats } from "../../prisma-types";
 import { SPIRIT_LIST } from "./SpiritSelector";
 import Codex from "./icon/Codex";
 import EXP from "./icon/EXP";
@@ -57,10 +58,16 @@ function StatusChips() {
   const [{ status }, setListFilter] = useAtom(ListFilterAtom);
 
   return Object.entries(status).map(([stat, value], index) => {
-    const statusName = stat as StatType;
+    const statusName = stat as keyof NftStats;
 
     if (
-      isRangeEqual(status[statusName], LIST_FILTER_DEFAULT.status[statusName])
+      isRangeEqual(
+        status[statusName] as [number | undefined, number | undefined],
+        LIST_FILTER_DEFAULT.status[statusName] as [
+          number | undefined,
+          number | undefined,
+        ],
+      )
     )
       return null;
 

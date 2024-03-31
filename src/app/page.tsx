@@ -3,17 +3,10 @@ import NFTDisplay from "@/components/NFTDisplay";
 import SortList from "@/components/SortList";
 import Search from "@/components/icon/Search";
 import { FilterX } from "lucide-react";
-
-type nftStatName =
-  | "HP"
-  | "MP"
-  | "PHYS ATK"
-  | "Spell ATK"
-  | "PHYS DEF"
-  | "Spell DEF";
+import { NftFromMongo } from './api/get-nfts/route';
 
 async function getData() {
-  const res = await fetch("http://localhost:3000/api/lists");
+  const res = await fetch("http://localhost:3000/api/get-nfts");
 
   if (!res.ok) {
     throw new Error("Failed to fetch data");
@@ -49,7 +42,7 @@ export default async function Home() {
         <SortList />
       </div>
 
-      <NFTDisplay nftData={data} />
+      <NFTDisplay nft_list={data} />
     </main>
   );
 }

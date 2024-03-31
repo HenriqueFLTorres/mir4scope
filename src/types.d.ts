@@ -17,14 +17,6 @@ type CraftingMaterialType = {
   [key in MaterialsType]: { Legendary: number; Epic: number };
 };
 
-type StatType =
-  | "PHYS ATK"
-  | "PHYS DEF"
-  | "Spell ATK"
-  | "Spell DEF"
-  | "EVA"
-  | "Accuracy";
-
 type SkillsType =
   | "Arrow Rain"
   | "Quick Shot"
@@ -99,3 +91,9 @@ type SpiritsType =
   | "Thunder Beast Baratan"
   | "Verdant Watcher Gargas"
   | "White Peacock Crystalglass";
+
+type Keys = (keyof typeof data)[] & {};
+
+type Entries<T> = {
+  [K in keyof T]: [K, T[K]];
+}[keyof T][];

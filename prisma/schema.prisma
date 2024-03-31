@@ -4,6 +4,10 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator json {
+  provider = "prisma-json-types-generator"
+}
+
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
@@ -13,7 +17,8 @@ model Nft {
   id           String @id @default(auto()) @map("_id") @db.ObjectId
   seq          Int    @unique
   transport_id Int
-  nft_id       Int
+  nft_id       String
+  sealed_dt    Int
 
   character_name String @unique
   class          Int
@@ -22,203 +27,47 @@ model Nft {
 
   power_score  Int
   mirage_score Int
-  mirax        Int
+  mira_x       Int
 
-  worldName String
-  tradeType Int
-  reinforce Int
+  world_name String
+  trade_type Int
+  reinforce  Int
 
-  assets   Assets @relation(fields: [assetsId], references: [id], onDelete: Cascade)
-  assetsId String @unique @db.ObjectId
+  // stats
+  // training
+  // buildings
+  // assets
+  // potentials
+  // holy_stuff
+  // sucession
+  // equip_items
 
-  potential   Potential? @relation(fields: [potentialId], references: [id], onDelete: Cascade)
-  potentialId String?    @unique @db.ObjectId
+  /// [nft_stats]
+  stats       Json
+  /// [nft_skills]
+  skills      Json
+  /// [nft_training]
+  training    Json
+  buildings   Json
+  assets      Json
+  potentials  Json
+  holy_stuff  Json
+  sucession   Json
+  /// [nft_equip_items]
+  equip_items Json
 
-  codex Codex[]
-
-  equipedSpirits     SpiritSet[]
-  equipedMagicStones MagicStoneSet[]
-
-  equipedMysticalPiece MysticalPieceSet[]
-  equipedSuccession    Succession[]
-
-  innerForce        GenericStat[] @relation("Inner Force")
-  constitutionLevel Int
-  collectName       String
-  collectLevel      Int
-
-  buildings GenericStat[]   @relation("Buildings")
-  stats     GenericStat[]   @relation("Stats")
-  equipItem EquipItem[]
-  inventory InventoryItem[]
-  skills    GenericStat[]   @relation("Skills")
-  spirits   Spirit[]
-  HolyStuff GenericStat[]   @relation("Holy Stuff")
+  spirits_id        String @db.ObjectId
+  magic_orb_id      String @db.ObjectId
+  inventory_id      String @db.ObjectId
+  magic_stone_id    String @db.ObjectId
+  mystical_piece_id String @db.ObjectId
 }
 
-model Assets {
+model Spirits {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 
-  copper       String
-  energy       String
-  darksteel    String
-  speedups     String
-  dragonjade   Int
-  ancientcoins String
-  dragonsteel  Int
-
-  Nft Nft?
-}
-
-model EquipItem {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-
-  enhance    Int
-  refineStep Int    @default(0)
-  grade      Int
-  tier       Int
-  itemName   String
-  itemPath   String
-
-  Nft   Nft?    @relation(fields: [nftId], references: [id], onDelete: Cascade)
-  nftId String? @db.ObjectId
-}
-
-model InventoryItem {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-
-  itemID  String
-  itemUID String
-
-  name    String
-  grade   Int
-  enhance Int
-  tier    Int
-
-  stack Int
-
-  tabCategory Int
-  itemPath    String
-
-  tranceStep Int
-  refineStep Int
-  powerScore Int
-  details    GenericStat[] @relation("Inventory Details")
-
-  Nft                 Nft?               @relation(fields: [nftId], references: [id], onDelete: Cascade)
-  nftId               String?            @db.ObjectId
-  magicStoneSet       MagicStoneSet[]    @relation("Magic Stone Set", fields: [magicStoneSetIDs], references: [id])
-  magicStoneSetIDs    String[]           @db.ObjectId
-  mysticalPieceSet    MysticalPieceSet[] @relation("Mystical Piece Set", fields: [mysticalPieceSetIDs], references: [id])
-  mysticalPieceSetIDs String[]           @db.ObjectId
-}
-
-model SpiritSet {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-
-  setIndex Int
-  slot     Spirit[] @relation(fields: [slotIDs], references: [id])
-  slotIDs  String[] @db.ObjectId
-
-  Nft   Nft?    @relation(fields: [nftId], references: [id], onDelete: Cascade)
-  nftId String? @db.ObjectId
-}
-
-model Spirit {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-
-  transcend Int
-  grade     Int
-  petName   String
-  iconPath  String
-
-  Nft   Nft?    @relation(fields: [nftId], references: [id], onDelete: Cascade)
-  nftId String? @db.ObjectId
-
-  SpiritSet    SpiritSet[] @relation(fields: [SpiritSetIDs], references: [id])
-  SpiritSetIDs String[]    @db.ObjectId
-}
-
-model MagicStoneSet {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-
-  setIndex Int
-  slot     InventoryItem[] @relation("Magic Stone Set", fields: [slotIDs], references: [id])
-  slotIDs  String[]        @db.ObjectId
-
-  Nft   Nft    @relation(fields: [nftId], references: [id], onDelete: Cascade)
-  nftId String @db.ObjectId
-}
-
-model MysticalPieceSet {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-
-  setIndex Int
-  slot     InventoryItem[] @relation("Mystical Piece Set", fields: [slotIDs], references: [id])
-  slotIDs  String[]        @db.ObjectId
-
-  Nft   Nft?    @relation(fields: [nftId], references: [id], onDelete: Cascade)
-  nftId String? @db.ObjectId
-}
-
-model Succession {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-
-  tranceStep Int
-  RefineStep Int
-  enhance    Int
-  grade      Int
-  tier       Int
-  itemName   String
-  itemPath   String
-
-  Nft   Nft?    @relation(fields: [nftId], references: [id], onDelete: Cascade)
-  nftId String? @db.ObjectId
-}
-
-model GenericStat {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-
-  name  String
-  value String?
-
-  NftBuildings    Nft?           @relation("Buildings", fields: [nftIdBuildings], references: [id], onDelete: Cascade)
-  nftIdBuildings  String?        @db.ObjectId
-  NftInnerForce   Nft?           @relation("Inner Force", fields: [nftIdInnerForce], references: [id], onDelete: Cascade)
-  nftIdInnerForce String?        @db.ObjectId
-  NftSkills       Nft?           @relation("Skills", fields: [nftIdSkills], references: [id], onDelete: Cascade)
-  nftIdSkills     String?        @db.ObjectId
-  NftStats        Nft?           @relation("Stats", fields: [nftIdStats], references: [id], onDelete: Cascade)
-  nftIdStats      String?        @db.ObjectId
-  NftHolyStuff    Nft?           @relation("Holy Stuff", fields: [nftIdHolyStuff], references: [id], onDelete: Cascade)
-  nftIdHolyStuff  String?        @db.ObjectId
-  inventoryItem   InventoryItem? @relation("Inventory Details", fields: [inventoryItemID], references: [id], onDelete: Cascade)
-  inventoryItemID String?        @db.ObjectId
-}
-
-model Potential {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-
-  total        Int
-  totalMax     Int
-  hunting      Int
-  huntingMax   Int
-  pvp          Int
-  pvpMax       Int
-  secondary    Int
-  secondaryMax Int
-
-  Nft Nft?
-}
-
-model Codex {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-
-  codexName  String
-  totalCount Int
-  completed  Int
-  inprogress Int
-
-  Nft   Nft?    @relation(fields: [nftId], references: [id], onDelete: Cascade)
-  nftId String? @db.ObjectId
+  /// [nft_spirit_equip]
+  equip Json
+  /// [nft_spirit_inven]
+  inven Json
 }

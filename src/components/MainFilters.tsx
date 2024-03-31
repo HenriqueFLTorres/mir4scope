@@ -6,7 +6,6 @@ import FilterChips from "@/components/FilterChips";
 import { PriceRange } from "@/components/PriceRange";
 import { SkillsSelector } from "@/components/SkillsSelector";
 import { SpiritSelector } from "@/components/SpiritSelector";
-import { StatusRange } from "@/components/StatusRange";
 import { TicketsSelector } from "@/components/TicketsSelector";
 import { TrainingSelector } from "@/components/TrainingSelector";
 import EXP from "@/components/icon/EXP";
@@ -170,7 +169,7 @@ function MainFilters() {
 
       <h2 className="mr-auto">Stats Filter</h2>
 
-      <section className="flex w-full flex-wrap items-center gap-4">
+      {/* <section className="flex w-full flex-wrap items-center gap-4">
         <StatusRange label="PHYS ATK" Icon={<PHYSATK className="h-5 w-5" />} />
 
         <StatusRange
@@ -188,7 +187,7 @@ function MainFilters() {
         <StatusRange label="EVA" Icon={<EVA className="h-5 w-5" />} />
 
         <StatusRange label="Accuracy" Icon={<Accuracy className="h-5 w-5" />} />
-      </section>
+      </section> */}
 
       <h2 className="mr-auto">Premium Filters</h2>
 
