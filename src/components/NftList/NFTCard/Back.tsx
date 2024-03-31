@@ -45,9 +45,9 @@ export default function NFTCardBack({
         <h3 className="mx-4 w-max text-xs uppercase">Equipment</h3>
         <ul className="grid w-max grid-cols-5 items-center gap-3 p-1">
           {equip_items_values.map(
-            ({ enhance, grade, item_path, item_name, tier }) => (
+            ({ enhance, grade, item_path, item_name, tier, item_idx }) => (
               <li
-                key={item_name}
+                key={item_idx}
                 className="relative flex h-10 w-10 items-center gap-2 p-1 text-sm font-bold text-white [&>span]:drop-shadow-[0_0_2px_rgb(0,0,0)]"
               >
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center">

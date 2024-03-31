@@ -1,3 +1,5 @@
+import NFTModal from "@/components/NFTModal";
+import { Providers } from "@/components/providers";
 import type { Metadata } from "next";
 import { Rubik } from "next/font/google";
 import "./globals.css";
@@ -11,12 +13,20 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  modal,
 }: Readonly<{
   children: React.ReactNode;
+  modal: React.ReactNode;
 }>) {
   return (
     <html lang="en">
-      <body className={rubik.className}>{children}</body>
+      <body className={rubik.className}>
+        <Providers>
+          {modal}
+          {children}
+          <div id="modal-root" />
+        </Providers>
+      </body>
     </html>
   );
 }

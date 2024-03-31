@@ -1,20 +1,21 @@
 "use client";
 
 import type { NftFromMongo } from "@/app/api/get-nfts/route";
+import Link from "next/link";
 import NFTCardBack from "./Back";
 import NFTCardFront from "./Front";
 
 export default function NFTCard(data: NftFromMongo) {
   return (
-    <button
-      type="button"
+    <Link
+      href={`/nft/${data.seq}`}
       className="preserve-3d group group relative flex h-[25rem] w-72 hover:z-10"
     >
       <div className="preserve-3d group-hover:rotate-y-180 relative flex h-[25rem] w-72 duration-500">
         <NFTCardFront {...data} />
         <NFTCardBack {...data} />
       </div>
-    </button>
+    </Link>
   );
 }
 
