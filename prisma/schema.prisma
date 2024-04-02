@@ -49,6 +49,7 @@ model Nft {
   /// [nft_training]
   training    Json
   buildings   Json
+  /// [nft_assets]
   assets      Json
   potentials  Json
   holy_stuff  Json

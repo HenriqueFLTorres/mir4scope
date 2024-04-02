@@ -7,6 +7,7 @@ declare global {
     
     type nft_spirit_inven = { [key in string]: { [key in string]: NftSpirit } };
     type nft_spirit_equip = NftSpirit[];
+    type nft_assets = { [key in NftAssets]: string };
   }
 }
 
@@ -203,3 +204,12 @@ export type NftSpirit = {
   pet_name: SpiritsType;
   icon_path: string;
 };
+
+export type NftAssets =
+  | "acientcoins"
+  | "copper"
+  | "darksteel"
+  | "dragonjade"
+  | "dragonsteel"
+  | "energy"
+  | "speedups";
