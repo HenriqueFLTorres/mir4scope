@@ -2,7 +2,7 @@
 
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { getNft } from "@/lib/get-nft";
-import { completeArray, getReadableNumber } from "@/lib/utils";
+import { completeArray, getReadableNumber, gradeToRarity } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -14,7 +14,48 @@ import NFTContainer from "./NFTContainer";
 import Spirit from "../icon/Spirit";
 import Image from "next/image";
 import { toRoman } from "typescript-roman-numbers-converter";
-import type { NftMagicOrb, NftSpirit } from "../../../prisma-types";
+import type {
+  NftEquipItem,
+  NftMagicOrb,
+  NftSpirit,
+} from "../../../prisma-types";
+
+const DRAGON_ARTIFACT_SEQUENCE_INDEX = [11, 12, 13, 14, 15];
+
+function prepareDragonArtifacts(
+  obj: any = {},
+): [string, NftEquipItem | null][] {
+  const newObj = { ...obj };
+  for (const objectKey of Object.keys(newObj)) {
+    if (!DRAGON_ARTIFACT_SEQUENCE_INDEX.includes(Number(objectKey)))
+      delete newObj[objectKey];
+  }
+
+  for (const key of DRAGON_ARTIFACT_SEQUENCE_INDEX) {
+    if (!(key in newObj)) {
+      newObj[key] = null;
+    }
+  }
+
+  return Object.entries(newObj);
+}
+
+function ArtifactKeyToImagePath(key: string) {
+  switch (key) {
+    case "11":
+      return "/artifact/specter-placeholder.webp";
+    case "12":
+      return "/artifact/cape-placeholder.webp";
+    case "13":
+      return "/artifact/crown-placeholder.webp";
+    case "14":
+      return "/artifact/seal-placeholder.webp";
+    case "15":
+      return "/artifact/tome-placeholder.webp";
+    default:
+      throw new Error(`Unknown artifact key: ${key}`);
+  }
+}
 
 export default function NFTModal({ seq }: { seq: string }) {
   const router = useRouter();
@@ -24,16 +65,9 @@ export default function NFTModal({ seq }: { seq: string }) {
     queryFn: () => getNft(seq),
   });
 
-  console.log(
-    completeArray(
-      Object.values((nft?.magic_orb?.equip_item?.[1] as NftMagicOrb[]) ?? []),
-      5,
-    ),
-  );
-
   return (
     <Sheet defaultOpen open onOpenChange={handleClose}>
-      <SheetContent>
+      <SheetContent className="overflow-auto">
         {isLoading ? (
           <p>asdfasdf</p>
         ) : (
@@ -186,6 +220,134 @@ export default function NFTModal({ seq }: { seq: string }) {
                     );
                   })
                 }
+              </NFTContainer>
+
+              <NFTContainer
+                Icon={<Spirit className="h-8 w-8" />}
+                title="Dragon Artifact"
+              >
+                {prepareDragonArtifacts(nft?.equip_items).map(
+                  ([key, equip_item]) => {
+                    if (!equip_item)
+                      return (
+                        <Image
+                          key={key}
+                          src={ArtifactKeyToImagePath(key)}
+                          alt=""
+                          className="object-contain"
+                          width={80}
+                          height={80}
+                        />
+                      );
+
+                    const {
+                      grade,
+                      item_name,
+                      item_path,
+                      tier,
+                      enhance,
+                      refine_step,
+                    } = equip_item;
+
+                    return (
+                      <div
+                        key={item_name}
+                        className="relative flex h-20 w-20 items-center justify-center"
+                      >
+                        <Image
+                          src={`/artifact/${gradeToRarity(grade)}-frame.webp`}
+                          alt=""
+                          className="object-contain"
+                          width={80}
+                          height={80}
+                        />
+                        <Image
+                          src={item_path}
+                          alt={item_name}
+                          className="absolute object-contain"
+                          width={40}
+                          height={40}
+                        />
+
+                        {Number(tier) > 1 && (
+                          <div className="absolute -bottom-1 -left-1 flex h-7 w-7 shrink-0 items-center justify-center">
+                            <Image
+                              src={"/icon/spirit-transcend.webp"}
+                              alt={""}
+                              className="object-contain"
+                              width={28}
+                              height={28}
+                            />
+                            <p className="absolute">{toRoman(Number(tier))}</p>
+                          </div>
+                        )}
+
+                        {Number(enhance) > 0 && (
+                          <p className="absolute -right-1 -top-1 flex h-7 w-7 shrink-0 items-center justify-center font-bold drop-shadow">
+                            +{enhance}
+                          </p>
+                        )}
+                      </div>
+                    );
+                  },
+                )}
+                {/* {(currentSetIndex) =>
+                  completeArray(
+                    Object.entries(nft?.equip_items).filter(([key]) =>
+                      DRAGON_ARTIFACT_SEQUENCE_INDEX.includes(Number(key)),
+                    ),
+                    5,
+                  ).map((item) => {
+                    if (!item) return <ItemPlaceholder />;
+
+                    const {
+                      grade,
+                      item_exp,
+                      item_idx,
+                      item_level,
+                      item_name,
+                      item_path,
+                      tier,
+                    } = item;
+
+                    return (
+                      <div
+                        key={item_name}
+                        className="relative flex h-20 w-20 items-center justify-center"
+                      >
+                        <Image
+                          src={
+                            Number(grade) === 5
+                              ? "/bg-legendary.webp"
+                              : "/bg-epic.webp"
+                          }
+                          alt=""
+                          className="object-contain"
+                          width={80}
+                          height={80}
+                        />
+                        <Image
+                          src={item_path}
+                          alt={item_name}
+                          className="absolute object-contain"
+                          width={50}
+                          height={50}
+                        />
+
+                        <div className="absolute -bottom-1 -left-1 flex h-7 w-7 shrink-0 items-center justify-center">
+                          <Image
+                            src={"/icon/spirit-transcend.webp"}
+                            alt={""}
+                            className="object-contain"
+                            width={28}
+                            height={28}
+                          />
+                          <p className="absolute">{toRoman(item_level)}</p>
+                        </div>
+                      </div>
+                    );
+                  })
+                } */}
               </NFTContainer>
             </section>
           </>

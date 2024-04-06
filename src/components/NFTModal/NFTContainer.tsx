@@ -10,12 +10,12 @@ export default function NFTContainer({
   availableSetsIndex,
 }: {
   title: string;
-  children: (currentSet: number) => React.ReactNode;
+  children: ((currentSet: number) => React.ReactNode) | React.ReactNode;
   Icon: React.ReactNode;
-  availableSetsIndex: string[];
+  availableSetsIndex?: string[];
 }) {
   const [currentSet, setCurrentSet] = useState<number>(
-    Number(availableSetsIndex[0] ?? 1),
+    Number(availableSetsIndex?.[0] ?? 1),
   );
 
   return (
@@ -26,25 +26,29 @@ export default function NFTContainer({
           <h2 className="text-xl font-semibold">{title}</h2>
         </div>
 
-        <div className="flex gap-1">
-          {availableSetsIndex.map((setIndex) => (
-            <button
-              type="button"
-              key={setIndex}
-              className={cn(
-                "rounded border px-1.5 py-1 text-xs transition-colors",
-                "border-black/10 bg-black/5 hover:border-black/40 hover:bg-black/20",
-                "data-[active=true]:border-black/40 data-[active=true]:bg-black/20 data-[active=true]:hover:border-black/60 data-[active=true]:hover:bg-black/40",
-              )}
-              onClick={() => setCurrentSet(Number(setIndex))}
-              data-active={currentSet === Number(setIndex)}
-            >
-              {setIndex}
-            </button>
-          ))}
-        </div>
+        {availableSetsIndex && (
+          <div className="flex gap-1">
+            {availableSetsIndex.map((setIndex) => (
+              <button
+                type="button"
+                key={setIndex}
+                className={cn(
+                  "rounded border px-1.5 py-1 text-xs transition-colors",
+                  "border-black/10 bg-black/5 hover:border-black/40 hover:bg-black/20",
+                  "data-[active=true]:border-black/40 data-[active=true]:bg-black/20 data-[active=true]:hover:border-black/60 data-[active=true]:hover:bg-black/40",
+                )}
+                onClick={() => setCurrentSet(Number(setIndex))}
+                data-active={currentSet === Number(setIndex)}
+              >
+                {setIndex}
+              </button>
+            ))}
+          </div>
+        )}
       </header>
-      <div className="flex gap-4">{children(currentSet)}</div>
+      <div className="flex gap-4">
+        {typeof children === "function" ? children(currentSet) : children}
+      </div>
     </section>
   );
 }

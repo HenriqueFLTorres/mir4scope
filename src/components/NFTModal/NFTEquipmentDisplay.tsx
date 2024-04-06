@@ -70,7 +70,7 @@ export default function NFTEquipmentDisplay({
         height={452}
         src={`/class-preview/${classIndexToName(classIndex)}.webp`}
         alt=""
-        className="pointer-events-none absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] object-contain"
+        className="pointer-events-none absolute left-[50%] top-[50%] fade-image translate-x-[-50%] translate-y-[-50%] object-contain"
       />
 
       <ul className="grid w-max grid-cols-5 items-center gap-3 p-1">
