@@ -16,6 +16,7 @@ import NFTMagicStone from "./NFTMagicStone";
 import NFTMysticalPiece from "./NFTMysticalPiece";
 import NFTSpirit from "./NFTSpirit";
 import NFTTags from "./NFTTags";
+import NFTTraining from "./NFTTraining";
 import NFTTransferenceEquipment from "./NFTTransferenceEquipment";
 
 export default function NFTModal({ seq }: { seq: string }) {
@@ -81,6 +82,8 @@ export default function NFTModal({ seq }: { seq: string }) {
               <NFTMagicStone magic_stone={nft?.magic_stone} />
 
               <NFTMysticalPiece mystical_piece={nft?.mystical_piece} />
+
+              <NFTTraining training={nft?.training} />
             </section>
           </>
         )}
