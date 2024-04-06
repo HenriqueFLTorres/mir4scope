@@ -29,10 +29,17 @@ export async function POST(request: Request) {
       },
     });
 
+    const magic_stone = await prisma.magic_stone.findFirst({
+      where: {
+        id: nft?.magic_stone_id,
+      },
+    });
+
     return NextResponse.json({
       ...nft,
       spirits,
       magic_orb,
+      magic_stone,
     });
   } catch (error) {
     console.error(error);

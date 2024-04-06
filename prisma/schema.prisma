@@ -80,3 +80,11 @@ model magic_orb {
   /// [nft_magic_orb_equip_item]
   equip_item Json
 }
+
+model magic_stone {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  /// [nft_magic_stone_equip_item]
+  equip_item  Json
+  active_deck Int
+}

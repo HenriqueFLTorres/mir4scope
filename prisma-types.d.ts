@@ -9,6 +9,9 @@ declare global {
     type nft_spirit_inven = { [key in string]: { [key in string]: NftSpirit } };
     type nft_assets = { [key in NftAssets]: string };
     type nft_succession = { [key in string]: NftSuccessionItem };
+    type nft_magic_stone_equip_item = {
+      [key in string]: { [key in string]: NftMagicStone };
+    };
 
     type nft_magic_orb_equip_item = NftMagicOrb[];
   }
@@ -227,6 +230,21 @@ export type NftSuccessionItem = {
   tier: string;
   item_name: string;
   item_path: string;
+};
+
+export type NftMagicStone = {
+  item_idx: string;
+  trance_step: number;
+  refine_step: number;
+  grade: string;
+  tier: string;
+  item_name: string;
+  item_path: string;
+  power_score: number;
+  options: { [key in string]: { name: string; value: number; format: string } };
+  add_option: {
+    [key in string]: { name: string; value: number; format: string };
+  };
 };
 
 export type NftAssets =

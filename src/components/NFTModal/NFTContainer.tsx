@@ -8,11 +8,13 @@ export default function NFTContainer({
   children,
   Icon,
   availableSetsIndex,
+  className,
 }: {
   title: string;
   children: ((currentSet: number) => React.ReactNode) | React.ReactNode;
   Icon: React.ReactNode;
   availableSetsIndex?: string[];
+  className?: string;
 }) {
   const [currentSet, setCurrentSet] = useState<number>(
     Number(availableSetsIndex?.[0] ?? 1),
@@ -46,7 +48,7 @@ export default function NFTContainer({
           </div>
         )}
       </header>
-      <div className="flex gap-4">
+      <div className={cn("flex gap-4", className)}>
         {typeof children === "function" ? children(currentSet) : children}
       </div>
     </section>

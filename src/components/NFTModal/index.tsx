@@ -17,6 +17,7 @@ import { toRoman } from "typescript-roman-numbers-converter";
 import type {
   NftEquipItem,
   NftMagicOrb,
+  NftMagicStone,
   NftSpirit,
   NftSuccessionItem,
 } from "../../../prisma-types";
@@ -332,8 +333,8 @@ export default function NFTModal({ seq }: { seq: string }) {
                         src={item_path}
                         alt={item_name}
                         className="absolute object-contain"
-                        width={40}
-                        height={40}
+                        width={50}
+                        height={50}
                       />
 
                       {Number(tier) > 1 && (
@@ -357,6 +358,77 @@ export default function NFTModal({ seq }: { seq: string }) {
                     </div>
                   );
                 })}
+              </NFTContainer>
+
+              <NFTContainer
+                Icon={<Spirit className="h-8 w-8" />}
+                title="Magic Stone"
+                className="grid grid-cols-4"
+                availableSetsIndex={Object.keys(nft?.magic_stone?.equip_item)}
+              >
+                {(currentSet) =>
+                  (
+                    completeArray(
+                      Object.values(nft?.magic_stone?.equip_item?.[currentSet]),
+                      12,
+                    ) as (NftMagicStone | null)[]
+                  ).map((magicStone) => {
+                    if (!magicStone) return <ItemPlaceholder />;
+
+                    const {
+                      grade,
+                      item_name,
+                      item_path,
+                      tier,
+                      refine_step,
+                      trance_step,
+                      power_score,
+                      options,
+                      add_option,
+                    } = magicStone;
+
+                    return (
+                      <div
+                        key={item_name}
+                        className="relative flex h-20 w-20 items-center justify-center"
+                      >
+                        <Image
+                          src={`/bg-${gradeToRarity(grade)}.webp`}
+                          alt=""
+                          className="object-contain"
+                          width={80}
+                          height={80}
+                        />
+                        <Image
+                          src={item_path}
+                          alt={item_name}
+                          className="absolute object-contain"
+                          width={64}
+                          height={64}
+                        />
+
+                        {Number(tier) > 1 && (
+                          <div className="absolute -bottom-1 -left-1 flex h-7 w-7 shrink-0 items-center justify-center">
+                            <Image
+                              src={"/icon/spirit-transcend.webp"}
+                              alt={""}
+                              className="object-contain"
+                              width={28}
+                              height={28}
+                            />
+                            <p className="absolute">{toRoman(Number(tier))}</p>
+                          </div>
+                        )}
+
+                        {Number(trance_step) > 0 && (
+                          <p className="absolute -right-1 -top-1 flex h-7 w-7 shrink-0 items-center justify-center font-bold drop-shadow">
+                            +{trance_step}
+                          </p>
+                        )}
+                      </div>
+                    );
+                  })
+                }
               </NFTContainer>
             </section>
           </>
