@@ -17,7 +17,7 @@ export async function POST(request: Request) {
       },
     });
 
-    const spirits = prisma.spirits.findFirst({
+    const spirits = await prisma.spirits.findFirst({
       where: {
         id: nft?.spirits_id,
       },
