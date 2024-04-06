@@ -9,6 +9,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Wemix from "../icon/Wemix";
 import NFTAssets from "./NFTAssets";
+import NFTBuildings from "./NFTBuildings";
 import NFTDragonArtifact from "./NFTDragonArtifact";
 import NFTEquipmentDisplay from "./NFTEquipmentDisplay";
 import NFTMagicSoulOrb from "./NFTMagicSoulOrb";
@@ -84,6 +85,8 @@ export default function NFTModal({ seq }: { seq: string }) {
               <NFTMysticalPiece mystical_piece={nft?.mystical_piece} />
 
               <NFTTraining training={nft?.training} />
+
+              <NFTBuildings buildings={nft?.buildings} />
             </section>
           </>
         )}

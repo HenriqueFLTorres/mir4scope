@@ -265,3 +265,15 @@ export type NftAssets =
   | "dragonsteel"
   | "energy"
   | "speedups";
+
+export type NftBuildings =
+  | "Mine"
+  | "Forge"
+  | "Sanctuary of Hydra"
+  | "Tower of Conquest"
+  | "Tower of Quintessence"
+  | "Millennial Tree"
+  | "Portal"
+  | "Tower of Victory"
+  | "Training Sanctum"
+  | "Holy Shrine";
