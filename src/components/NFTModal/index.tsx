@@ -1,12 +1,12 @@
 "use client";
 
+import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { getNft } from "@/lib/get-nft";
 import { getReadableNumber } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Wemix from "../icon/Wemix";
-import { Dialog, DialogContent } from "../ui/dialog";
 import NFTAssets from "./NFTAssets";
 import NFTEquipmentDisplay from "./NFTEquipmentDisplay";
 import NFTTags from "./NFTTags";
@@ -18,11 +18,10 @@ export default function NFTModal({ seq }: { seq: string }) {
     queryKey: ["nft", seq],
     queryFn: () => getNft(seq),
   });
-  console.log(nft);
 
   return (
-    <Dialog defaultOpen open onOpenChange={handleClose}>
-      <DialogContent className="max-w-[80rem]">
+    <Sheet defaultOpen open onOpenChange={handleClose}>
+      <SheetContent>
         {isLoading ? (
           <p>asdfasdf</p>
         ) : (
@@ -61,7 +60,7 @@ export default function NFTModal({ seq }: { seq: string }) {
             </div>
           </section>
         )}
-      </DialogContent>
-    </Dialog>
+      </SheetContent>
+    </Sheet>
   );
 }

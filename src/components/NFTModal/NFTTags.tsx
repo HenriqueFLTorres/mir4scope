@@ -1,7 +1,8 @@
 import { getReadableNumber } from "@/lib/utils";
-import { Globe, Power } from "lucide-react";
-import Codex from "../icon/Codex";
-import EXP from "../icon/EXP";
+import Codex from "@/components/icon/Codex";
+import EXP from "@/components/icon/EXP";
+import Power from '@/components/icon/Power';
+import Globe from '@/components/icon/Globe';
 
 export default function NFTTags({
   lvl,

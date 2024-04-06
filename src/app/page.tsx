@@ -5,7 +5,7 @@ import Search from "@/components/icon/Search";
 import { FilterX } from "lucide-react";
 
 async function getData() {
-  const res = await fetch("http://localhost:3000/api/get-nfts");
+  const res = await fetch("http://localhost:3000/api/get-nfts", { cache: "no-cache" });
 
   if (!res.ok) {
     throw new Error("Failed to fetch data");
