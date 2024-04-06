@@ -39,7 +39,7 @@ model nft {
   // assets
   // potentials
   // holy_stuff
-  // sucession
+  // succession
   // equip_items
 
   /// [nft_stats]
@@ -53,7 +53,7 @@ model nft {
   assets      Json
   potentials  Json
   holy_stuff  Json
-  sucession   Json
+  succession  Json
   /// [nft_equip_items]
   equip_items Json
 
