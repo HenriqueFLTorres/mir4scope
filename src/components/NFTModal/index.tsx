@@ -18,6 +18,7 @@ import type {
   NftEquipItem,
   NftMagicOrb,
   NftSpirit,
+  NftSuccessionItem,
 } from "../../../prisma-types";
 
 const DRAGON_ARTIFACT_SEQUENCE_INDEX = [11, 12, 13, 14, 15];
@@ -291,49 +292,51 @@ export default function NFTModal({ seq }: { seq: string }) {
                     );
                   },
                 )}
-                {/* {(currentSetIndex) =>
+              </NFTContainer>
+
+              <NFTContainer
+                Icon={<Spirit className="h-8 w-8" />}
+                title="Transference Equipment"
+              >
+                {(
                   completeArray(
-                    Object.entries(nft?.equip_items).filter(([key]) =>
-                      DRAGON_ARTIFACT_SEQUENCE_INDEX.includes(Number(key)),
-                    ),
+                    Object.values(nft?.succession),
                     5,
-                  ).map((item) => {
-                    if (!item) return <ItemPlaceholder />;
+                  ) as (NftSuccessionItem | null)[]
+                ).map((successionItem) => {
+                  if (!successionItem) return <ItemPlaceholder />;
 
-                    const {
-                      grade,
-                      item_exp,
-                      item_idx,
-                      item_level,
-                      item_name,
-                      item_path,
-                      tier,
-                    } = item;
+                  const {
+                    grade,
+                    item_name,
+                    item_path,
+                    tier,
+                    enhance,
+                    refine_step,
+                    trance_step,
+                  } = successionItem;
 
-                    return (
-                      <div
-                        key={item_name}
-                        className="relative flex h-20 w-20 items-center justify-center"
-                      >
-                        <Image
-                          src={
-                            Number(grade) === 5
-                              ? "/bg-legendary.webp"
-                              : "/bg-epic.webp"
-                          }
-                          alt=""
-                          className="object-contain"
-                          width={80}
-                          height={80}
-                        />
-                        <Image
-                          src={item_path}
-                          alt={item_name}
-                          className="absolute object-contain"
-                          width={50}
-                          height={50}
-                        />
+                  return (
+                    <div
+                      key={item_name}
+                      className="relative flex h-20 w-20 items-center justify-center"
+                    >
+                      <Image
+                        src={`/bg-${gradeToRarity(grade)}.webp`}
+                        alt=""
+                        className="object-contain"
+                        width={80}
+                        height={80}
+                      />
+                      <Image
+                        src={item_path}
+                        alt={item_name}
+                        className="absolute object-contain"
+                        width={40}
+                        height={40}
+                      />
 
+                      {Number(tier) > 1 && (
                         <div className="absolute -bottom-1 -left-1 flex h-7 w-7 shrink-0 items-center justify-center">
                           <Image
                             src={"/icon/spirit-transcend.webp"}
@@ -342,12 +345,18 @@ export default function NFTModal({ seq }: { seq: string }) {
                             width={28}
                             height={28}
                           />
-                          <p className="absolute">{toRoman(item_level)}</p>
+                          <p className="absolute">{toRoman(Number(tier))}</p>
                         </div>
-                      </div>
-                    );
-                  })
-                } */}
+                      )}
+
+                      {Number(enhance) > 0 && (
+                        <p className="absolute -right-1 -top-1 flex h-7 w-7 shrink-0 items-center justify-center font-bold drop-shadow">
+                          +{enhance}
+                        </p>
+                      )}
+                    </div>
+                  );
+                })}
               </NFTContainer>
             </section>
           </>

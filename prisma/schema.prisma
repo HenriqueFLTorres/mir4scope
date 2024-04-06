@@ -53,6 +53,7 @@ model nft {
   assets      Json
   potentials  Json
   holy_stuff  Json
+  /// [nft_succession]
   succession  Json
   /// [nft_equip_items]
   equip_items Json
