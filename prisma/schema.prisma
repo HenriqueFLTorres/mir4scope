@@ -13,7 +13,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Nft {
+model nft {
   id           String @id @default(auto()) @map("_id") @db.ObjectId
   seq          Int    @unique
   transport_id Int
@@ -64,11 +64,18 @@ model Nft {
   mystical_piece_id String @db.ObjectId
 }
 
-model Spirits {
+model spirits {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 
   /// [nft_spirit_equip]
   equip Json
   /// [nft_spirit_inven]
   inven Json
+}
+
+model magic_orb {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  /// [nft_magic_orb_equip_item]
+  equip_item Json
 }

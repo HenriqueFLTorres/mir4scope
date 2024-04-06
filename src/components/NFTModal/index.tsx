@@ -2,7 +2,7 @@
 
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { getNft } from "@/lib/get-nft";
-import { getReadableNumber, handleTierValue } from "@/lib/utils";
+import { completeArray, getReadableNumber } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -13,7 +13,8 @@ import NFTTags from "./NFTTags";
 import NFTContainer from "./NFTContainer";
 import Spirit from "../icon/Spirit";
 import Image from "next/image";
-import type { NftSpirit } from "../../../prisma-types";
+import { toRoman } from "typescript-roman-numbers-converter";
+import type { NftMagicOrb, NftSpirit } from "../../../prisma-types";
 
 export default function NFTModal({ seq }: { seq: string }) {
   const router = useRouter();
@@ -22,6 +23,13 @@ export default function NFTModal({ seq }: { seq: string }) {
     queryKey: ["nft", seq],
     queryFn: () => getNft(seq),
   });
+
+  console.log(
+    completeArray(
+      Object.values((nft?.magic_orb?.equip_item?.[1] as NftMagicOrb[]) ?? []),
+      5,
+    ),
+  );
 
   return (
     <Sheet defaultOpen open onOpenChange={handleClose}>
@@ -69,7 +77,7 @@ export default function NFTModal({ seq }: { seq: string }) {
             <section className="grid grid-cols-2 gap-4">
               <NFTContainer
                 Icon={<Spirit className="h-8 w-8" />}
-                title="Spirits Sets"
+                title="Spirit"
                 availableSetsIndex={Object.keys(nft?.spirits?.equip)}
               >
                 {(currentSetIndex) =>
@@ -106,13 +114,77 @@ export default function NFTModal({ seq }: { seq: string }) {
                             width={28}
                             height={28}
                           />
-                          <p className="absolute">
-                            {handleTierValue(transcend)}
-                          </p>
+                          <p className="absolute">{toRoman(transcend)}</p>
                         </div>
                       )}
                     </div>
                   ))
+                }
+              </NFTContainer>
+
+              <NFTContainer
+                Icon={<Spirit className="h-8 w-8" />}
+                title="Magical Soul Orb"
+                availableSetsIndex={Object.keys(nft?.magic_orb?.equip_item)}
+              >
+                {(currentSetIndex) =>
+                  completeArray(
+                    Object.values(
+                      (nft?.magic_orb?.equip_item?.[
+                        currentSetIndex
+                      ] as NftMagicOrb[]) ?? [],
+                    ),
+                    5,
+                  ).map((item) => {
+                    if (!item) return <ItemPlaceholder />;
+
+                    const {
+                      grade,
+                      item_exp,
+                      item_idx,
+                      item_level,
+                      item_name,
+                      item_path,
+                      tier,
+                    } = item;
+
+                    return (
+                      <div
+                        key={item_name}
+                        className="relative flex h-20 w-20 items-center justify-center"
+                      >
+                        <Image
+                          src={
+                            Number(grade) === 5
+                              ? "/bg-legendary.webp"
+                              : "/bg-epic.webp"
+                          }
+                          alt=""
+                          className="object-contain"
+                          width={80}
+                          height={80}
+                        />
+                        <Image
+                          src={item_path}
+                          alt={item_name}
+                          className="absolute object-contain"
+                          width={50}
+                          height={50}
+                        />
+
+                        <div className="absolute -bottom-1 -left-1 flex h-7 w-7 shrink-0 items-center justify-center">
+                          <Image
+                            src={"/icon/spirit-transcend.webp"}
+                            alt={""}
+                            className="object-contain"
+                            width={28}
+                            height={28}
+                          />
+                          <p className="absolute">{toRoman(item_level)}</p>
+                        </div>
+                      </div>
+                    );
+                  })
                 }
               </NFTContainer>
             </section>
@@ -120,5 +192,19 @@ export default function NFTModal({ seq }: { seq: string }) {
         )}
       </SheetContent>
     </Sheet>
+  );
+}
+
+function ItemPlaceholder() {
+  return (
+    <div className="relative flex h-20 w-20 items-center justify-center">
+      <Image
+        src={"/icon/spirit-none.webp"}
+        alt=""
+        className="object-contain"
+        width={80}
+        height={80}
+      />
+    </div>
   );
 }

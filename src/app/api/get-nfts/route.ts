@@ -1,10 +1,10 @@
 import prisma from "@/lib/prisma";
-import type { Nft, Prisma, Spirits } from "@prisma/client";
+import type { nft, spirits } from "@prisma/client";
 import { NextResponse } from "next/server";
 
-export type NftFromMongo = Exclude<Nft, "spirits_id" | "stats"> & {
+export type NftFromMongo = Exclude<nft, "spirits_id" | "stats"> & {
   spirits_id: { $oid: string };
-  spirits: Omit<Spirits, "id" | "equip">;
+  spirits: Omit<spirits, "id" | "equip">;
 };
 
 export async function GET() {
@@ -45,7 +45,7 @@ export async function GET() {
 
         return {
           ...nft,
-          spirits: spirits[0] as Omit<Spirits, "id" | "equip">,
+          spirits: spirits[0] as Omit<spirits, "id" | "equip">,
         };
       }),
     );

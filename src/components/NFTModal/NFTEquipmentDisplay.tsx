@@ -1,6 +1,7 @@
-import { classIndexToName, gradeToRarity, handleTierValue } from "@/lib/utils";
+import { classIndexToName, gradeToRarity } from "@/lib/utils";
 import Image from "next/image";
 import type { NftEquipItem } from "../../../prisma-types";
+import { toRoman } from "typescript-roman-numbers-converter";
 
 const slot_position = [
   {
@@ -105,7 +106,7 @@ export default function NFTEquipmentDisplay({
                 </span>
               ) : null}
               <span className="absolute -bottom-2 -left-2 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-[3px] border-[#9f916c] bg-[#333] text-base">
-                {handleTierValue(tier)}
+                {toRoman(Number(tier))}
               </span>
             </li>
           );

@@ -81,16 +81,11 @@ export function gradeToRarity(grade: number | string) {
   }
 }
 
-export function handleTierValue(tier: string | number) {
-  const tierNumber = Number(tier);
-  if (!Number.isInteger(tierNumber)) return "";
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+export function completeArray(array: any[], size: number) {
+  if (array.length === size) return array;
 
-  switch (tierNumber) {
-    case 5:
-      return "V";
-    case 4:
-      return "IV";
-    default:
-      return "I".repeat(tierNumber);
-  }
+  while (array.length < size) array.push(null);
+
+  return array
 }

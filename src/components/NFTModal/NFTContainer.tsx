@@ -23,7 +23,7 @@ export default function NFTContainer({
       <header className="flex w-full items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           {Icon}
-          <h2 className="text-2xl font-semibold">{title}</h2>
+          <h2 className="text-xl font-semibold">{title}</h2>
         </div>
 
         <div className="flex gap-1">
@@ -32,7 +32,7 @@ export default function NFTContainer({
               type="button"
               key={setIndex}
               className={cn(
-                "rounded border px-2 py-1 text-xs transition-colors",
+                "rounded border px-1.5 py-1 text-xs transition-colors",
                 "border-black/10 bg-black/5 hover:border-black/40 hover:bg-black/20",
                 "data-[active=true]:border-black/40 data-[active=true]:bg-black/20 data-[active=true]:hover:border-black/60 data-[active=true]:hover:bg-black/40",
               )}

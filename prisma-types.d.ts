@@ -5,9 +5,11 @@ declare global {
     type nft_equip_items = { [key in string]: NftEquipItem };
     type nft_skills = NftSkills;
     
-    type nft_spirit_inven = { [key in string]: { [key in string]: NftSpirit } };
     type nft_spirit_equip = NftSpirit[];
+    type nft_spirit_inven = { [key in string]: { [key in string]: NftSpirit } };
     type nft_assets = { [key in NftAssets]: string };
+
+    type nft_magic_orb_equip_item = NftMagicOrb[];
   }
 }
 
@@ -203,6 +205,16 @@ export type NftSpirit = {
   grade: number;
   pet_name: SpiritsType;
   icon_path: string;
+};
+
+export type NftMagicOrb = {
+  item_idx: string;
+  item_level: number;
+  item_exp: number;
+  grade: string;
+  tier: string;
+  item_name: string;
+  item_path: string;
 };
 
 export type NftAssets =

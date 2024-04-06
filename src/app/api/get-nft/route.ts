@@ -1,10 +1,10 @@
 import prisma from "@/lib/prisma";
-import type { Nft, Prisma, Spirits } from "@prisma/client";
+import type { nft, Prisma, spirits } from "@prisma/client";
 import { NextResponse } from "next/server";
 
-export type NftFromMongo = Exclude<Nft, "spirits_id" | "stats"> & {
+export type NftFromMongo = Exclude<nft, "spirits_id" | "stats"> & {
   spirits_id: { $oid: string };
-  spirits: Omit<Spirits, "id" | "equip">;
+  spirits: Omit<spirits, "id" | "equip">;
 };
 
 export async function POST(request: Request) {
@@ -23,9 +23,16 @@ export async function POST(request: Request) {
       },
     });
 
+    const magic_orb = await prisma.magic_orb.findFirst({
+      where: {
+        id: nft?.magic_orb_id,
+      },
+    });
+
     return NextResponse.json({
       ...nft,
       spirits,
+      magic_orb,
     });
   } catch (error) {
     console.error(error);

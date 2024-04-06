@@ -2,7 +2,7 @@
 
 import type { NftFromMongo } from "@/app/api/get-nfts/route";
 import { SPECIAL_ABILITIES_NAMES } from "@/lib/contants";
-import { gradeToRarity, handleTierValue } from "@/lib/utils";
+import { gradeToRarity } from "@/lib/utils";
 import Image from "next/image";
 
 import { getCardRarity, getNFTColor } from ".";
@@ -13,6 +13,7 @@ import type {
   NftStats,
 } from "../../../../prisma-types";
 import SkillFragment from "./SkillFragment";
+import { toRoman } from "typescript-roman-numbers-converter";
 
 export default function NFTCardBack({
   power_score,
@@ -72,7 +73,7 @@ export default function NFTCardBack({
                   </span>
                 ) : null}
                 <span className="absolute -bottom-1 -left-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 border-[#9f916c] bg-[#333] text-xs">
-                  {handleTierValue(tier)}
+                  {toRoman(Number(tier))}
                 </span>
               </li>
             ),
