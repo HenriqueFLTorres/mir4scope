@@ -35,11 +35,18 @@ export async function POST(request: Request) {
       },
     });
 
+    const mystical_piece = await prisma.mystical_piece.findFirst({
+      where: {
+        id: nft?.mystical_piece_id,
+      },
+    });
+
     return NextResponse.json({
       ...nft,
       spirits,
       magic_orb,
       magic_stone,
+      mystical_piece,
     });
   } catch (error) {
     console.error(error);

@@ -88,3 +88,11 @@ model magic_stone {
   equip_item  Json
   active_deck Int
 }
+
+model mystical_piece {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  /// [nft_mystical_piece_equip_item]
+  equip_item  Json
+  active_deck Int
+}

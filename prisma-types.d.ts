@@ -12,6 +12,9 @@ declare global {
     type nft_magic_stone_equip_item = {
       [key in string]: { [key in string]: NftMagicStone };
     };
+    type nft_mystical_piece_equip_item = {
+      [key in string]: { [key in string]: NftMysticalPiece };
+    };
 
     type nft_magic_orb_equip_item = NftMagicOrb[];
   }
@@ -246,6 +249,8 @@ export type NftMagicStone = {
     [key in string]: { name: string; value: number; format: string };
   };
 };
+
+type NftMysticalPiece = NftMagicStone;
 
 export type NftAssets =
   | "acientcoins"
