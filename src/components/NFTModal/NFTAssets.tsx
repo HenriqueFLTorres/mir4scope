@@ -36,7 +36,7 @@ function AssetFragment({
 
   return (
     <li className={cn("flex items-center gap-2", className)}>
-      <Image src={"/icon/copper.webp"} alt="" width={32} height={32} />
+      <Image src={`/icon/${type}.webp`} alt="" width={32} height={32} />
       {isNumberValid ? getReadableNumber(valueAsNumber) : 0}
     </li>
   );
