@@ -112,6 +112,11 @@ export type NftEquipItem = {
   item_type: string;
   item_name: string;
   item_path: string;
+  power_score: number;
+  options: { [key in string]: { name: string; value: number; format: string } };
+  add_option: {
+    [key in string]: { name: string; value: number; format: string };
+  };
 };
 
 export type NftSkills = Partial<{ [key in NftAllSkills]: string }>;

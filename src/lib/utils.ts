@@ -4,7 +4,7 @@ import PHYSATK from "@/components/icon/PHYSATK";
 import PHYSDEF from "@/components/icon/PHYSDEF";
 import SpellATK from "@/components/icon/SpellATK";
 import SPELLDEF from "@/components/icon/SpellDEF";
-import { type ClassValue, clsx } from "clsx";
+import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import type { NftStats } from "../../prisma-types";
 
@@ -81,11 +81,28 @@ export function gradeToRarity(grade: number | string) {
   }
 }
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-export function completeArray(array: any[], size: number) {
+export function completeArray<T extends {}>(
+  array: T[],
+  size: number,
+): (T | null)[] {
   if (array.length === size) return array;
+  const newArray: (T | null)[] = [...array];
 
-  while (array.length < size) array.push(null);
+  while (newArray.length < size) newArray.push(null);
 
-  return array
+  return newArray;
 }
+
+// // biome-ignore lint/complexity/noBannedTypes: <explanation>
+// export function completeObject<T extends Object[]>(
+//   entries: { [key in string]: T },
+//   size: number,
+// ): { [key in string]: T | null } {
+//   if (Object.keys(entries).length === size) return entries;
+//   let newEntries: { [key in string]: T | null } = { ...entries };
+
+//   while (Object.keys(entries).length < size)
+//     newEntries = { ...newEntries, "-1": null };
+
+//   return newEntries;
+// }

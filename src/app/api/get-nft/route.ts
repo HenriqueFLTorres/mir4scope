@@ -1,5 +1,5 @@
 import prisma from "@/lib/prisma";
-import type { nft, Prisma, spirits } from "@prisma/client";
+import type { nft, spirits } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 export type NftFromMongo = Exclude<nft, "spirits_id" | "stats"> & {
