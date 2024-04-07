@@ -46,7 +46,7 @@ const slot_position = [
   },
 ];
 
-const equip_order = [1, 9, 5, 6, 7, 8, 2, 3, 4, 10];
+export const equip_order = [1, 9, 5, 6, 7, 8, 2, 3, 4, 10];
 
 export default function NFTEquipmentDisplay({
   equip_items,

@@ -5,15 +5,13 @@ import { SPECIAL_ABILITIES_NAMES } from "@/lib/contants";
 import { gradeToRarity } from "@/lib/utils";
 import Image from "next/image";
 
-import { getCardRarity, getNFTColor } from ".";
-import type {
-  NftEquipItem,
-  NftSkills,
-  NftSpirit,
-  NftStats,
-} from "../../../../prisma-types";
-import SkillFragment from "./SkillFragment";
+import { equip_order } from "@/components/NFTModal/NFTEquipmentDisplay";
 import { toRoman } from "typescript-roman-numbers-converter";
+import { getCardRarity, getNFTColor } from ".";
+import type { NftSkills, NftSpirit } from "../../../../prisma-types";
+import SkillFragment from "./SkillFragment";
+
+const artifacts_order = [11, 12, 13, 14, 15];
 
 export default function NFTCardBack({
   power_score,
@@ -21,8 +19,6 @@ export default function NFTCardBack({
   spirits,
   equip_items,
 }: NftFromMongo) {
-  const equip_items_values = Object.values(equip_items) as NftEquipItem[];
-
   const skills_without_special = Object.entries(skills).filter(
     ([name]) => !SPECIAL_ABILITIES_NAMES.includes(name),
   ) as [keyof NftSkills, string][];
@@ -45,8 +41,13 @@ export default function NFTCardBack({
       <section className="flex flex-col gap-2">
         <h3 className="mx-4 w-max text-xs uppercase">Equipment</h3>
         <ul className="grid w-max grid-cols-5 items-center gap-3 p-1">
-          {equip_items_values.map(
-            ({ enhance, grade, item_path, item_name, tier, item_idx }) => (
+          {[...equip_order, ...artifacts_order].map((key) => {
+            if (!(key in equip_items)) return null;
+
+            const { enhance, grade, item_path, item_name, tier, item_idx } =
+              equip_items[key];
+
+            return (
               <li
                 key={item_idx}
                 className="relative flex h-10 w-10 items-center gap-2 p-1 text-sm font-bold text-white [&>span]:drop-shadow-[0_0_2px_rgb(0,0,0)]"
@@ -76,8 +77,8 @@ export default function NFTCardBack({
                   {toRoman(Number(tier))}
                 </span>
               </li>
-            ),
-          )}
+            );
+          })}
         </ul>
       </section>
 
