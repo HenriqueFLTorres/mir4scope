@@ -2,14 +2,23 @@
 
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { getNft } from "@/lib/get-nft";
-import { getReadableNumber } from "@/lib/utils";
+import { getReadableNumber, gradeToRarity } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { toRoman } from "typescript-roman-numbers-converter";
+import type { NftInventoryItem } from "../../../prisma-types";
+import Backpack from "../icon/Backpack";
+import Crafting from "../icon/Crafting";
+import Spirit from "../icon/Spirit";
 import Wemix from "../icon/Wemix";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+import Enhance from "./Enhance";
 import NFTAssets from "./NFTAssets";
 import NFTBuildings from "./NFTBuildings";
+import NFTCodex from "./NFTCodex";
+import NFTContainer from "./NFTContainer";
 import NFTDragonArtifact from "./NFTDragonArtifact";
 import NFTEquipmentDisplay from "./NFTEquipmentDisplay";
 import NFTMagicSoulOrb from "./NFTMagicSoulOrb";
@@ -21,6 +30,7 @@ import NFTSpirit from "./NFTSpirit";
 import NFTTags from "./NFTTags";
 import NFTTraining from "./NFTTraining";
 import NFTTransferenceEquipment from "./NFTTransferenceEquipment";
+import NFTInventory from './NFTInventory';
 
 export default function NFTModal({ seq }: { seq: string }) {
   const router = useRouter();
@@ -93,6 +103,10 @@ export default function NFTModal({ seq }: { seq: string }) {
               <NFTMystique holy_stuff={nft?.holy_stuff} />
 
               <NFTPotentials potentials={nft?.potentials} />
+
+              <NFTCodex codex={nft?.codex} />
+
+              <NFTInventory inventory={nft?.inventory} />
             </section>
           </>
         )}

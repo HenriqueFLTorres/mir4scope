@@ -21,7 +21,9 @@ TabsList.displayName = TabsPrimitive.List.displayName;
 
 const TabsTrigger = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger> & {
+    children: React.ReactNode | React.ReactNode[];
+  }
 >(({ className, ...props }, ref) => (
   <TabsPrimitive.Trigger
     ref={ref}

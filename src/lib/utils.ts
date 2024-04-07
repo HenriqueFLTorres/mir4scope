@@ -93,16 +93,15 @@ export function completeArray<T extends {}>(
   return newArray;
 }
 
-// // biome-ignore lint/complexity/noBannedTypes: <explanation>
-// export function completeObject<T extends Object[]>(
-//   entries: { [key in string]: T },
-//   size: number,
-// ): { [key in string]: T | null } {
-//   if (Object.keys(entries).length === size) return entries;
-//   let newEntries: { [key in string]: T | null } = { ...entries };
+export function getRelativePercentage(
+  firstNumber: number | string,
+  secondNumber: string | number,
+) {
+  const numberA = Number(firstNumber);
+  const numberB = Number(secondNumber);
+  if (Number.isNaN(numberA) || Number.isNaN(numberB)) return 0;
 
-//   while (Object.keys(entries).length < size)
-//     newEntries = { ...newEntries, "-1": null };
+  const result = (numberA / numberB) * 100;
 
-//   return newEntries;
-// }
+  return result;
+}

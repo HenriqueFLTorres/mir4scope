@@ -59,6 +59,8 @@ model nft {
   succession  Json
   /// [nft_equip_items]
   equip_items Json
+  /// [nft_codex]
+  codex Json
 
   spirits_id        String @db.ObjectId
   magic_orb_id      String @db.ObjectId
@@ -97,4 +99,11 @@ model mystical_piece {
   /// [nft_mystical_piece_equip_item]
   equip_item  Json
   active_deck Int
+}
+
+model inventory {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  /// [nft_inventory]
+  inventory  Json
 }

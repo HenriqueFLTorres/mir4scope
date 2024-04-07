@@ -41,15 +41,21 @@ export async function POST(request: Request) {
       },
     });
 
+    const inventory = await prisma.inventory.findFirst({
+      where: {
+        id: nft?.inventory_id,
+      },
+    });
+
     return NextResponse.json({
       ...nft,
       spirits,
       magic_orb,
       magic_stone,
       mystical_piece,
+      inventory: inventory?.inventory
     });
   } catch (error) {
-    console.error(error);
     return NextResponse.json(
       {
         success: false,

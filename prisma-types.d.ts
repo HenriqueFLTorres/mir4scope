@@ -6,6 +6,7 @@ declare global {
     type nft_skills = NftSkills;
     type nft_potentials = NftPotential;
     type nft_holy_stuff = { [key in NftMystique]: string };
+    type nft_codex = { [key in string]: NftCodexObject };
 
     type nft_spirit_equip = NftSpirit[];
     type nft_spirit_inven = { [key in string]: { [key in string]: NftSpirit } };
@@ -17,6 +18,7 @@ declare global {
     type nft_mystical_piece_equip_item = {
       [key in string]: { [key in string]: NftMysticalPiece };
     };
+    type nft_inventory = NftInventoryItem[];
 
     type nft_magic_orb_equip_item = NftMagicOrb[];
   }
@@ -296,4 +298,27 @@ export type NftPotential = {
   pvp_max: number;
   secondary: number;
   secondary_max: number;
+};
+
+export type NftCodexObject = {
+  codex_name: string;
+  total_count: string;
+  completed: string;
+  in_progress: string;
+};
+
+export type NftInventoryItem = {
+  item_uid: string;
+  item_id: string;
+  enhance: number;
+  stack: number;
+  trance_step: number;
+  refine_step: number;
+  grade: string;
+  main_type: number;
+  sub_type: number;
+  tab_category: number;
+  tier: string;
+  item_name: string;
+  item_path: string;
 };
