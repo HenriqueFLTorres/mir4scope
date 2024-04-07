@@ -1,16 +1,30 @@
+import { ListFiltersType } from "@/atom/ListFilters";
 import prisma from "@/lib/prisma";
 import type { nft, spirits } from "@prisma/client";
-import { NextResponse } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 
 export type NftFromMongo = Exclude<nft, "spirits_id" | "stats"> & {
   spirits_id: { $oid: string };
   spirits: Omit<spirits, "id" | "equip">;
 };
 
-export async function GET() {
+export async function POST(request: NextRequest) {
   try {
+    const {
+      search,
+      class: mir4Class,
+      level,
+      power,
+      codex,
+      priceRange,
+    } = (await request.json()) as ListFiltersType;
+
+    const filter = {
+      ...(search ? { character_name: { $regex: search, $options: "i" } } : {}),
+    };
+
     const nft_list = (await prisma.nft.findRaw({
-      // filter: {  },
+      filter,
       options: {
         take: 20,
       },
