@@ -59,8 +59,6 @@ export default function NFTInventory({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(ItemCount);
-
   return (
     <NFTContainer className="col-span-2">
       <header className="flex w-full items-center justify-between gap-4">
