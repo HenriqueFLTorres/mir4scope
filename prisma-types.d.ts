@@ -277,3 +277,10 @@ export type NftBuildings =
   | "Tower of Victory"
   | "Training Sanctum"
   | "Holy Shrine";
+
+export type NftMystique =
+  | "Unicorn Lion Mystique"
+  | "Vermilion Bird Mystique"
+  | "Black Tortoise Mystique"
+  | "White Tiger Mystique"
+  | "Blue Dragon Mystique";
