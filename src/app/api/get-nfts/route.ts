@@ -36,7 +36,7 @@ export async function GET() {
             {
               $project: {
                 inven: {
-                  $sortArray: { input: "$inven", sortBy: { grade: 1 } },
+                  $sortArray: { input: "$inven", sortBy: { grade: -1 } },
                 },
               },
             },
