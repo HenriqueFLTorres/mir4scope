@@ -16,6 +16,7 @@ import NFTMagicSoulOrb from "./NFTMagicSoulOrb";
 import NFTMagicStone from "./NFTMagicStone";
 import NFTMysticalPiece from "./NFTMysticalPiece";
 import NFTMystique from "./NFTMystique";
+import NFTPotentials from "./NFTPotentials";
 import NFTSpirit from "./NFTSpirit";
 import NFTTags from "./NFTTags";
 import NFTTraining from "./NFTTraining";
@@ -90,6 +91,8 @@ export default function NFTModal({ seq }: { seq: string }) {
               <NFTBuildings buildings={nft?.buildings} />
 
               <NFTMystique holy_stuff={nft?.holy_stuff} />
+
+              <NFTPotentials potentials={nft?.potentials} />
             </section>
           </>
         )}

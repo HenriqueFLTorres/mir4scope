@@ -51,7 +51,9 @@ model nft {
   buildings   Json
   /// [nft_assets]
   assets      Json
+  /// [nft_potentials]
   potentials  Json
+  /// [nft_holy_stuff]
   holy_stuff  Json
   /// [nft_succession]
   succession  Json

@@ -4,6 +4,8 @@ declare global {
     type nft_training = NftTraining;
     type nft_equip_items = { [key in string]: NftEquipItem };
     type nft_skills = NftSkills;
+    type nft_potentials = NftPotential;
+    type nft_holy_stuff = { [key in NftMystique]: string };
 
     type nft_spirit_equip = NftSpirit[];
     type nft_spirit_inven = { [key in string]: { [key in string]: NftSpirit } };
@@ -284,3 +286,14 @@ export type NftMystique =
   | "Black Tortoise Mystique"
   | "White Tiger Mystique"
   | "Blue Dragon Mystique";
+
+export type NftPotential = {
+  total: number;
+  total_max: number;
+  hunting: number;
+  hunting_max: number;
+  pvp: number;
+  pvp_max: number;
+  secondary: number;
+  secondary_max: number;
+};
