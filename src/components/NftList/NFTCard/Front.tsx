@@ -9,7 +9,15 @@ import Wemix from "@/components/icon/Wemix";
 import { getCardRarity, getNFTColor } from ".";
 import type { NftStats } from "../../../../prisma-types";
 import GlassChip from "./GlassChip";
-import SkillFragment from "./SkillFragment";
+
+const STATS_TO_DISPLAY = [
+  "PHYS ATK",
+  "PHYS DEF",
+  "Spell ATK",
+  "Spell DEF",
+  "EVA",
+  "Accuracy",
+];
 
 export default function NFTCardFront({
   character_name,
@@ -20,16 +28,6 @@ export default function NFTCardFront({
   stats,
 }: NftFromMongo) {
   const mir4Class = classIndexToName(classIndex);
-  const stats_for_display = Object.entries(stats).filter(([name]) =>
-    [
-      "PHYST ATK",
-      "PHYS DEF",
-      "Spell ATK",
-      "Spell DEF",
-      "EVA",
-      "Accuracy",
-    ].includes(name),
-  ) as [keyof NftStats, string][];
 
   return (
     <div
@@ -78,8 +76,12 @@ export default function NFTCardFront({
       />
 
       <ul className="grid grid-cols-3 items-center justify-between gap-1 p-1">
-        {stats_for_display.map(([name, value]) => {
-          const StatIcon = getStatIcon(name);
+        {STATS_TO_DISPLAY.map((name) => {
+          if (!(name in stats)) return null;
+
+          const value = stats[name as keyof NftStats];
+
+          const StatIcon = getStatIcon(name as keyof NftStats);
           if (value === undefined) return null;
 
           return (
@@ -87,7 +89,7 @@ export default function NFTCardFront({
               key={name}
               className="flex h-8 w-full items-center gap-2 rounded border border-black/10 bg-black/40 p-1 drop-shadow-sm backdrop-blur-md"
             >
-              <StatIcon className="h-4 w-4 shrink-0" />
+              <StatIcon className="h-5 w-5 shrink-0" />
               <p className="flex w-full justify-center text-xs font-medium text-white">
                 {value}
               </p>

@@ -1,6 +1,6 @@
 declare global {
   namespace PrismaJson {
-    type nft_status = NftStats;
+    type nft_stats = NftStats;
     type nft_training = NftTraining;
     type nft_equip_items = { [key in string]: NftEquipItem };
     type nft_skills = NftSkills;
