@@ -1,4 +1,4 @@
-import { ListFiltersType } from "@/atom/ListFilters";
+import type { ListFiltersType } from "@/atom/ListFilters";
 import prisma from "@/lib/prisma";
 import type { nft, spirits } from "@prisma/client";
 import { NextResponse, type NextRequest } from "next/server";
@@ -21,6 +21,21 @@ export async function POST(request: NextRequest) {
 
     const filter = {
       ...(search ? { character_name: { $regex: search, $options: "i" } } : {}),
+      ...(mir4Class > 0 ? { class: { $eq: mir4Class } } : {}),
+      ...(level[0] > 60 || level[1] < 170
+        ? { lvl: { $gte: level[0], $lte: level[1] } }
+        : {}),
+      ...(power[0] > 100e3 || power[1] < 600e3
+        ? { power_score: { $gte: power[0], $lte: power[1] } }
+        : {}),
+      ...(priceRange[0] > 0 || priceRange[1]
+        ? {
+            price: {
+              ...(priceRange[0] > 0 ? { $gte: priceRange[0] } : {}),
+              ...(priceRange[1] ? { $lte: priceRange[1] } : {}),
+            },
+          }
+        : {}),
     };
 
     const nft_list = (await prisma.nft.findRaw({
