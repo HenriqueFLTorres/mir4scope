@@ -3,6 +3,7 @@
 import { LIST_FILTER_DEFAULT, ListFilterAtom } from "@/atom/ListFilters";
 import MainFilters from "@/components/MainFilters";
 import NFTDisplay from "@/components/NftList";
+import NFTDisplaySkeleton from "@/components/NftList/NFTDisplaySkeleton";
 import SortList from "@/components/SortList";
 import Search from "@/components/icon/Search";
 import { getNfts } from "@/lib/get-nfts";
@@ -24,7 +25,13 @@ async function getData() {
 
 export default function Home() {
   const [listFilter, setListFilter] = useAtom(ListFilterAtom);
-  const { data: nft_list, isLoading, refetch } = useQuery({
+  const {
+    data: nft_list,
+    isLoading,
+    refetch,
+    isFetching,
+    isRefetching,
+  } = useQuery({
     queryKey: ["nft_list"],
     queryFn: () => getNfts(listFilter),
   });
@@ -53,8 +60,8 @@ export default function Home() {
         <SortList />
       </div>
 
-      {isLoading ? (
-        <p>asdfasdfasdf</p>
+      {isLoading || isFetching || isRefetching ? (
+        <NFTDisplaySkeleton />
       ) : (
         <NFTDisplay nft_list={nft_list?.data} />
       )}
