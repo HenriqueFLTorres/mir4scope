@@ -38,8 +38,46 @@ export async function POST(request: NextRequest) {
         : {}),
     };
 
-    const nft_list = (await prisma.nft.findRaw({
-      filter,
+    const nft_list = (await prisma.nft.aggregateRaw({
+      pipeline: [
+        {
+          $match: filter,
+        },
+        {
+          $project: {
+            codex: {
+              $sum: "$1.completed",
+            },
+          },
+        },
+        ...(codex[0] > 100 || codex[1] < 2000
+          ? [
+              {
+                $addFields: {
+                  codex1: { $toInt: "$codex.1.completed" },
+                  codex2: { $toInt: "$codex.2.completed" },
+                  codex3: { $toInt: "$codex.3.completed" },
+                  codex4: { $toInt: "$codex.4.completed" },
+                },
+              },
+              {
+                $addFields: {
+                  totalCodex: {
+                    $add: ["$codex1", "$codex2", "$codex3", "$codex4"],
+                  },
+                },
+              },
+              {
+                $unset: ["codex1", "codex2", "codex3", "codex4"],
+              },
+              {
+                $match: {
+                  totalCodex: { $gte: codex[0], $lte: codex[1] },
+                },
+              },
+            ]
+          : []),
+      ],
       options: {
         take: 20,
       },

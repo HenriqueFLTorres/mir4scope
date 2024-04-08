@@ -34,6 +34,7 @@ export default function Home() {
   } = useQuery({
     queryKey: ["nft_list"],
     queryFn: () => getNfts(listFilter),
+    refetchOnWindowFocus: false,
   });
 
   return (
