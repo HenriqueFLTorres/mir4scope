@@ -12,6 +12,7 @@ import Spirit from "../icon/Spirit";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "../ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import Enhance from "./Enhance";
+import ItemDetailTooltip from "./ItemDetailTooltip";
 import NFTContainer from "./NFTContainer";
 
 type InventoryTabs =
@@ -203,7 +204,17 @@ export default function NFTInventory({
           <TabsContent key={tab} value={tab.toLowerCase().replace(/\s/g, "_")}>
             <ul className="flex flex-wrap gap-3">
               {formattedInventory[tab].items.map((item) => (
-                <InventoryItem key={item.item_uid} {...item} />
+                <ItemDetailTooltip
+                  key={item.item_uid}
+                  add_option={item?.add_option ?? []}
+                  item_name={item.item_name}
+                  item_path={item.item_path}
+                  options={item?.options ?? []}
+                  power_score={item?.power_score}
+                  no_detail
+                >
+                  <InventoryItem {...item} />
+                </ItemDetailTooltip>
               ))}
             </ul>
           </TabsContent>

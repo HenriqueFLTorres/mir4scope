@@ -332,4 +332,7 @@ export type NftInventoryItem = {
   tier: string;
   item_name: string;
   item_path: string;
+  power_score?: number;
+  options?: ItemDetail[];
+  add_option?: ItemDetail[];
 };
