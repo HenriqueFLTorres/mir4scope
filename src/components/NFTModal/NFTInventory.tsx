@@ -37,23 +37,42 @@ export default function NFTInventory({
   const [currentTab, setCurrentTab] = useState("equipment");
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  const ItemCount = useMemo(() => {
-    const countingObject = {
-      Equipment: 0,
-      Material: 0,
-      "Magic Stone": 0,
-      Spirit: 0,
-      Sundry: 0,
-      "Secondary Equipment": 0,
+  const formattedInventory = useMemo(() => {
+    const countingObject: {
+      [key in InventoryTabs]: { count: number; items: NftInventoryItem[] };
+    } = {
+      Equipment: {
+        count: 0,
+        items: [],
+      },
+      Material: {
+        count: 0,
+        items: [],
+      },
+      "Magic Stone": {
+        count: 0,
+        items: [],
+      },
+      Spirit: {
+        count: 0,
+        items: [],
+      },
+      Sundry: {
+        count: 0,
+        items: [],
+      },
+      "Secondary Equipment": {
+        count: 0,
+        items: [],
+      },
     };
 
-    inventory.reduce((acc, item) => {
-      const accumulatorKey = INVENTORY_TABS.at(item.tab_category - 1);
-      if (!accumulatorKey) return acc;
+    for (const item of inventory) {
+      const itemTab = getItemTab(item.main_type);
 
-      acc[accumulatorKey] += 1;
-      return acc;
-    }, countingObject);
+      countingObject[itemTab].count += 1;
+      countingObject[itemTab].items.push(item);
+    }
 
     return countingObject;
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -85,7 +104,7 @@ export default function NFTInventory({
                 className="items-center gap-4 p-3 text-xs"
               >
                 <Icon className="h-4 w-4" /> {tab}
-                <strong>{ItemCount[tab]}</strong>
+                <strong>{formattedInventory[tab].count}</strong>
               </TabsTrigger>
             );
           })}
@@ -93,14 +112,9 @@ export default function NFTInventory({
         {INVENTORY_TABS.map((tab) => (
           <TabsContent key={tab} value={tab.toLowerCase().replace(/\s/g, "_")}>
             <ul className="flex flex-wrap gap-3">
-              {inventory
-                .filter(
-                  ({ tab_category }) =>
-                    tab_category === INVENTORY_TABS.indexOf(tab) + 1,
-                )
-                .map((item) => (
-                  <InventoryItem key={item.item_uid} {...item} />
-                ))}
+              {formattedInventory[tab].items.map((item) => (
+                <InventoryItem key={item.item_uid} {...item} />
+              ))}
             </ul>
           </TabsContent>
         ))}
@@ -114,13 +128,9 @@ function InventoryItem({
   grade,
   item_name,
   item_path,
-  item_uid,
   refine_step,
   stack,
   tier,
-  main_type,
-  sub_type,
-  tab_category,
 }: NftInventoryItem) {
   return (
     <li className="relative flex h-24 w-24 items-center justify-center">
@@ -171,5 +181,37 @@ function getTabIcon(tab: InventoryTabs) {
       return Crafting;
     default:
       throw new Error(`Unknown inventory tab: ${tab}`);
+  }
+}
+
+function getItemTab(main_type: number): InventoryTabs {
+  switch (main_type) {
+    case 2: // Weapon
+    case 3: // Armor
+    case 4: // Accessories
+    case 20: // Legendary weapon
+    case 22: // Artifact
+      return "Equipment";
+    case 5: // Pills, enhancement, crafting materials
+    case 7: // Constitution upgrade materials
+    case 9: // BUNCH OF RANDOM MATERIALS
+    case 12: // Skill tomes
+      return "Material";
+    case 17: // Treasuers
+      return "Spirit";
+    case 8: // Magic Stone
+      return "Magic Stone";
+    case 6: // Buff potions, scrolls, boxes, tickets
+    case 11: // Costumes?
+    case 13: // Gear codex
+    case 14: // Badges, crystal and tickets
+    case 18: // Tickets, summoning tickets and badges
+      return "Sundry";
+    case 21: // Mystical Piece
+    case 23: // Soul orb
+    case 24: // Transference equipment
+      return "Secondary Equipment";
+    default:
+      return "Secondary Equipment";
   }
 }
