@@ -306,10 +306,16 @@ export type NftPotential = {
 };
 
 export type NftCodexObject = {
-  codex_name: string;
-  total_count: string;
-  completed: string;
-  in_progress: string;
+  data: {
+    [key in string]: {
+      codex_name: number;
+      total_count: number;
+      completed: number;
+      in_progress: number;
+    };
+  };
+  completed: number;
+  in_progress: number;
 };
 
 export type NftInventoryItem = {
