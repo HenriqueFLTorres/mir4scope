@@ -1,6 +1,7 @@
 "use client";
 
 import { gradeToRarity } from "@/lib/utils";
+import { ArrowDownWideNarrow, Gem, Layers, Plus } from "lucide-react";
 import Image from "next/image";
 import { useMemo, useState } from "react";
 import { toRoman } from "typescript-roman-numbers-converter";
@@ -8,6 +9,7 @@ import type { NftInventoryItem } from "../../../prisma-types";
 import Backpack from "../icon/Backpack";
 import Crafting from "../icon/Crafting";
 import Spirit from "../icon/Spirit";
+import { Select, SelectContent, SelectItem, SelectTrigger } from "../ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import Enhance from "./Enhance";
 import NFTContainer from "./NFTContainer";
@@ -29,12 +31,24 @@ const INVENTORY_TABS = [
   "Secondary Equipment",
 ] as const;
 
+type InventorySortingTypes =
+  | "RARITY_ASC"
+  | "RARITY_DESC"
+  | "TIER_ASC"
+  | "TIER_DESC"
+  | "ENHANCE_ASC"
+  | "ENHANCE_DESC"
+  | "QUANTITY_ASC"
+  | "QUANTITY_DESC";
+
 export default function NFTInventory({
   inventory,
 }: {
   inventory: NftInventoryItem[];
 }) {
   const [currentTab, setCurrentTab] = useState("equipment");
+  const [inventorySorting, setInventorySorting] =
+    useState<InventorySortingTypes>("RARITY_DESC");
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const formattedInventory = useMemo(() => {
@@ -74,9 +88,15 @@ export default function NFTInventory({
       countingObject[itemTab].items.push(item);
     }
 
+    for (const tab of Object.values(countingObject)) {
+      tab.items.sort((itemA, itemB) =>
+        getSortingComparasion(inventorySorting, itemA, itemB),
+      );
+    }
+
     return countingObject;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [inventorySorting]);
 
   return (
     <NFTContainer className="col-span-2">
@@ -93,7 +113,7 @@ export default function NFTInventory({
         defaultValue="equipment"
         className="flex flex-col items-start"
       >
-        <TabsList className="mb-6">
+        <TabsList className="mb-6 flex-wrap justify-start gap-4">
           {INVENTORY_TABS.map((tab) => {
             const Icon = getTabIcon(tab);
 
@@ -108,6 +128,76 @@ export default function NFTInventory({
               </TabsTrigger>
             );
           })}
+
+          <Select
+            value={inventorySorting}
+            onValueChange={(value) =>
+              setInventorySorting(value as InventorySortingTypes)
+            }
+          >
+            <SelectTrigger className="w-72">
+              <ArrowDownWideNarrow className="h-5 w-5" />
+              Sort By
+            </SelectTrigger>
+            <SelectContent className="w-52" align="end">
+              <SelectItem
+                className="gap-2"
+                Icon={<Gem className="h-5 w-5" />}
+                value={"RARITY_DESC"}
+              >
+                Rarity Highest
+              </SelectItem>
+              <SelectItem
+                className="gap-2"
+                Icon={<Gem className="h-5 w-5" />}
+                value={"RARITY_ASC"}
+              >
+                Rarity Lowest
+              </SelectItem>
+              <SelectItem
+                className="gap-2"
+                Icon={<Crafting className="h-5 w-5" />}
+                value={"TIER_DESC"}
+              >
+                Tier Highest
+              </SelectItem>
+              <SelectItem
+                className="gap-2"
+                Icon={<Crafting className="h-5 w-5" />}
+                value={"TIER_ASC"}
+              >
+                Tier Lowest
+              </SelectItem>
+              <SelectItem
+                className="gap-2"
+                Icon={<Plus className="h-5 w-5" />}
+                value={"ENHANCE_DESC"}
+              >
+                Enhance Highest
+              </SelectItem>
+              <SelectItem
+                className="gap-2"
+                Icon={<Plus className="h-5 w-5" />}
+                value={"ENHANCE_ASC"}
+              >
+                Enhance Lowest
+              </SelectItem>
+              <SelectItem
+                className="gap-2"
+                Icon={<Layers className="h-5 w-5" />}
+                value={"QUANTITY_DESC"}
+              >
+                Quantity Highest
+              </SelectItem>
+              <SelectItem
+                className="gap-2"
+                Icon={<Layers className="h-5 w-5" />}
+                value={"QUANTITY_ASC"}
+              >
+                Quantity Lowest
+              </SelectItem>
+            </SelectContent>
+          </Select>
         </TabsList>
         {INVENTORY_TABS.map((tab) => (
           <TabsContent key={tab} value={tab.toLowerCase().replace(/\s/g, "_")}>
@@ -213,5 +303,53 @@ function getItemTab(main_type: number): InventoryTabs {
       return "Secondary Equipment";
     default:
       return "Secondary Equipment";
+  }
+}
+
+function getSortingComparasion(
+  inventorySorting: InventorySortingTypes,
+  itemA: NftInventoryItem,
+  itemB: NftInventoryItem,
+) {
+  const RARITY_ASC = Number(itemA.grade) - Number(itemB.grade);
+  const RARITY_DESC = Number(itemB.grade) - Number(itemA.grade);
+
+  const ENHANCE_ASC = itemA.enhance - itemB.enhance;
+  const ENHANCE_DESC = itemB.enhance - itemA.enhance;
+
+  const TIER_ASC = Number(itemA.tier) - Number(itemB.tier);
+  const TIER_DESC = Number(itemB.tier) - Number(itemA.tier);
+
+  switch (inventorySorting) {
+    case "RARITY_ASC":
+      return RARITY_ASC + TIER_ASC * 0.1 + ENHANCE_ASC * 0.1;
+    case "RARITY_DESC":
+      return RARITY_DESC + TIER_DESC * 0.1 + ENHANCE_DESC * 0.1;
+    case "QUANTITY_ASC":
+      return (
+        itemA.stack -
+        itemB.stack +
+        RARITY_ASC * 0.5 +
+        ENHANCE_ASC * 0.1 +
+        TIER_ASC * 0.1
+      );
+    case "QUANTITY_DESC":
+      return (
+        itemB.stack -
+        itemA.stack +
+        RARITY_DESC * 0.5 +
+        ENHANCE_DESC * 0.1 +
+        TIER_DESC * 0.1
+      );
+    case "ENHANCE_ASC":
+      return ENHANCE_ASC + RARITY_ASC * 0.1 + TIER_ASC * 0.1;
+    case "ENHANCE_DESC":
+      return ENHANCE_DESC + RARITY_DESC * 0.1 + TIER_DESC * 0.1;
+    case "TIER_ASC":
+      return TIER_ASC + RARITY_ASC * 0.1 + ENHANCE_ASC * 0.1;
+    case "TIER_DESC":
+      return TIER_DESC + RARITY_DESC * 0.1 + ENHANCE_DESC * 0.1;
+    default:
+      throw new Error(`Unknown inventory sorting type: ${inventorySorting}`);
   }
 }
