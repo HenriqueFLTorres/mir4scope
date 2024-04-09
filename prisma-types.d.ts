@@ -107,6 +107,12 @@ export type NftTraining = {
   collect_level: number;
 };
 
+export type ItemDetail = {
+  name: string;
+  value: number;
+  format: string;
+};
+
 export type NftEquipItem = {
   item_idx: string;
   enhance: string;
@@ -117,10 +123,8 @@ export type NftEquipItem = {
   item_name: string;
   item_path: string;
   power_score: number;
-  options: { [key in string]: { name: string; value: number; format: string } };
-  add_option: {
-    [key in string]: { name: string; value: number; format: string };
-  };
+  options: ItemDetail[];
+  add_option: ItemDetail[];
 };
 
 export type NftSkills = Partial<{ [key in NftAllSkills]: string }>;
@@ -242,6 +246,9 @@ export type NftSuccessionItem = {
   tier: string;
   item_name: string;
   item_path: string;
+  power_score: number;
+  options: ItemDetail[];
+  add_option: ItemDetail[];
 };
 
 export type NftMagicStone = {
@@ -253,10 +260,8 @@ export type NftMagicStone = {
   item_name: string;
   item_path: string;
   power_score: number;
-  options: { [key in string]: { name: string; value: number; format: string } };
-  add_option: {
-    [key in string]: { name: string; value: number; format: string };
-  };
+  options: ItemDetail[];
+  add_option: ItemDetail[];
 };
 
 type NftMysticalPiece = NftMagicStone;

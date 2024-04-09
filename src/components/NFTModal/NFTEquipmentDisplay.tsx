@@ -1,7 +1,8 @@
 import { classIndexToName, gradeToRarity } from "@/lib/utils";
 import Image from "next/image";
-import type { NftEquipItem } from "../../../prisma-types";
 import { toRoman } from "typescript-roman-numbers-converter";
+import type { NftEquipItem } from "../../../prisma-types";
+import ItemDetailTooltip from "./ItemDetailTooltip";
 
 const slot_position = [
   {
@@ -70,13 +71,21 @@ export default function NFTEquipmentDisplay({
         height={452}
         src={`/class-preview/${classIndexToName(classIndex)}.webp`}
         alt=""
-        className="pointer-events-none absolute left-[50%] top-[50%] fade-image translate-x-[-50%] translate-y-[-50%] object-contain"
+        className="fade-image pointer-events-none absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] object-contain"
       />
 
       <ul className="grid w-max grid-cols-5 items-center gap-3 p-1">
         {equip_order.map((key, index) => {
-          const { enhance, grade, item_path, item_name, tier } =
-            equip_items[key];
+          const {
+            enhance,
+            grade,
+            item_path,
+            item_name,
+            tier,
+            power_score,
+            add_option,
+            options,
+          } = equip_items[key];
 
           return (
             <li
@@ -84,30 +93,39 @@ export default function NFTEquipmentDisplay({
               className="absolute flex h-20 w-20 items-center gap-2 p-1 text-sm font-bold text-white [&>span]:drop-shadow-[0_0_2px_rgb(0,0,0)]"
               style={slot_position[index]}
             >
-              <div className="flex h-20 w-20 shrink-0 items-center justify-center">
-                <Image
-                  width={80}
-                  height={80}
-                  src={`/item-bg-${gradeToRarity(grade)}.webp`}
-                  alt=""
-                  className="absolute object-contain"
-                />
-                <Image
-                  width={62}
-                  height={62}
-                  src={item_path}
-                  alt={item_name}
-                  className="absolute object-contain"
-                />
-              </div>
-              {Number(enhance) > 0 ? (
-                <span className="absolute -right-1 -top-1 text-xl">
-                  +{enhance}
+              <ItemDetailTooltip
+                add_option={add_option}
+                options={options}
+                item_name={item_name}
+                item_path={item_path}
+                power_score={power_score}
+                disable_background
+              >
+                <div className="flex h-20 w-20 shrink-0 items-center justify-center">
+                  <Image
+                    width={80}
+                    height={80}
+                    src={`/item-bg-${gradeToRarity(grade)}.webp`}
+                    alt=""
+                    className="absolute object-contain"
+                  />
+                  <Image
+                    width={62}
+                    height={62}
+                    src={item_path}
+                    alt={item_name}
+                    className="absolute object-contain"
+                  />
+                </div>
+                {Number(enhance) > 0 ? (
+                  <span className="absolute -right-1 -top-1 text-xl">
+                    +{enhance}
+                  </span>
+                ) : null}
+                <span className="absolute -bottom-2 -left-2 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-[3px] border-[#9f916c] bg-[#333] text-base">
+                  {toRoman(Number(tier))}
                 </span>
-              ) : null}
-              <span className="absolute -bottom-2 -left-2 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-[3px] border-[#9f916c] bg-[#333] text-base">
-                {toRoman(Number(tier))}
-              </span>
+              </ItemDetailTooltip>
             </li>
           );
         })}

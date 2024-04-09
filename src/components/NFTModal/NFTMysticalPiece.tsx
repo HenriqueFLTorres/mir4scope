@@ -5,6 +5,7 @@ import type { NftMysticalPiece } from "../../../prisma-types";
 import Spirit from "../icon/Spirit";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import Enhance from "./Enhance";
+import ItemDetailTooltip from "./ItemDetailTooltip";
 import NFTContainer from "./NFTContainer";
 import Transcend from "./Transcend";
 
@@ -80,25 +81,33 @@ function MysticalPieceItem({
   add_option,
 }: NftMysticalPiece) {
   return (
-    <div className="relative flex h-20 w-20 items-center justify-center">
-      <Image
-        src={`/bg-${gradeToRarity(grade)}.webp`}
-        alt=""
-        className="object-contain"
-        width={80}
-        height={80}
-      />
-      <Image
-        src={item_path}
-        alt={item_name}
-        className="absolute object-contain"
-        width={64}
-        height={64}
-      />
+    <ItemDetailTooltip
+      add_option={add_option}
+      options={options}
+      item_name={item_name}
+      item_path={item_path}
+      power_score={power_score}
+    >
+      <div className="relative flex h-20 w-20 items-center justify-center">
+        <Image
+          src={`/bg-${gradeToRarity(grade)}.webp`}
+          alt=""
+          className="object-contain"
+          width={80}
+          height={80}
+        />
+        <Image
+          src={item_path}
+          alt={item_name}
+          className="absolute object-contain"
+          width={64}
+          height={64}
+        />
 
-      <Transcend value={tier} />
+        <Transcend value={tier} />
 
-      <Enhance value={trance_step} />
-    </div>
+        <Enhance value={trance_step} />
+      </div>
+    </ItemDetailTooltip>
   );
 }

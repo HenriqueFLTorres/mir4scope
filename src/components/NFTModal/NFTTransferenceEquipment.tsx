@@ -4,6 +4,7 @@ import { ItemPlaceholder } from ".";
 import type { NftSuccessionItem } from "../../../prisma-types";
 import Spirit from "../icon/Spirit";
 import Enhance from "./Enhance";
+import ItemDetailTooltip from "./ItemDetailTooltip";
 import NFTContainer from "./NFTContainer";
 import Transcend from "./Transcend";
 
@@ -50,27 +51,38 @@ function TransferenceItem({
   enhance,
   refine_step,
   trance_step,
+  add_option,
+  options,
+  power_score,
 }: NftSuccessionItem) {
   return (
-    <div className="relative flex h-20 w-20 items-center justify-center">
-      <Image
-        src={`/bg-${gradeToRarity(grade)}.webp`}
-        alt=""
-        className="object-contain"
-        width={80}
-        height={80}
-      />
-      <Image
-        src={item_path}
-        alt={item_name}
-        className="absolute object-contain"
-        width={50}
-        height={50}
-      />
+    <ItemDetailTooltip
+      add_option={add_option}
+      options={options}
+      item_name={item_name}
+      item_path={item_path}
+      power_score={power_score}
+    >
+      <div className="relative flex h-20 w-20 items-center justify-center">
+        <Image
+          src={`/bg-${gradeToRarity(grade)}.webp`}
+          alt=""
+          className="object-contain"
+          width={80}
+          height={80}
+        />
+        <Image
+          src={item_path}
+          alt={item_name}
+          className="absolute object-contain"
+          width={50}
+          height={50}
+        />
 
-      <Transcend value={tier} />
+        <Transcend value={tier} />
 
-      <Enhance value={enhance} />
-    </div>
+        <Enhance value={enhance} />
+      </div>
+    </ItemDetailTooltip>
   );
 }

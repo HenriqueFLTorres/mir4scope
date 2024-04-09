@@ -47,13 +47,20 @@ export async function POST(request: Request) {
       },
     });
 
+    const succession = await prisma.succession.findFirst({
+      where: {
+        id: nft?.succession_id,
+      },
+    });
+
     return NextResponse.json({
       ...nft,
       spirits,
       magic_orb,
       magic_stone,
       mystical_piece,
-      inventory: inventory?.inventory
+      inventory: inventory?.inventory,
+      succession: succession?.equip_item,
     });
   } catch (error) {
     return NextResponse.json(

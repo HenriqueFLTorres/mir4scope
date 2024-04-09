@@ -43,13 +43,6 @@ export async function POST(request: NextRequest) {
         {
           $match: filter,
         },
-        {
-          $project: {
-            codex: {
-              $sum: "$1.completed",
-            },
-          },
-        },
         ...(codex[0] > 100 || codex[1] < 2000
           ? [
               {
@@ -77,10 +70,10 @@ export async function POST(request: NextRequest) {
               },
             ]
           : []),
+        {
+          $limit: 20,
+        },
       ],
-      options: {
-        take: 20,
-      },
     })) as unknown as NftFromMongo[];
 
     const nft_list_with_spirit = await Promise.all(

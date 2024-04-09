@@ -55,18 +55,17 @@ model nft {
   potentials  Json
   /// [nft_holy_stuff]
   holy_stuff  Json
-  /// [nft_succession]
-  succession  Json
   /// [nft_equip_items]
   equip_items Json
   /// [nft_codex]
-  codex Json
+  codex       Json
 
   spirits_id        String @db.ObjectId
   magic_orb_id      String @db.ObjectId
   inventory_id      String @db.ObjectId
   magic_stone_id    String @db.ObjectId
   mystical_piece_id String @db.ObjectId
+  succession_id     String @db.ObjectId
 }
 
 model spirits {
@@ -105,5 +104,12 @@ model inventory {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 
   /// [nft_inventory]
-  inventory  Json
+  inventory Json
+}
+
+model succession {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  /// [nft_succession]
+  equip_item Json
 }
