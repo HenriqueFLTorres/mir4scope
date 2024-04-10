@@ -1,7 +1,7 @@
 "use client";
 
 import { gradeToRarity } from "@/lib/utils";
-import { ArrowDownWideNarrow, Gem, Layers, Plus } from "lucide-react";
+import { ArrowDownWideNarrow, Gem, Layers, Plus, Search } from "lucide-react";
 import Image from "next/image";
 import { useMemo, useState } from "react";
 import { toRoman } from "typescript-roman-numbers-converter";
@@ -9,6 +9,7 @@ import type { NftInventoryItem } from "../../../prisma-types";
 import Backpack from "../icon/Backpack";
 import Crafting from "../icon/Crafting";
 import Spirit from "../icon/Spirit";
+import { Input } from "../ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "../ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import Enhance from "./Enhance";
@@ -47,6 +48,7 @@ export default function NFTInventory({
 }: {
   inventory: NftInventoryItem[];
 }) {
+  const [itemSearch, setItemSearch] = useState("");
   const [currentTab, setCurrentTab] = useState("equipment");
   const [inventorySorting, setInventorySorting] =
     useState<InventorySortingTypes>("RARITY_DESC");
@@ -199,23 +201,40 @@ export default function NFTInventory({
               </SelectItem>
             </SelectContent>
           </Select>
+          <Input
+            prefix={<Search className="absolute bottom-2 left-2 h-6 w-6" />}
+            placeholder="Search by item name"
+            spellCheck={false}
+            value={itemSearch}
+            onChange={(e) => setItemSearch(e.target.value)}
+          />
         </TabsList>
         {INVENTORY_TABS.map((tab) => (
-          <TabsContent key={tab} value={tab.toLowerCase().replace(/\s/g, "_")}>
+          <TabsContent
+            key={tab}
+            className="items-start data-[state=active]:min-h-[30rem]"
+            value={tab.toLowerCase().replace(/\s/g, "_")}
+          >
             <ul className="flex flex-wrap gap-3">
-              {formattedInventory[tab].items.map((item) => (
-                <ItemDetailTooltip
-                  key={item.item_uid}
-                  add_option={item?.add_option ?? []}
-                  item_name={item.item_name}
-                  item_path={item.item_path}
-                  options={item?.options ?? []}
-                  power_score={item?.power_score}
-                  no_detail
-                >
-                  <InventoryItem {...item} />
-                </ItemDetailTooltip>
-              ))}
+              {formattedInventory[tab].items
+                .filter((item) =>
+                  itemSearch
+                    ? item.item_name.toLowerCase().includes(itemSearch)
+                    : true,
+                )
+                .map((item) => (
+                  <ItemDetailTooltip
+                    key={item.item_uid}
+                    add_option={item?.add_option ?? []}
+                    item_name={item.item_name}
+                    item_path={item.item_path}
+                    options={item?.options ?? []}
+                    power_score={item?.power_score}
+                    no_detail
+                  >
+                    <InventoryItem {...item} />
+                  </ItemDetailTooltip>
+                ))}
             </ul>
           </TabsContent>
         ))}
