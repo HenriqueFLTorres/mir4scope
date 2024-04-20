@@ -5,7 +5,22 @@ import { NextResponse, type NextRequest } from "next/server";
 
 export async function POST(request: NextRequest) {
   try {
-    const allNfts = await db.select().from(NFT_SCHEMA).limit(20);
+    const allNfts = await db
+      .select({
+        characterName: NFT_SCHEMA.characterName,
+        seq: NFT_SCHEMA.seq,
+        transportId: NFT_SCHEMA.transportId,
+        class: NFT_SCHEMA.class,
+        lvl: NFT_SCHEMA.lvl,
+        powerScore: NFT_SCHEMA.powerScore,
+        worldName: NFT_SCHEMA.worldName,
+        stats: NFT_SCHEMA.stats,
+        skills: NFT_SCHEMA.skills,
+        equipItems: NFT_SCHEMA.equipItems,
+        spiritsId: NFT_SCHEMA.spiritsId,
+      })
+      .from(NFT_SCHEMA)
+      .limit(20);
 
     const nftsWithSpirit = await Promise.all(
       allNfts.map(async (nft) => {

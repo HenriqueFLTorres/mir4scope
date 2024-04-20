@@ -24,7 +24,6 @@ export default function Home() {
     queryFn: () => getNfts(listFilter),
     refetchOnWindowFocus: false,
   });
-  console.log(nft_list)
 
   return (
     <main className="flex min-h-screen flex-col items-center gap-6 bg-gradient-to-br from-[#44356A] to-[#272039] p-24">

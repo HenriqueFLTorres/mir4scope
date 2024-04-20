@@ -64,7 +64,7 @@ export default function NFTEquipmentDisplay({
         className="absolute object-contain"
       />
 
-      {/* <Image
+      <Image
         width={452}
         height={452}
         src={`/class-preview/${classIndexToName(classIndex)}.webp`}
@@ -127,7 +127,7 @@ export default function NFTEquipmentDisplay({
             </li>
           );
         })}
-      </ul> */}
+      </ul>
     </div>
   );
 }

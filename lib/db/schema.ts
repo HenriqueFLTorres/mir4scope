@@ -77,12 +77,12 @@ export const MYSTICAL_PIECE_SCHEMA = pgTable("mystical_piece", {
 
 export const INVENTORY_SCHEMA = pgTable("inventory", {
   id: serial("id").primaryKey(),
-  inventory: jsonb("equip_item").$type<NFT_INVENTORY_ITEM[]>().notNull(),
+  inventory: jsonb("inventory").$type<NFT_INVENTORY_ITEM[]>().notNull(),
 });
 
 export const SUCCESSION_SCHEMA = pgTable("succession", {
   id: serial("id").primaryKey(),
-  succession: jsonb("equip_item")
+  succession: jsonb("succession")
     .$type<{ [key in string]: NFT_SUCCESSION_ITEM }>()
     .notNull(),
 });
