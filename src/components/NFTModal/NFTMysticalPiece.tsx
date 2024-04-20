@@ -1,4 +1,5 @@
 import { completeArray, gradeToRarity } from "@/lib/utils";
+import type { NFTSelectAll } from "@/types/schema";
 import Image from "next/image";
 import { ItemPlaceholder } from ".";
 import Spirit from "../icon/Spirit";
@@ -9,21 +10,16 @@ import NFTContainer from "./NFTContainer";
 import Transcend from "./Transcend";
 
 export default function NFTMysticalPiece({
-  mystical_piece,
-}: {
-  mystical_piece: {
-    equip_item: { [key in string]: NFT_MYSTICAL_PIECE[] };
-    active_deck: number;
-  };
-}) {
-  const availableDeckIndexes = Object.keys(mystical_piece?.equip_item);
+  mysticalPiece,
+}: Pick<NFTSelectAll, "mysticalPiece">) {
+  const availableDeckIndexes = Object.keys(mysticalPiece?.equipItem);
 
   return (
     <NFTContainer>
       <Tabs
         className="flex w-full flex-col"
         defaultValue={String(
-          mystical_piece?.active_deck ?? availableDeckIndexes[0],
+          mysticalPiece?.active_deck ?? availableDeckIndexes[0],
         )}
       >
         <header className="mb-8 flex w-full items-center justify-between gap-4">
@@ -41,7 +37,7 @@ export default function NFTMysticalPiece({
           </TabsList>
         </header>
 
-        {Object.entries(mystical_piece?.equip_item).map(
+        {Object.entries(mysticalPiece?.equipItem).map(
           ([deckIndex, mysticalPieceObject]) => (
             <TabsContent
               className="grid w-full grid-cols-3"

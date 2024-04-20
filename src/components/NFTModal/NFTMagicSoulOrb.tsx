@@ -1,5 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { completeArray } from "@/lib/utils";
+import type { NFTSelectAll } from "@/types/schema";
 import Image from "next/image";
 import { toRoman } from "typescript-roman-numbers-converter";
 import { ItemPlaceholder } from ".";
@@ -7,13 +8,9 @@ import Spirit from "../icon/Spirit";
 import NFTContainer from "./NFTContainer";
 
 export default function NFTMagicSoulOrb({
-  magic_orb,
-}: {
-  magic_orb: {
-    equip_item: { [key in string]: NFT_MAGIC_ORB[] };
-  };
-}) {
-  const availableDeckIndexes = Object.keys(magic_orb?.equip_item);
+  magicOrb,
+}: Pick<NFTSelectAll, "magicOrb">) {
+  const availableDeckIndexes = Object.keys(magicOrb?.equipItem);
 
   return (
     <NFTContainer>
@@ -36,7 +33,7 @@ export default function NFTMagicSoulOrb({
           </TabsList>
         </header>
 
-        {Object.entries(magic_orb?.equip_item).map(
+        {Object.entries(magicOrb?.equipItem).map(
           ([deckIndex, magicOrbObject]) => (
             <TabsContent key={deckIndex} value={deckIndex}>
               {completeArray(Object.values(magicOrbObject), 5).map(

@@ -20,10 +20,10 @@ export type NFTForDisplay = SelectNFT & {
   spirits: { inven: SelectSpirit["inven"] };
 };
 
-export type NFTSelectAll = SelectNFT &
-  SelectSpirit &
-  SelectMagicOrb &
-  SelectMagicStone &
-  SelectMysticalPiece &
-  SelectInventory &
-  SelectSuccession;
+export type NFTSelectAll = SelectNFT & { spirits: SelectSpirit } & {
+  magicOrb: SelectMagicOrb;
+} & { magicStone: SelectMagicStone } & {
+  mysticalPiece: SelectMysticalPiece;
+} & { inventory: SelectInventory["inventory"] } & {
+  succession: SelectSuccession["succession"];
+};

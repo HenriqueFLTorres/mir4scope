@@ -1,18 +1,15 @@
-import { getReadableNumber } from "@/lib/utils";
 import Codex from "@/components/icon/Codex";
 import EXP from "@/components/icon/EXP";
-import Power from '@/components/icon/Power';
-import Globe from '@/components/icon/Globe';
+import Globe from "@/components/icon/Globe";
+import Power from "@/components/icon/Power";
+import { getReadableNumber } from "@/lib/utils";
+import type { NFTSelectAll } from "@/types/schema";
 
 export default function NFTTags({
   lvl,
-  power_score,
-  world_name,
-}: {
-  lvl: number;
-  power_score: number;
-  world_name: string;
-}) {
+  powerScore,
+  worldName,
+}: Pick<NFTSelectAll, "lvl" | "powerScore" | "worldName">) {
   return (
     <ul className="flex flex-wrap gap-2">
       <NFTChips>
@@ -22,10 +19,10 @@ export default function NFTTags({
         <Codex className="h-6 w-6" /> 9,243
       </NFTChips>
       <NFTChips>
-        <Power className="h-6 w-6" /> {getReadableNumber(power_score)}
+        <Power className="h-6 w-6" /> {getReadableNumber(powerScore)}
       </NFTChips>
       <NFTChips>
-        <Globe className="h-6 w-6" /> {world_name}
+        <Globe className="h-6 w-6" /> {worldName}
       </NFTChips>
     </ul>
   );

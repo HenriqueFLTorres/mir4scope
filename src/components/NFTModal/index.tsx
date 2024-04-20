@@ -33,20 +33,22 @@ export default function NFTModal({ seq }: { seq: string }) {
     refetchOnWindowFocus: false,
   });
 
+  console.log(nft)
+
   return (
     <Sheet defaultOpen open onOpenChange={handleClose}>
       <SheetContent className="overflow-auto">
-        {isLoading ? (
+        {isLoading || !nft ? (
           <p>asdfasdf</p>
         ) : (
           <>
             <section className="relative mb-16 flex h-[34rem] w-full justify-center gap-16">
               <NFTEquipmentDisplay
                 class={nft.class}
-                equip_items={nft.equip_items}
+                equipItems={nft.equipItems}
               />
               <div className="flex flex-col gap-6">
-                <h1 className="text-4xl font-bold">{nft.character_name}</h1>
+                <h1 className="text-4xl font-bold">{nft.characterName}</h1>
                 <NFTTags {...nft} />
 
                 <NFTAssets assets={nft.assets} />
@@ -79,15 +81,15 @@ export default function NFTModal({ seq }: { seq: string }) {
             <section className="grid grid-cols-2 gap-4">
               <NFTSpirit spirits={nft?.spirits} />
 
-              <NFTMagicSoulOrb magic_orb={nft?.magic_orb} />
+              <NFTMagicSoulOrb magicOrb={nft?.magicOrb} />
 
-              <NFTDragonArtifact equip_items={nft?.equip_items} />
+              <NFTDragonArtifact equip_items={nft?.equipItems} />
 
               <NFTTransferenceEquipment succession={nft?.succession} />
 
-              <NFTMagicStone magic_stone={nft?.magic_stone} />
+              <NFTMagicStone magicStone={nft?.magicStone} />
 
-              <NFTMysticalPiece mystical_piece={nft?.mystical_piece} />
+              <NFTMysticalPiece mysticalPiece={nft?.mysticalPiece} />
 
               <NFTTraining training={nft?.training} />
 

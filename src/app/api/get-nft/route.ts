@@ -8,6 +8,7 @@ import {
   SPIRITS_SCHEMA,
   SUCCESSION_SCHEMA,
 } from "@/drizzle/schema";
+import type { NFTSelectAll } from "@/types/schema";
 import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
@@ -29,7 +30,7 @@ export async function POST(request: Request) {
         .limit(1)
     ).at(0);
 
-    const magic_orb = (
+    const magicOrb = (
       await db
         .select()
         .from(MAGIC_ORB_SCHEMA)
@@ -37,7 +38,7 @@ export async function POST(request: Request) {
         .limit(1)
     ).at(0);
 
-    const magic_stone = (
+    const magicStone = (
       await db
         .select()
         .from(MAGIC_STONE_SCHEMA)
@@ -45,7 +46,7 @@ export async function POST(request: Request) {
         .limit(1)
     ).at(0);
 
-    const mystical_piece = (
+    const mysticalPiece = (
       await db
         .select()
         .from(MYSTICAL_PIECE_SCHEMA)
@@ -72,19 +73,14 @@ export async function POST(request: Request) {
     return NextResponse.json({
       ...nft,
       spirits,
-      magic_orb,
-      magic_stone,
-      mystical_piece,
+      magicOrb,
+      magicStone,
+      mysticalPiece,
       inventory: inventory?.inventory,
       succession: succession?.succession,
-    });
+    } as NFTSelectAll);
   } catch (error) {
-    return NextResponse.json(
-      {
-        success: false,
-        data: null,
-      },
-      { status: 500, statusText: "Server error." },
-    );
+    console.error(error)
+    return NextResponse.json([], { status: 500, statusText: "Server error." });
   }
 }

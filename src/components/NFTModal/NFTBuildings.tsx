@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import type { NFTSelectAll } from "@/types/schema";
 import Image from "next/image";
 import Conquest from "../icon/Conquest";
 import NFTContainer from "./NFTContainer";
@@ -18,9 +19,7 @@ const BUILDING_POSITIONS = {
 
 export default function NFTBuildings({
   buildings,
-}: {
-  buildings: { [key in string]: NFT_BUILDINGS_ENUM };
-}) {
+}: Pick<NFTSelectAll, "buildings">) {
   return (
     <NFTContainer className="relative col-span-2 items-center justify-center p-0">
       <header className="absolute top-0 flex w-full items-center justify-between gap-4 px-6 py-4">

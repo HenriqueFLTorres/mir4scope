@@ -1,4 +1,5 @@
 import { classIndexToName, gradeToRarity } from "@/lib/utils";
+import type { NFTSelectAll } from "@/types/schema";
 import Image from "next/image";
 import { toRoman } from "typescript-roman-numbers-converter";
 import ItemDetailTooltip from "./ItemDetailTooltip";
@@ -49,12 +50,10 @@ const slot_position = [
 export const equip_order = [1, 9, 5, 6, 7, 8, 2, 3, 4, 10];
 
 export default function NFTEquipmentDisplay({
-  equip_items,
+  equipItems,
   class: classIndex,
-}: {
-  equip_items: { [key in string]: NFT_EQUIP_ITEM };
-  class: number;
-}) {
+}: Pick<NFTSelectAll, "equipItems" | "class">) {
+  console.log("class", classIndex);
   return (
     <div className="relative mx-10 my-6 h-[32rem] w-[32rem]">
       <Image
@@ -65,7 +64,7 @@ export default function NFTEquipmentDisplay({
         className="absolute object-contain"
       />
 
-      <Image
+      {/* <Image
         width={452}
         height={452}
         src={`/class-preview/${classIndexToName(classIndex)}.webp`}
@@ -84,7 +83,7 @@ export default function NFTEquipmentDisplay({
             power_score,
             add_option,
             options,
-          } = equip_items[key];
+          } = equipItems[key];
 
           return (
             <li
@@ -128,7 +127,7 @@ export default function NFTEquipmentDisplay({
             </li>
           );
         })}
-      </ul>
+      </ul> */}
     </div>
   );
 }

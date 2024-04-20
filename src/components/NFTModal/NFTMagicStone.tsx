@@ -1,4 +1,5 @@
 import { completeArray, gradeToRarity } from "@/lib/utils";
+import type { NFTSelectAll } from "@/types/schema";
 import Image from "next/image";
 import { ItemPlaceholder } from ".";
 import Spirit from "../icon/Spirit";
@@ -9,21 +10,16 @@ import NFTContainer from "./NFTContainer";
 import Transcend from "./Transcend";
 
 export default function NFTMagicStone({
-  magic_stone,
-}: {
-  magic_stone: {
-    equip_item: { [key in string]: NFT_MAGIC_STONE[] };
-    active_deck: number;
-  };
-}) {
-  const availableDeckIndexes = Object.keys(magic_stone?.equip_item);
+  magicStone,
+}: Pick<NFTSelectAll, "magicStone">) {
+  const availableDeckIndexes = Object.keys(magicStone?.equipItem);
 
   return (
     <NFTContainer>
       <Tabs
         className="flex w-full flex-col"
         defaultValue={String(
-          magic_stone?.active_deck ?? availableDeckIndexes[0],
+          magicStone?.active_deck ?? availableDeckIndexes[0],
         )}
       >
         <header className="mb-8 flex w-full items-center justify-between gap-4">
@@ -41,7 +37,7 @@ export default function NFTMagicStone({
           </TabsList>
         </header>
 
-        {Object.entries(magic_stone?.equip_item).map(
+        {Object.entries(magicStone?.equipItem).map(
           ([deckIndex, magicStoneObject]) => (
             <TabsContent
               className="grid w-full grid-cols-4"
