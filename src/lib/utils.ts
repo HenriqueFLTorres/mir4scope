@@ -6,7 +6,6 @@ import SpellATK from "@/components/icon/SpellATK";
 import SPELLDEF from "@/components/icon/SpellDEF";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import type { NftStats } from "../../prisma-types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -47,7 +46,7 @@ export function classIndexToName(index: number) {
   }
 }
 
-export function getStatIcon(stat: keyof NftStats) {
+export function getStatIcon(stat: NFT_STATS_ENUM) {
   switch (stat) {
     case "PHYS ATK":
       return PHYSATK;

@@ -1,57 +1,73 @@
-import prisma from "@/lib/prisma";
-import type { nft, spirits } from "@prisma/client";
+import { db } from "@/drizzle/index";
+import {
+  INVENTORY_SCHEMA,
+  MAGIC_ORB_SCHEMA,
+  MAGIC_STONE_SCHEMA,
+  MYSTICAL_PIECE_SCHEMA,
+  NFT_SCHEMA,
+  SPIRITS_SCHEMA,
+  SUCCESSION_SCHEMA,
+} from "@/drizzle/schema";
+import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
-
-export type NftFromMongo = Exclude<nft, "spirits_id" | "stats"> & {
-  spirits_id: { $oid: string };
-  spirits: Omit<spirits, "id" | "equip">;
-};
 
 export async function POST(request: Request) {
   try {
     const { seq } = await request.json();
 
-    const nft = await prisma.nft.findFirst({
-      where: {
-        seq: Number(seq),
-      },
-    });
+    const nft = (
+      await db.select().from(NFT_SCHEMA).where(eq(NFT_SCHEMA.seq, seq)).limit(1)
+    ).at(0);
 
-    const spirits = await prisma.spirits.findFirst({
-      where: {
-        id: nft?.spirits_id,
-      },
-    });
+    if (!nft) throw new Error("NFT not found.");
 
-    const magic_orb = await prisma.magic_orb.findFirst({
-      where: {
-        id: nft?.magic_orb_id,
-      },
-    });
+    const spirits = (
+      await db
+        .select()
+        .from(SPIRITS_SCHEMA)
+        .where(eq(SPIRITS_SCHEMA.id, nft.spiritsId))
+        .limit(1)
+    ).at(0);
 
-    const magic_stone = await prisma.magic_stone.findFirst({
-      where: {
-        id: nft?.magic_stone_id,
-      },
-    });
+    const magic_orb = (
+      await db
+        .select()
+        .from(MAGIC_ORB_SCHEMA)
+        .where(eq(MAGIC_ORB_SCHEMA.id, nft.magicOrbId))
+        .limit(1)
+    ).at(0);
 
-    const mystical_piece = await prisma.mystical_piece.findFirst({
-      where: {
-        id: nft?.mystical_piece_id,
-      },
-    });
+    const magic_stone = (
+      await db
+        .select()
+        .from(MAGIC_STONE_SCHEMA)
+        .where(eq(MAGIC_STONE_SCHEMA.id, nft.magicStoneId))
+        .limit(1)
+    ).at(0);
 
-    const inventory = await prisma.inventory.findFirst({
-      where: {
-        id: nft?.inventory_id,
-      },
-    });
+    const mystical_piece = (
+      await db
+        .select()
+        .from(MYSTICAL_PIECE_SCHEMA)
+        .where(eq(MYSTICAL_PIECE_SCHEMA.id, nft.mysticalPieceId))
+        .limit(1)
+    ).at(0);
 
-    const succession = await prisma.succession.findFirst({
-      where: {
-        id: nft?.succession_id,
-      },
-    });
+    const inventory = (
+      await db
+        .select()
+        .from(INVENTORY_SCHEMA)
+        .where(eq(INVENTORY_SCHEMA.id, nft.inventoryId))
+        .limit(1)
+    ).at(0);
+
+    const succession = (
+      await db
+        .select()
+        .from(SUCCESSION_SCHEMA)
+        .where(eq(SUCCESSION_SCHEMA.id, nft.successionId))
+        .limit(1)
+    ).at(0);
 
     return NextResponse.json({
       ...nft,
@@ -60,7 +76,7 @@ export async function POST(request: Request) {
       magic_stone,
       mystical_piece,
       inventory: inventory?.inventory,
-      succession: succession?.equip_item,
+      succession: succession?.succession,
     });
   } catch (error) {
     return NextResponse.json(

@@ -11,18 +11,6 @@ import { useQuery } from "@tanstack/react-query";
 import { useAtom } from "jotai";
 import { FilterX } from "lucide-react";
 
-async function getData() {
-  const res = await fetch("http://localhost:3000/api/get-nfts", {
-    cache: "no-cache",
-  });
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
-  }
-
-  return res.json();
-}
-
 export default function Home() {
   const [listFilter, setListFilter] = useAtom(ListFilterAtom);
   const {
@@ -64,7 +52,7 @@ export default function Home() {
       {isLoading || isFetching || isRefetching ? (
         <NFTDisplaySkeleton />
       ) : (
-        <NFTDisplay nft_list={nft_list?.data} />
+        <NFTDisplay nft_list={nft_list} />
       )}
     </main>
   );

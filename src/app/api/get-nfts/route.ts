@@ -1,127 +1,36 @@
-import type { ListFiltersType } from "@/atom/ListFilters";
-import prisma from "@/lib/prisma";
-import type { nft, spirits } from "@prisma/client";
+import { db } from "@/drizzle/index";
+import { NFT_SCHEMA } from "@/drizzle/schema";
+import { sql } from "drizzle-orm";
 import { NextResponse, type NextRequest } from "next/server";
-
-export type NftFromMongo = Exclude<nft, "spirits_id" | "stats"> & {
-  spirits_id: { $oid: string };
-  spirits: Omit<spirits, "id" | "equip">;
-};
 
 export async function POST(request: NextRequest) {
   try {
-    const {
-      search,
-      class: mir4Class,
-      level,
-      power,
-      codex,
-      priceRange,
-    } = (await request.json()) as ListFiltersType;
+    const allNfts = await db.select().from(NFT_SCHEMA).limit(20);
 
-    const filter = {
-      ...(search ? { character_name: { $regex: search, $options: "i" } } : {}),
-      ...(mir4Class > 0 ? { class: { $eq: mir4Class } } : {}),
-      ...(level[0] > 60 || level[1] < 170
-        ? { lvl: { $gte: level[0], $lte: level[1] } }
-        : {}),
-      ...(power[0] > 100e3 || power[1] < 600e3
-        ? { power_score: { $gte: power[0], $lte: power[1] } }
-        : {}),
-      ...(priceRange[0] > 0 || priceRange[1]
-        ? {
-            price: {
-              ...(priceRange[0] > 0 ? { $gte: priceRange[0] } : {}),
-              ...(priceRange[1] ? { $lte: priceRange[1] } : {}),
-            },
-          }
-        : {}),
-    };
+    const nftsWithSpirit = await Promise.all(
+      allNfts.map(async (nft) => {
+        const spirits = await db.execute(sql`
+          SELECT
+            jsonb_agg(obj) AS inven
+          FROM
+            spirits
+            LEFT JOIN LATERAL jsonb_array_elements(spirits.inven) AS obj ON true
+          WHERE
+            id = ${nft.spiritsId}
+            AND (obj ->> 'grade')::int >= 4
+          GROUP BY
+            spirits.id
+          LIMIT
+            1;
+        `);
 
-    const nft_list = (await prisma.nft.aggregateRaw({
-      pipeline: [
-        {
-          $match: filter,
-        },
-        ...(codex[0] > 100 || codex[1] < 2000
-          ? [
-              {
-                $addFields: {
-                  codex1: { $toInt: "$codex.1.completed" },
-                  codex2: { $toInt: "$codex.2.completed" },
-                  codex3: { $toInt: "$codex.3.completed" },
-                  codex4: { $toInt: "$codex.4.completed" },
-                },
-              },
-              {
-                $addFields: {
-                  totalCodex: {
-                    $add: ["$codex1", "$codex2", "$codex3", "$codex4"],
-                  },
-                },
-              },
-              {
-                $unset: ["codex1", "codex2", "codex3", "codex4"],
-              },
-              {
-                $match: {
-                  totalCodex: { $gte: codex[0], $lte: codex[1] },
-                },
-              },
-            ]
-          : []),
-        {
-          $limit: 20,
-        },
-      ],
-    })) as unknown as NftFromMongo[];
-
-    const nft_list_with_spirit = await Promise.all(
-      (nft_list ? nft_list : []).map(async (nft) => {
-        const spirits = await prisma.spirits.aggregateRaw({
-          pipeline: [
-            { $match: { _id: { $oid: nft.spirits_id.$oid } } },
-            {
-              $project: {
-                inven: {
-                  $filter: {
-                    input: "$inven",
-                    cond: {
-                      $gte: ["$$this.grade", 4],
-                    },
-                  },
-                },
-              },
-            },
-            {
-              $project: {
-                inven: {
-                  $sortArray: { input: "$inven", sortBy: { grade: -1 } },
-                },
-              },
-            },
-          ],
-        });
-
-        return {
-          ...nft,
-          spirits: spirits[0] as Omit<spirits, "id" | "equip">,
-        };
+        return { ...nft, spirits: spirits[0] };
       }),
     );
 
-    return NextResponse.json({
-      success: true,
-      data: nft_list_with_spirit,
-    });
+    return NextResponse.json(nftsWithSpirit);
   } catch (error) {
     console.error(error);
-    return NextResponse.json(
-      {
-        success: false,
-        data: null,
-      },
-      { status: 500, statusText: "Server error." },
-    );
+    return NextResponse.json([], { status: 500, statusText: "Server error." });
   }
 }

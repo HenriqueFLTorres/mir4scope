@@ -1,8 +1,7 @@
 import { cn, getReadableNumber } from "@/lib/utils";
 import Image from "next/image";
-import type { NftAssets } from "../../../prisma-types";
 
-type assets_type = { [key in NftAssets]: string };
+type assets_type = { [key in NFT_ASSETS_ENUM]: string };
 
 export default function NFTAssets({ assets }: { assets: assets_type }) {
   return (
@@ -27,7 +26,7 @@ function AssetFragment({
   assets,
   className,
 }: {
-  type: NftAssets;
+  type: NFT_ASSETS_ENUM;
   assets: assets_type;
   className?: string;
 }) {

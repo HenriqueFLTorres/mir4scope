@@ -1,6 +1,5 @@
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import type { NftBuildings } from "../../../prisma-types";
 import Conquest from "../icon/Conquest";
 import NFTContainer from "./NFTContainer";
 
@@ -20,7 +19,7 @@ const BUILDING_POSITIONS = {
 export default function NFTBuildings({
   buildings,
 }: {
-  buildings: { [key in string]: NftBuildings };
+  buildings: { [key in string]: NFT_BUILDINGS_ENUM };
 }) {
   return (
     <NFTContainer className="relative col-span-2 items-center justify-center p-0">
@@ -39,16 +38,14 @@ export default function NFTBuildings({
         className="w-full rounded-xl object-contain"
       />
 
-      {(Object.entries(buildings) as unknown as [NftBuildings, string][]).map(
-        ([name, tier]) => (
-          <BuildingFragment
-            key={name}
-            name={name}
-            tier={tier}
-            style={BUILDING_POSITIONS[name]}
-          />
-        ),
-      )}
+      {Object.entries(buildings).map(([name, tier]) => (
+        <BuildingFragment
+          key={name}
+          name={name}
+          tier={tier}
+          style={BUILDING_POSITIONS[name as NFT_BUILDINGS_ENUM]}
+        />
+      ))}
     </NFTContainer>
   );
 }

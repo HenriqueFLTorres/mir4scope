@@ -1,7 +1,6 @@
 import { classIndexToName, gradeToRarity } from "@/lib/utils";
 import Image from "next/image";
 import { toRoman } from "typescript-roman-numbers-converter";
-import type { NftEquipItem } from "../../../prisma-types";
 import ItemDetailTooltip from "./ItemDetailTooltip";
 
 const slot_position = [
@@ -53,7 +52,7 @@ export default function NFTEquipmentDisplay({
   equip_items,
   class: classIndex,
 }: {
-  equip_items: { [key in string]: NftEquipItem };
+  equip_items: { [key in string]: NFT_EQUIP_ITEM };
   class: number;
 }) {
   return (

@@ -3,14 +3,13 @@
 import { classIndexToName, getReadableNumber, getStatIcon } from "@/lib/utils";
 import Image from "next/image";
 
-import type { NftFromMongo } from "@/app/api/get-nfts/route";
 import Power from "@/components/icon/Power";
 import Wemix from "@/components/icon/Wemix";
+import type { NFTForDisplay } from "@/types/schema";
 import { getCardRarity, getNFTColor } from ".";
-import type { NftStats } from "../../../../prisma-types";
 import GlassChip from "./GlassChip";
 
-const STATS_TO_DISPLAY = [
+const STATS_TO_DISPLAY: NFT_STATS_ENUM[] = [
   "PHYS ATK",
   "PHYS DEF",
   "Spell ATK",
@@ -20,29 +19,29 @@ const STATS_TO_DISPLAY = [
 ];
 
 export default function NFTCardFront({
-  character_name,
-  power_score,
+  characterName,
+  powerScore,
   class: classIndex,
   price,
   lvl,
   stats,
-}: NftFromMongo) {
+}: NFTForDisplay) {
   const mir4Class = classIndexToName(classIndex);
 
   return (
     <div
       className="backface-hidden absolute h-full w-full overflow-hidden rounded-lg border-4 shadow-inner drop-shadow-lg"
-      style={{ borderColor: getNFTColor(power_score) }}
+      style={{ borderColor: getNFTColor(powerScore) }}
     >
       <Image
         fill
-        src={`/${getCardRarity(power_score)}-card.webp`}
+        src={`/${getCardRarity(powerScore)}-card.webp`}
         alt=""
         className="pointer-events-none absolute z-[-1] h-[22rem] w-72 object-cover"
       />
 
       <p className="pointer-events-none absolute left-0 top-14 z-[-1] inline-block shrink-0 text-nowrap text-6xl font-bold text-white opacity-40 drop-shadow-lg">
-        {character_name}
+        {characterName}
       </p>
 
       <div
@@ -51,7 +50,7 @@ export default function NFTCardFront({
         }
         style={{
           backgroundImage: `linear-gradient(to bottom, ${getNFTColor(
-            power_score,
+            powerScore,
           )}, rgba(0,0,0,0))`,
         }}
       />
@@ -62,7 +61,7 @@ export default function NFTCardFront({
         }
         style={{
           backgroundImage: `linear-gradient(to top, ${getNFTColor(
-            power_score,
+            powerScore,
           )}, rgba(0,0,0,0))`,
         }}
       />
@@ -79,9 +78,9 @@ export default function NFTCardFront({
         {STATS_TO_DISPLAY.map((name) => {
           if (!(name in stats)) return null;
 
-          const value = stats[name as keyof NftStats];
+          const value = stats[name];
 
-          const StatIcon = getStatIcon(name as keyof NftStats);
+          const StatIcon = getStatIcon(name);
           if (value === undefined) return null;
 
           return (
@@ -101,7 +100,7 @@ export default function NFTCardFront({
       <footer className="absolute bottom-0 mt-auto flex w-full flex-col gap-2 p-1">
         <div className="flex w-full items-end justify-between">
           <h2 className="leading-none drop-shadow-[0px_2px_2px_rgba(0,0,0,0.4)]">
-            {character_name}
+            {characterName}
           </h2>
 
           <h3 className="text-base leading-none drop-shadow-[0px_2px_2px_rgba(0,0,0,0.4)]">
@@ -111,7 +110,7 @@ export default function NFTCardFront({
 
         <div className="flex w-full items-center justify-between">
           <GlassChip className="w-max">
-            <Power className="h-4 w-4" /> {getReadableNumber(power_score)}
+            <Power className="h-4 w-4" /> {getReadableNumber(powerScore)}
           </GlassChip>
 
           {/* <GlassChip className="w-max">

@@ -1,7 +1,6 @@
 import { completeArray, gradeToRarity } from "@/lib/utils";
 import Image from "next/image";
 import { ItemPlaceholder } from ".";
-import type { NftMysticalPiece } from "../../../prisma-types";
 import Spirit from "../icon/Spirit";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import Enhance from "./Enhance";
@@ -13,7 +12,7 @@ export default function NFTMysticalPiece({
   mystical_piece,
 }: {
   mystical_piece: {
-    equip_item: { [key in string]: NftMysticalPiece[] };
+    equip_item: { [key in string]: NFT_MYSTICAL_PIECE[] };
     active_deck: number;
   };
 }) {
@@ -79,7 +78,7 @@ function MysticalPieceItem({
   power_score,
   options,
   add_option,
-}: NftMysticalPiece) {
+}: NFT_MYSTICAL_PIECE) {
   return (
     <ItemDetailTooltip
       add_option={add_option}

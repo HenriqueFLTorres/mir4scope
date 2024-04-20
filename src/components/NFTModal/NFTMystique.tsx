@@ -1,12 +1,11 @@
 import Image from "next/image";
-import type { NftMystique } from "../../../prisma-types";
 import Skill from "../icon/Skill";
 import NFTContainer from "./NFTContainer";
 
 export default function NFTMystique({
   holy_stuff,
 }: {
-  holy_stuff: { [key in NftMystique]: string };
+  holy_stuff: { [key in NFT_MYSTIQUE]: string };
 }) {
   return (
     <NFTContainer className="gap-12">
@@ -18,7 +17,7 @@ export default function NFTMystique({
       </header>
 
       <ul className="flex gap-4">
-        {(Object.entries(holy_stuff) as [NftMystique, string][]).map(
+        {(Object.entries(holy_stuff) as [NFT_MYSTIQUE, string][]).map(
           ([name, tier]) => (
             <li key={name}>
               <MystiqueFragment name={name} tier={tier} />
@@ -35,7 +34,7 @@ function MystiqueFragment({
   name,
 }: {
   tier: number | string;
-  name: NftMystique;
+  name: NFT_MYSTIQUE;
 }) {
   return (
     <div className="flex w-full flex-col items-center gap-4">

@@ -5,7 +5,6 @@ import { ArrowDownWideNarrow, Gem, Layers, Plus, Search } from "lucide-react";
 import Image from "next/image";
 import { useMemo, useState } from "react";
 import { toRoman } from "typescript-roman-numbers-converter";
-import type { NftInventoryItem } from "../../../prisma-types";
 import Backpack from "../icon/Backpack";
 import Crafting from "../icon/Crafting";
 import Spirit from "../icon/Spirit";
@@ -46,7 +45,7 @@ type InventorySortingTypes =
 export default function NFTInventory({
   inventory,
 }: {
-  inventory: NftInventoryItem[];
+  inventory: NFT_INVENTORY_ITEM[];
 }) {
   const [itemSearch, setItemSearch] = useState("");
   const [currentTab, setCurrentTab] = useState("equipment");
@@ -56,7 +55,7 @@ export default function NFTInventory({
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const formattedInventory = useMemo(() => {
     const countingObject: {
-      [key in InventoryTabs]: { count: number; items: NftInventoryItem[] };
+      [key in InventoryTabs]: { count: number; items: NFT_INVENTORY_ITEM[] };
     } = {
       Equipment: {
         count: 0,
@@ -251,7 +250,7 @@ function InventoryItem({
   refine_step,
   stack,
   tier,
-}: NftInventoryItem) {
+}: NFT_INVENTORY_ITEM) {
   return (
     <li className="relative flex h-24 w-24 items-center justify-center">
       <Image
@@ -338,8 +337,8 @@ function getItemTab(main_type: number): InventoryTabs {
 
 function getSortingComparasion(
   inventorySorting: InventorySortingTypes,
-  itemA: NftInventoryItem,
-  itemB: NftInventoryItem,
+  itemA: NFT_INVENTORY_ITEM,
+  itemB: NFT_INVENTORY_ITEM,
 ) {
   const RARITY_ASC = Number(itemA.grade) - Number(itemB.grade);
   const RARITY_DESC = Number(itemB.grade) - Number(itemA.grade);

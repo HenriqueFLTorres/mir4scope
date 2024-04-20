@@ -1,9 +1,8 @@
 import { getRelativePercentage } from "@/lib/utils";
-import type { NftCodexObject } from "../../../prisma-types";
 import Codex from "../icon/Codex";
 import NFTContainer from "./NFTContainer";
 
-export default function NFTCodex({ codex }: { codex: NftCodexObject }) {
+export default function NFTCodex({ codex }: { codex: NFT_CODEX }) {
   return (
     <NFTContainer className="col-span-2">
       <header className="flex w-full items-center justify-between gap-4">
@@ -14,7 +13,9 @@ export default function NFTCodex({ codex }: { codex: NftCodexObject }) {
       </header>
 
       <div className="flex w-full justify-center gap-4">
-        {Object.values(codex.data).map((codex) => (
+        {(
+          Object.values(codex.data) as unknown as NFT_CODEX_OBJECT["data"][0][]
+        ).map((codex) => (
           <CodexFragment key={codex.codex_name} {...codex} />
         ))}
       </div>
@@ -27,7 +28,7 @@ function CodexFragment({
   completed,
   in_progress,
   total_count,
-}: NftCodexObject["data"][0]) {
+}: NFT_CODEX_OBJECT["data"][0]) {
   const completedPercentage = getRelativePercentage(
     in_progress + completed,
     total_count,

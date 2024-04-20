@@ -1,7 +1,6 @@
 import { completeArray, gradeToRarity } from "@/lib/utils";
 import Image from "next/image";
 import { ItemPlaceholder } from ".";
-import type { NftSuccessionItem } from "../../../prisma-types";
 import Spirit from "../icon/Spirit";
 import Enhance from "./Enhance";
 import ItemDetailTooltip from "./ItemDetailTooltip";
@@ -11,7 +10,7 @@ import Transcend from "./Transcend";
 export default function NFTTransferenceEquipment({
   succession,
 }: {
-  succession: { [key in string]: NftSuccessionItem };
+  succession: { [key in string]: NFT_SUCCESSION_ITEM };
 }) {
   return (
     <NFTContainer>
@@ -27,7 +26,7 @@ export default function NFTTransferenceEquipment({
           completeArray(
             Object.values(succession),
             5,
-          ) as (NftSuccessionItem | null)[]
+          ) as (NFT_SUCCESSION_ITEM | null)[]
         ).map((successionItem) =>
           successionItem ? (
             <TransferenceItem
@@ -54,7 +53,7 @@ function TransferenceItem({
   add_option,
   options,
   power_score,
-}: NftSuccessionItem) {
+}: NFT_SUCCESSION_ITEM) {
   return (
     <ItemDetailTooltip
       add_option={add_option}

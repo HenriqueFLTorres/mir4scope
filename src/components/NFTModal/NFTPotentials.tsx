@@ -1,12 +1,11 @@
 import Image from "next/image";
-import type { NftPotential } from "../../../prisma-types";
 import Skill from "../icon/Skill";
 import NFTContainer from "./NFTContainer";
 
 export default function NFTPotentials({
   potentials,
 }: {
-  potentials: NftPotential;
+  potentials: NFT_POTENTIAL;
 }) {
   return (
     <NFTContainer className="relative items-center justify-center gap-4 overflow-hidden">

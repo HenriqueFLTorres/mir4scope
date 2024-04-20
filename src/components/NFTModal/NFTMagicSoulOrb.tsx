@@ -3,7 +3,6 @@ import { completeArray } from "@/lib/utils";
 import Image from "next/image";
 import { toRoman } from "typescript-roman-numbers-converter";
 import { ItemPlaceholder } from ".";
-import type { NftMagicOrb } from "../../../prisma-types";
 import Spirit from "../icon/Spirit";
 import NFTContainer from "./NFTContainer";
 
@@ -11,7 +10,7 @@ export default function NFTMagicSoulOrb({
   magic_orb,
 }: {
   magic_orb: {
-    equip_item: { [key in string]: NftMagicOrb[] };
+    equip_item: { [key in string]: NFT_MAGIC_ORB[] };
   };
 }) {
   const availableDeckIndexes = Object.keys(magic_orb?.equip_item);
@@ -65,7 +64,7 @@ function MagicOrbItem({
   item_name,
   item_path,
   tier,
-}: NftMagicOrb) {
+}: NFT_MAGIC_ORB) {
   return (
     <div
       key={item_name}

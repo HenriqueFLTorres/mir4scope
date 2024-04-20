@@ -2,7 +2,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { completeArray } from "@/lib/utils";
 import Image from "next/image";
 import { ItemPlaceholder } from ".";
-import type { NftSpirit } from "../../../prisma-types";
 import Spirit from "../icon/Spirit";
 import NFTContainer from "./NFTContainer";
 import Transcend from "./Transcend";
@@ -10,7 +9,7 @@ import Transcend from "./Transcend";
 export default function NFTSpirit({
   spirits,
 }: {
-  spirits: { equip: { [key in string]: { [key in string]: NftSpirit } } };
+  spirits: { equip: { [key in string]: { [key in string]: NFT_SPIRIT } } };
 }) {
   const availableDeckIndexes = Object.keys(spirits?.equip);
 
@@ -53,7 +52,7 @@ export default function NFTSpirit({
   );
 }
 
-function SpiritItem({ grade, icon_path, pet_name, transcend }: NftSpirit) {
+function SpiritItem({ grade, icon_path, pet_name, transcend }: NFT_SPIRIT) {
   return (
     <div className="relative flex h-20 w-20 items-center justify-center">
       <Image

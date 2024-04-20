@@ -1,9 +1,8 @@
 import Image from "next/image";
-import type { NftTraining } from "../../../prisma-types";
 import Skill from "../icon/Skill";
 import NFTContainer from "./NFTContainer";
 
-export default function NFTTraining({ training }: { training: NftTraining }) {
+export default function NFTTraining({ training }: { training: NFT_TRAINING }) {
   return (
     <NFTContainer className="col-span-2">
       <header className="flex w-full items-center justify-between gap-4">

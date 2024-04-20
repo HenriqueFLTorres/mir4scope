@@ -1,5 +1,4 @@
 import { atom } from "jotai";
-import type { NftStats } from "../../prisma-types";
 
 export type ListFiltersType = {
   search: string;
@@ -13,7 +12,7 @@ export type ListFiltersType = {
   skills: SkillsValueType;
   spirits: SpiritsType[];
   status: Partial<{
-    [key in keyof NftStats]: [number | undefined, number | undefined];
+    [key in NFT_STATS_ENUM]: [number | undefined, number | undefined];
   }>;
   tickets: { [key in TicketsType]: number };
   training: {

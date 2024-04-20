@@ -1,6 +1,5 @@
 import { gradeToRarity } from "@/lib/utils";
 import Image from "next/image";
-import type { NftEquipItem } from "../../../prisma-types";
 import Spirit from "../icon/Spirit";
 import Enhance from "./Enhance";
 import ItemDetailTooltip from "./ItemDetailTooltip";
@@ -12,7 +11,7 @@ const DRAGON_ARTIFACT_SEQUENCE_INDEX = [11, 12, 13, 14, 15];
 export default function NFTDragonArtifact({
   equip_items,
 }: {
-  equip_items: { [key in string]: NftEquipItem };
+  equip_items: { [key in string]: NFT_EQUIP_ITEM };
 }) {
   return (
     <NFTContainer>
@@ -52,7 +51,7 @@ function ArtifactItem({
   add_option,
   options,
   power_score,
-}: NftEquipItem) {
+}: NFT_EQUIP_ITEM) {
   return (
     <ItemDetailTooltip
       add_option={add_option}
@@ -86,8 +85,8 @@ function ArtifactItem({
 }
 
 function prepareDragonArtifacts(
-  obj: { [key in string]: NftEquipItem | null } = {},
-): [string, NftEquipItem | null][] {
+  obj: { [key in string]: NFT_EQUIP_ITEM | null } = {},
+): [string, NFT_EQUIP_ITEM | null][] {
   const newObj = { ...obj };
   for (const objectKey of Object.keys(newObj)) {
     if (!DRAGON_ARTIFACT_SEQUENCE_INDEX.includes(Number(objectKey)))

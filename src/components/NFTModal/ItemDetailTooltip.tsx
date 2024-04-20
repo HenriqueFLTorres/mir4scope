@@ -7,7 +7,6 @@ import {
 } from "@/components/ui/tooltip";
 import { FileText } from "lucide-react";
 import Image from "next/image";
-import type { NftEquipItem } from "../../../prisma-types";
 
 export default function ItemDetailTooltip({
   children,
@@ -23,8 +22,8 @@ export default function ItemDetailTooltip({
   item_name: string;
   item_path: string;
   power_score?: number;
-  options: NftEquipItem["options"];
-  add_option: NftEquipItem["add_option"];
+  options: NFT_EQUIP_ITEM["options"];
+  add_option: NFT_EQUIP_ITEM["add_option"];
   disable_background?: boolean;
   no_detail?: boolean;
 }) {
@@ -71,8 +70,8 @@ function ItemDetail({
   add_option,
 }: {
   power_score?: number;
-  options: NftEquipItem["options"];
-  add_option: NftEquipItem["add_option"];
+  options: NFT_EQUIP_ITEM["options"];
+  add_option: NFT_EQUIP_ITEM["add_option"];
 }) {
   return (
     <>

@@ -1,11 +1,11 @@
 "use client";
 
-import type { NftFromMongo } from "@/app/api/get-nfts/route";
+import type { NFTForDisplay } from "@/types/schema";
 import Link from "next/link";
 import NFTCardBack from "./Back";
 import NFTCardFront from "./Front";
 
-export default function NFTCard(data: NftFromMongo) {
+export default function NFTCard(data: NFTForDisplay) {
   return (
     <Link
       href={`/nft/${data.seq}`}

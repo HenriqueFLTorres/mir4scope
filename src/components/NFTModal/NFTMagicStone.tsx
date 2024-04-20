@@ -1,7 +1,6 @@
 import { completeArray, gradeToRarity } from "@/lib/utils";
 import Image from "next/image";
 import { ItemPlaceholder } from ".";
-import type { NftMagicStone } from "../../../prisma-types";
 import Spirit from "../icon/Spirit";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import Enhance from "./Enhance";
@@ -13,7 +12,7 @@ export default function NFTMagicStone({
   magic_stone,
 }: {
   magic_stone: {
-    equip_item: { [key in string]: NftMagicStone[] };
+    equip_item: { [key in string]: NFT_MAGIC_STONE[] };
     active_deck: number;
   };
 }) {
@@ -76,7 +75,7 @@ function MagicStoneItem({
   power_score,
   options,
   add_option,
-}: NftMagicStone) {
+}: NFT_MAGIC_STONE) {
   return (
     <ItemDetailTooltip
       add_option={add_option}
