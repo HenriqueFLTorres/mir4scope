@@ -54,24 +54,24 @@ export default function NFTEquipmentDisplay({
   class: classIndex,
 }: Pick<NFTSelectAll, "equipItems" | "class">) {
   return (
-    <div className="relative mx-10 my-6 h-[32rem] w-[32rem]">
+    <div className="relative mx-10 my-6 flex h-[32rem] w-[32rem] shrink-0">
       <Image
         src="/nft/bg-character-equip.webp"
         alt=""
         width={512}
         height={512}
-        className="absolute object-contain"
+        className="absolute"
       />
 
       <Image
-        width={452}
-        height={452}
+        width={512}
+        height={512}
         src={`/class-preview/${classIndexToName(classIndex)}.webp`}
         alt=""
-        className="fade-image pointer-events-none absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] object-contain"
+        className="fade-image pointer-events-none absolute left-[50%] top-[50%] shrink-0 translate-x-[-50%] translate-y-[-50%] object-contain"
       />
 
-      <ul className="grid w-max grid-cols-5 items-center gap-3 p-1">
+      <ul className="flex items-center justify-center">
         {equip_order.map((key, index) => {
           const {
             enhance,
