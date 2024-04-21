@@ -1,5 +1,3 @@
-"use client";
-
 import NFTCard from "@/components/NftList/NFTCard";
 import type { NFTForDisplay } from "@/types/schema";
 

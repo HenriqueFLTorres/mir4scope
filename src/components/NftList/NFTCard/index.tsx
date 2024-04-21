@@ -1,5 +1,3 @@
-"use client";
-
 import type { NFTForDisplay } from "@/types/schema";
 import Link from "next/link";
 import NFTCardBack from "./Back";

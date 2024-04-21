@@ -1,5 +1,3 @@
-"use client";
-
 import { classIndexToName, getReadableNumber, getStatIcon } from "@/lib/utils";
 import Image from "next/image";
 

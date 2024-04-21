@@ -1,5 +1,3 @@
-"use client";
-
 import { SPECIAL_ABILITIES_NAMES } from "@/lib/contants";
 import { gradeToRarity } from "@/lib/utils";
 import Image from "next/image";
