@@ -1,8 +1,8 @@
+import NFTContainer from "@/components/NFTModal/NFTContainer";
+import Conquest from "@/components/icon/Conquest";
 import { cn } from "@/lib/utils";
 import type { NFTSelectAll } from "@/types/schema";
 import Image from "next/image";
-import Conquest from "../icon/Conquest";
-import NFTContainer from "./NFTContainer";
 
 const BUILDING_POSITIONS = {
   Mine: { left: "3rem", top: "10rem" },

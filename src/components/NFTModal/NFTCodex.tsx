@@ -1,6 +1,6 @@
+import NFTContainer from "@/components/NFTModal/NFTContainer";
+import Codex from "@/components/icon/Codex";
 import { getRelativePercentage } from "@/lib/utils";
-import Codex from "../icon/Codex";
-import NFTContainer from "./NFTContainer";
 
 export default function NFTCodex({ codex }: { codex: NFT_CODEX }) {
   return (

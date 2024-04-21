@@ -1,10 +1,10 @@
+import Enhance from "@/components/NFTModal/Enhance";
+import ItemDetailTooltip from "@/components/NFTModal/ItemDetailTooltip";
+import NFTContainer from "@/components/NFTModal/NFTContainer";
+import Transcend from "@/components/NFTModal/Transcend";
+import Spirit from "@/components/icon/Spirit";
 import { gradeToRarity } from "@/lib/utils";
 import Image from "next/image";
-import Spirit from "../icon/Spirit";
-import Enhance from "./Enhance";
-import ItemDetailTooltip from "./ItemDetailTooltip";
-import NFTContainer from "./NFTContainer";
-import Transcend from "./Transcend";
 
 const DRAGON_ARTIFACT_SEQUENCE_INDEX = [11, 12, 13, 14, 15];
 

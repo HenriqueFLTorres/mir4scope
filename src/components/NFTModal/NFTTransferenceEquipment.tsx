@@ -1,11 +1,11 @@
+import Enhance from "@/components/NFTModal/Enhance";
+import ItemDetailTooltip from "@/components/NFTModal/ItemDetailTooltip";
+import ItemPlaceholder from "@/components/NFTModal/ItemPlaceholder";
+import NFTContainer from "@/components/NFTModal/NFTContainer";
+import Transcend from "@/components/NFTModal/Transcend";
+import Spirit from "@/components/icon/Spirit";
 import { completeArray, gradeToRarity } from "@/lib/utils";
 import Image from "next/image";
-import { ItemPlaceholder } from ".";
-import Spirit from "../icon/Spirit";
-import Enhance from "./Enhance";
-import ItemDetailTooltip from "./ItemDetailTooltip";
-import NFTContainer from "./NFTContainer";
-import Transcend from "./Transcend";
 
 export default function NFTTransferenceEquipment({
   succession,

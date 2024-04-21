@@ -1,6 +1,6 @@
+import NFTContainer from "@/components/NFTModal/NFTContainer";
+import Skill from "@/components/icon/Skill";
 import Image from "next/image";
-import Skill from "../icon/Skill";
-import NFTContainer from "./NFTContainer";
 
 export default function NFTMystique({
   holy_stuff,

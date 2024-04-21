@@ -4,8 +4,8 @@ import type { DialogProps } from "@radix-ui/react-dialog";
 import { Command as CommandPrimitive } from "cmdk";
 import * as React from "react";
 
+import Search from "@/components/icon/Search";
 import { cn } from "@/lib/utils";
-import Search from "../icon/Search";
 import { Popover, PopoverContent } from "./popover";
 
 const Command = React.forwardRef<

@@ -1,10 +1,10 @@
+import ItemPlaceholder from "@/components/NFTModal/ItemPlaceholder";
+import NFTContainer from "@/components/NFTModal/NFTContainer";
+import Transcend from "@/components/NFTModal/Transcend";
+import Spirit from "@/components/icon/Spirit";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { completeArray } from "@/lib/utils";
 import Image from "next/image";
-import { ItemPlaceholder } from ".";
-import Spirit from "../icon/Spirit";
-import NFTContainer from "./NFTContainer";
-import Transcend from "./Transcend";
 
 export default function NFTSpirit({
   spirits,

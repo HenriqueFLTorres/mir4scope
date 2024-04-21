@@ -1,11 +1,11 @@
+import ItemPlaceholder from "@/components/NFTModal/ItemPlaceholder";
+import NFTContainer from "@/components/NFTModal/NFTContainer";
+import Spirit from "@/components/icon/Spirit";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { completeArray } from "@/lib/utils";
 import type { NFTSelectAll } from "@/types/schema";
 import Image from "next/image";
 import { toRoman } from "typescript-roman-numbers-converter";
-import { ItemPlaceholder } from ".";
-import Spirit from "../icon/Spirit";
-import NFTContainer from "./NFTContainer";
 
 export default function NFTMagicSoulOrb({
   magicOrb,

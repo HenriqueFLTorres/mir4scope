@@ -16,7 +16,9 @@ export default function NFTModalPage() {
           </Link>
         </div>
 
-        <div className="mt-10 w-1/3">qwefqwef</div>
+        <div className="mt-10 w-1/3">
+          <pre>nft/[id]/page.tsx</pre>
+        </div>
       </div>
     </section>
   );

@@ -1,10 +1,10 @@
+import ItemDetailTooltip from "@/components/NFTModal/ItemDetailTooltip";
 import { classIndexToName, gradeToRarity } from "@/lib/utils";
 import type { NFTSelectAll } from "@/types/schema";
 import Image from "next/image";
 import { toRoman } from "typescript-roman-numbers-converter";
-import ItemDetailTooltip from "./ItemDetailTooltip";
 
-const slot_position = [
+export const equip_slot_position = [
   {
     left: 125.22,
     top: -23.36,
@@ -53,7 +53,6 @@ export default function NFTEquipmentDisplay({
   equipItems,
   class: classIndex,
 }: Pick<NFTSelectAll, "equipItems" | "class">) {
-  console.log("class", classIndex);
   return (
     <div className="relative mx-10 my-6 h-[32rem] w-[32rem]">
       <Image
@@ -89,7 +88,7 @@ export default function NFTEquipmentDisplay({
             <li
               key={item_name}
               className="absolute flex h-20 w-20 items-center gap-2 p-1 text-sm font-bold text-white [&>span]:drop-shadow-[0_0_2px_rgb(0,0,0)]"
-              style={slot_position[index]}
+              style={equip_slot_position[index]}
             >
               <ItemDetailTooltip
                 add_option={add_option}

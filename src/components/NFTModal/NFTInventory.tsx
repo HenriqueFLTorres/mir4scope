@@ -1,19 +1,19 @@
 "use client";
 
+import Enhance from "@/components/NFTModal/Enhance";
+import ItemDetailTooltip from "@/components/NFTModal/ItemDetailTooltip";
+import NFTContainer from "@/components/NFTModal/NFTContainer";
+import Backpack from "@/components/icon/Backpack";
+import Crafting from "@/components/icon/Crafting";
+import Spirit from "@/components/icon/Spirit";
 import { gradeToRarity } from "@/lib/utils";
 import { ArrowDownWideNarrow, Gem, Layers, Plus, Search } from "lucide-react";
 import Image from "next/image";
 import { useMemo, useState } from "react";
 import { toRoman } from "typescript-roman-numbers-converter";
-import Backpack from "../icon/Backpack";
-import Crafting from "../icon/Crafting";
-import Spirit from "../icon/Spirit";
 import { Input } from "../ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "../ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
-import Enhance from "./Enhance";
-import ItemDetailTooltip from "./ItemDetailTooltip";
-import NFTContainer from "./NFTContainer";
 
 type InventoryTabs =
   | "Equipment"

@@ -1,8 +1,7 @@
-import NFTModal from "@/components/NFTModal";
 import { Providers } from "@/components/providers";
 import type { Metadata } from "next";
 import { Rubik } from "next/font/google";
-import "./globals.css";
+import "@/app/globals.css";
 
 const rubik = Rubik({ subsets: ["latin"] });
 
