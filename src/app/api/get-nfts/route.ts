@@ -18,6 +18,8 @@ export async function POST(request: NextRequest) {
         skills: NFT_SCHEMA.skills,
         equipItems: NFT_SCHEMA.equipItems,
         spiritsId: NFT_SCHEMA.spiritsId,
+        codex: NFT_SCHEMA.codex,
+        price: NFT_SCHEMA.price
       })
       .from(NFT_SCHEMA)
       .limit(20);

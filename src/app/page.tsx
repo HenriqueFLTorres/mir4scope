@@ -1,25 +1,25 @@
-import { LIST_FILTER_DEFAULT } from "@/atom/ListFilters";
-import MainFilters from "@/components/MainFilters";
-import NFTDisplay from '@/components/NftList';
-import NFTDisplaySkeleton from '@/components/NftList/NFTDisplaySkeleton';
-import SortList from "@/components/SortList";
-import Search from "@/components/icon/Search";
-import { getNfts } from "@/lib/get-nfts";
-import { FilterX } from "lucide-react";
+"use client";
 
-export default async function Home() {
-  // const {
-  //   data: nft_list,
-  //   isLoading,
-  //   refetch,
-  //   isFetching,
-  //   isRefetching,
-  // } = useQuery({
-  //   queryKey: ["nft_list"],
-  //   queryFn: () => getNfts(listFilter),
-  //   refetchOnWindowFocus: false,
-  // });
-  const nft_list = await getNfts();
+import MainFilters from "@/components/MainFilters";
+import NFTDisplay from "@/components/NftList";
+import NFTDisplaySkeleton from "@/components/NftList/NFTDisplaySkeleton";
+import SortList from "@/components/SortList";
+import { getNfts } from "@/lib/get-nfts";
+import { useQuery } from "@tanstack/react-query";
+import { FilterX, Search } from "lucide-react";
+
+export default function Home() {
+  const {
+    data: nft_list,
+    isLoading,
+    refetch,
+    isFetching,
+    isRefetching,
+  } = useQuery({
+    queryKey: ["nft_list"],
+    queryFn: getNfts,
+    refetchOnWindowFocus: false,
+  });
 
   return (
     <main className="flex min-h-screen flex-col items-center gap-6 bg-gradient-to-br from-[#44356A] to-[#272039] p-24">
@@ -44,7 +44,7 @@ export default async function Home() {
         <SortList />
       </div>
 
-      {!nft_list ? (
+      {!nft_list || isLoading ? (
         <NFTDisplaySkeleton />
       ) : (
         <NFTDisplay nft_list={nft_list} />
