@@ -1,6 +1,7 @@
 import { classIndexToName, getReadableNumber, getStatIcon } from "@/lib/utils";
 import Image from "next/image";
 
+import Codex from "@/components/icon/Codex";
 import Power from "@/components/icon/Power";
 import Wemix from "@/components/icon/Wemix";
 import type { NFTForDisplay } from "@/types/schema";
@@ -23,6 +24,7 @@ export default function NFTCardFront({
   price,
   lvl,
   stats,
+  codex,
 }: NFTForDisplay) {
   const mir4Class = classIndexToName(classIndex);
 
@@ -111,14 +113,9 @@ export default function NFTCardFront({
             <Power className="h-4 w-4" /> {getReadableNumber(powerScore)}
           </GlassChip>
 
-          {/* <GlassChip className="w-max">
-                <Codex className="h-4 w-4" />{" "}
-                {codex.reduce(
-                  (accumulator, currentValue) =>
-                    accumulator + currentValue.completed,
-                  0,
-                )}
-              </GlassChip> */}
+          <GlassChip className="w-max">
+            <Codex className="h-4 w-4" /> {codex.completed}
+          </GlassChip>
         </div>
 
         <GlassChip className="mt-auto justify-center text-base">
