@@ -97,9 +97,7 @@ export const isRangeDifferent = (
 // }
 
 function SpiritChips() {
-  const [{ spirits }, setListFilter] = useAtom(ListFilterAtom);
-
-  if (spirits.length === 0) return <></>;
+  return <></>;
 
   return (
     <FilterChip

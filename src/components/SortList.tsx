@@ -1,6 +1,6 @@
 "use client";
 
-import { ListFilterAtom, type ListSortType } from "@/atom/ListFilters";
+import type { ListFiltersType, ListSortType } from "@/atom/ListFilters";
 import EXP from "@/components/icon/EXP";
 import Power from "@/components/icon/Power";
 import {
@@ -9,45 +9,46 @@ import {
   SelectItem,
   SelectTrigger,
 } from "@/components/ui/select";
-import { useAtom } from "jotai";
 import { ArrowDown01, ArrowDown10, Clock1 } from "lucide-react";
+import { Controller, type Control } from "react-hook-form";
 
-function SortList() {
-  const [{ sort }, setListFilter] = useAtom(ListFilterAtom);
-
-  const SortIcon = getSortingIcon(sort);
-  const currentSortLabel = SORTING_OPTIONS.find(
-    (option) => option.value === sort,
-  );
+function SortList({ control }: { control: Control<ListFiltersType> }) {
+  const SortIcon = getSortingIcon("pricelow");
 
   return (
-    <Select
-      onValueChange={(value) =>
-        setListFilter((prev) => ({ ...prev, sort: value as ListSortType }))
-      }
-      defaultValue="latest"
-    >
-      <SelectTrigger className="w-72">
-        <SortIcon className="h-5 w-5" />
-        {currentSortLabel?.label ?? "Newest"}
-      </SelectTrigger>
-      <SelectContent className="w-52" align="end">
-        {SORTING_OPTIONS.map(({ label, value }) => {
-          const Icon = getSortingIcon(value);
+    <Controller
+      name="sort"
+      control={control}
+      render={({ field: { value, onChange, ...fieldProps } }) => (
+        <Select
+          value={value}
+          onValueChange={onChange}
+          defaultValue="latest"
+          {...fieldProps}
+        >
+          <SelectTrigger className="w-72">
+            <SortIcon className="h-5 w-5" />
+            {value ?? "Newest"}
+          </SelectTrigger>
+          <SelectContent className="w-52" align="end">
+            {SORTING_OPTIONS.map(({ label, value }) => {
+              const Icon = getSortingIcon(value);
 
-          return (
-            <SelectItem
-              key={value}
-              className="gap-2"
-              Icon={<Icon className="h-5 w-5" />}
-              value={value}
-            >
-              {label}
-            </SelectItem>
-          );
-        })}
-      </SelectContent>
-    </Select>
+              return (
+                <SelectItem
+                  key={value}
+                  className="gap-2"
+                  Icon={<Icon className="h-5 w-5" />}
+                  value={value}
+                >
+                  {label}
+                </SelectItem>
+              );
+            })}
+          </SelectContent>
+        </Select>
+      )}
+    />
   );
 }
 

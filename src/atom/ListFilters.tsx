@@ -10,6 +10,7 @@ export type ListFiltersType = {
   power: number[];
   codex: number[];
   spirits: SpiritsType[];
+  max_price: undefined
 };
 
 export const LIST_FILTER_DEFAULT: ListFiltersType = {
@@ -19,7 +20,8 @@ export const LIST_FILTER_DEFAULT: ListFiltersType = {
   level: [60, 170],
   power: [100e3, 600e3],
   codex: [100, 2000],
-  spirits: []
+  spirits: [],
+  max_price: undefined
 };
 
 export const ListFilterAtom = atom<ListFiltersType>(LIST_FILTER_DEFAULT);

@@ -83,13 +83,14 @@ function sortToSQL(sort: ListSortType) {
 }
 
 function getMainFilters(
-  { search, class: mir4Class, level, power, codex }: ListFiltersType,
+  { search, class: mir4Class, level, power, codex, max_price }: ListFiltersType,
   filters: string[],
 ) {
   if (search) filters.push(`"nft"."character_name" ilike '%${search}%'`);
   if (mir4Class !== 0) filters.push(`"nft"."class" = ${mir4Class}`);
   if (isRangeDifferent(level, LIST_FILTER_DEFAULT.level))
     filters.push(`"nft"."lvl" between ${level[0]} and ${level[1]}`);
+  if (max_price) filters.push(`WHERE "nft"."price" <= ${max_price}`);
   if (isRangeDifferent(power, LIST_FILTER_DEFAULT.power))
     filters.push(`"nft"."power_score" between ${power[0]} and ${power[1]}`);
   if (isRangeDifferent(codex, LIST_FILTER_DEFAULT.codex))

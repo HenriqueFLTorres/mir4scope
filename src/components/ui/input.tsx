@@ -1,21 +1,27 @@
-import * as React from "react";
-
 import { cn } from "@/lib/utils";
+import React from "react";
 import { Label } from "./label";
 
 export interface InputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "prefix"> {
   prefix?: JSX.Element;
   wrapperClass?: string;
+  label?: string;
 }
 
-type LabeledInputProps =
-  | (InputProps & { label: string; name: string })
-  | (InputProps & { label?: undefined });
-
-const Input = React.forwardRef<HTMLInputElement, LabeledInputProps>(
+const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (
-    { className, wrapperClass, type, disabled, prefix, name, label, ...props },
+    {
+      className,
+      wrapperClass,
+      prefix,
+      spellCheck = false,
+      label,
+      disabled,
+      name,
+      id = name,
+      ...props
+    },
     ref,
   ) => {
     const PrefixIcon = prefix;
@@ -33,15 +39,16 @@ const Input = React.forwardRef<HTMLInputElement, LabeledInputProps>(
 
         {PrefixIcon}
         <input
-          type={type}
           className={cn(
             "flex h-10 w-full rounded-md border border-black/20 bg-transparent bg-gradient-to-b from-black/10 to-black/0 px-3 py-2 text-sm text-white transition-[box-shadow,_opacity]",
             "placeholder:text-white/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white disabled:cursor-not-allowed disabled:opacity-50",
             { "pl-10": PrefixIcon },
             className,
           )}
+          id={id}
+          name={name}
           ref={ref}
-          id={name}
+          spellCheck={spellCheck}
           disabled={disabled}
           {...props}
         />
@@ -49,6 +56,7 @@ const Input = React.forwardRef<HTMLInputElement, LabeledInputProps>(
     );
   },
 );
+
 Input.displayName = "Input";
 
 export { Input };
