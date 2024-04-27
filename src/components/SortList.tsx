@@ -13,41 +13,46 @@ import { ArrowDown01, ArrowDown10, Clock1 } from "lucide-react";
 import { Controller, type Control } from "react-hook-form";
 
 function SortList({ control }: { control: Control<ListFiltersType> }) {
-  const SortIcon = getSortingIcon("pricelow");
-
   return (
     <Controller
       name="sort"
       control={control}
-      render={({ field: { value, onChange, ...fieldProps } }) => (
-        <Select
-          value={value}
-          onValueChange={onChange}
-          defaultValue="latest"
-          {...fieldProps}
-        >
-          <SelectTrigger className="w-72">
-            <SortIcon className="h-5 w-5" />
-            {value ?? "Newest"}
-          </SelectTrigger>
-          <SelectContent className="w-52" align="end">
-            {SORTING_OPTIONS.map(({ label, value }) => {
-              const Icon = getSortingIcon(value);
+      render={({ field: { value, onChange, ...fieldProps } }) => {
+        const SortIcon = getSortingIcon(value);
+        const selectedOption = SORTING_OPTIONS.find(
+          (opt) => opt.value === value,
+        );
 
-              return (
-                <SelectItem
-                  key={value}
-                  className="gap-2"
-                  Icon={<Icon className="h-5 w-5" />}
-                  value={value}
-                >
-                  {label}
-                </SelectItem>
-              );
-            })}
-          </SelectContent>
-        </Select>
-      )}
+        return (
+          <Select
+            value={value}
+            onValueChange={onChange}
+            defaultValue="latest"
+            {...fieldProps}
+          >
+            <SelectTrigger className="w-72">
+              <SortIcon className="h-5 w-5" />
+              {selectedOption?.label ?? "Newest"}
+            </SelectTrigger>
+            <SelectContent className="w-52" align="end">
+              {SORTING_OPTIONS.map(({ label, value }) => {
+                const Icon = getSortingIcon(value);
+
+                return (
+                  <SelectItem
+                    key={value}
+                    className="gap-2"
+                    Icon={<Icon className="h-5 w-5" />}
+                    value={value}
+                  >
+                    {label}
+                  </SelectItem>
+                );
+              })}
+            </SelectContent>
+          </Select>
+        );
+      }}
     />
   );
 }
