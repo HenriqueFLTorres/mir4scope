@@ -22,11 +22,17 @@ import {
   Controller,
   type Control,
   type UseFormRegister,
-  type UseFormSetValue,
 } from "react-hook-form";
 import { PriceRange } from "./PriceRange";
+import { StatusRange } from "./StatusRange";
+import Accuracy from "./icon/Accuracy";
 import Codex from "./icon/Codex";
+import EVA from "./icon/EVA";
+import PHYSATK from "./icon/PHYSATK";
+import PHYSDEF from "./icon/PHYSDEF";
 import Power from "./icon/Power";
+import SpellATK from "./icon/SpellATK";
+import SPELLDEF from "./icon/SpellDEF";
 
 const mir4Classes: Mir4Classes[] = [
   "Arbalist",
@@ -49,11 +55,9 @@ const classToKey: { [key in Mir4Classes]: number } = {
 function MainFilters({
   register,
   control,
-  setValue,
 }: {
   register: UseFormRegister<ListFiltersType>;
   control: Control<ListFiltersType>;
-  setValue: UseFormSetValue<ListFiltersType>;
 }) {
   return (
     <>
@@ -191,25 +195,43 @@ function MainFilters({
 
       <h2 className="mr-auto">Stats Filter</h2>
 
-      {/* <section className="flex w-full flex-wrap items-center gap-4">
-        <StatusRange label="PHYS ATK" Icon={<PHYSATK className="h-5 w-5" />} />
+      <section className="flex w-full flex-wrap items-center gap-4">
+        <StatusRange
+          label="PHYS ATK"
+          Icon={<PHYSATK className="h-5 w-5" />}
+          control={control}
+        />
 
         <StatusRange
           label="Spell ATK"
           Icon={<SpellATK className="h-5 w-5" />}
+          control={control}
         />
 
-        <StatusRange label="PHYS DEF" Icon={<PHYSDEF className="h-5 w-5" />} />
+        <StatusRange
+          label="PHYS DEF"
+          Icon={<PHYSDEF className="h-5 w-5" />}
+          control={control}
+        />
 
         <StatusRange
           label="Spell DEF"
           Icon={<SPELLDEF className="h-5 w-5" />}
+          control={control}
         />
 
-        <StatusRange label="EVA" Icon={<EVA className="h-5 w-5" />} />
+        <StatusRange
+          label="EVA"
+          Icon={<EVA className="h-5 w-5" />}
+          control={control}
+        />
 
-        <StatusRange label="Accuracy" Icon={<Accuracy className="h-5 w-5" />} />
-      </section> */}
+        <StatusRange
+          label="Accuracy"
+          Icon={<Accuracy className="h-5 w-5" />}
+          control={control}
+        />
+      </section>
 
       <h2 className="mr-auto">Premium Filters</h2>
 

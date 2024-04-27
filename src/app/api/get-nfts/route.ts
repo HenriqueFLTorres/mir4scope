@@ -5,26 +5,30 @@ import {
 } from "@/atom/ListFilters";
 import { isRangeDifferent } from "@/components/FilterChips";
 import { db } from "@/drizzle/index";
+import { capitalizeString } from "@/lib/utils";
 import { sql } from "drizzle-orm";
 import { NextResponse, type NextRequest } from "next/server";
 
-const NON_NULL_SPIRITS = `
-  where
-    spirits.inven is not null
-`;
+const NON_NULL_SPIRITS = "spirits.inven is not null";
 
 export async function POST(request: NextRequest) {
   try {
     const mainFilters: ListFiltersType = await request.json();
-    const { sort, spirits } = mainFilters;
+    const { sort, spirits, stats } = mainFilters;
 
     const filters: string[] = [];
+    const whereFilter: string[] = [];
+    if (spirits.length > 0) whereFilter.push(NON_NULL_SPIRITS);
 
     getMainFilters(mainFilters, filters);
     getSpiritsFilters(spirits, filters);
+    statsToSQL(stats, whereFilter);
 
     const JOINED_FILTERS =
       filters.length > 0 ? `AND ( ${filters.join("\nAND ")} )` : "";
+
+    const JOINED_WHERE =
+      whereFilter.length > 0 ? `WHERE ( ${whereFilter.join("\nAND ")} )` : "";
 
     const SQL_QUERY = `
       SELECT
@@ -50,10 +54,8 @@ export async function POST(request: NextRequest) {
         WHERE (obj ->> 'grade')::int >= 4
       ) AS spirits(inven) ON true
       ${JOINED_FILTERS}
-      ${spirits.length > 0 ? NON_NULL_SPIRITS : ""}
-      ORDER BY
-        (spirits.inven -> 0 ->> 'grade')::int DESC
-        ${sortToSQL(sort)}
+      ${JOINED_WHERE}
+      ${sortToSQL(sort)}
       LIMIT
         20;
     `;
@@ -67,16 +69,32 @@ export async function POST(request: NextRequest) {
   }
 }
 
+function statsToSQL(stats: ListFiltersType["stats"], filters: string[]) {
+  for (const [statName, value] of Object.entries(stats)) {
+    const firstValue = Number(value[0]);
+    const secondValue = Number(value[1]);
+
+    if (firstValue && secondValue)
+      filters.push(
+        `(nft.stats ->> '${statName}')::float between ${firstValue} and ${secondValue}`,
+      );
+    else if (firstValue)
+      filters.push(`(nft.stats ->> '${statName}')::float >= ${firstValue}`);
+    else if (secondValue)
+      filters.push(`(nft.stats ->> '${statName}')::float <= ${secondValue}`);
+  }
+}
+
 function sortToSQL(sort: ListSortType) {
   switch (sort) {
     case "lvhigh":
-      return ", lvl desc";
+      return "ORDER BY\n    lvl desc";
     case "pshigh":
-      return ", power_score desc";
+      return "ORDER BY\n    power_score desc";
     case "pricehigh":
-      return ", price desc";
+      return "ORDER BY\n    price desc";
     case "pricelow":
-      return ", price asc";
+      return "ORDER BY\n    price asc";
     default:
       return "";
   }
@@ -101,11 +119,12 @@ function getMainFilters(
 
 function getSpiritsFilters(spirits: SpiritsType[], filters: string[]) {
   for (const spiritName of spirits) {
+    const capitalizedName = capitalizeString(spiritName);
     filters.push(`
       EXISTS (
         SELECT 1
         FROM jsonb_array_elements((SELECT spirits.inven FROM spirits WHERE spirits.id = nft.spirits_id)) AS inner_obj
-        WHERE inner_obj ->> 'pet_name' = '${spiritName}'
+        WHERE inner_obj ->> 'pet_name' = '${capitalizedName}'
       )
     `);
   }

@@ -38,11 +38,7 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center gap-6 p-24">
       <form className="flex flex-col gap-6" onSubmit={handleSubmit(onSubmit)}>
-        <MainFilters
-          register={register}
-          control={control}
-          setValue={setValue}
-        />
+        <MainFilters register={register} control={control} />
 
         <div className="mb-16 flex w-full gap-4">
           <button
