@@ -1,8 +1,10 @@
-export const getNfts = async () => {
+import type { ListFiltersType } from "@/atom/ListFilters";
+
+export const getNfts = async (listFilter: ListFiltersType) => {
   const response = await fetch("http://localhost:3000/api/get-nfts", {
     method: "POST",
-    cache: "no-store",
-    body: JSON.stringify({}),
+    cache: "no-cache",
+    body: JSON.stringify(listFilter),
   });
 
   if (!response.ok) {

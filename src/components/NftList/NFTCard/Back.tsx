@@ -11,16 +11,16 @@ import SkillFragment from "./SkillFragment";
 const artifacts_order = [11, 12, 13, 14, 15];
 
 export default function NFTCardBack({
-  powerScore,
+  power_score,
   skills,
-  spirits,
-  equipItems,
+  inven,
+  equip_items,
 }: NFTForDisplay) {
   const skills_without_special = (
     Object.entries(skills) as Entries<typeof skills>
   ).filter(([name]) => !SPECIAL_ABILITIES_NAMES.includes(name));
 
-  const orderedSpiritsInven = spirits.inven.sort((a, b) => b.grade - a.grade);
+  const orderedSpiritsInven = inven.sort((a, b) => b.grade - a.grade);
 
   const special_skill = (Object.entries(skills) as Entries<typeof skills>).find(
     ([name]) => SPECIAL_ABILITIES_NAMES.includes(name),
@@ -29,11 +29,11 @@ export default function NFTCardBack({
   return (
     <div
       className="group-hover:rotate-y-180 rotate-y-180 backface-hidden absolute flex h-full w-full flex-col items-center gap-6 overflow-hidden rounded-lg border-4 bg-black p-4 shadow-inner drop-shadow-lg duration-500 group-hover:z-10 group-hover:h-[42rem] group-hover:w-96"
-      style={{ borderColor: getNFTColor(powerScore) }}
+      style={{ borderColor: getNFTColor(power_score) }}
     >
       <Image
         fill
-        src={`/${getCardRarity(powerScore)}-card.webp`}
+        src={`/${getCardRarity(power_score)}-card.webp`}
         alt=""
         className="pointer-events-none absolute z-[-1] h-[22rem] w-72 object-cover opacity-20 blur-md group-hover:h-[42rem] group-hover:w-96"
       />
@@ -42,10 +42,10 @@ export default function NFTCardBack({
         <h3 className="mx-4 w-max text-xs uppercase">Equipment</h3>
         <ul className="grid w-max grid-cols-5 items-center gap-3 p-1">
           {[...equip_order, ...artifacts_order].map((key) => {
-            if (!equipItems || !(key in equipItems)) return null;
+            if (!equip_items || !(key in equip_items)) return null;
 
             const { enhance, grade, item_path, item_name, tier, item_idx } =
-              equipItems[key];
+              equip_items[key];
 
             return (
               <li
@@ -68,14 +68,16 @@ export default function NFTCardBack({
                     className="absolute object-contain"
                   />
                 </div>
-                {Number(enhance) > 0 ? (
+                {Number(enhance) > 0 && (
                   <span className="absolute -right-1 -top-1 text-xs">
                     +{enhance}
                   </span>
-                ) : null}
-                <span className="absolute -bottom-1 -left-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 border-[#9f916c] bg-[#333] text-xs">
-                  {toRoman(Number(tier))}
-                </span>
+                )}
+                {Number(tier) > 1 && (
+                  <span className="absolute -bottom-1 -left-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 border-[#9f916c] bg-[#333] text-xs">
+                    {toRoman(Number(tier))}
+                  </span>
+                )}
               </li>
             );
           })}
@@ -130,7 +132,7 @@ export default function NFTCardBack({
                 </div>
                 {transcend > 1 ? (
                   <span className="absolute -bottom-1 -left-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 border-[#9f916c] bg-[#333] text-xs">
-                    {transcend}
+                    {toRoman(transcend)}
                   </span>
                 ) : null}
               </li>

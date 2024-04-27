@@ -18,8 +18,8 @@ const STATS_TO_DISPLAY: NFT_STATS_ENUM[] = [
 ];
 
 export default function NFTCardFront({
-  characterName,
-  powerScore,
+  character_name,
+  power_score,
   class: classIndex,
   price,
   lvl,
@@ -31,17 +31,17 @@ export default function NFTCardFront({
   return (
     <div
       className="backface-hidden absolute h-full w-full overflow-hidden rounded-lg border-4 shadow-inner drop-shadow-lg"
-      style={{ borderColor: getNFTColor(powerScore) }}
+      style={{ borderColor: getNFTColor(power_score) }}
     >
       <Image
         fill
-        src={`/${getCardRarity(powerScore)}-card.webp`}
+        src={`/${getCardRarity(power_score)}-card.webp`}
         alt=""
         className="pointer-events-none absolute z-[-1] h-[22rem] w-72 object-cover"
       />
 
       <p className="pointer-events-none absolute left-0 top-14 z-[-1] inline-block shrink-0 text-nowrap text-6xl font-bold text-white opacity-40 drop-shadow-lg">
-        {characterName}
+        {character_name}
       </p>
 
       <div
@@ -50,7 +50,7 @@ export default function NFTCardFront({
         }
         style={{
           backgroundImage: `linear-gradient(to bottom, ${getNFTColor(
-            powerScore,
+            power_score,
           )}, rgba(0,0,0,0))`,
         }}
       />
@@ -61,7 +61,7 @@ export default function NFTCardFront({
         }
         style={{
           backgroundImage: `linear-gradient(to top, ${getNFTColor(
-            powerScore,
+            power_score,
           )}, rgba(0,0,0,0))`,
         }}
       />
@@ -100,7 +100,7 @@ export default function NFTCardFront({
       <footer className="absolute bottom-0 mt-auto flex w-full flex-col gap-2 p-1">
         <div className="flex w-full items-end justify-between">
           <h2 className="leading-none drop-shadow-[0px_2px_2px_rgba(0,0,0,0.4)]">
-            {characterName}
+            {character_name}
           </h2>
 
           <h3 className="text-base leading-none drop-shadow-[0px_2px_2px_rgba(0,0,0,0.4)]">
@@ -110,7 +110,7 @@ export default function NFTCardFront({
 
         <div className="flex w-full items-center justify-between">
           <GlassChip className="w-max">
-            <Power className="h-4 w-4" /> {getReadableNumber(powerScore)}
+            <Power className="h-4 w-4" /> {getReadableNumber(power_score)}
           </GlassChip>
 
           <GlassChip className="w-max">

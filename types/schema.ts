@@ -16,8 +16,21 @@ export type SelectMysticalPiece = typeof MYSTICAL_PIECE_SCHEMA.$inferSelect;
 export type SelectInventory = typeof INVENTORY_SCHEMA.$inferSelect;
 export type SelectSuccession = typeof SUCCESSION_SCHEMA.$inferSelect;
 
-export type NFTForDisplay = SelectNFT & {
-  spirits: { inven: SelectSpirit["inven"] };
+export type NFTForDisplay = {
+  character_name: string;
+  class: number;
+  codex: NFT_CODEX;
+  equip_items: NFT_EQUIP_ITEM[];
+  inven: SelectSpirit["inven"];
+  lvl: number;
+  power_score: number;
+  price: number;
+  seq: number;
+  skills: { [key in NFT_SKILLS_ENUM]: string };
+  spirits_id: string;
+  stats: { [key in NFT_STATS_ENUM]: string };
+  transport_id: string;
+  world_name: string;
 };
 
 export type NFTSelectAll = SelectNFT & { spirits: SelectSpirit } & {

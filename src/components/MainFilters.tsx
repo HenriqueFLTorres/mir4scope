@@ -1,13 +1,8 @@
 "use client";
 
 import { ListFilterAtom, type ListFiltersType } from "@/atom/ListFilters";
-import { CraftingMaterialSelector } from "@/components/CraftingMaterials";
 import FilterChips from "@/components/FilterChips";
-import { PriceRange } from "@/components/PriceRange";
-import { SkillsSelector } from "@/components/SkillsSelector";
 import { SpiritSelector } from "@/components/SpiritSelector";
-import { TicketsSelector } from "@/components/TicketsSelector";
-import { TrainingSelector } from "@/components/TrainingSelector";
 import EXP from "@/components/icon/EXP";
 import Search from "@/components/icon/Search";
 import Skill from "@/components/icon/Skill";
@@ -24,14 +19,8 @@ import { classIndexToName } from "@/lib/utils";
 import { SelectIcon } from "@radix-ui/react-select";
 import { useAtom } from "jotai";
 import Image from "next/image";
-import Accuracy from "./icon/Accuracy";
 import Codex from "./icon/Codex";
-import EVA from "./icon/EVA";
-import PHYSATK from "./icon/PHYSATK";
-import PHYSDEF from "./icon/PHYSDEF";
 import Power from "./icon/Power";
-import SpellATK from "./icon/SpellATK";
-import SPELLDEF from "./icon/SpellDEF";
 
 const mir4Classes: Mir4Classes[] = [
   "Arbalist",
@@ -65,6 +54,7 @@ function MainFilters() {
           onChange={(e) =>
             setListFilter((prev) => ({ ...prev, search: e.target.value }))
           }
+          maxLength={12}
         />
 
         <Select
@@ -78,18 +68,16 @@ function MainFilters() {
           value={String(listFilter.class)}
         >
           <SelectTrigger className="w-48">
-            {listFilter.class === 0 ? (
-              <Skill className="h-5 w-5" />
-            ) : (
+            {listFilter?.class ? (
               <Image
                 className="object-contain"
                 width={20}
                 height={20}
-                src={`/icon/${classIndexToName(
-                  listFilter.class,
-                ).toLowerCase()}.webp`}
+                src={`/icon/${classIndexToName(listFilter.class).toLowerCase()}.webp`}
                 alt=""
               />
+            ) : (
+              <Skill className="h-5 w-5" />
             )}
             <SelectValue placeholder="All Classes" />
           </SelectTrigger>
@@ -129,7 +117,7 @@ function MainFilters() {
           min={60}
           max={170}
           Icon={<EXP className="h-5 w-5" />}
-          value={listFilter.level}
+          value={listFilter.level ?? [60, 170]}
           onValueChange={(value) =>
             setListFilter((prev) => ({ ...prev, level: value }))
           }
@@ -142,7 +130,7 @@ function MainFilters() {
           min={1e5}
           max={6e5}
           Icon={<Power className="h-5 w-5" />}
-          value={listFilter.power}
+          value={listFilter.power ?? [1e5, 6e5]}
           onValueChange={(value) =>
             setListFilter((prev) => ({ ...prev, power: value }))
           }
@@ -156,7 +144,7 @@ function MainFilters() {
           min={100}
           max={2000}
           Icon={<Codex className="h-5 w-5" />}
-          value={listFilter.codex}
+          value={listFilter.codex ?? [100, 2000]}
           onValueChange={(value) =>
             setListFilter((prev) => ({ ...prev, codex: value }))
           }
@@ -164,7 +152,7 @@ function MainFilters() {
           step={10}
         />
 
-        <PriceRange />
+        {/* <PriceRange /> */}
       </section>
 
       <h2 className="mr-auto">Stats Filter</h2>
@@ -193,14 +181,14 @@ function MainFilters() {
 
       <section className="flex w-full flex-wrap items-center gap-4">
         <SpiritSelector />
-
+        {/* 
         <TrainingSelector />
 
         <TicketsSelector />
 
         <SkillsSelector />
 
-        <CraftingMaterialSelector />
+        <CraftingMaterialSelector /> */}
       </section>
 
       <FilterChips />

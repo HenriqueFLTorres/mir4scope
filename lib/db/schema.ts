@@ -37,7 +37,7 @@ export const NFT_SCHEMA = pgTable("nft", {
   reinforce: integer("reinforce").notNull(),
   inventoryId: integer("inventory_id").notNull(),
   successionId: integer("succession_id").notNull(),
-  spiritsId: integer("spirits_id").notNull(),
+  spiritsId: integer("spirits_id").notNull().references(() => SPIRITS_SCHEMA.id),
   magicOrbId: integer("magic_orb_id").notNull(),
   magicStoneId: integer("magic_stone_id").notNull(),
   mysticalPieceId: integer("mystical_piece_id").notNull(),

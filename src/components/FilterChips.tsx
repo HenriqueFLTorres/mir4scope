@@ -3,21 +3,20 @@ import {
   ListFilterAtom,
   type ListFiltersType,
 } from "@/atom/ListFilters";
-import { classIndexToName, cn, getStatIcon } from "@/lib/utils";
+import { SPIRIT_LIST } from "@/components/SpiritSelector";
+import Codex from "@/components/icon/Codex";
+import EXP from "@/components/icon/EXP";
+import Power from "@/components/icon/Power";
+import Search from "@/components/icon/Search";
+import Skill from "@/components/icon/Skill";
+import Spirit from "@/components/icon/Spirit";
+import { Label } from "@/components/ui/label";
+import { classIndexToName, cn } from "@/lib/utils";
 import type * as LabelPrimitive from "@radix-ui/react-label";
 import { useAtom } from "jotai";
 import { X } from "lucide-react";
 import millify from "millify";
 import Image from "next/image";
-import { SPIRIT_LIST } from "./SpiritSelector";
-import Codex from "./icon/Codex";
-import EXP from "./icon/EXP";
-import Power from "./icon/Power";
-import Search from "./icon/Search";
-import Skill from "./icon/Skill";
-import Spirit from "./icon/Spirit";
-import Wemix from "./icon/Wemix";
-import { Label } from "./ui/label";
 
 function FilterChip({
   className,
@@ -40,67 +39,67 @@ function FilterChip({
   );
 }
 
-const isRangeEqual = (
+export const isRangeDifferent = (
   value1: (number | undefined)[],
   value2: (number | undefined)[],
 ) => {
-  if (value1.length !== value2.length) return false;
+  if (value1.length !== value2.length) return true;
 
   for (let i = 0; i < value1.length; i++) {
-    if (value1[i] !== value2[i]) return false;
+    if (value1[i] !== value2[i]) return true;
   }
 
-  return true;
+  return false;
 };
 
-function StatusChips() {
-  const [{ status }, setListFilter] = useAtom(ListFilterAtom);
+// function StatusChips() {
+//   const [{ status }, setListFilter] = useAtom(ListFilterAtom);
 
-  return Object.entries(status).map(([stat, value], index) => {
-    const statusName = stat as NFT_STATS_ENUM;
+//   return Object.entries(status).map(([stat, value], index) => {
+//     const statusName = stat as NFT_STATS_ENUM;
 
-    if (
-      isRangeEqual(
-        status[statusName] as [number | undefined, number | undefined],
-        LIST_FILTER_DEFAULT.status[statusName] as [
-          number | undefined,
-          number | undefined,
-        ],
-      )
-    )
-      return null;
+//     if (
+//       isRangeEqual(
+//         status[statusName] as [number | undefined, number | undefined],
+//         LIST_FILTER_DEFAULT.status[statusName] as [
+//           number | undefined,
+//           number | undefined,
+//         ],
+//       )
+//     )
+//       return null;
 
-    const StatIcon = getStatIcon(statusName);
-    let label = "";
+//     const StatIcon = getStatIcon(statusName);
+//     let label = "";
 
-    if (Number.isInteger(value[0]) && Number.isInteger(value[1]))
-      label = `(${millify(value[0] ?? 0)} - ${millify(value[1] ?? 0)})`;
-    else if (Number.isInteger(value[0])) label = `+${millify(value[0] ?? 0)}`;
-    else if (Number.isInteger(value[1])) label = `< ${millify(value[1] ?? 0)}`;
+//     if (Number.isInteger(value[0]) && Number.isInteger(value[1]))
+//       label = `(${millify(value[0] ?? 0)} - ${millify(value[1] ?? 0)})`;
+//     else if (Number.isInteger(value[0])) label = `+${millify(value[0] ?? 0)}`;
+//     else if (Number.isInteger(value[1])) label = `< ${millify(value[1] ?? 0)}`;
 
-    return (
-      <FilterChip
-        key={`${stat}-${value}`}
-        onClick={() =>
-          setListFilter((prev) => ({
-            ...prev,
-            status: {
-              ...prev.status,
-              [statusName]: LIST_FILTER_DEFAULT.status[statusName],
-            },
-          }))
-        }
-      >
-        <StatIcon className="h-5 w-5" /> {label}
-      </FilterChip>
-    );
-  });
-}
+//     return (
+//       <FilterChip
+//         key={`${stat}-${value}`}
+//         onClick={() =>
+//           setListFilter((prev) => ({
+//             ...prev,
+//             status: {
+//               ...prev.status,
+//               [statusName]: LIST_FILTER_DEFAULT.status[statusName],
+//             },
+//           }))
+//         }
+//       >
+//         <StatIcon className="h-5 w-5" /> {label}
+//       </FilterChip>
+//     );
+//   });
+// }
 
 function SpiritChips() {
   const [{ spirits }, setListFilter] = useAtom(ListFilterAtom);
 
-  if (spirits.length <= 0) return <></>;
+  if (spirits.length === 0) return <></>;
 
   return (
     <FilterChip
@@ -148,17 +147,15 @@ function SpiritChips() {
 }
 
 const FilterChips = () => {
-  const [
-    { search, class: mir4Class, level, power, codex, priceRange },
-    setListFilter,
-  ] = useAtom(ListFilterAtom);
+  const [{ search, class: mir4Class, level, power, codex }, setListFilter] =
+    useAtom(ListFilterAtom);
 
   function handleClear(key: keyof ListFiltersType) {
     setListFilter((prev) => ({ ...prev, [key]: LIST_FILTER_DEFAULT[key] }));
   }
 
   return (
-    <section className="flex flex-wrap gap-4">
+    <section className="flex min-h-10  flex-wrap gap-4">
       {!!search && (
         <FilterChip onClick={() => handleClear("search")}>
           <Search className="h-5 w-5" /> {search}
@@ -171,33 +168,33 @@ const FilterChips = () => {
         </FilterChip>
       )}
 
-      {!isRangeEqual(level, LIST_FILTER_DEFAULT.level) && (
+      {isRangeDifferent(level, LIST_FILTER_DEFAULT.level) && (
         <FilterChip onClick={() => handleClear("level")}>
-          <EXP className="h-5 w-5" /> {level[0]} - {level[1]}
+          <EXP className="h-5 w-5" /> {level[0] ?? 60} - {level[1] ?? 170}
         </FilterChip>
       )}
 
-      {!isRangeEqual(power, LIST_FILTER_DEFAULT.power) && (
+      {isRangeDifferent(power, LIST_FILTER_DEFAULT.power) && (
         <FilterChip onClick={() => handleClear("power")}>
           <Power className="h-5 w-5" /> {millify(power[0])} -{" "}
           {millify(power[1])}
         </FilterChip>
       )}
 
-      {!isRangeEqual(codex, LIST_FILTER_DEFAULT.codex) && (
+      {isRangeDifferent(codex, LIST_FILTER_DEFAULT.codex) && (
         <FilterChip onClick={() => handleClear("codex")}>
           <Codex className="h-5 w-5" /> {millify(codex[0])} -{" "}
           {millify(codex[1])}
         </FilterChip>
       )}
 
-      {!isRangeEqual(priceRange, LIST_FILTER_DEFAULT.priceRange) && (
+      {/* {!isRangeEqual(priceRange, LIST_FILTER_DEFAULT.priceRange) && (
         <FilterChip onClick={() => handleClear("priceRange")}>
           <Wemix className="h-5 w-5" /> {priceRange[0]} - {priceRange[1]}
         </FilterChip>
-      )}
+      )} */}
 
-      <StatusChips />
+      {/* <StatusChips /> */}
 
       <SpiritChips />
     </section>
