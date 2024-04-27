@@ -4,18 +4,14 @@ import Image from "next/image";
 
 import { equip_order } from "@/components/NFTModal/NFTEquipmentDisplay";
 import type { NFTForDisplay } from "@/types/schema";
+import { memo } from "react";
 import { toRoman } from "typescript-roman-numbers-converter";
 import { getCardRarity, getNFTColor } from ".";
 import SkillFragment from "./SkillFragment";
 
 const artifacts_order = [11, 12, 13, 14, 15];
 
-export default function NFTCardBack({
-  power_score,
-  skills,
-  inven,
-  equip_items,
-}: NFTForDisplay) {
+function CardBack({ power_score, skills, inven, equip_items }: NFTForDisplay) {
   const skills_without_special = (
     Object.entries(skills) as Entries<typeof skills>
   ).filter(([name]) => !SPECIAL_ABILITIES_NAMES.includes(name));
@@ -143,3 +139,7 @@ export default function NFTCardBack({
     </div>
   );
 }
+
+const NFTCardBack = memo(CardBack);
+
+export default NFTCardBack;

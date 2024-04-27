@@ -5,6 +5,7 @@ import Codex from "@/components/icon/Codex";
 import Power from "@/components/icon/Power";
 import Wemix from "@/components/icon/Wemix";
 import type { NFTForDisplay } from "@/types/schema";
+import { memo } from "react";
 import { getCardRarity, getNFTColor } from ".";
 import GlassChip from "./GlassChip";
 
@@ -17,7 +18,7 @@ const STATS_TO_DISPLAY: NFT_STATS_ENUM[] = [
   "Accuracy",
 ];
 
-export default function NFTCardFront({
+function CardFront({
   character_name,
   power_score,
   class: classIndex,
@@ -125,3 +126,7 @@ export default function NFTCardFront({
     </div>
   );
 }
+
+const NFTCardFront = memo(CardFront);
+
+export default NFTCardFront;
