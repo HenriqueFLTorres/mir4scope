@@ -8,7 +8,7 @@ import SortList from "@/components/SortList";
 import { getNfts } from "@/lib/get-nfts";
 import { useQuery } from "@tanstack/react-query";
 import { FilterX, Search } from "lucide-react";
-import { useForm, type SubmitHandler } from "react-hook-form";
+import { type SubmitHandler, useForm } from "react-hook-form";
 
 export default function Home() {
   const {
@@ -62,7 +62,7 @@ export default function Home() {
         </div>
 
         <pre className="rounded bg-black/40 p-2 text-white">
-          {JSON.stringify(watch("training"), null, 2)}
+          {JSON.stringify(watch("building"), null, 2)}
         </pre>
       </form>
 
