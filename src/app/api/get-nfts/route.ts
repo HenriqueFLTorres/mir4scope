@@ -4,7 +4,9 @@ import {
   type ListSortType,
 } from "@/atom/ListFilters";
 import { isRangeDifferent } from "@/components/FilterChips";
+import { db } from "@/drizzle/index";
 import { capitalizeString } from "@/lib/utils";
+import { sql } from "drizzle-orm";
 import { type NextRequest, NextResponse } from "next/server";
 
 const NON_NULL_SPIRITS = "spirits.inven is not null";
@@ -12,7 +14,7 @@ const NON_NULL_SPIRITS = "spirits.inven is not null";
 export async function POST(request: NextRequest) {
   try {
     const mainFilters: ListFiltersType = await request.json();
-    const { sort, spirits, stats, training } = mainFilters;
+    const { sort, spirits, stats, training, building } = mainFilters;
 
     const filters: string[] = [];
     const whereFilter: string[] = [];
@@ -22,6 +24,7 @@ export async function POST(request: NextRequest) {
     getSpiritsFilters(spirits, filters);
     statsToSQL(stats, whereFilter);
     getTrainingFilters(training, whereFilter);
+    getBuildingFilters(building, whereFilter);
 
     const JOINED_FILTERS =
       filters.length > 0 ? `AND ( ${filters.join("\nAND ")} )` : "";
@@ -42,6 +45,7 @@ export async function POST(request: NextRequest) {
         nft.stats,
         nft.skills,
         nft.training,
+        nft.buildings,
         nft.codex,
         nft.equip_items,
         nft.spirits_id,
@@ -61,8 +65,8 @@ export async function POST(request: NextRequest) {
     `;
     console.log(SQL_QUERY);
 
-    // const allNfts = await db.execute(sql.raw(SQL_QUERY));
-    const allNfts = [];
+    const allNfts = await db.execute(sql.raw(SQL_QUERY));
+    // const allNfts = [];
 
     return NextResponse.json(allNfts);
   } catch (error) {
@@ -148,6 +152,23 @@ function getTrainingFilters(
     )
       filters.push(
         `(training ->> '${trainingName}')::int BETWEEN ${values[0]} AND ${values[1]}`,
+      );
+  }
+}
+
+function getBuildingFilters(
+  building: ListFiltersType["building"],
+  filters: string[],
+) {
+  for (const [buildingName, values] of Object.entries(building)) {
+    if (
+      isRangeDifferent(
+        values,
+        LIST_FILTER_DEFAULT.building[buildingName as BuildingType],
+      )
+    )
+      filters.push(
+        `(buildings ->> '${buildingName}')::int BETWEEN ${values[0]} AND ${values[1]}`,
       );
   }
 }

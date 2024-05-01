@@ -19,12 +19,17 @@ import { classIndexToName } from "@/lib/utils";
 import { SelectIcon } from "@radix-ui/react-select";
 import Image from "next/image";
 import {
-  Controller,
   type Control,
+  Controller,
   type UseFormRegister,
 } from "react-hook-form";
+import { BuildingSelector } from "./BuildingSelector";
+import { CraftingMaterialSelector } from "./CraftingMaterials";
 import { PriceRange } from "./PriceRange";
+import { SkillsSelector } from "./SkillsSelector";
 import { StatusRange } from "./StatusRange";
+import { TicketsSelector } from "./TicketsSelector";
+import { TrainingSelector } from "./TrainingSelector";
 import Accuracy from "./icon/Accuracy";
 import Codex from "./icon/Codex";
 import EVA from "./icon/EVA";
@@ -33,10 +38,6 @@ import PHYSDEF from "./icon/PHYSDEF";
 import Power from "./icon/Power";
 import SpellATK from "./icon/SpellATK";
 import SPELLDEF from "./icon/SpellDEF";
-import { TrainingSelector } from './TrainingSelector';
-import { TicketsSelector } from './TicketsSelector';
-import { SkillsSelector } from './SkillsSelector';
-import { CraftingMaterialSelector } from './CraftingMaterials';
 
 const mir4Classes: Mir4Classes[] = [
   "Arbalist",
@@ -241,8 +242,10 @@ function MainFilters({
 
       <section className="flex w-full flex-wrap items-center gap-4">
         <SpiritSelector control={control} />
-        
+
         <TrainingSelector control={control} />
+
+        <BuildingSelector control={control} />
 
         <TicketsSelector />
 

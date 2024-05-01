@@ -32,6 +32,9 @@ export type ListFiltersType = {
   training: {
     [key in TrainingType]: [number, number];
   };
+  building: {
+    [key in BuildingType]: [number, number];
+  };
 };
 
 export const LIST_FILTER_DEFAULT: ListFiltersType = {
@@ -59,6 +62,18 @@ export const LIST_FILTER_DEFAULT: ListFiltersType = {
     "Northern Profound Art": [0, 12],
     "Toad Stance": [0, 12],
     "Violet Mist Art": [0, 12],
+  },
+  building: {
+    Mine: [0, 25],
+    Forge: [0, 25],
+    Portal: [0, 25],
+    "Holy Shrine": [0, 25],
+    "Millennial Tree": [0, 25],
+    "Tower of Victory": [0, 25],
+    "Training Sanctum": [0, 25],
+    "Tower of Conquest": [0, 25],
+    "Sanctuary of Hydra": [0, 25],
+    "Tower of Quintessence": [0, 25],
   },
 };
 

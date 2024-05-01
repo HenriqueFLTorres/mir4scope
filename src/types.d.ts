@@ -92,6 +92,18 @@ type SpiritsType =
   | "Verdant Watcher Gargas"
   | "White Peacock Crystalglass";
 
+type BuildingType =
+  | "Mine"
+  | "Forge"
+  | "Portal"
+  | "Holy Shrine"
+  | "Millennial Tree"
+  | "Tower of Victory"
+  | "Training Sanctum"
+  | "Tower of Conquest"
+  | "Sanctuary of Hydra"
+  | "Tower of Quintessence";
+
 type Keys = (keyof typeof data)[] & {};
 
 type Entries<T> = {
