@@ -5,7 +5,7 @@ import {
 } from "@/atom/ListFilters";
 import { isRangeDifferent } from "@/components/FilterChips";
 import { capitalizeString } from "@/lib/utils";
-import { NextResponse, type NextRequest } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 
 const NON_NULL_SPIRITS = "spirits.inven is not null";
 
@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
     getMainFilters(mainFilters, filters);
     getSpiritsFilters(spirits, filters);
     statsToSQL(stats, whereFilter);
-    // getTrainingFilters(training, whereFilter);
+    getTrainingFilters(training, whereFilter);
 
     const JOINED_FILTERS =
       filters.length > 0 ? `AND ( ${filters.join("\nAND ")} )` : "";
@@ -41,6 +41,7 @@ export async function POST(request: NextRequest) {
         nft.world_name,
         nft.stats,
         nft.skills,
+        nft.training,
         nft.codex,
         nft.equip_items,
         nft.spirits_id,
@@ -134,8 +135,19 @@ function getSpiritsFilters(
   }
 }
 
-// function getTrainingFilters(training: ListFiltersType["training"], filters: string[]) {
-//   for (const [trainingName, values] of Object.entries(training)) {
-//     if (isRangeDifferent(values, LIST_FILTER_DEFAULT.training[trainingName as TrainingType])) filters.push()
-//   }
-// }
+function getTrainingFilters(
+  training: ListFiltersType["training"],
+  filters: string[],
+) {
+  for (const [trainingName, values] of Object.entries(training)) {
+    if (
+      isRangeDifferent(
+        values,
+        LIST_FILTER_DEFAULT.training[trainingName as TrainingType],
+      )
+    )
+      filters.push(
+        `(training ->> '${trainingName}')::int BETWEEN ${values[0]} AND ${values[1]}`,
+      );
+  }
+}
