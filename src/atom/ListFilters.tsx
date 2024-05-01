@@ -15,6 +15,8 @@ export type ListStatusEnum =
   | "EVA"
   | "Accuracy";
 
+export type ListMinMaxType = [undefined | number, undefined | number];
+
 export type ListFiltersType = {
   search: string;
   sort: ListSortType;
@@ -25,7 +27,10 @@ export type ListFiltersType = {
   spirits: SpiritsType[];
   max_price: undefined;
   stats: {
-    [key in ListStatusEnum]: [undefined | number, undefined | number];
+    [key in ListStatusEnum]: ListMinMaxType;
+  };
+  training: {
+    [key in TrainingType]: [number, number];
   };
 };
 
@@ -45,6 +50,15 @@ export const LIST_FILTER_DEFAULT: ListFiltersType = {
     "Spell DEF": [undefined, undefined],
     EVA: [undefined, undefined],
     Accuracy: [undefined, undefined],
+  },
+  training: {
+    Constitution: [0, 21],
+    "Muscle Strength Manual": [0, 20],
+    "Nine Yang Manual": [0, 20],
+    "Nine Yin Manual": [0, 20],
+    "Northern Profound Art": [0, 12],
+    "Toad Stance": [0, 12],
+    "Violet Mist Art": [0, 12],
   },
 };
 

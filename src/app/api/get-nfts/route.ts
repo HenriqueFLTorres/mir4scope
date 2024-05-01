@@ -4,9 +4,7 @@ import {
   type ListSortType,
 } from "@/atom/ListFilters";
 import { isRangeDifferent } from "@/components/FilterChips";
-import { db } from "@/drizzle/index";
 import { capitalizeString } from "@/lib/utils";
-import { sql } from "drizzle-orm";
 import { NextResponse, type NextRequest } from "next/server";
 
 const NON_NULL_SPIRITS = "spirits.inven is not null";
@@ -14,7 +12,7 @@ const NON_NULL_SPIRITS = "spirits.inven is not null";
 export async function POST(request: NextRequest) {
   try {
     const mainFilters: ListFiltersType = await request.json();
-    const { sort, spirits, stats } = mainFilters;
+    const { sort, spirits, stats, training } = mainFilters;
 
     const filters: string[] = [];
     const whereFilter: string[] = [];
@@ -23,6 +21,7 @@ export async function POST(request: NextRequest) {
     getMainFilters(mainFilters, filters);
     getSpiritsFilters(spirits, filters);
     statsToSQL(stats, whereFilter);
+    // getTrainingFilters(training, whereFilter);
 
     const JOINED_FILTERS =
       filters.length > 0 ? `AND ( ${filters.join("\nAND ")} )` : "";
@@ -59,8 +58,10 @@ export async function POST(request: NextRequest) {
       LIMIT
         20;
     `;
+    console.log(SQL_QUERY);
 
-    const allNfts = await db.execute(sql.raw(SQL_QUERY));
+    // const allNfts = await db.execute(sql.raw(SQL_QUERY));
+    const allNfts = [];
 
     return NextResponse.json(allNfts);
   } catch (error) {
@@ -117,7 +118,10 @@ function getMainFilters(
     );
 }
 
-function getSpiritsFilters(spirits: SpiritsType[], filters: string[]) {
+function getSpiritsFilters(
+  spirits: ListFiltersType["spirits"],
+  filters: string[],
+) {
   for (const spiritName of spirits) {
     const capitalizedName = capitalizeString(spiritName);
     filters.push(`
@@ -129,3 +133,9 @@ function getSpiritsFilters(spirits: SpiritsType[], filters: string[]) {
     `);
   }
 }
+
+// function getTrainingFilters(training: ListFiltersType["training"], filters: string[]) {
+//   for (const [trainingName, values] of Object.entries(training)) {
+//     if (isRangeDifferent(values, LIST_FILTER_DEFAULT.training[trainingName as TrainingType])) filters.push()
+//   }
+// }

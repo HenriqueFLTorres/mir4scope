@@ -33,6 +33,10 @@ import PHYSDEF from "./icon/PHYSDEF";
 import Power from "./icon/Power";
 import SpellATK from "./icon/SpellATK";
 import SPELLDEF from "./icon/SpellDEF";
+import { TrainingSelector } from './TrainingSelector';
+import { TicketsSelector } from './TicketsSelector';
+import { SkillsSelector } from './SkillsSelector';
+import { CraftingMaterialSelector } from './CraftingMaterials';
 
 const mir4Classes: Mir4Classes[] = [
   "Arbalist",
@@ -237,14 +241,14 @@ function MainFilters({
 
       <section className="flex w-full flex-wrap items-center gap-4">
         <SpiritSelector control={control} />
-        {/* 
-        <TrainingSelector />
+        
+        <TrainingSelector control={control} />
 
         <TicketsSelector />
 
         <SkillsSelector />
 
-        <CraftingMaterialSelector /> */}
+        <CraftingMaterialSelector />
       </section>
 
       <FilterChips />

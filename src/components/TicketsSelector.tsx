@@ -1,15 +1,12 @@
 "use client";
 
 import { ChevronsUpDown } from "lucide-react";
-import * as React from "react";
 
-import { ListFilterAtom } from "@/atom/ListFilters";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useAtom } from "jotai";
 import Image from "next/image";
 import MagicSquare from "./icon/MagicSquare";
 import { Input } from "./ui/input";
@@ -17,20 +14,10 @@ import { Label } from "./ui/label";
 
 const tickets = ["Raid", "Raid Boss", "Magic Square", "Secret Peak"] as const;
 
-const MAX_TICKETS = 999;
-
 export function TicketsSelector() {
-  const [open, setOpen] = React.useState(false);
-  const [{ tickets: ticketsValue }, setListFilter] = useAtom(ListFilterAtom);
-
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger
-        role="combobox"
-        aria-expanded={open}
-        className="w-72 justify-between"
-        noIcon
-      >
+    <Popover>
+      <PopoverTrigger role="combobox" className="w-72 justify-between" noIcon>
         <MagicSquare className="h-5 w-5" />
         Tickets
         <ChevronsUpDown className="ml-auto h-4 w-4 opacity-60 transition-[opacity] group-data-[state=open]:opacity-100" />
@@ -54,17 +41,7 @@ export function TicketsSelector() {
                 prefix={
                   <span className="absolute bottom-2 left-3 font-bold">+</span>
                 }
-                value={ticketsValue[ticket]}
-                onChange={(e) => {
-                  let value = Number(e.target.value);
-
-                  if (value < 0 || Number.isNaN(value)) return;
-                  if (value > MAX_TICKETS) value = MAX_TICKETS;
-                  setListFilter((prev) => ({
-                    ...prev,
-                    tickets: { ...prev.tickets, [ticket]: value },
-                  }));
-                }}
+                value={0}
                 defaultValue={0}
                 className="h-8 w-16 p-1 pl-4 text-center"
                 wrapperClass="ml-auto"

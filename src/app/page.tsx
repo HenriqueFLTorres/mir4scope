@@ -62,7 +62,7 @@ export default function Home() {
         </div>
 
         <pre className="rounded bg-black/40 p-2 text-white">
-          {JSON.stringify(watch(), null, 2)}
+          {JSON.stringify(watch("training"), null, 2)}
         </pre>
       </form>
 

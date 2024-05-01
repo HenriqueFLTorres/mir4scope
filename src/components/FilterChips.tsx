@@ -145,8 +145,7 @@ function SpiritChips() {
 }
 
 const FilterChips = () => {
-  const [{ search, class: mir4Class, level, power, codex }, setListFilter] =
-    useAtom(ListFilterAtom);
+  return <></>
 
   function handleClear(key: keyof ListFiltersType) {
     setListFilter((prev) => ({ ...prev, [key]: LIST_FILTER_DEFAULT[key] }));
