@@ -15,13 +15,16 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { SelectRange } from "@/components/ui/select-range";
+import { SkillsListByClass } from "@/lib/skillsByClass";
 import { classIndexToName } from "@/lib/utils";
 import { SelectIcon } from "@radix-ui/react-select";
 import Image from "next/image";
 import {
-  type Control,
   Controller,
+  type Control,
   type UseFormRegister,
+  type UseFormSetFocus,
+  type UseFormSetValue,
 } from "react-hook-form";
 import { BuildingSelector } from "./BuildingSelector";
 import { CraftingMaterialSelector } from "./CraftingMaterials";
@@ -60,9 +63,13 @@ const classToKey: { [key in Mir4Classes]: number } = {
 function MainFilters({
   register,
   control,
+  setFocus,
+  setValue,
 }: {
   register: UseFormRegister<ListFiltersType>;
   control: Control<ListFiltersType>;
+  setFocus: UseFormSetFocus<ListFiltersType>;
+  setValue: UseFormSetValue<ListFiltersType>;
 }) {
   return (
     <>
@@ -78,16 +85,31 @@ function MainFilters({
         <Controller
           name="class"
           control={control}
-          render={({ field: { value, onChange, ...fieldProps } }) => (
+          render={({ field: { value, onChange, disabled, ...fieldProps } }) => (
             <Select
               defaultValue={"0"}
-              onValueChange={(value) =>
-                onChange(Number(value) as ListFiltersType["class"])
-              }
+              onValueChange={(value) => {
+                const newClass = Number(value) as ListFiltersType["class"];
+
+                onChange(newClass);
+                if (newClass === 0) return setValue("skills", undefined);
+
+                const newSkillsValue: ListFiltersType["skills"] = {};
+                for (const skill of SkillsListByClass[newClass]) {
+                  const formattedName = skill
+                    .toLowerCase()
+                    .replace(/\'/g, "")
+                    .replace(/\s/g, "-");
+
+                  newSkillsValue[formattedName] = 0;
+                }
+
+                setValue("skills", newSkillsValue);
+              }}
               value={String(value)}
-              {...fieldProps}
+              disabled={disabled}
             >
-              <SelectTrigger className="w-48">
+              <SelectTrigger className="w-48" {...fieldProps}>
                 {value ? (
                   <Image
                     className="object-contain"
@@ -249,7 +271,7 @@ function MainFilters({
 
         <TicketsSelector />
 
-        <SkillsSelector />
+        <SkillsSelector control={control} setFocus={setFocus} />
 
         <CraftingMaterialSelector />
       </section>

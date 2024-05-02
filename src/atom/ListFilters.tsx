@@ -35,6 +35,11 @@ export type ListFiltersType = {
   building: {
     [key in BuildingType]: [number, number];
   };
+  skills:
+    | {
+        [key in string]: number;
+      }
+    | undefined;
 };
 
 export const LIST_FILTER_DEFAULT: ListFiltersType = {
@@ -75,6 +80,7 @@ export const LIST_FILTER_DEFAULT: ListFiltersType = {
     "Sanctuary of Hydra": [0, 25],
     "Tower of Quintessence": [0, 25],
   },
+  skills: undefined,
 };
 
 export const ListFilterAtom = atom<ListFiltersType>(LIST_FILTER_DEFAULT);

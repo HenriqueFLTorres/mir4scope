@@ -5,16 +5,17 @@ import {
 } from "@/atom/ListFilters";
 import { isRangeDifferent } from "@/components/FilterChips";
 import { db } from "@/drizzle/index";
+import formattedSkillsMapping from "@/lib/formattedSkillsMapping";
 import { capitalizeString } from "@/lib/utils";
 import { sql } from "drizzle-orm";
-import { type NextRequest, NextResponse } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 
 const NON_NULL_SPIRITS = "spirits.inven is not null";
 
 export async function POST(request: NextRequest) {
   try {
     const mainFilters: ListFiltersType = await request.json();
-    const { sort, spirits, stats, training, building } = mainFilters;
+    const { sort, spirits, stats, training, building, skills } = mainFilters;
 
     const filters: string[] = [];
     const whereFilter: string[] = [];
@@ -25,6 +26,7 @@ export async function POST(request: NextRequest) {
     statsToSQL(stats, whereFilter);
     getTrainingFilters(training, whereFilter);
     getBuildingFilters(building, whereFilter);
+    getSkillsFilters(skills, whereFilter);
 
     const JOINED_FILTERS =
       filters.length > 0 ? `AND ( ${filters.join("\nAND ")} )` : "";
@@ -66,7 +68,6 @@ export async function POST(request: NextRequest) {
     console.log(SQL_QUERY);
 
     const allNfts = await db.execute(sql.raw(SQL_QUERY));
-    // const allNfts = [];
 
     return NextResponse.json(allNfts);
   } catch (error) {
@@ -170,5 +171,20 @@ function getBuildingFilters(
       filters.push(
         `(buildings ->> '${buildingName}')::int BETWEEN ${values[0]} AND ${values[1]}`,
       );
+  }
+}
+
+function getSkillsFilters(
+  skills: ListFiltersType["skills"],
+  filters: string[],
+) {
+  if (!skills) return;
+
+  for (const [skillName, value] of Object.entries(skills)) {
+    if (value <= 0) continue;
+
+    const unformattedName = formattedSkillsMapping[skillName];
+
+    filters.push(`(skills ->> $$${unformattedName}$$)::int >= ${value}`);
   }
 }

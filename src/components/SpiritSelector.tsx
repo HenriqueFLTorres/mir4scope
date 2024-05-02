@@ -2,7 +2,7 @@
 
 import { ChevronsUpDown } from "lucide-react";
 
-import { type ListFiltersType } from "@/atom/ListFilters";
+import type { ListFiltersType } from "@/atom/ListFilters";
 import {
   Command,
   CommandEmpty,
@@ -29,7 +29,7 @@ export function SpiritSelector({
   const fields = useWatch({ control, name: "spirits" });
 
   return (
-    <Popover modal>
+    <Popover>
       <PopoverTrigger role="combobox" className="w-72 justify-between" noIcon>
         <Spirit className="h-5 w-5" />
         Spirits ({fields ? `${fields.length} selected` : "Any"})

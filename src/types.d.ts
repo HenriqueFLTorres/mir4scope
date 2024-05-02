@@ -17,21 +17,6 @@ type CraftingMaterialType = {
   [key in MaterialsType]: { Legendary: number; Epic: number };
 };
 
-type SkillsType =
-  | "Arrow Rain"
-  | "Quick Shot"
-  | "Painstrike Gale"
-  | "Illusion Arrow"
-  | "Burst Shell"
-  | "Flash Arrow"
-  | "Heavenly Bow"
-  | "Mind's Eye"
-  | "Ice Cage"
-  | "Obliterate Shell"
-  | "Venom Mist Shell"
-  | "Seeking Bolt"
-  | "Cloaking";
-
 type SkillsValueType = {
   [key in SkillsType]: number;
 };
