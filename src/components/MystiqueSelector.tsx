@@ -37,8 +37,8 @@ export function MystiqueSelector({
         align="start"
         className="grid h-max max-h-none w-max grid-cols-2 gap-2 p-2"
       >
-        {MYSTIQUE_LIST.map((building) => (
-          <MystiqueFragment key={building} name={building} control={control} />
+        {MYSTIQUE_LIST.map((mystique) => (
+          <MystiqueFragment key={mystique} name={mystique} control={control} />
         ))}
       </PopoverContent>
     </Popover>
