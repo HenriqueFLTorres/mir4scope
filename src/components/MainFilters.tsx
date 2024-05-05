@@ -41,6 +41,7 @@ import PHYSDEF from "./icon/PHYSDEF";
 import Power from "./icon/Power";
 import SpellATK from "./icon/SpellATK";
 import SPELLDEF from "./icon/SpellDEF";
+import { MystiqueSelector } from './MystiqueSelector';
 
 const mir4Classes: Mir4Classes[] = [
   "Arbalist",
@@ -268,6 +269,8 @@ function MainFilters({
         <TrainingSelector control={control} />
 
         <BuildingSelector control={control} />
+
+        <MystiqueSelector control={control} />
 
         <TicketsSelector />
 

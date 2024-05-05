@@ -40,6 +40,9 @@ export type ListFiltersType = {
         [key in string]: number;
       }
     | undefined;
+  mystique: {
+    [key in NFT_MYSTIQUE]: number | undefined;
+  };
 };
 
 export const LIST_FILTER_DEFAULT: ListFiltersType = {
@@ -81,6 +84,13 @@ export const LIST_FILTER_DEFAULT: ListFiltersType = {
     "Tower of Quintessence": undefined,
   },
   skills: undefined,
+  mystique: {
+    "Unicorn Lion Mystique": undefined,
+    "Vermilion Bird Mystique": undefined,
+    "Black Tortoise Mystique": undefined,
+    "White Tiger Mystique": undefined,
+    "Blue Dragon Mystique": undefined,
+  },
 };
 
 export const ListFilterAtom = atom<ListFiltersType>(LIST_FILTER_DEFAULT);

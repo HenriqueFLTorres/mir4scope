@@ -15,7 +15,8 @@ const NON_NULL_SPIRITS = "spirits.inven is not null";
 export async function POST(request: NextRequest) {
   try {
     const mainFilters: ListFiltersType = await request.json();
-    const { sort, spirits, stats, training, building, skills } = mainFilters;
+    const { sort, spirits, stats, training, building, skills, mystique } =
+      mainFilters;
 
     const filters: string[] = [];
     const whereFilter: string[] = [];
@@ -27,6 +28,7 @@ export async function POST(request: NextRequest) {
     getTrainingFilters(training, whereFilter);
     getBuildingFilters(building, whereFilter);
     getSkillsFilters(skills, whereFilter);
+    getMystiqueFilters(mystique, whereFilter);
 
     const JOINED_FILTERS =
       filters.length > 0 ? `AND ( ${filters.join("\nAND ")} )` : "";
@@ -162,7 +164,7 @@ function getBuildingFilters(
   filters: string[],
 ) {
   for (const [buildingName, value] of Object.entries(building)) {
-    if (value === undefined || value === null) return;
+    if (value === undefined || value === null || value === 0) return;
 
     filters.push(`(buildings ->> '${buildingName}')::int >= ${value}`);
   }
@@ -180,5 +182,16 @@ function getSkillsFilters(
     const unformattedName = formattedSkillsMapping[skillName];
 
     filters.push(`(skills ->> $$${unformattedName}$$)::int >= ${value}`);
+  }
+}
+
+function getMystiqueFilters(
+  mystique: ListFiltersType["mystique"],
+  filters: string[],
+) {
+  for (const [name, value] of Object.entries(mystique)) {
+    if (value === undefined || value === null || value === 0) return;
+
+    filters.push(`(holy_stuff ->> '${name}')::int >= ${value}`);
   }
 }
