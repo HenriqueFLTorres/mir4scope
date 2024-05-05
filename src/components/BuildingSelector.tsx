@@ -35,7 +35,7 @@ export function BuildingSelector({
       </PopoverTrigger>
       <PopoverContent
         align="start"
-        className="grid h-max max-h-none w-max grid-cols-3 gap-3 p-3"
+        className="grid h-max max-h-none w-max grid-cols-3 gap-2 p-2"
       >
         {BUILDING_LIST.map((building) => (
           <BuildingFragment key={building} name={building} control={control} />
@@ -64,13 +64,13 @@ function BuildingFragment({
     <TooltipProvider delayDuration={0}>
       <Tooltip>
         <TooltipTrigger asChild>
-          <Label className="relative flex h-24 w-24 flex-col items-center justify-end gap-2 rounded-xl text-sm font-medium last:w-full last-of-type:col-span-3">
+          <Label className="relative flex h-20 w-20 flex-col items-center justify-end gap-2 rounded-lg text-sm font-medium last:w-full last-of-type:col-span-3">
             <Image
               src={`/building/${name.toLowerCase().replace(/\s/g, "_")}.png`}
               alt={name}
               width={476}
               height={476}
-              className="absolute -z-[1] h-full rounded-xl object-cover"
+              className="absolute -z-[1] h-full rounded-lg object-cover"
             />
 
             <Input
@@ -95,12 +95,12 @@ function BuildingFragment({
 const BUILDING_LIST: BuildingType[] = [
   "Mine",
   "Forge",
-  "Portal",
-  "Holy Shrine",
-  "Millennial Tree",
-  "Tower of Victory",
-  "Training Sanctum",
-  "Tower of Conquest",
   "Sanctuary of Hydra",
   "Tower of Quintessence",
+  "Millennial Tree",
+  "Portal",
+  "Tower of Victory",
+  "Training Sanctum",
+  "Holy Shrine",
+  "Tower of Conquest",
 ];
