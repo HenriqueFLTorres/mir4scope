@@ -33,7 +33,7 @@ export type ListFiltersType = {
     [key in TrainingType]: [number, number];
   };
   building: {
-    [key in BuildingType]: [number, number];
+    [key in BuildingType]: number | undefined;
   };
   skills:
     | {
@@ -69,16 +69,16 @@ export const LIST_FILTER_DEFAULT: ListFiltersType = {
     "Violet Mist Art": [0, 12],
   },
   building: {
-    Mine: [0, 25],
-    Forge: [0, 25],
-    Portal: [0, 25],
-    "Holy Shrine": [0, 25],
-    "Millennial Tree": [0, 25],
-    "Tower of Victory": [0, 25],
-    "Training Sanctum": [0, 25],
-    "Tower of Conquest": [0, 25],
-    "Sanctuary of Hydra": [0, 25],
-    "Tower of Quintessence": [0, 25],
+    Mine: undefined,
+    Forge: undefined,
+    Portal: undefined,
+    "Holy Shrine": undefined,
+    "Millennial Tree": undefined,
+    "Tower of Victory": undefined,
+    "Training Sanctum": undefined,
+    "Tower of Conquest": undefined,
+    "Sanctuary of Hydra": undefined,
+    "Tower of Quintessence": undefined,
   },
   skills: undefined,
 };

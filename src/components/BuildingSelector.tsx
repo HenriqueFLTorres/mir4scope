@@ -9,11 +9,17 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { getNumber } from "@/lib/utils";
-import type { ChangeEvent } from "react";
-import { type Control, useController } from "react-hook-form";
+import Image from "next/image";
+import { useController, type Control } from "react-hook-form";
 import { Building } from "./icon/Building";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "./ui/tooltip";
 
 export function BuildingSelector({
   control,
@@ -27,14 +33,12 @@ export function BuildingSelector({
         Building
         <ChevronsUpDown className="ml-auto h-4 w-4 opacity-60 transition-[opacity] group-data-[state=open]:opacity-100" />
       </PopoverTrigger>
-      <PopoverContent align="start" className="flex w-96 flex-col gap-4 p-3">
-        {BUILDING_LIST.map(({ name, max }) => (
-          <BuildingFragment
-            key={name}
-            name={name}
-            max={max}
-            control={control}
-          />
+      <PopoverContent
+        align="start"
+        className="grid h-max max-h-none w-max grid-cols-3 gap-3 p-3"
+      >
+        {BUILDING_LIST.map((building) => (
+          <BuildingFragment key={building} name={building} control={control} />
         ))}
       </PopoverContent>
     </Popover>
@@ -43,11 +47,9 @@ export function BuildingSelector({
 
 function BuildingFragment({
   name,
-  max,
   control,
 }: {
   name: BuildingType;
-  max: number;
   control: Control<ListFiltersType>;
 }) {
   const {
@@ -56,59 +58,49 @@ function BuildingFragment({
     name: `building.${name}`,
     control,
   });
-
-  const minValue = value[0];
-  const maxValue = value[1];
-
-  const onBlurMin = (e: ChangeEvent<HTMLInputElement>) => {
-    const newMinValue = getNumber(e.currentTarget.value);
-    if (!newMinValue) return onChange([0, maxValue]);
-    if (newMinValue > maxValue) return onChange([maxValue, maxValue]);
-
-    onChange([newMinValue, maxValue]);
-  };
-
-  const onBlurMax = (e: ChangeEvent<HTMLInputElement>) => {
-    const newMaxValue = getNumber(e.currentTarget.value);
-    if (!newMaxValue) return onChange([minValue, max]);
-    if (newMaxValue < minValue) return onChange([minValue, minValue]);
-
-    if (newMaxValue > max) return onChange([minValue, max]);
-
-    onChange([minValue, newMaxValue]);
-  };
+  const removeValue = () => onChange(undefined);
 
   return (
-    <Label className="flex h-8 w-full items-center justify-end gap-2 text-sm font-medium">
-      {name}
+    <TooltipProvider delayDuration={0}>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Label className="relative flex h-24 w-24 flex-col items-center justify-end gap-2 rounded-xl text-sm font-medium last:w-full last-of-type:col-span-3">
+            <Image
+              src={`/building/${name.toLowerCase().replace(/\s/g, "_")}.png`}
+              alt={name}
+              width={476}
+              height={476}
+              className="absolute -z-[1] h-full rounded-xl object-cover"
+            />
 
-      <Input
-        className="h-8 w-10 px-1 text-center"
-        wrapperClass="ml-auto"
-        value={minValue}
-        onChange={(e) => onChange([getNumber(e.target.value), maxValue])}
-        onBlur={onBlurMin}
-      />
-      <Input
-        className="h-8 w-10 px-1 text-center"
-        defaultValue={max}
-        value={maxValue}
-        onChange={(e) => onChange([minValue, getNumber(e.target.value)])}
-        onBlur={onBlurMax}
-      />
-    </Label>
+            <Input
+              className="h-8 w-10 bg-gradient-to-b from-black/60 to-black/40 px-1 text-center backdrop-blur-md"
+              wrapperClass="mb-1"
+              value={value ? value : ""}
+              onChange={(e) => {
+                const newValue = getNumber(e.currentTarget.value);
+                if (newValue === null) return removeValue();
+
+                onChange(newValue);
+              }}
+            />
+          </Label>
+        </TooltipTrigger>
+        <TooltipContent className="font-bold">{name}</TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 }
 
-const BUILDING_LIST: { name: BuildingType; max: number }[] = [
-  { name: "Mine", max: 25 },
-  { name: "Forge", max: 25 },
-  { name: "Portal", max: 25 },
-  { name: "Holy Shrine", max: 25 },
-  { name: "Millennial Tree", max: 25 },
-  { name: "Tower of Victory", max: 25 },
-  { name: "Training Sanctum", max: 25 },
-  { name: "Tower of Conquest", max: 25 },
-  { name: "Sanctuary of Hydra", max: 25 },
-  { name: "Tower of Quintessence", max: 25 },
+const BUILDING_LIST: BuildingType[] = [
+  "Mine",
+  "Forge",
+  "Portal",
+  "Holy Shrine",
+  "Millennial Tree",
+  "Tower of Victory",
+  "Training Sanctum",
+  "Tower of Conquest",
+  "Sanctuary of Hydra",
+  "Tower of Quintessence",
 ];

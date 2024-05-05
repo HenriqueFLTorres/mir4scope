@@ -161,16 +161,10 @@ function getBuildingFilters(
   building: ListFiltersType["building"],
   filters: string[],
 ) {
-  for (const [buildingName, values] of Object.entries(building)) {
-    if (
-      isRangeDifferent(
-        values,
-        LIST_FILTER_DEFAULT.building[buildingName as BuildingType],
-      )
-    )
-      filters.push(
-        `(buildings ->> '${buildingName}')::int BETWEEN ${values[0]} AND ${values[1]}`,
-      );
+  for (const [buildingName, value] of Object.entries(building)) {
+    if (value === undefined || value === null) return;
+
+    filters.push(`(buildings ->> '${buildingName}')::int >= ${value}`);
   }
 }
 
