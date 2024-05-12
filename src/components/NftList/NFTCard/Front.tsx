@@ -8,6 +8,7 @@ import type { NFTForDisplay } from "@/types/schema";
 import { memo } from "react";
 import { getCardRarity, getNFTColor } from ".";
 import GlassChip from "./GlassChip";
+import Globe from '@/components/icon/Globe';
 
 const STATS_TO_DISPLAY: NFT_STATS_ENUM[] = [
   "PHYS ATK",
@@ -26,6 +27,7 @@ function CardFront({
   lvl,
   stats,
   codex,
+  world_name
 }: NFTForDisplay) {
   const mir4Class = classIndexToName(classIndex);
 
@@ -112,6 +114,10 @@ function CardFront({
         <div className="flex w-full items-center justify-between">
           <GlassChip className="w-max">
             <Power className="h-4 w-4" /> {getReadableNumber(power_score)}
+          </GlassChip>
+
+          <GlassChip className="w-max">
+            <Globe className="h-4 w-4" /> {world_name}
           </GlassChip>
 
           <GlassChip className="w-max">

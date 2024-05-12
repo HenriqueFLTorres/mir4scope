@@ -41,7 +41,8 @@ import PHYSDEF from "./icon/PHYSDEF";
 import Power from "./icon/Power";
 import SpellATK from "./icon/SpellATK";
 import SPELLDEF from "./icon/SpellDEF";
-import { MystiqueSelector } from './MystiqueSelector';
+import { MystiqueSelector } from "./MystiqueSelector";
+import { ServerSelector } from "./ServerSelector";
 
 const mir4Classes: Mir4Classes[] = [
   "Arbalist",
@@ -219,6 +220,8 @@ function MainFilters({
             <PriceRange value={value} setValue={onChange} {...fieldProps} />
           )}
         />
+
+        <ServerSelector control={control} />
       </section>
 
       <h2 className="mr-auto">Stats Filter</h2>

@@ -26,6 +26,7 @@ export type ListFiltersType = {
   codex: number[];
   spirits: SpiritsType[];
   max_price: undefined;
+  world_name: string | undefined
   stats: {
     [key in ListStatusEnum]: ListMinMaxType;
   };
@@ -54,6 +55,7 @@ export const LIST_FILTER_DEFAULT: ListFiltersType = {
   codex: [100, 2000],
   spirits: [],
   max_price: undefined,
+  world_name: undefined,
   stats: {
     "PHYS ATK": [undefined, undefined],
     "PHYS DEF": [undefined, undefined],

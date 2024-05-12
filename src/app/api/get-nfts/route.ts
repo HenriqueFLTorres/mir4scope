@@ -15,7 +15,7 @@ const NON_NULL_SPIRITS = "spirits.inven is not null";
 export async function POST(request: NextRequest) {
   try {
     const mainFilters: ListFiltersType = await request.json();
-    const { sort, spirits, stats, training, building, skills, mystique, codex } =
+    const { sort, spirits, stats, training, building, skills, mystique } =
       mainFilters;
 
     const filters: string[] = [];
@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
 
     getMainFilters(mainFilters, filters);
     getSpiritsFilters(spirits, filters);
-    getCodexFilter(codex, whereFilter)
+    getBasicFilters(mainFilters, whereFilter);
     statsToSQL(stats, whereFilter);
     getTrainingFilters(training, whereFilter);
     getBuildingFilters(building, whereFilter);
@@ -139,11 +139,15 @@ function getSpiritsFilters(
   }
 }
 
-function getCodexFilter(codex: ListFiltersType["codex"], filters: string[]) {
+function getBasicFilters(
+  { codex, world_name }: ListFiltersType,
+  filters: string[],
+) {
   if (isRangeDifferent(codex, LIST_FILTER_DEFAULT.codex))
     filters.push(
       `(codex ->> 'completed')::int between ${codex[0]} and ${codex[1]}`,
     );
+  if (world_name) filters.push(`world_name = '${world_name}'`);
 }
 
 function getTrainingFilters(

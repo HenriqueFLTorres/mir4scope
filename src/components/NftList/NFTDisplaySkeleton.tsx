@@ -23,6 +23,7 @@ export default function NFTDisplaySkeleton() {
             <div className="flex justify-between">
               <div className="h-[1.875rem] w-[5.5rem] rounded bg-[#564284]" />
               <div className="h-[1.875rem] w-[5.5rem] rounded bg-[#564284]" />
+              <div className="h-[1.875rem] w-[5.5rem] rounded bg-[#564284]" />
             </div>
             <div className="h-[2.125rem] w-full rounded bg-[#564284]" />
           </div>
