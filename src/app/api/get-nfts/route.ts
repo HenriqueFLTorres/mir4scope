@@ -15,7 +15,7 @@ const NON_NULL_SPIRITS = "spirits.inven is not null";
 export async function POST(request: NextRequest) {
   try {
     const mainFilters: ListFiltersType = await request.json();
-    const { sort, spirits, stats, training, building, skills, mystique } =
+    const { sort, spirits, stats, training, building, skills, mystique, codex } =
       mainFilters;
 
     const filters: string[] = [];
@@ -24,6 +24,7 @@ export async function POST(request: NextRequest) {
 
     getMainFilters(mainFilters, filters);
     getSpiritsFilters(spirits, filters);
+    getCodexFilter(codex, whereFilter)
     statsToSQL(stats, whereFilter);
     getTrainingFilters(training, whereFilter);
     getBuildingFilters(building, whereFilter);
@@ -120,10 +121,6 @@ function getMainFilters(
   if (max_price) filters.push(`WHERE "nft"."price" <= ${max_price}`);
   if (isRangeDifferent(power, LIST_FILTER_DEFAULT.power))
     filters.push(`"nft"."power_score" between ${power[0]} and ${power[1]}`);
-  if (isRangeDifferent(codex, LIST_FILTER_DEFAULT.codex))
-    filters.push(
-      `(codex ->> 'completed')::int between ${codex[0]} and ${codex[1]}`,
-    );
 }
 
 function getSpiritsFilters(
@@ -140,6 +137,13 @@ function getSpiritsFilters(
       )
     `);
   }
+}
+
+function getCodexFilter(codex: ListFiltersType["codex"], filters: string[]) {
+  if (isRangeDifferent(codex, LIST_FILTER_DEFAULT.codex))
+    filters.push(
+      `(codex ->> 'completed')::int between ${codex[0]} and ${codex[1]}`,
+    );
 }
 
 function getTrainingFilters(
