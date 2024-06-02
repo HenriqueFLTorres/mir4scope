@@ -24,6 +24,7 @@ export async function POST(request: NextRequest) {
       skills,
       mystique,
       potentials,
+      tickets,
     } = mainFilters;
 
     const filters: string[] = [];
@@ -39,6 +40,7 @@ export async function POST(request: NextRequest) {
     getSkillsFilters(skills, whereFilter);
     getMystiqueFilters(mystique, whereFilter);
     getPotentialsFilters(potentials, whereFilter);
+    getTicketsFilters(tickets, whereFilter);
 
     const JOINED_FILTERS =
       filters.length > 0 ? `AND ( ${filters.join("\nAND ")} )` : "";
@@ -207,7 +209,7 @@ function getMystiqueFilters(
   filters: string[],
 ) {
   for (const [name, value] of Object.entries(mystique)) {
-    if (value === undefined || value === null || value === 0) return;
+    if (value == null) return;
 
     filters.push(`(holy_stuff ->> '${name}')::int >= ${value}`);
   }
@@ -218,9 +220,19 @@ function getPotentialsFilters(
   filters: string[],
 ) {
   for (const [potentialName, value] of Object.entries(potentials)) {
-    if (value === undefined || value === null || value === 0) return;
+    if (value == null) continue;
     filters.push(
       `(potentials ->> '${potentialName.toLowerCase()}')::int >= ${value}`,
     );
+  }
+}
+
+function getTicketsFilters(
+  tickets: ListFiltersType["tickets"],
+  filters: string[],
+) {
+  for (const [ticketName, value] of Object.entries(tickets)) {
+    if (value == null) continue;
+    filters.push(`(tickets ->> '${ticketName}')::int >= ${value}`);
   }
 }

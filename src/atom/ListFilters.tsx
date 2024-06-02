@@ -47,6 +47,9 @@ export type ListFiltersType = {
   potentials: {
     [key in PotentialType]: number | undefined;
   };
+  tickets: {
+    [key in TicketsType]: number | undefined;
+  };
 };
 
 export const LIST_FILTER_DEFAULT: ListFiltersType = {
@@ -97,9 +100,17 @@ export const LIST_FILTER_DEFAULT: ListFiltersType = {
     "Blue Dragon Mystique": undefined,
   },
   potentials: {
-    Hunting: 0,
-    PvP: 0,
-    Secondary: 0,
+    Hunting: undefined,
+    PvP: undefined,
+    Secondary: undefined,
+  },
+  tickets: {
+    "Raid Ticket": undefined,
+    "Boss Raid Ticket": undefined,
+    "Hell Raid Ticket": undefined,
+    "Magic Square Ticket": undefined,
+    "Secret Peak Ticket": undefined,
+    "Wayfarer Travel Pass": undefined,
   },
 };
 

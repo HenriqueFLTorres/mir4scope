@@ -276,7 +276,7 @@ function MainFilters({
 
         <MystiqueSelector control={control} />
 
-        <TicketsSelector />
+        <TicketsSelector control={control} />
 
         <SkillsSelector control={control} setFocus={setFocus} />
 
