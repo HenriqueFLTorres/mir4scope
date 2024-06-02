@@ -89,6 +89,8 @@ type BuildingType =
   | "Sanctuary of Hydra"
   | "Tower of Quintessence";
 
+type PotentialType = "Hunting" | "PvP" | "Secondary";
+
 type Keys = (keyof typeof data)[] & {};
 
 type Entries<T> = {

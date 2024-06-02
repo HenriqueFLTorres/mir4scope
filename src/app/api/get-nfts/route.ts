@@ -8,15 +8,23 @@ import { db } from "@/drizzle/index";
 import formattedSkillsMapping from "@/lib/formattedSkillsMapping";
 import { capitalizeString } from "@/lib/utils";
 import { sql } from "drizzle-orm";
-import { NextResponse, type NextRequest } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 
 const NON_NULL_SPIRITS = "spirits.inven is not null";
 
 export async function POST(request: NextRequest) {
   try {
     const mainFilters: ListFiltersType = await request.json();
-    const { sort, spirits, stats, training, building, skills, mystique } =
-      mainFilters;
+    const {
+      sort,
+      spirits,
+      stats,
+      training,
+      building,
+      skills,
+      mystique,
+      potentials,
+    } = mainFilters;
 
     const filters: string[] = [];
     const whereFilter: string[] = [];
@@ -30,6 +38,7 @@ export async function POST(request: NextRequest) {
     getBuildingFilters(building, whereFilter);
     getSkillsFilters(skills, whereFilter);
     getMystiqueFilters(mystique, whereFilter);
+    getPotentialsFilters(potentials, whereFilter);
 
     const JOINED_FILTERS =
       filters.length > 0 ? `AND ( ${filters.join("\nAND ")} )` : "";
@@ -201,5 +210,17 @@ function getMystiqueFilters(
     if (value === undefined || value === null || value === 0) return;
 
     filters.push(`(holy_stuff ->> '${name}')::int >= ${value}`);
+  }
+}
+
+function getPotentialsFilters(
+  potentials: ListFiltersType["potentials"],
+  filters: string[],
+) {
+  for (const [potentialName, value] of Object.entries(potentials)) {
+    if (value === undefined || value === null || value === 0) return;
+    filters.push(
+      `(potentials ->> '${potentialName.toLowerCase()}')::int >= ${value}`,
+    );
   }
 }

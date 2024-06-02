@@ -26,7 +26,7 @@ export type ListFiltersType = {
   codex: number[];
   spirits: SpiritsType[];
   max_price: undefined;
-  world_name: string | undefined
+  world_name: string | undefined;
   stats: {
     [key in ListStatusEnum]: ListMinMaxType;
   };
@@ -43,6 +43,9 @@ export type ListFiltersType = {
     | undefined;
   mystique: {
     [key in NFT_MYSTIQUE]: number | undefined;
+  };
+  potentials: {
+    [key in PotentialType]: number | undefined;
   };
 };
 
@@ -92,6 +95,11 @@ export const LIST_FILTER_DEFAULT: ListFiltersType = {
     "Black Tortoise Mystique": undefined,
     "White Tiger Mystique": undefined,
     "Blue Dragon Mystique": undefined,
+  },
+  potentials: {
+    Hunting: 0,
+    PvP: 0,
+    Secondary: 0,
   },
 };
 
