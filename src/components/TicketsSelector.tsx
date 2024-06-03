@@ -37,7 +37,7 @@ export function TicketsSelector({
       </PopoverTrigger>
       <PopoverContent align="start" className="flex flex-col gap-4 p-3">
         {TICKETS.map((ticket) => (
-          <TicketFragment name={ticket} control={control} />
+          <TicketFragment key={ticket} name={ticket} control={control} />
         ))}
       </PopoverContent>
     </Popover>
