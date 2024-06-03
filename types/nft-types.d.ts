@@ -243,15 +243,13 @@ type NFT_SUCCESSION_ITEM = {
 };
 
 type NFT_TRAINING = {
-  chi: {
-    "Nine Yang Manual": string;
-    "Muscle Strength Manual": string;
-    "Toad Stance": string;
-    "Northern Profound Art": string;
-    "Violet Mist Art": string;
-    "Nine Yin Manual": string;
-  };
-  constitution: number;
+  "Nine Yang Manual": string;
+  "Muscle Strength Manual": string;
+  "Toad Stance": string;
+  "Northern Profound Art": string;
+  "Violet Mist Art": string;
+  "Nine Yin Manual": string;
+  Constitution: number;
   collect_name: string;
   collect_level: number;
 };

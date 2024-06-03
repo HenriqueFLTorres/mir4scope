@@ -9,8 +9,14 @@ import { getNfts } from "@/lib/get-nfts";
 import { useQuery } from "@tanstack/react-query";
 import { FilterX, Search } from "lucide-react";
 import { type SubmitHandler, useForm } from "react-hook-form";
+import { getPrice } from "@/lib/get-price";
+import { UsdPriceAtom } from "@/atom/Price";
+import { useAtom } from "jotai";
+import { useEffect } from "react";
 
 export default function Home() {
+  const [usdPrice, setUsdPriceAtom] = useAtom(UsdPriceAtom);
+
   const {
     register,
     handleSubmit,
@@ -33,6 +39,18 @@ export default function Home() {
     queryFn: () => getNfts(watch()),
     refetchOnWindowFocus: false,
   });
+
+  const { data: price, isSuccess } = useQuery({
+    queryKey: ["price"],
+    queryFn: () => getPrice(),
+    refetchOnWindowFocus: false,
+  });
+
+  useEffect(() => {
+    if (isSuccess) {
+      setUsdPriceAtom(price);
+    }
+  }, [isSuccess, price, setUsdPriceAtom]);
 
   const onSubmit: SubmitHandler<ListFiltersType> = (data) => console.log(data);
 

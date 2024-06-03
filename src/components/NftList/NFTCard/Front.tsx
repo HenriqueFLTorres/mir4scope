@@ -9,6 +9,8 @@ import { memo } from "react";
 import { getCardRarity, getNFTColor } from ".";
 import GlassChip from "./GlassChip";
 import Globe from '@/components/icon/Globe';
+import { useAtomValue } from "jotai/index";
+import { UsdPriceAtom } from "@/atom/Price";
 
 const STATS_TO_DISPLAY: NFT_STATS_ENUM[] = [
   "PHYS ATK",
@@ -30,6 +32,9 @@ function CardFront({
   world_name
 }: NFTForDisplay) {
   const mir4Class = classIndexToName(classIndex);
+
+  const usdPrice = useAtomValue(UsdPriceAtom);
+  const formattedPrice = usdPrice ? (Number(usdPrice) * price).toFixed(2) : 0;
 
   return (
     <div
@@ -127,6 +132,9 @@ function CardFront({
 
         <GlassChip className="mt-auto justify-center text-base">
           <Wemix className="h-5 w-5" /> {getReadableNumber(price)}
+          <b className="ml-2">
+            ${formattedPrice}
+          </b>
         </GlassChip>
       </footer>
     </div>
