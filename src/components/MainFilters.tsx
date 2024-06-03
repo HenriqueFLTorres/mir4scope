@@ -280,7 +280,7 @@ function MainFilters({
 
         <SkillsSelector control={control} setFocus={setFocus} />
 
-        <CraftingMaterialSelector />
+        <CraftingMaterialSelector control={control} />
 
         <PotentialsSelector control={control} />
       </section>

@@ -50,6 +50,11 @@ export type ListFiltersType = {
   tickets: {
     [key in TicketsType]: number | undefined;
   };
+  materials:
+    | {
+        [key in string]: { Legendary: number; Epic: number };
+      }
+    | undefined;
 };
 
 export const LIST_FILTER_DEFAULT: ListFiltersType = {
@@ -112,6 +117,7 @@ export const LIST_FILTER_DEFAULT: ListFiltersType = {
     "Secret Peak Ticket": undefined,
     "Wayfarer Travel Pass": undefined,
   },
+  materials: undefined,
 };
 
 export const ListFilterAtom = atom<ListFiltersType>(LIST_FILTER_DEFAULT);
