@@ -226,6 +226,7 @@ type NFT_INVENTORY_ITEM = {
   power_score?: number;
   options?: ITEM_DETAIL[];
   add_option?: ITEM_DETAIL[];
+  is_tradable: boolean;
 };
 
 type NFT_SUCCESSION_ITEM = {
