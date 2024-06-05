@@ -26,11 +26,8 @@ import NFTPrice from "@/components/NFTModal/NFTPrice";
 export default async function NFTModal({ params }: { params: { id: string } }) {
   const seq = params.id;
   const nft = await getNft(seq);
-
-
+  
   if (!nft) return null;
-
-  console.log(nft?.training);
 
   return (
     <Modal>
