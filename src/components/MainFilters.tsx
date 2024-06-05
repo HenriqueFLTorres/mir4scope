@@ -20,15 +20,18 @@ import { classIndexToName } from "@/lib/utils";
 import { SelectIcon } from "@radix-ui/react-select";
 import Image from "next/image";
 import {
-  Controller,
   type Control,
+  Controller,
   type UseFormRegister,
   type UseFormSetFocus,
   type UseFormSetValue,
 } from "react-hook-form";
 import { BuildingSelector } from "./BuildingSelector";
 import { CraftingMaterialSelector } from "./CraftingMaterials";
+import { MystiqueSelector } from "./MystiqueSelector";
+import { PotentialsSelector } from "./PotentialsSelector";
 import { PriceRange } from "./PriceRange";
+import { ServerSelector } from "./ServerSelector";
 import { SkillsSelector } from "./SkillsSelector";
 import { StatusRange } from "./StatusRange";
 import { TicketsSelector } from "./TicketsSelector";
@@ -41,8 +44,6 @@ import PHYSDEF from "./icon/PHYSDEF";
 import Power from "./icon/Power";
 import SpellATK from "./icon/SpellATK";
 import SPELLDEF from "./icon/SpellDEF";
-import { MystiqueSelector } from "./MystiqueSelector";
-import { ServerSelector } from "./ServerSelector";
 
 const mir4Classes: Mir4Classes[] = [
   "Arbalist",
@@ -275,11 +276,13 @@ function MainFilters({
 
         <MystiqueSelector control={control} />
 
-        <TicketsSelector />
+        <TicketsSelector control={control} />
 
         <SkillsSelector control={control} setFocus={setFocus} />
 
-        <CraftingMaterialSelector />
+        <CraftingMaterialSelector control={control} />
+
+        <PotentialsSelector control={control} />
       </section>
 
       <FilterChips />

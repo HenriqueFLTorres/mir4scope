@@ -26,7 +26,7 @@ export type ListFiltersType = {
   codex: number[];
   spirits: SpiritsType[];
   max_price: undefined;
-  world_name: string | undefined
+  world_name: string | undefined;
   stats: {
     [key in ListStatusEnum]: ListMinMaxType;
   };
@@ -44,6 +44,17 @@ export type ListFiltersType = {
   mystique: {
     [key in NFT_MYSTIQUE]: number | undefined;
   };
+  potentials: {
+    [key in PotentialType]: number | undefined;
+  };
+  tickets: {
+    [key in TicketsType]: number | undefined;
+  };
+  materials:
+    | {
+        [key in string]: { Legendary: number; Epic: number };
+      }
+    | undefined;
 };
 
 export const LIST_FILTER_DEFAULT: ListFiltersType = {
@@ -93,6 +104,20 @@ export const LIST_FILTER_DEFAULT: ListFiltersType = {
     "White Tiger Mystique": undefined,
     "Blue Dragon Mystique": undefined,
   },
+  potentials: {
+    Hunting: undefined,
+    PvP: undefined,
+    Secondary: undefined,
+  },
+  tickets: {
+    "Raid Ticket": undefined,
+    "Boss Raid Ticket": undefined,
+    "Hell Raid Ticket": undefined,
+    "Magic Square Ticket": undefined,
+    "Secret Peak Ticket": undefined,
+    "Wayfarer Travel Pass": undefined,
+  },
+  materials: undefined,
 };
 
 export const ListFilterAtom = atom<ListFiltersType>(LIST_FILTER_DEFAULT);

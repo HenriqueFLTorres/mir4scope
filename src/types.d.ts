@@ -21,7 +21,13 @@ type SkillsValueType = {
   [key in SkillsType]: number;
 };
 
-type TicketsType = "Raid" | "Raid Boss" | "Magic Square" | "Secret Peak";
+type TicketsType =
+  | "Raid Ticket"
+  | "Boss Raid Ticket"
+  | "Hell Raid Ticket"
+  | "Magic Square Ticket"
+  | "Secret Peak Ticket"
+  | "Wayfarer Travel Pass";
 
 type TrainingType =
   | "Constitution"
@@ -88,6 +94,8 @@ type BuildingType =
   | "Tower of Conquest"
   | "Sanctuary of Hydra"
   | "Tower of Quintessence";
+
+type PotentialType = "Hunting" | "PvP" | "Secondary";
 
 type Keys = (keyof typeof data)[] & {};
 

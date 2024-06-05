@@ -9,8 +9,14 @@ import { getNfts } from "@/lib/get-nfts";
 import { useQuery } from "@tanstack/react-query";
 import { FilterX, Search } from "lucide-react";
 import { type SubmitHandler, useForm } from "react-hook-form";
+import { getPrice } from "@/lib/get-price";
+import { UsdPriceAtom } from "@/atom/Price";
+import { useAtom } from "jotai";
+import { useEffect } from "react";
 
 export default function Home() {
+  const [usdPrice, setUsdPriceAtom] = useAtom(UsdPriceAtom);
+
   const {
     register,
     handleSubmit,
@@ -19,7 +25,7 @@ export default function Home() {
     control,
     setValue,
     reset,
-    setFocus
+    setFocus,
   } = useForm<ListFiltersType>({ defaultValues: LIST_FILTER_DEFAULT });
 
   const {
@@ -34,12 +40,29 @@ export default function Home() {
     refetchOnWindowFocus: false,
   });
 
+  const { data: price, isSuccess } = useQuery({
+    queryKey: ["price"],
+    queryFn: () => getPrice(),
+    refetchOnWindowFocus: false,
+  });
+
+  useEffect(() => {
+    if (isSuccess) {
+      setUsdPriceAtom(price);
+    }
+  }, [isSuccess, price, setUsdPriceAtom]);
+
   const onSubmit: SubmitHandler<ListFiltersType> = (data) => console.log(data);
 
   return (
     <main className="flex min-h-screen flex-col items-center gap-6 p-24">
       <form className="flex flex-col gap-6" onSubmit={handleSubmit(onSubmit)}>
-        <MainFilters register={register} control={control} setFocus={setFocus} setValue={setValue} />
+        <MainFilters
+          register={register}
+          control={control}
+          setFocus={setFocus}
+          setValue={setValue}
+        />
 
         <div className="mb-16 flex w-full gap-4">
           <button
@@ -63,7 +86,7 @@ export default function Home() {
         </div>
 
         <pre className="rounded bg-black/40 p-2 text-xs text-white">
-          {JSON.stringify(watch("skills"), null, 2)}
+          {JSON.stringify(watch("materials"), null, 2)}
         </pre>
       </form>
 

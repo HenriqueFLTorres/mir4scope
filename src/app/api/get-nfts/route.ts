@@ -8,18 +8,29 @@ import { db } from "@/drizzle/index";
 import formattedSkillsMapping from "@/lib/formattedSkillsMapping";
 import { capitalizeString } from "@/lib/utils";
 import { sql } from "drizzle-orm";
-import { NextResponse, type NextRequest } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 
 const NON_NULL_SPIRITS = "spirits.inven is not null";
 
 export async function POST(request: NextRequest) {
   try {
     const mainFilters: ListFiltersType = await request.json();
-    const { sort, spirits, stats, training, building, skills, mystique } =
-      mainFilters;
+    const {
+      sort,
+      spirits,
+      stats,
+      training,
+      building,
+      skills,
+      mystique,
+      potentials,
+      tickets,
+      materials,
+    } = mainFilters;
 
     const filters: string[] = [];
     const whereFilter: string[] = [];
+    const jsonbAggFilter: string[] = [];
     if (spirits.length > 0) whereFilter.push(NON_NULL_SPIRITS);
 
     getMainFilters(mainFilters, filters);
@@ -30,12 +41,18 @@ export async function POST(request: NextRequest) {
     getBuildingFilters(building, whereFilter);
     getSkillsFilters(skills, whereFilter);
     getMystiqueFilters(mystique, whereFilter);
+    getPotentialsFilters(potentials, whereFilter);
+    getTicketsFilters(tickets, whereFilter);
+    getMaterialsFilters(materials, jsonbAggFilter, whereFilter);
 
     const JOINED_FILTERS =
       filters.length > 0 ? `AND ( ${filters.join("\nAND ")} )` : "";
 
     const JOINED_WHERE =
       whereFilter.length > 0 ? `WHERE ( ${whereFilter.join("\nAND ")} )` : "";
+
+    const JOINED_JSONB_AGG =
+      jsonbAggFilter.length > 0 ? jsonbAggFilter.join("\nAND ") : "";
 
     const SQL_QUERY = `
       SELECT
@@ -62,6 +79,7 @@ export async function POST(request: NextRequest) {
         FROM jsonb_array_elements((SELECT spirits.inven FROM spirits WHERE spirits.id = nft.spirits_id)) AS obj
         WHERE (obj ->> 'grade')::int >= 4
       ) AS spirits(inven) ON true
+      ${JOINED_JSONB_AGG}
       ${JOINED_FILTERS}
       ${JOINED_WHERE}
       ${sortToSQL(sort)}
@@ -198,8 +216,63 @@ function getMystiqueFilters(
   filters: string[],
 ) {
   for (const [name, value] of Object.entries(mystique)) {
-    if (value === undefined || value === null || value === 0) return;
+    if (value == null) return;
 
     filters.push(`(holy_stuff ->> '${name}')::int >= ${value}`);
+  }
+}
+
+function getPotentialsFilters(
+  potentials: ListFiltersType["potentials"],
+  filters: string[],
+) {
+  for (const [potentialName, value] of Object.entries(potentials)) {
+    if (value == null) continue;
+    filters.push(
+      `(potentials ->> '${potentialName.toLowerCase()}')::int >= ${value}`,
+    );
+  }
+}
+
+function getTicketsFilters(
+  tickets: ListFiltersType["tickets"],
+  filters: string[],
+) {
+  for (const [ticketName, value] of Object.entries(tickets)) {
+    if (value == null) continue;
+    filters.push(`(tickets ->> '${ticketName}')::int >= ${value}`);
+  }
+}
+
+function getMaterialsFilters(
+  materials: ListFiltersType["materials"],
+  jsonb_agg_filters: string[],
+  where_filters: string[],
+) {
+  if (!materials) return;
+
+  // 💀
+  jsonb_agg_filters.push(`
+        LEFT JOIN LATERAL (
+          SELECT jsonb_object_agg(key, value) AS craft_materials
+          FROM jsonb_each((SELECT inventory.craft_materials FROM inventory WHERE
+              inventory.id = nft.inventory_id))
+        ) AS inventory ON true
+    `);
+
+  for (const [materialName, value] of Object.entries(materials)) {
+    if (value == null) continue;
+
+    if (value.Epic != null && value.Epic !== 0) {
+      where_filters.push(
+        `(inventory.craft_materials -> '[E] ${materialName}')::int >= ${value.Epic}`,
+      );
+    }
+
+    if (value.Legendary != null && value.Legendary !== 0) {
+      where_filters.push(
+        `(inventory.craft_materials -> '[L] ${materialName}')::int >= ${value.Legendary}`,
+      );
+    }
   }
 }

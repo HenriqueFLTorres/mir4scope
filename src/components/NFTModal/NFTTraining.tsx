@@ -1,6 +1,17 @@
+"use client";
+
 import NFTContainer from "@/components/NFTModal/NFTContainer";
 import Skill from "@/components/icon/Skill";
 import Image from "next/image";
+
+const chi = [
+  "Muscle Strength Manual",
+  "Nine Yin Manual",
+  "Nine Yang Manual",
+  "Violet Mist Art",
+  "Northern Profound Art",
+  "Toad Stance",
+] as const;
 
 export default function NFTTraining({ training }: { training: NFT_TRAINING }) {
   return (
@@ -13,12 +24,12 @@ export default function NFTTraining({ training }: { training: NFT_TRAINING }) {
       </header>
 
       <div className="flex w-full items-start justify-center gap-4">
-        <TrainingFragment name="Constitution" tier={training?.constitution} />
-        {Object.entries(training?.chi).map(([name, value]) => (
+        <TrainingFragment name="Constitution" tier={training?.Constitution} />
+        {chi.map((chiName) => (
           <TrainingFragment
-            key={name}
-            name={name}
-            tier={String(value ?? 0)}
+            key={chiName}
+            name={chiName}
+            tier={String(training[chiName] ?? 0)}
             isChi
           />
         ))}

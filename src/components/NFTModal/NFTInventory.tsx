@@ -21,7 +21,8 @@ type InventoryTabs =
   | "Magic Stone"
   | "Spirit"
   | "Sundry"
-  | "Secondary Equipment";
+  | "Secondary Equipment"
+  | "Tradable Items";
 
 const INVENTORY_TABS = [
   "Equipment",
@@ -30,6 +31,7 @@ const INVENTORY_TABS = [
   "Spirit",
   "Sundry",
   "Secondary Equipment",
+  "Tradable Items",
 ] as const;
 
 type InventorySortingTypes =
@@ -81,9 +83,18 @@ export default function NFTInventory({
         count: 0,
         items: [],
       },
+      "Tradable Items": {
+        count: 0,
+        items: [],
+      },
     };
 
     for (const item of inventory) {
+      if (item.is_tradable) {
+        countingObject["Tradable Items"].count += 1;
+        countingObject["Tradable Items"].items.push(item)
+      }
+
       const itemTab = getItemTab(item.main_type);
 
       countingObject[itemTab].count += 1;
@@ -297,6 +308,8 @@ function getTabIcon(tab: InventoryTabs) {
     case "Material":
     case "Secondary Equipment":
     case "Sundry":
+      return Crafting;
+    case "Tradable Items":
       return Crafting;
     default:
       throw new Error(`Unknown inventory tab: ${tab}`);

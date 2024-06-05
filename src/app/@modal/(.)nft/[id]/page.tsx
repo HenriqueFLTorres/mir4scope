@@ -19,11 +19,14 @@ import Wemix from "@/components/icon/Wemix";
 import { getNft } from "@/lib/get-nft";
 import { getReadableNumber } from "@/lib/utils";
 import { Link } from "lucide-react";
+import { useAtom, useAtomValue } from "jotai";
+import { UsdPriceAtom } from "@/atom/Price";
+import NFTPrice from "@/components/NFTModal/NFTPrice";
 
 export default async function NFTModal({ params }: { params: { id: string } }) {
   const seq = params.id;
   const nft = await getNft(seq);
-
+  
   if (!nft) return null;
 
   return (
@@ -46,16 +49,7 @@ export default async function NFTModal({ params }: { params: { id: string } }) {
               <Link /> Open Link
             </a>
 
-            <a
-              href={`https://xdraco.com/nft/trade/${nft.seq}`}
-              target="_blank"
-              className="h-14 rounded-lg bg-gradient-to-b from-[#FF4BAC] to-[#89005A] p-0.5"
-              rel="noreferrer"
-            >
-              <span className="flex h-full w-full items-center justify-center gap-4 rounded-lg bg-gradient-to-r from-[#140000] via-[#320030] to-[#140000] px-3 py-1.5 text-lg font-medium transition-colors hover:border-black/40 hover:bg-black/20">
-                <Wemix className="h-6 w-6" /> {getReadableNumber(nft.price)}
-              </span>
-            </a>
+            <NFTPrice nft_price={nft.price} seq={nft.seq} />
           </footer>
         </div>
       </section>

@@ -226,6 +226,7 @@ type NFT_INVENTORY_ITEM = {
   power_score?: number;
   options?: ITEM_DETAIL[];
   add_option?: ITEM_DETAIL[];
+  is_tradable: boolean;
 };
 
 type NFT_SUCCESSION_ITEM = {
@@ -243,15 +244,13 @@ type NFT_SUCCESSION_ITEM = {
 };
 
 type NFT_TRAINING = {
-  chi: {
-    "Nine Yang Manual": string;
-    "Muscle Strength Manual": string;
-    "Toad Stance": string;
-    "Northern Profound Art": string;
-    "Violet Mist Art": string;
-    "Nine Yin Manual": string;
-  };
-  constitution: number;
+  "Nine Yang Manual": string;
+  "Muscle Strength Manual": string;
+  "Toad Stance": string;
+  "Northern Profound Art": string;
+  "Violet Mist Art": string;
+  "Nine Yin Manual": string;
+  Constitution: number;
   collect_name: string;
   collect_level: number;
 };
