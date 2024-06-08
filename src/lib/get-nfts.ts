@@ -1,7 +1,7 @@
 import type { ListFiltersType } from "@/atom/ListFilters"
 
 export const getNfts = async (listFilter: ListFiltersType) => {
-  const response = await fetch("http://localhost:3000/api/get-nfts", {
+  const response = await fetch("/api/get-nfts", {
     method: "POST",
     cache: "no-cache",
     body: JSON.stringify(listFilter),

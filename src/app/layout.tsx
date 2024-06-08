@@ -1,8 +1,8 @@
 import "@/app/globals.css"
-import type { Metadata } from "next"
-import { Rubik } from "next/font/google"
 import { Providers } from "@/components/providers"
 import { cn } from "@/lib/cn"
+import type { Metadata } from "next"
+import { Rubik } from "next/font/google"
 
 const rubik = Rubik({ subsets: ["latin"] })
 
@@ -23,7 +23,7 @@ export default function RootLayout({
       <body
         className={cn(
           rubik.className,
-          "bg-gradient-to-br from-[#44356A] to-[#272039]"
+          "min-h-screen bg-gradient-to-br from-[#44356A] to-[#272039]"
         )}
       >
         <Providers>

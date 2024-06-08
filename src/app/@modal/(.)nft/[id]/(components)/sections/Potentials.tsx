@@ -1,6 +1,6 @@
-import Image from "next/image"
 import NFTContainer from "@/app/@modal/(.)nft/[id]/(components)/container"
 import { Skill } from "@/components/other"
+import Image from "next/image"
 
 export default function NFTPotentials({
   potentials,
@@ -24,7 +24,7 @@ export default function NFTPotentials({
         </div>
       </header>
 
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-8">
         <div className="flex flex-col justify-center text-center">
           <h3 className="text-xl font-medium">Total</h3>
           <p className="text-2xl font-extrabold">
@@ -33,13 +33,13 @@ export default function NFTPotentials({
         </div>
 
         <div className="flex w-full justify-around gap-4 px-4">
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center min-w-24 gap-4">
             <Image
               alt=""
-              className="translate-y-6 object-contain"
-              height={96}
-              src={"/potential/hunt.webp"}
-              width={96}
+              className="object-contain"
+              height={56}
+              src={"/potential/hunting.webp"}
+              width={56}
             />
             <p className="flex flex-col justify-center text-center text-sm font-medium">
               Hunt
@@ -49,13 +49,13 @@ export default function NFTPotentials({
             </p>
           </div>
 
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center min-w-24 gap-4">
             <Image
               alt=""
-              className="translate-y-6 object-contain"
-              height={96}
+              className="object-contain"
+              height={56}
               src={"/potential/pvp.webp"}
-              width={96}
+              width={56}
             />
             <p className="flex flex-col justify-center text-center text-sm font-medium">
               PvP
@@ -65,13 +65,13 @@ export default function NFTPotentials({
             </p>
           </div>
 
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center min-w-24 gap-4">
             <Image
               alt=""
-              className="translate-y-6 object-contain"
-              height={96}
+              className="object-contain"
+              height={56}
               src={"/potential/secondary.webp"}
-              width={96}
+              width={56}
             />
             <p className="flex flex-col justify-center text-center text-sm font-medium">
               Secondary

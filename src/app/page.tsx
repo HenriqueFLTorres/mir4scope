@@ -32,7 +32,7 @@ export default function Home() {
   } = useForm<ListFiltersType>({ defaultValues: LIST_FILTER_DEFAULT })
 
   const {
-    data: nft_list,
+    data: nft_list = [],
     isLoading,
     refetch,
     isFetching,
