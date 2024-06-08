@@ -1,18 +1,18 @@
 "use client"
 
+import MainFilters from "@/app/(components)/form/MainFilters"
+import SortList from "@/app/(components)/form/SortList"
+import NFTDisplay from "@/app/(components)/list"
+import NFTDisplaySkeleton from "@/app/(components)/list/NFTDisplaySkeleton"
+import { LIST_FILTER_DEFAULT, type ListFiltersType } from "@/atom/ListFilters"
+import { UsdPriceAtom } from "@/atom/Price"
+import { getNfts } from "@/lib/get-nfts"
+import { getPrice } from "@/lib/get-price"
 import { useQuery } from "@tanstack/react-query"
 import { useSetAtom } from "jotai"
 import { FilterX, Search } from "lucide-react"
 import { useEffect } from "react"
-import { type SubmitHandler, useForm } from "react-hook-form"
-import { LIST_FILTER_DEFAULT, type ListFiltersType } from "@/atom/ListFilters"
-import { UsdPriceAtom } from "@/atom/Price"
-import MainFilters from "@/components/MainFilters"
-import NFTDisplay from "@/components/NftList"
-import NFTDisplaySkeleton from "@/components/NftList/NFTDisplaySkeleton"
-import SortList from "@/components/SortList"
-import { getNfts } from "@/lib/get-nfts"
-import { getPrice } from "@/lib/get-price"
+import { useForm, type SubmitHandler } from "react-hook-form"
 
 export default function Home() {
   const setUsdPriceAtom = useSetAtom(UsdPriceAtom)

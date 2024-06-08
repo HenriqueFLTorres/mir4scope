@@ -1,7 +1,7 @@
-import NFTModalIntroductionSkeleton from "@/components/NFTModal/Introduction.skeleton"
-import NFTContainerSkeleton from "@/components/NFTModal/NFTContainer/Skeleton"
-import { Sheet, SheetContent } from "@/components/ui/sheet"
-import { cn } from "@/lib/utils"
+import NFTModalIntroductionSkeleton from "@/app/@modal/(.)nft/[id]/(components)/Introduction.skeleton"
+import NFTContainerSkeleton from "@/app/@modal/(.)nft/[id]/(components)/container/Skeleton"
+import { Sheet, SheetContent } from "@/components/ui"
+import { cn } from "@/lib/cn"
 
 export default function Loading() {
   return (
