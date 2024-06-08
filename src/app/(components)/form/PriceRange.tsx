@@ -1,6 +1,3 @@
-import { Wemix } from "@/components/other"
-import { Input } from "@/components/ui"
-import { getNumber } from "@/lib/utils"
 import { X } from "lucide-react"
 import millify from "millify"
 import {
@@ -8,6 +5,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "../../../components/ui/elements/popover"
+import { Wemix } from "@/components/other"
+import { Input } from "@/components/ui"
+import { getNumber } from "@/lib/utils"
 
 const PriceRange = ({
   value,

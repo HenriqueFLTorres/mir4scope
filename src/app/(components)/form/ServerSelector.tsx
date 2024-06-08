@@ -1,9 +1,7 @@
 "use client"
 
-import type { ListFiltersType } from "@/atom/ListFilters"
-import { ALL_MIR4_SERVERS } from "@/lib/constants"
 import { Globe, Trash2 } from "lucide-react"
-import { useController, type Control } from "react-hook-form"
+import { type Control, useController } from "react-hook-form"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,6 +15,8 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "../../../components/ui/elements/dropdown-menu"
+import type { ListFiltersType } from "@/atom/ListFilters"
+import { ALL_MIR4_SERVERS } from "@/lib/constants"
 
 export function ServerSelector({
   control,

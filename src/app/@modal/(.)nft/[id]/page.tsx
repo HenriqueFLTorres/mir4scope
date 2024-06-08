@@ -1,22 +1,24 @@
 import { Link } from "lucide-react"
 import { Modal } from "./modal"
 
-import NFTAssets from "@/app/@modal/(.)nft/[id]/(components)/sections/NFTAssets"
-import NFTBuildings from "@/app/@modal/(.)nft/[id]/(components)/sections/NFTBuildings"
-import NFTCodex from "@/app/@modal/(.)nft/[id]/(components)/sections/NFTCodex"
-import NFTDragonArtifact from "@/app/@modal/(.)nft/[id]/(components)/sections/NFTDragonArtifact"
-import NFTEquipmentDisplay from "@/app/@modal/(.)nft/[id]/(components)/sections/NFTEquipmentDisplay"
-import NFTInventory from "@/app/@modal/(.)nft/[id]/(components)/sections/NFTInventory"
-import NFTMagicSoulOrb from "@/app/@modal/(.)nft/[id]/(components)/sections/NFTMagicSoulOrb"
-import NFTMagicStone from "@/app/@modal/(.)nft/[id]/(components)/sections/NFTMagicStone"
-import NFTMysticalPiece from "@/app/@modal/(.)nft/[id]/(components)/sections/NFTMysticalPiece"
-import NFTMystique from "@/app/@modal/(.)nft/[id]/(components)/sections/NFTMystique"
-import NFTPotentials from "@/app/@modal/(.)nft/[id]/(components)/sections/NFTPotentials"
-import NFTPrice from "@/app/@modal/(.)nft/[id]/(components)/sections/NFTPrice"
-import NFTSpirit from "@/app/@modal/(.)nft/[id]/(components)/sections/Spirit"
-import NFTTags from "@/app/@modal/(.)nft/[id]/(components)/sections/NFTTags"
-import NFTTraining from "@/app/@modal/(.)nft/[id]/(components)/sections/NFTTraining"
-import NFTTransferenceEquipment from "@/app/@modal/(.)nft/[id]/(components)/sections/NFTTransferenceEquipment"
+import {
+  NFTAssets,
+  NFTBuildings,
+  NFTCodex,
+  NFTDragonArtifact,
+  NFTEquipmentDisplay,
+  NFTInventory,
+  NFTMagicSoulOrb,
+  NFTMagicStone,
+  NFTMysticalPiece,
+  NFTMystique,
+  NFTPotentials,
+  NFTPrice,
+  NFTSpirit,
+  NFTTags,
+  NFTTraining,
+  NFTTransferenceEquipment,
+} from "@/app/@modal/(.)nft/[id]/(components)/sections"
 import { getNft } from "@/lib/get-nft"
 
 export default async function NFTModal({ params }: { params: { id: string } }) {

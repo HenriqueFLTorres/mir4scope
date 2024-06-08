@@ -1,13 +1,13 @@
 import Image from "next/image"
 
-import { equip_order } from "@/app/@modal/(.)nft/[id]/(components)/sections/NFTEquipmentDisplay"
+import { memo } from "react"
+import { toRoman } from "typescript-roman-numbers-converter"
+import SkillFragment from "./SkillFragment"
+import { getCardRarity, getNFTColor } from "./index"
+import { equip_order } from "@/app/@modal/(.)nft/[id]/(components)/sections/EquipmentDisplay"
 import { SPECIAL_ABILITIES_NAMES } from "@/lib/constants"
 import { gradeToRarity } from "@/lib/utils"
 import type { NFTForDisplay } from "@/types/schema"
-import { memo } from "react"
-import { toRoman } from "typescript-roman-numbers-converter"
-import { getCardRarity, getNFTColor } from "."
-import SkillFragment from "./SkillFragment"
 
 const artifacts_order = [11, 12, 13, 14, 15]
 

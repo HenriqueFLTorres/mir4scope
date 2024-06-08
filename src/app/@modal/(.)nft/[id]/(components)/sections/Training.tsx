@@ -1,8 +1,8 @@
 "use client"
 
-import NFTContainer from "@/app/@modal/(.)nft/[id]/(components)/NFTContainer"
-import { Skill } from "@/components/other"
 import Image from "next/image"
+import NFTContainer from "@/app/@modal/(.)nft/[id]/(components)/container"
+import { Skill } from "@/components/other"
 
 const chi = [
   "Muscle Strength Manual",

@@ -1,5 +1,5 @@
-import NFTModalIntroductionSkeleton from "@/app/@modal/(.)nft/[id]/(components)/Introduction.skeleton"
 import NFTContainerSkeleton from "@/app/@modal/(.)nft/[id]/(components)/container/Skeleton"
+import NFTModalIntroductionSkeleton from "@/app/@modal/(.)nft/[id]/(components)/Introduction.skeleton"
 import { Sheet, SheetContent } from "@/components/ui"
 import { cn } from "@/lib/cn"
 

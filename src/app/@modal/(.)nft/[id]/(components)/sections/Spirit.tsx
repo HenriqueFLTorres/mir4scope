@@ -1,4 +1,5 @@
-import NFTContainer from "@/app/@modal/(.)nft/[id]/(components)/NFTContainer"
+import Image from "next/image"
+import NFTContainer from "@/app/@modal/(.)nft/[id]/(components)/container"
 import Transcend from "@/app/@modal/(.)nft/[id]/(components)/Transcend"
 import { Spirit } from "@/components/other"
 import {
@@ -7,7 +8,6 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/elements/tabs"
-import Image from "next/image"
 
 export default function NFTSpirit({
   spirits,

@@ -2,6 +2,8 @@
 
 import { ChevronsUpDown } from "lucide-react"
 
+import Image from "next/image"
+import { type Control, useController } from "react-hook-form"
 import type { ListFiltersType } from "@/atom/ListFilters"
 import { Building } from "@/components/other"
 import {
@@ -16,8 +18,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui"
 import { getNumber } from "@/lib/utils"
-import Image from "next/image"
-import { useController, type Control } from "react-hook-form"
 
 export function BuildingSelector({
   control,

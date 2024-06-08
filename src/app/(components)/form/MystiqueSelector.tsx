@@ -2,12 +2,8 @@
 
 import { ChevronsUpDown } from "lucide-react"
 
-import type { ListFiltersType } from "@/atom/ListFilters"
-import { Skill } from "@/components/other"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui"
-import { getNumber } from "@/lib/utils"
 import Image from "next/image"
-import { useController, type Control } from "react-hook-form"
+import { type Control, useController } from "react-hook-form"
 import { Input } from "../../../components/ui/elements/input"
 import { Label } from "../../../components/ui/elements/label"
 import {
@@ -16,6 +12,10 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../../../components/ui/elements/tooltip"
+import type { ListFiltersType } from "@/atom/ListFilters"
+import { Skill } from "@/components/other"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui"
+import { getNumber } from "@/lib/utils"
 
 export function MystiqueSelector({
   control,

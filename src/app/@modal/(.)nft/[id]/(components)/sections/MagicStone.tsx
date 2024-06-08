@@ -1,12 +1,12 @@
+import Image from "next/image"
+import NFTContainer from "@/app/@modal/(.)nft/[id]/(components)/container"
 import Enhance from "@/app/@modal/(.)nft/[id]/(components)/Enhance"
 import ItemDetailTooltip from "@/app/@modal/(.)nft/[id]/(components)/ItemDetailTooltip"
-import NFTContainer from "@/app/@modal/(.)nft/[id]/(components)/NFTContainer"
 import Transcend from "@/app/@modal/(.)nft/[id]/(components)/Transcend"
 import { Spirit } from "@/components/other"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui"
 import { gradeToRarity } from "@/lib/utils"
 import type { NFTSelectAll } from "@/types/schema"
-import Image from "next/image"
 
 export default function NFTMagicStone({
   magicStone,

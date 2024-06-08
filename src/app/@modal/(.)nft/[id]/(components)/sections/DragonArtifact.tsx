@@ -1,10 +1,10 @@
+import Image from "next/image"
+import NFTContainer from "@/app/@modal/(.)nft/[id]/(components)/container"
 import Enhance from "@/app/@modal/(.)nft/[id]/(components)/Enhance"
 import ItemDetailTooltip from "@/app/@modal/(.)nft/[id]/(components)/ItemDetailTooltip"
-import NFTContainer from "@/app/@modal/(.)nft/[id]/(components)/NFTContainer"
 import Transcend from "@/app/@modal/(.)nft/[id]/(components)/Transcend"
 import { Spirit } from "@/components/other"
 import { gradeToRarity } from "@/lib/utils"
-import Image from "next/image"
 
 const DRAGON_ARTIFACT_SEQUENCE_INDEX = [11, 12, 13, 14, 15]
 

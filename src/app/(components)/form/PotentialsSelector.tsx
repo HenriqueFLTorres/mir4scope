@@ -3,7 +3,7 @@
 import { ChevronsUpDown } from "lucide-react"
 
 import Image from "next/image"
-import { useController, type Control } from "react-hook-form"
+import { type Control, useController } from "react-hook-form"
 import { Input } from "../../../components/ui/elements/input"
 import { Label } from "../../../components/ui/elements/label"
 

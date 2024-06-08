@@ -1,8 +1,8 @@
+import Image from "next/image"
+import { toRoman } from "typescript-roman-numbers-converter"
 import ItemDetailTooltip from "@/app/@modal/(.)nft/[id]/(components)/ItemDetailTooltip"
 import { classIndexToName, gradeToRarity } from "@/lib/utils"
 import type { NFTSelectAll } from "@/types/schema"
-import Image from "next/image"
-import { toRoman } from "typescript-roman-numbers-converter"
 
 export const equip_slot_position = [
   {

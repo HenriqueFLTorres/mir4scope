@@ -1,4 +1,4 @@
-import NFTContainer from "@/app/@modal/(.)nft/[id]/(components)/NFTContainer"
+import NFTContainer from "@/app/@modal/(.)nft/[id]/(components)/container"
 import { Codex } from "@/components/other"
 
 export default function NFTCodex({ codex }: { codex: NFT_CODEX }) {

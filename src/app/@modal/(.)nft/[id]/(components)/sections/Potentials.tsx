@@ -1,6 +1,6 @@
-import NFTContainer from "@/app/@modal/(.)nft/[id]/(components)/NFTContainer"
-import { Skill } from "@/components/other"
 import Image from "next/image"
+import NFTContainer from "@/app/@modal/(.)nft/[id]/(components)/container"
+import { Skill } from "@/components/other"
 
 export default function NFTPotentials({
   potentials,

@@ -1,4 +1,6 @@
-import NFTContainer from "@/app/@modal/(.)nft/[id]/(components)/NFTContainer"
+import Image from "next/image"
+import { toRoman } from "typescript-roman-numbers-converter"
+import NFTContainer from "@/app/@modal/(.)nft/[id]/(components)/container"
 import { Spirit } from "@/components/other"
 import {
   Tabs,
@@ -7,8 +9,6 @@ import {
   TabsTrigger,
 } from "@/components/ui/elements/tabs"
 import type { NFTSelectAll } from "@/types/schema"
-import Image from "next/image"
-import { toRoman } from "typescript-roman-numbers-converter"
 
 export default function NFTMagicSoulOrb({
   magicOrb,
