@@ -1,5 +1,10 @@
 "use client"
 
+import Enhance from "@/app/@modal/(.)nft/[id]/(components)/Enhance"
+import ItemDetailTooltip from "@/app/@modal/(.)nft/[id]/(components)/ItemDetailTooltip"
+import NFTContainer from "@/app/@modal/(.)nft/[id]/(components)/container"
+import { Backpack, Crafting, Spirit, Traddable } from "@/components/other"
+import { gradeToRarity } from "@/lib/utils"
 import { ArrowDownWideNarrow, Gem, Layers, Plus, Search } from "lucide-react"
 import Image from "next/image"
 import { useMemo, useState } from "react"
@@ -17,11 +22,6 @@ import {
   TabsList,
   TabsTrigger,
 } from "../../../../../../components/ui/elements/tabs"
-import NFTContainer from "@/app/@modal/(.)nft/[id]/(components)/container"
-import Enhance from "@/app/@modal/(.)nft/[id]/(components)/Enhance"
-import ItemDetailTooltip from "@/app/@modal/(.)nft/[id]/(components)/ItemDetailTooltip"
-import { Backpack, Crafting, Spirit } from "@/components/other"
-import { gradeToRarity } from "@/lib/utils"
 
 type InventoryTabs =
   | "Equipment"
@@ -268,6 +268,7 @@ function InventoryItem({
   item_path,
   stack,
   tier,
+  is_tradable,
 }: NFT_INVENTORY_ITEM) {
   return (
     <li className="relative flex h-24 w-24 items-center justify-center">
@@ -285,6 +286,10 @@ function InventoryItem({
         src={item_path}
         width={82}
       />
+
+      {is_tradable ? (
+        <Traddable className="absolute left-0 top-0 h-8 w-8 drop-shadow-[0px_0px_2px_rgba(0,0,0,0.8)]" />
+      ) : null}
 
       {stack > 0 && (
         <p className="absolute bottom-1.5 right-1.5 text-end font-bold leading-none drop-shadow-[0px_0px_2px_rgba(0,0,0,0.8)]">
