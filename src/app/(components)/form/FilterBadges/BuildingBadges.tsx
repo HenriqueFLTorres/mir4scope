@@ -1,24 +1,30 @@
+import Image from "next/image"
+import type { UseFormResetField } from "react-hook-form"
+import { FilterChip } from "./FilterChip"
 import type { ListFiltersType } from "@/atom/ListFilters"
 import { Building } from "@/components/other"
-import Image from "next/image"
-import { FilterChip } from "./FilterChip"
 
 function BuildingBadges({
   building,
+  resetField,
 }: {
   building: ListFiltersType["building"]
+  resetField: UseFormResetField<ListFiltersType>
 }) {
   return Object.entries(building).map(([key, value]) => {
     if (value === undefined || value < 1) return null
 
     return (
-      <FilterChip key={key}>
+      <FilterChip
+        key={key}
+        onRemove={() => resetField(`building.${key as BuildingType}`)}
+      >
         <Image
-          className="absolute left-0 z-[-1] w-32 object-cover opacity-30"
           alt=""
-          width={128}
+          className="absolute left-0 z-[-1] w-32 object-cover opacity-30"
           height={40}
-          src={`/building/${key.toLowerCase()}.png`}
+          src={`/building/${key.toLowerCase().replace(/\s/g, "_")}.png`}
+          width={128}
         />
         <Building /> +{value}
       </FilterChip>

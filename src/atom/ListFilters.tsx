@@ -27,9 +27,9 @@ export type ListFiltersType = {
   spirits: SpiritsType[]
   max_price: number | undefined
   world_name: string | undefined
-  stats: {
-    [key in ListStatusEnum]: ListMinMaxType
-  }
+  stats: Partial<{
+    [key in NFT_STATS_ENUM]: ListMinMaxType
+  }>
   training: {
     [key in TrainingType]: [number, number]
   }
@@ -52,7 +52,7 @@ export type ListFiltersType = {
   }
   materials:
     | {
-        [key in string]: { Legendary: number; Epic: number }
+        [key in MaterialsType]: { Legendary: number; Epic: number }
       }
     | undefined
 }

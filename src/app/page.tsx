@@ -1,5 +1,11 @@
 "use client"
 
+import { useQuery } from "@tanstack/react-query"
+import { useSetAtom } from "jotai"
+import { FilterX } from "lucide-react"
+import { useEffect } from "react"
+import { type SubmitHandler, useForm } from "react-hook-form"
+import { FilterBadges } from "./(components)/form/FilterBadges"
 import MainFilters from "@/app/(components)/form/MainFilters"
 import SortList from "@/app/(components)/form/SortList"
 import NFTDisplay from "@/app/(components)/list"
@@ -9,12 +15,6 @@ import { UsdPriceAtom } from "@/atom/Price"
 import { Search } from "@/components/other"
 import { getNfts } from "@/lib/get-nfts"
 import { getPrice } from "@/lib/get-price"
-import { useQuery } from "@tanstack/react-query"
-import { useSetAtom } from "jotai"
-import { FilterX } from "lucide-react"
-import { useEffect } from "react"
-import { useForm, type SubmitHandler } from "react-hook-form"
-import { FilterBadges } from "./(components)/form/FilterBadges"
 
 export default function Home() {
   const setUsdPriceAtom = useSetAtom(UsdPriceAtom)
@@ -28,6 +28,7 @@ export default function Home() {
     setValue,
     reset,
     setFocus,
+    resetField,
   } = useForm<ListFiltersType>({ defaultValues: LIST_FILTER_DEFAULT })
 
   const {
@@ -87,10 +88,14 @@ export default function Home() {
           <SortList control={control} />
         </div>
 
-        <FilterBadges filters={watch()} />
+        <FilterBadges
+          filters={watch()}
+          resetField={resetField}
+          setValue={setValue}
+        />
 
         <pre className="rounded bg-black/40 p-2 text-xs text-white">
-          {JSON.stringify(watch("materials"), null, 2)}
+          {JSON.stringify(watch("skills"), null, 2)}
         </pre>
       </form>
 

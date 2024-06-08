@@ -102,9 +102,9 @@ function MaterialItem({
 
       <Input
         className="h-8 w-16 p-1 pl-4 text-center"
-        defaultValue={0}
+        placeholder="0"
         prefix={<span className="absolute bottom-2 left-3 font-bold">+</span>}
-        value={typeof value === "number" && value > 0 ? value : "0"}
+        value={typeof value === "number" && value > 0 ? value : ""}
         wrapperClass="ml-auto"
         onChange={(e) => {
           const newValue = getNumber(e.currentTarget.value)

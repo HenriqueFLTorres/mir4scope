@@ -86,7 +86,8 @@ function TrainingFragment({
 
       <Input
         className="h-8 w-10 px-1 text-center"
-        value={minValue}
+        placeholder="0"
+        value={minValue === 0 ? "" : minValue}
         wrapperClass="ml-auto"
         onBlur={onBlurMin}
         onChange={(e) => onChange([getNumber(e.target.value), maxValue])}

@@ -37,7 +37,10 @@ export function TicketsSelector({
         Tickets
         <ChevronsUpDown className="ml-auto h-4 w-4 opacity-60 transition-[opacity] group-data-[state=open]:opacity-100" />
       </PopoverTrigger>
-      <PopoverContent align="start" className="flex flex-col gap-4 p-3">
+      <PopoverContent
+        align="start"
+        className="flex w-full min-w-[20rem] flex-col gap-4 p-3"
+      >
         {TICKETS.map((ticket) => (
           <TicketFragment control={control} key={ticket} name={ticket} />
         ))}
@@ -75,9 +78,9 @@ function TicketFragment({
 
       <Input
         className="h-8 w-16 p-1 pl-4 text-center"
-        defaultValue={0}
+        placeholder="0"
         prefix={<span className="absolute bottom-2 left-3 font-bold">+</span>}
-        value={typeof value === "number" && value > 0 ? value : "0"}
+        value={typeof value === "number" && value > 0 ? value : ""}
         wrapperClass="ml-auto"
         onChange={(e) => {
           const newValue = getNumber(e.currentTarget.value)

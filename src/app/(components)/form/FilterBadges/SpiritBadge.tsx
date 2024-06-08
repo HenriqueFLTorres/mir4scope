@@ -1,19 +1,24 @@
+import Image from "next/image"
+import type { UseFormResetField } from "react-hook-form"
+import { FilterChip } from "./FilterChip"
 import type { ListFiltersType } from "@/atom/ListFilters"
 import { Spirit } from "@/components/other"
-import Image from "next/image"
-import { FilterChip } from "./FilterChip"
 
-function SpiritsBadge({ spirits }: { spirits: ListFiltersType["spirits"] }) {
+function SpiritsBadge({
+  spirits,
+  resetField,
+}: {
+  spirits: ListFiltersType["spirits"]
+  resetField: UseFormResetField<ListFiltersType>
+}) {
   if (spirits.length === 0) return null
 
   return (
-    <FilterChip>
+    <FilterChip onRemove={() => resetField("spirits")}>
       <Spirit />
 
       <div className="flex items-center gap-1">
         {spirits.slice(0, 3).map((spirit) => {
-          const rarity = "Legendary"
-          console.log(rarity, spirit)
           const formattedName = spirit.toLowerCase().replace(/\s/g, "-")
 
           return (
@@ -22,15 +27,8 @@ function SpiritsBadge({ spirits }: { spirits: ListFiltersType["spirits"] }) {
               key={spirit}
             >
               <Image
-                alt={""}
-                className="object-contain"
-                height={28}
-                src={`/bg-${rarity.toLowerCase()}.webp`}
-                width={28}
-              />
-              <Image
                 alt={spirit}
-                className="absolute object-contain"
+                className="object-contain"
                 height={24}
                 src={`/spirit/${formattedName}.webp`}
                 width={24}

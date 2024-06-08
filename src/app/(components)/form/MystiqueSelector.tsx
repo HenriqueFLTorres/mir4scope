@@ -79,6 +79,7 @@ function MystiqueFragment({
 
             <Input
               className="h-8 w-10 bg-gradient-to-b from-black/60 to-black/40 px-1 text-center backdrop-blur-md"
+              placeholder="0"
               value={typeof value === "number" && value > 0 ? value : ""}
               wrapperClass="mb-2"
               onChange={(e) => {
