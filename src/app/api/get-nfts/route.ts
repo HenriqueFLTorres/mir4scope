@@ -1,5 +1,3 @@
-import { sql } from "drizzle-orm"
-import { type NextRequest, NextResponse } from "next/server"
 import {
   LIST_FILTER_DEFAULT,
   type ListFiltersType,
@@ -8,6 +6,8 @@ import {
 import { db } from "@/drizzle/index"
 import formattedSkillsMapping from "@/lib/formattedSkillsMapping"
 import { capitalizeString, isRangeDifferent } from "@/lib/utils"
+import { sql } from "drizzle-orm"
+import { NextResponse, type NextRequest } from "next/server"
 
 const NON_NULL_SPIRITS = "spirits.inven is not null"
 
@@ -85,6 +85,7 @@ export async function POST(request: NextRequest) {
       LIMIT
         20;
     `
+    console.log(SQL_QUERY)
 
     const allNfts = await db.execute(sql.raw(SQL_QUERY))
 
@@ -97,6 +98,8 @@ export async function POST(request: NextRequest) {
 
 function statsToSQL(stats: ListFiltersType["stats"], filters: string[]) {
   for (const [statName, value] of Object.entries(stats)) {
+    if (value[0] == null && value[0] == null) continue
+
     const firstValue = Number(value[0])
     const secondValue = Number(value[1])
 

@@ -1,11 +1,5 @@
 "use client"
 
-import { useQuery } from "@tanstack/react-query"
-import { useSetAtom } from "jotai"
-import { FilterX } from "lucide-react"
-import { useEffect } from "react"
-import { type SubmitHandler, useForm } from "react-hook-form"
-import { FilterBadges } from "./(components)/form/FilterBadges"
 import MainFilters from "@/app/(components)/form/MainFilters"
 import SortList from "@/app/(components)/form/SortList"
 import NFTDisplay from "@/app/(components)/list"
@@ -15,6 +9,12 @@ import { UsdPriceAtom } from "@/atom/Price"
 import { Search } from "@/components/other"
 import { getNfts } from "@/lib/get-nfts"
 import { getPrice } from "@/lib/get-price"
+import { useQuery } from "@tanstack/react-query"
+import { useSetAtom } from "jotai"
+import { FilterX } from "lucide-react"
+import { useEffect } from "react"
+import { useForm, type SubmitHandler } from "react-hook-form"
+import { FilterBadges } from "./(components)/form/FilterBadges"
 
 export default function Home() {
   const setUsdPriceAtom = useSetAtom(UsdPriceAtom)
@@ -67,7 +67,7 @@ export default function Home() {
           setValue={setValue}
         />
 
-        <div className="mb-16 flex w-full gap-4">
+        <div className="flex w-full gap-4">
           <button
             className="h-10 w-full gap-2 rounded-lg border-2 border-[#7C71AA] bg-[#44356A] p-2 font-medium text-white focus-visible:outline-none disabled:pointer-events-none disabled:opacity-40"
             disabled={!isDirty}
@@ -94,9 +94,9 @@ export default function Home() {
           setValue={setValue}
         />
 
-        <pre className="rounded bg-black/40 p-2 text-xs text-white">
-          {JSON.stringify(watch("skills"), null, 2)}
-        </pre>
+        {/* <pre className="rounded bg-black/40 p-2 text-xs text-white">
+          {JSON.stringify(watch("stats"), null, 2)}
+        </pre> */}
       </form>
 
       {isLoading || isFetching || isRefetching ? (
