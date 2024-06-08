@@ -1,15 +1,15 @@
+import type { ListFiltersType, ListStatusEnum } from "@/atom/ListFilters"
+import { cn } from "@/lib/cn"
+import { getNumber } from "@/lib/utils"
 import { X } from "lucide-react"
 import millify from "millify"
-import { type Control, useController } from "react-hook-form"
+import { useController, type Control } from "react-hook-form"
 import { Input } from "../../../components/ui/elements/input"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "../../../components/ui/elements/popover"
-import type { ListFiltersType, ListStatusEnum } from "@/atom/ListFilters"
-import { cn } from "@/lib/cn"
-import { getNumber } from "@/lib/utils"
 
 export interface StatusRangeProps {
   label: ListStatusEnum
@@ -30,13 +30,10 @@ const StatusRange = ({ label, Icon, control }: StatusRangeProps) => {
   } = useController({
     name: `stats.${label}`,
     control,
-    rules: {
-      validate: validateRange,
-    },
   })
 
-  const minValue = value[0]
-  const maxValue = value[1]
+  const minValue = value?.[0]
+  const maxValue = value?.[1]
 
   return (
     <Popover>
