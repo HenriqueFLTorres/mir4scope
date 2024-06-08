@@ -148,7 +148,7 @@ function CardFront({
   )
 }
 
-function getStatIcon(stat: NFT_STATS_ENUM) {
+export function getStatIcon(stat: NFT_STATS_ENUM) {
   switch (stat) {
     case "PHYS ATK":
       return PHYSATK

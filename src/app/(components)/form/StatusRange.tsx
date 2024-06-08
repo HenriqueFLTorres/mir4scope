@@ -1,15 +1,15 @@
+import type { ListFiltersType, ListStatusEnum } from "@/atom/ListFilters"
+import { cn } from "@/lib/cn"
+import { getNumber } from "@/lib/utils"
 import { X } from "lucide-react"
 import millify from "millify"
-import { type Control, useController } from "react-hook-form"
+import { useController, type Control } from "react-hook-form"
 import { Input } from "../../../components/ui/elements/input"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "../../../components/ui/elements/popover"
-import type { ListFiltersType, ListStatusEnum } from "@/atom/ListFilters"
-import { cn } from "@/lib/cn"
-import { getNumber } from "@/lib/utils"
 
 export interface StatusRangeProps {
   label: ListStatusEnum
@@ -35,18 +35,6 @@ const StatusRange = ({ label, Icon, control }: StatusRangeProps) => {
     },
   })
 
-  const getLabel = () => {
-    const firstValue = Number(minValue)
-    const secondValue = Number(maxValue)
-
-    if (Number.isInteger(firstValue) && Number.isInteger(secondValue))
-      return `${millify(firstValue)} - ${millify(secondValue)}`
-    if (Number.isInteger(firstValue)) return `>= ${millify(firstValue)}`
-    if (Number.isInteger(secondValue)) return `<= ${millify(secondValue)}`
-
-    return "Any"
-  }
-
   const minValue = value[0]
   const maxValue = value[1]
 
@@ -60,7 +48,7 @@ const StatusRange = ({ label, Icon, control }: StatusRangeProps) => {
       >
         {Icon}
         <span>
-          {label} <b>({getLabel()})</b>
+          {label} <b>({getStatsRangeLabel(minValue, maxValue)})</b>
         </span>
       </PopoverTrigger>
       <PopoverContent className="flex flex-col items-center gap-4 px-3 py-4">
@@ -118,4 +106,19 @@ const StatusRange = ({ label, Icon, control }: StatusRangeProps) => {
   )
 }
 
-export { StatusRange }
+const getStatsRangeLabel = (
+  minValue: number | undefined,
+  maxValue: number | undefined
+) => {
+  const firstValue = Number(minValue)
+  const secondValue = Number(maxValue)
+
+  if (Number.isInteger(firstValue) && Number.isInteger(secondValue))
+    return `${millify(firstValue)} - ${millify(secondValue)}`
+  if (Number.isInteger(firstValue)) return `>= ${millify(firstValue)}`
+  if (Number.isInteger(secondValue)) return `<= ${millify(secondValue)}`
+
+  return "Any"
+}
+
+export { StatusRange, getStatsRangeLabel }
