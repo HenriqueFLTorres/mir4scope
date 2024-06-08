@@ -67,7 +67,7 @@ export default function NFTEquipmentDisplay({
         alt=""
         className="fade-image pointer-events-none absolute left-[50%] top-[50%] shrink-0 translate-x-[-50%] translate-y-[-50%] object-contain"
         height={512}
-        src={`/class-preview/${classIndexToName(classIndex)}.webp`}
+        src={`/class-preview/${classIndexToName(classIndex).toLowerCase()}.webp`}
         width={512}
       />
 
