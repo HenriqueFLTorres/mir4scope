@@ -1,14 +1,14 @@
-import type { SVGProps } from "react";
+import type { SVGProps } from "react"
 
 const Skill = (props: SVGProps<SVGSVGElement>) => (
   <svg
-    width="1em"
-    height="1em"
-    viewBox="0 0 20 20"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
     aria-label="Skill Icon"
+    fill="none"
+    height="1em"
     role="img"
+    viewBox="0 0 20 20"
+    width="1em"
+    xmlns="http://www.w3.org/2000/svg"
     {...props}
   >
     <path
@@ -68,6 +68,6 @@ const Skill = (props: SVGProps<SVGSVGElement>) => (
       fill="white"
     />
   </svg>
-);
+)
 
-export default Skill;
+export default Skill

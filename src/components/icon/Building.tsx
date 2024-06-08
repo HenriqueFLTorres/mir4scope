@@ -1,14 +1,14 @@
-import type { SVGProps } from "react";
+import type { SVGProps } from "react"
 
 const Building = (props: SVGProps<SVGSVGElement>) => (
   <svg
-    width="1em"
-    height="1em"
-    viewBox="0 0 30 32"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
     aria-label="Building Icon"
+    fill="none"
+    height="1em"
     role="img"
+    viewBox="0 0 30 32"
+    width="1em"
+    xmlns="http://www.w3.org/2000/svg"
     {...props}
   >
     <path
@@ -24,10 +24,10 @@ const Building = (props: SVGProps<SVGSVGElement>) => (
       fill="white"
     />
     <path
-      fillRule="evenodd"
       clipRule="evenodd"
       d="M11.3112 2.80702H18.1313C18.2144 3.18129 18.6552 4.09201 19.7531 4.74074H16.447V6.17544C16.447 6.52891 16.4055 6.8616 16.0104 7.25666C15.6943 7.57271 15.0193 7.66558 14.7212 7.67251C14.4232 7.66558 13.7481 7.57271 13.4321 7.25666C13.037 6.8616 12.9955 6.52891 12.9955 6.17544V4.74074H9.68941C10.7873 4.09201 11.2281 3.18129 11.3112 2.80702ZM14.7212 6.90145C15.3009 6.86911 15.7609 6.38886 15.7609 5.80117C15.7609 5.21348 15.3009 4.73323 14.7212 4.70089C14.1416 4.73323 13.6816 5.21348 13.6816 5.80117C13.6816 6.38886 14.1416 6.86911 14.7212 6.90145Z"
       fill="white"
+      fillRule="evenodd"
     />
     <path
       d="M12.4548 5.63483C12.4548 7.1319 12.5588 7.54776 13.8272 8.17154H11.1865C9.73931 8.17154 8.82305 7.04873 8.54581 6.48733C10.0928 6.48733 10.7013 5.919 10.8122 5.63483H12.4548Z"
@@ -74,6 +74,6 @@ const Building = (props: SVGProps<SVGSVGElement>) => (
     />
     <path d="M27.3008 29.8168H17.7362V31.9376H27.3008V29.8168Z" fill="white" />
   </svg>
-);
+)
 
-export { Building };
+export { Building }

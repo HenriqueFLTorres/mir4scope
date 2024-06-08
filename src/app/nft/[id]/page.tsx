@@ -1,16 +1,16 @@
-import Link from "next/link";
-import { redirect } from "next/navigation";
+import Link from "next/link"
+import { redirect } from "next/navigation"
 
 export default function NFTModalPage() {
-  redirect("/");
+  redirect("/")
 
   return (
     <section className="py-24">
       <div className="container">
         <div>
           <Link
-            href="/"
             className="font-semibold italic text-sky-600 underline"
+            href="/"
           >
             Back to main page
           </Link>
@@ -21,5 +21,5 @@ export default function NFTModalPage() {
         </div>
       </div>
     </section>
-  );
+  )
 }

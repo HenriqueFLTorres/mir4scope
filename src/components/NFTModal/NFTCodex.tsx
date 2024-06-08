@@ -1,6 +1,6 @@
-import NFTContainer from "@/components/NFTModal/NFTContainer";
-import Codex from "@/components/icon/Codex";
-import { getRelativePercentage } from "@/lib/utils";
+import Codex from "@/components/icon/Codex"
+import NFTContainer from "@/components/NFTModal/NFTContainer"
+import { getRelativePercentage } from "@/lib/utils"
 
 export default function NFTCodex({ codex }: { codex: NFT_CODEX }) {
   return (
@@ -20,7 +20,7 @@ export default function NFTCodex({ codex }: { codex: NFT_CODEX }) {
         ))}
       </div>
     </NFTContainer>
-  );
+  )
 }
 
 function CodexFragment({
@@ -31,8 +31,8 @@ function CodexFragment({
 }: NFT_CODEX_OBJECT["data"][0]) {
   const completedPercentage = getRelativePercentage(
     in_progress + completed,
-    total_count,
-  );
+    total_count
+  )
 
   return (
     <div className="relative flex flex-col items-center rounded-lg bg-black/10 p-4 text-center text-sm drop-shadow-lg">
@@ -58,5 +58,5 @@ function CodexFragment({
         <strong className="font-semibold text-white">{completed}</strong>
       </p>
     </div>
-  );
+  )
 }

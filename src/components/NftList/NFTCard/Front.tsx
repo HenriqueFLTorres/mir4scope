@@ -1,16 +1,16 @@
-import { classIndexToName, getReadableNumber, getStatIcon } from "@/lib/utils";
-import Image from "next/image";
+import { useAtomValue } from "jotai/index"
+import Image from "next/image"
 
-import Codex from "@/components/icon/Codex";
-import Power from "@/components/icon/Power";
-import Wemix from "@/components/icon/Wemix";
-import type { NFTForDisplay } from "@/types/schema";
-import { memo } from "react";
-import { getCardRarity, getNFTColor } from ".";
-import GlassChip from "./GlassChip";
-import Globe from '@/components/icon/Globe';
-import { useAtomValue } from "jotai/index";
-import { UsdPriceAtom } from "@/atom/Price";
+import { memo } from "react"
+import GlassChip from "./GlassChip"
+import { getCardRarity, getNFTColor } from "."
+import { UsdPriceAtom } from "@/atom/Price"
+import Codex from "@/components/icon/Codex"
+import Globe from "@/components/icon/Globe"
+import Power from "@/components/icon/Power"
+import Wemix from "@/components/icon/Wemix"
+import { classIndexToName, getReadableNumber, getStatIcon } from "@/lib/utils"
+import type { NFTForDisplay } from "@/types/schema"
 
 const STATS_TO_DISPLAY: NFT_STATS_ENUM[] = [
   "PHYS ATK",
@@ -19,7 +19,7 @@ const STATS_TO_DISPLAY: NFT_STATS_ENUM[] = [
   "Spell DEF",
   "EVA",
   "Accuracy",
-];
+]
 
 function CardFront({
   character_name,
@@ -29,12 +29,12 @@ function CardFront({
   lvl,
   stats,
   codex,
-  world_name
+  world_name,
 }: NFTForDisplay) {
-  const mir4Class = classIndexToName(classIndex);
+  const mir4Class = classIndexToName(classIndex)
 
-  const usdPrice = useAtomValue(UsdPriceAtom);
-  const formattedPrice = usdPrice ? (Number(usdPrice) * price).toFixed(2) : 0;
+  const usdPrice = useAtomValue(UsdPriceAtom)
+  const formattedPrice = usdPrice ? (Number(usdPrice) * price).toFixed(2) : 0
 
   return (
     <div
@@ -42,10 +42,10 @@ function CardFront({
       style={{ borderColor: getNFTColor(power_score) }}
     >
       <Image
-        fill
-        src={`/${getCardRarity(power_score)}-card.webp`}
         alt=""
         className="pointer-events-none absolute z-[-1] h-[22rem] w-72 object-cover"
+        src={`/${getCardRarity(power_score)}-card.webp`}
+        fill
       />
 
       <p className="pointer-events-none absolute left-0 top-14 z-[-1] inline-block shrink-0 text-nowrap text-6xl font-bold text-white opacity-40 drop-shadow-lg">
@@ -58,7 +58,7 @@ function CardFront({
         }
         style={{
           backgroundImage: `linear-gradient(to bottom, ${getNFTColor(
-            power_score,
+            power_score
           )}, rgba(0,0,0,0))`,
         }}
       />
@@ -69,39 +69,39 @@ function CardFront({
         }
         style={{
           backgroundImage: `linear-gradient(to top, ${getNFTColor(
-            power_score,
+            power_score
           )}, rgba(0,0,0,0))`,
         }}
       />
 
       <Image
-        width={288}
-        height={540}
-        src={`/class-preview/${mir4Class}.webp`}
         alt=""
         className="pointer-events-none absolute bottom-0 left-1/2 z-[-1] max-w-2xl -translate-x-1/2 rounded-md object-contain"
+        height={540}
+        src={`/class-preview/${mir4Class}.webp`}
+        width={288}
       />
 
       <ul className="grid grid-cols-3 items-center justify-between gap-1 p-1">
         {STATS_TO_DISPLAY.map((name) => {
-          if (!(name in stats)) return null;
+          if (!(name in stats)) return null
 
-          const value = stats[name];
+          const value = stats[name]
 
-          const StatIcon = getStatIcon(name);
-          if (value === undefined) return null;
+          const StatIcon = getStatIcon(name)
+          if (value === undefined) return null
 
           return (
             <li
-              key={name}
               className="flex h-8 w-full items-center gap-2 rounded border border-black/10 bg-black/40 p-1 drop-shadow-sm backdrop-blur-md"
+              key={name}
             >
               <StatIcon className="h-5 w-5 shrink-0" />
               <p className="flex w-full justify-center text-xs font-medium text-white">
                 {value}
               </p>
             </li>
-          );
+          )
         })}
       </ul>
 
@@ -132,15 +132,13 @@ function CardFront({
 
         <GlassChip className="mt-auto justify-center text-base">
           <Wemix className="h-5 w-5" /> {getReadableNumber(price)}
-          <b className="ml-2">
-            ${formattedPrice}
-          </b>
+          <b className="ml-2">${formattedPrice}</b>
         </GlassChip>
       </footer>
     </div>
-  );
+  )
 }
 
-const NFTCardFront = memo(CardFront);
+const NFTCardFront = memo(CardFront)
 
-export default NFTCardFront;
+export default NFTCardFront

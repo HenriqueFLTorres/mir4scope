@@ -1,25 +1,25 @@
-import Enhance from "@/components/NFTModal/Enhance";
-import ItemDetailTooltip from "@/components/NFTModal/ItemDetailTooltip";
-import ItemPlaceholder from "@/components/NFTModal/ItemPlaceholder";
-import NFTContainer from "@/components/NFTModal/NFTContainer";
-import Transcend from "@/components/NFTModal/Transcend";
-import Spirit from "@/components/icon/Spirit";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { completeArray, gradeToRarity } from "@/lib/utils";
-import type { NFTSelectAll } from "@/types/schema";
-import Image from "next/image";
+import Image from "next/image"
+import Spirit from "@/components/icon/Spirit"
+import Enhance from "@/components/NFTModal/Enhance"
+import ItemDetailTooltip from "@/components/NFTModal/ItemDetailTooltip"
+import ItemPlaceholder from "@/components/NFTModal/ItemPlaceholder"
+import NFTContainer from "@/components/NFTModal/NFTContainer"
+import Transcend from "@/components/NFTModal/Transcend"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { completeArray, gradeToRarity } from "@/lib/utils"
+import type { NFTSelectAll } from "@/types/schema"
 
 export default function NFTMagicStone({
   magicStone,
 }: Pick<NFTSelectAll, "magicStone">) {
-  const availableDeckIndexes = Object.keys(magicStone?.equipItem);
+  const availableDeckIndexes = Object.keys(magicStone?.equipItem)
 
   return (
     <NFTContainer>
       <Tabs
         className="flex w-full flex-col"
         defaultValue={String(
-          magicStone?.active_deck ?? availableDeckIndexes[0],
+          magicStone?.active_deck ?? availableDeckIndexes[0]
         )}
       >
         <header className="mb-8 flex w-full items-center justify-between gap-4">
@@ -51,14 +51,14 @@ export default function NFTMagicStone({
                   ) : (
                     // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
                     <ItemPlaceholder key={`${deckIndex}-${index}`} />
-                  ),
+                  )
               )}
             </TabsContent>
-          ),
+          )
         )}
       </Tabs>
     </NFTContainer>
-  );
+  )
 }
 
 function MagicStoneItem({
@@ -75,28 +75,28 @@ function MagicStoneItem({
   return (
     <ItemDetailTooltip
       add_option={add_option}
-      options={options}
       item_name={item_name}
       item_path={item_path}
+      options={options}
       power_score={power_score}
     >
       <div
-        key={item_name}
         className="relative flex h-20 w-20 items-center justify-center"
+        key={item_name}
       >
         <Image
-          src={`/bg-${gradeToRarity(grade)}.webp`}
           alt=""
           className="object-contain"
-          width={80}
           height={80}
+          src={`/bg-${gradeToRarity(grade)}.webp`}
+          width={80}
         />
         <Image
-          src={item_path}
           alt={item_name}
           className="absolute object-contain"
-          width={64}
           height={64}
+          src={item_path}
+          width={64}
         />
 
         <Transcend value={tier} />
@@ -104,5 +104,5 @@ function MagicStoneItem({
         <Enhance value={trance_step} />
       </div>
     </ItemDetailTooltip>
-  );
+  )
 }

@@ -1,8 +1,8 @@
-import ItemDetailTooltip from "@/components/NFTModal/ItemDetailTooltip";
-import { classIndexToName, gradeToRarity } from "@/lib/utils";
-import type { NFTSelectAll } from "@/types/schema";
-import Image from "next/image";
-import { toRoman } from "typescript-roman-numbers-converter";
+import Image from "next/image"
+import { toRoman } from "typescript-roman-numbers-converter"
+import ItemDetailTooltip from "@/components/NFTModal/ItemDetailTooltip"
+import { classIndexToName, gradeToRarity } from "@/lib/utils"
+import type { NFTSelectAll } from "@/types/schema"
 
 export const equip_slot_position = [
   {
@@ -45,9 +45,9 @@ export const equip_slot_position = [
     left: 472,
     top: 216,
   },
-];
+]
 
-export const equip_order = [1, 9, 5, 6, 7, 8, 2, 3, 4, 10];
+export const equip_order = [1, 9, 5, 6, 7, 8, 2, 3, 4, 10]
 
 export default function NFTEquipmentDisplay({
   equipItems,
@@ -56,19 +56,19 @@ export default function NFTEquipmentDisplay({
   return (
     <div className="relative mx-10 my-6 flex h-[32rem] w-[32rem] shrink-0">
       <Image
-        src="/nft/bg-character-equip.webp"
         alt=""
-        width={512}
-        height={512}
         className="absolute"
+        height={512}
+        src="/nft/bg-character-equip.webp"
+        width={512}
       />
 
       <Image
-        width={512}
-        height={512}
-        src={`/class-preview/${classIndexToName(classIndex)}.webp`}
         alt=""
         className="fade-image pointer-events-none absolute left-[50%] top-[50%] shrink-0 translate-x-[-50%] translate-y-[-50%] object-contain"
+        height={512}
+        src={`/class-preview/${classIndexToName(classIndex)}.webp`}
+        width={512}
       />
 
       <ul className="flex items-center justify-center">
@@ -82,36 +82,36 @@ export default function NFTEquipmentDisplay({
             power_score,
             add_option,
             options,
-          } = equipItems[key];
+          } = equipItems[key]
 
           return (
             <li
-              key={item_name}
               className="absolute flex h-20 w-20 items-center gap-2 p-1 text-sm font-bold text-white [&>span]:drop-shadow-[0_0_2px_rgb(0,0,0)]"
+              key={item_name}
               style={equip_slot_position[index]}
             >
               <ItemDetailTooltip
                 add_option={add_option}
-                options={options}
                 item_name={item_name}
                 item_path={item_path}
+                options={options}
                 power_score={power_score}
                 disable_background
               >
                 <div className="flex h-20 w-20 shrink-0 items-center justify-center">
                   <Image
-                    width={80}
-                    height={80}
-                    src={`/item-bg-${gradeToRarity(grade)}.webp`}
                     alt=""
                     className="absolute object-contain"
+                    height={80}
+                    src={`/item-bg-${gradeToRarity(grade)}.webp`}
+                    width={80}
                   />
                   <Image
-                    width={62}
-                    height={62}
-                    src={item_path}
                     alt={item_name}
                     className="absolute object-contain"
+                    height={62}
+                    src={item_path}
+                    width={62}
                   />
                 </div>
                 {Number(enhance) > 0 ? (
@@ -124,9 +124,9 @@ export default function NFTEquipmentDisplay({
                 </span>
               </ItemDetailTooltip>
             </li>
-          );
+          )
         })}
       </ul>
     </div>
-  );
+  )
 }

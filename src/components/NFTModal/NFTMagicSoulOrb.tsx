@@ -1,16 +1,16 @@
-import ItemPlaceholder from "@/components/NFTModal/ItemPlaceholder";
-import NFTContainer from "@/components/NFTModal/NFTContainer";
-import Spirit from "@/components/icon/Spirit";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { completeArray } from "@/lib/utils";
-import type { NFTSelectAll } from "@/types/schema";
-import Image from "next/image";
-import { toRoman } from "typescript-roman-numbers-converter";
+import Image from "next/image"
+import { toRoman } from "typescript-roman-numbers-converter"
+import Spirit from "@/components/icon/Spirit"
+import ItemPlaceholder from "@/components/NFTModal/ItemPlaceholder"
+import NFTContainer from "@/components/NFTModal/NFTContainer"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { completeArray } from "@/lib/utils"
+import type { NFTSelectAll } from "@/types/schema"
 
 export default function NFTMagicSoulOrb({
   magicOrb,
 }: Pick<NFTSelectAll, "magicOrb">) {
-  const availableDeckIndexes = Object.keys(magicOrb?.equipItem);
+  const availableDeckIndexes = Object.keys(magicOrb?.equipItem)
 
   return (
     <NFTContainer>
@@ -43,14 +43,14 @@ export default function NFTMagicSoulOrb({
                   ) : (
                     // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
                     <ItemPlaceholder key={`${deckIndex}-${index}`} />
-                  ),
+                  )
               )}
             </TabsContent>
-          ),
+          )
         )}
       </Tabs>
     </NFTContainer>
-  );
+  )
 }
 
 function MagicOrbItem({
@@ -64,34 +64,34 @@ function MagicOrbItem({
 }: NFT_MAGIC_ORB) {
   return (
     <div
-      key={item_name}
       className="relative flex h-20 w-20 items-center justify-center"
+      key={item_name}
     >
       <Image
-        src={Number(grade) === 5 ? "/bg-legendary.webp" : "/bg-epic.webp"}
         alt=""
         className="object-contain"
-        width={80}
         height={80}
+        src={Number(grade) === 5 ? "/bg-legendary.webp" : "/bg-epic.webp"}
+        width={80}
       />
       <Image
-        src={item_path}
         alt={item_name}
         className="absolute object-contain"
-        width={50}
         height={50}
+        src={item_path}
+        width={50}
       />
 
       <div className="absolute -bottom-1 -left-1 flex h-7 w-7 shrink-0 items-center justify-center">
         <Image
-          src={"/icon/spirit-transcend.webp"}
           alt={""}
           className="object-contain"
-          width={28}
           height={28}
+          src={"/icon/spirit-transcend.webp"}
+          width={28}
         />
         <p className="absolute">{toRoman(item_level)}</p>
       </div>
     </div>
-  );
+  )
 }

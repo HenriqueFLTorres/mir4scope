@@ -1,19 +1,16 @@
-import eslintPlugin from "@eslint/js";
-import nextPlugin from "@next/eslint-plugin-next";
-import stylisticPlugin from "@stylistic/eslint-plugin";
-import importPlugin from "eslint-plugin-import";
-import prettierPlugin from "eslint-plugin-prettier";
-import reactPlugin from "eslint-plugin-react";
-import hooksPlugin from "eslint-plugin-react-hooks";
-import unusedImportsPlugin from "eslint-plugin-unused-imports";
-import globals from "globals";
-import eslint from '@eslint/js';
-import tseslint from "typescript-eslint";
+import eslintPlugin from "@eslint/js"
+import eslint from "@eslint/js"
+import nextPlugin from "@next/eslint-plugin-next"
+import stylisticPlugin from "@stylistic/eslint-plugin"
+import importPlugin from "eslint-plugin-import"
+import prettierPlugin from "eslint-plugin-prettier"
+import reactPlugin from "eslint-plugin-react"
+import hooksPlugin from "eslint-plugin-react-hooks"
+import unusedImportsPlugin from "eslint-plugin-unused-imports"
+import globals from "globals"
+import tseslint from "typescript-eslint"
 
-const ignores = [
-  "node_modules/*",
-  ".next/*",
-]
+const ignores = ["node_modules/*", ".next/*"]
 
 const plugins = {
   eslint: eslint.configs.recommended,
@@ -24,7 +21,7 @@ const plugins = {
   "@next/next": nextPlugin,
   "@stylistic": stylisticPlugin,
   prettier: prettierPlugin,
-};
+}
 const config = tseslint.config(
   ...tseslint.configs.recommended,
   eslintPlugin.configs.recommended,
@@ -117,7 +114,7 @@ const config = tseslint.config(
       },
       sourceType: "module",
     },
-  },
-);
+  }
+)
 
-export default config;
+export default config

@@ -1,12 +1,12 @@
 const Conquest = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
-    width="1em"
-    height="1em"
-    viewBox="0 0 30 33"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
     aria-label="Conquest Icon"
+    fill="none"
+    height="1em"
     role="img"
+    viewBox="0 0 30 33"
+    width="1em"
+    xmlns="http://www.w3.org/2000/svg"
     {...props}
   >
     <path
@@ -22,10 +22,10 @@ const Conquest = (props: React.SVGProps<SVGSVGElement>) => (
       fill="white"
     />
     <path
-      fillRule="evenodd"
       clipRule="evenodd"
       d="M11.3112 3.28407H18.1313C18.2144 3.65834 18.6552 4.56906 19.7531 5.21779H16.447V6.65249C16.447 7.00597 16.4055 7.33865 16.0104 7.73371C15.6943 8.04976 15.0193 8.14263 14.7212 8.14957C14.4232 8.14263 13.7481 8.04976 13.4321 7.73371C13.037 7.33865 12.9955 7.00597 12.9955 6.65249V5.21779H9.68941C10.7873 4.56906 11.2281 3.65834 11.3112 3.28407ZM14.7212 7.3785C15.3009 7.34616 15.7609 6.86591 15.7609 6.27822C15.7609 5.69053 15.3009 5.21028 14.7212 5.17794C14.1416 5.21028 13.6816 5.69053 13.6816 6.27822C13.6816 6.86591 14.1416 7.34616 14.7212 7.3785Z"
       fill="white"
+      fillRule="evenodd"
     />
     <path
       d="M12.4548 6.11188C12.4548 7.60895 12.5588 8.02481 13.8272 8.64859H11.1865C9.73931 8.64859 8.82305 7.52578 8.54581 6.96438C10.0928 6.96438 10.7013 6.39605 10.8122 6.11188H12.4548Z"
@@ -72,6 +72,6 @@ const Conquest = (props: React.SVGProps<SVGSVGElement>) => (
     />
     <path d="M27.3008 30.2938H17.7362V32.4147H27.3008V30.2938Z" fill="white" />
   </svg>
-);
+)
 
-export default Conquest;
+export default Conquest

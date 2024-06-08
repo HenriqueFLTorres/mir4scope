@@ -1,36 +1,36 @@
-"use client";
+"use client"
 
-import { ChevronsUpDown } from "lucide-react";
+import { ChevronsUpDown } from "lucide-react"
 
-import type { ListFiltersType } from "@/atom/ListFilters";
+import Image from "next/image"
+import { type Control, useController, useWatch } from "react-hook-form"
+import Spirit from "./icon/Spirit"
+import type { ListFiltersType } from "@/atom/ListFilters"
 import {
   Command,
   CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
-} from "@/components/ui/command";
+} from "@/components/ui/command"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
-import Image from "next/image";
-import { useController, useWatch, type Control } from "react-hook-form";
-import Spirit from "./icon/Spirit";
+} from "@/components/ui/popover"
 
-type spiritList = Partial<{ [key in SpiritsType]: "Legendary" | "Epic" }>;
+type spiritList = Partial<{ [key in SpiritsType]: "Legendary" | "Epic" }>
 
 export function SpiritSelector({
   control,
 }: {
-  control: Control<ListFiltersType>;
+  control: Control<ListFiltersType>
 }) {
-  const fields = useWatch({ control, name: "spirits" });
+  const fields = useWatch({ control, name: "spirits" })
 
   return (
     <Popover>
-      <PopoverTrigger role="combobox" className="w-72 justify-between" noIcon>
+      <PopoverTrigger className="w-72 justify-between" role="combobox" noIcon>
         <Spirit className="h-5 w-5" />
         Spirits ({fields ? `${fields.length} selected` : "Any"})
         <ChevronsUpDown className="ml-auto h-4 w-4 opacity-60 transition-[opacity] group-data-[state=open]:opacity-100" />
@@ -41,89 +41,89 @@ export function SpiritSelector({
           <CommandEmpty>No spirit found.</CommandEmpty>
           <div className="small-scroll relative flex max-h-80 flex-col overflow-y-auto">
             <CommandGroup
-              heading="Legendary"
               className="flex shrink-0 flex-col gap-2 [&>div]:flex [&>div]:w-full [&>div]:flex-wrap [&>div]:gap-2"
+              heading="Legendary"
             >
               <SpiritList
+                control={control}
                 list={
                   Object.entries(SPIRIT_LIST).filter(
-                    ([, rarity]) => rarity !== "Epic",
+                    ([, rarity]) => rarity !== "Epic"
                   ) as [SpiritsType, "Legendary"][]
                 }
-                control={control}
               />
             </CommandGroup>
             <CommandGroup
-              heading="Epic"
               className="flex shrink-0 flex-col gap-2 [&>div]:flex [&>div]:w-full [&>div]:flex-wrap [&>div]:gap-2"
+              heading="Epic"
             >
               <SpiritList
+                control={control}
                 list={
                   Object.entries(SPIRIT_LIST).filter(
-                    ([, rarity]) => rarity !== "Legendary",
+                    ([, rarity]) => rarity !== "Legendary"
                   ) as [SpiritsType, "Epic"][]
                 }
-                control={control}
               />
             </CommandGroup>
           </div>
         </Command>
       </PopoverContent>
     </Popover>
-  );
+  )
 }
 
 function SpiritList({
   list,
   control,
 }: {
-  list: [SpiritsType, "Legendary" | "Epic"][];
-  control: Control<ListFiltersType>;
+  list: [SpiritsType, "Legendary" | "Epic"][]
+  control: Control<ListFiltersType>
 }) {
   const {
     field: { value, onChange },
   } = useController({
     name: "spirits",
     control,
-  });
+  })
 
   const onSelect = (spirit: string) => {
-    const isSelected = value.includes(spirit as SpiritsType);
+    const isSelected = value.includes(spirit as SpiritsType)
 
     onChange(
-      isSelected ? value.filter((pet) => pet !== spirit) : [...value, spirit],
-    );
-  };
+      isSelected ? value.filter((pet) => pet !== spirit) : [...value, spirit]
+    )
+  }
 
   return list.map(([spirit, rarity]) => {
-    const formattedName = spirit.toLowerCase();
-    const isSelected = value.includes(formattedName as SpiritsType);
+    const formattedName = spirit.toLowerCase()
+    const isSelected = value.includes(formattedName as SpiritsType)
 
     return (
       <CommandItem
+        className="flex cursor-pointer items-center justify-center rounded-full border border-transparent p-0 opacity-60 transition-[opacity,filter] aria-selected:bg-transparent data-[filter=true]:opacity-100 data-[filter=true]:drop-shadow-[0_0_8px_rgb(159,143,109)]"
+        data-filter={isSelected}
         key={spirit}
         value={spirit}
         onSelect={(spirit) => onSelect(spirit)}
-        data-filter={isSelected}
-        className="flex cursor-pointer items-center justify-center rounded-full border border-transparent p-0 opacity-60 transition-[opacity,filter] aria-selected:bg-transparent data-[filter=true]:opacity-100 data-[filter=true]:drop-shadow-[0_0_8px_rgb(159,143,109)]"
       >
         <Image
-          className="object-contain"
-          width={56}
-          height={56}
           alt={""}
+          className="object-contain"
+          height={56}
           src={`/bg-${rarity.toLowerCase()}.webp`}
+          width={56}
         />
         <Image
-          className="absolute object-contain"
-          width={48}
-          height={48}
           alt={spirit}
+          className="absolute object-contain"
+          height={48}
           src={`/spirit/${formattedName.replace(/\s/g, "-")}.webp`}
+          width={48}
         />
       </CommandItem>
-    );
-  });
+    )
+  })
 }
 
 export const SPIRIT_LIST: spiritList = {
@@ -171,4 +171,4 @@ export const SPIRIT_LIST: spiritList = {
   "Thunder Beast Baratan": "Epic",
   "Verdant Watcher Gargas": "Epic",
   "White Peacock Crystalglass": "Epic",
-};
+}

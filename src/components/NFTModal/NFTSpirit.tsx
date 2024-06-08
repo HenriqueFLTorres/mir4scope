@@ -1,17 +1,17 @@
-import ItemPlaceholder from "@/components/NFTModal/ItemPlaceholder";
-import NFTContainer from "@/components/NFTModal/NFTContainer";
-import Transcend from "@/components/NFTModal/Transcend";
-import Spirit from "@/components/icon/Spirit";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { completeArray } from "@/lib/utils";
-import Image from "next/image";
+import Image from "next/image"
+import Spirit from "@/components/icon/Spirit"
+import ItemPlaceholder from "@/components/NFTModal/ItemPlaceholder"
+import NFTContainer from "@/components/NFTModal/NFTContainer"
+import Transcend from "@/components/NFTModal/Transcend"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { completeArray } from "@/lib/utils"
 
 export default function NFTSpirit({
   spirits,
 }: {
-  spirits: { equip: { [key in string]: { [key in string]: NFT_SPIRIT } } };
+  spirits: { equip: { [key in string]: { [key in string]: NFT_SPIRIT } } }
 }) {
-  const availableDeckIndexes = Object.keys(spirits?.equip);
+  const availableDeckIndexes = Object.keys(spirits?.equip)
 
   return (
     <NFTContainer>
@@ -43,34 +43,34 @@ export default function NFTSpirit({
                 ) : (
                   // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
                   <ItemPlaceholder key={`${deckIndex}-${index}`} />
-                ),
+                )
             )}
           </TabsContent>
         ))}
       </Tabs>
     </NFTContainer>
-  );
+  )
 }
 
 function SpiritItem({ grade, icon_path, pet_name, transcend }: NFT_SPIRIT) {
   return (
     <div className="relative flex h-20 w-20 items-center justify-center">
       <Image
-        src={grade === 5 ? "/bg-legendary.webp" : "/bg-epic.webp"}
         alt=""
         className="object-contain"
-        width={80}
         height={80}
+        src={grade === 5 ? "/bg-legendary.webp" : "/bg-epic.webp"}
+        width={80}
       />
       <Image
-        src={icon_path}
         alt={pet_name}
         className="absolute object-contain"
-        width={50}
         height={50}
+        src={icon_path}
+        width={50}
       />
 
       <Transcend value={transcend} />
     </div>
-  );
+  )
 }

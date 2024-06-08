@@ -1,4 +1,4 @@
-import { integer, jsonb, pgTable, serial, text } from "drizzle-orm/pg-core";
+import { integer, jsonb, pgTable, serial, text } from "drizzle-orm/pg-core"
 
 export const NFT_SCHEMA = pgTable("nft", {
   id: serial("id").primaryKey(),
@@ -37,11 +37,13 @@ export const NFT_SCHEMA = pgTable("nft", {
   reinforce: integer("reinforce").notNull(),
   inventoryId: integer("inventory_id").notNull(),
   successionId: integer("succession_id").notNull(),
-  spiritsId: integer("spirits_id").notNull().references(() => SPIRITS_SCHEMA.id),
+  spiritsId: integer("spirits_id")
+    .notNull()
+    .references(() => SPIRITS_SCHEMA.id),
   magicOrbId: integer("magic_orb_id").notNull(),
   magicStoneId: integer("magic_stone_id").notNull(),
   mysticalPieceId: integer("mystical_piece_id").notNull(),
-});
+})
 
 export const SPIRITS_SCHEMA = pgTable("spirits", {
   id: serial("id").primaryKey(),
@@ -49,7 +51,7 @@ export const SPIRITS_SCHEMA = pgTable("spirits", {
     .$type<{ [key in string]: { [key in string]: NFT_SPIRIT } }>()
     .notNull(),
   inven: jsonb("inven").$type<NFT_SPIRIT[]>().notNull(),
-});
+})
 
 export const MAGIC_ORB_SCHEMA = pgTable("magic_orb", {
   id: serial("id").primaryKey(),
@@ -57,7 +59,7 @@ export const MAGIC_ORB_SCHEMA = pgTable("magic_orb", {
     .$type<{ [key in string]: { [key in string]: NFT_MAGIC_ORB } }>()
     .notNull(),
   active_deck: text("active_deck"),
-});
+})
 
 export const MAGIC_STONE_SCHEMA = pgTable("magic_stone", {
   id: serial("id").primaryKey(),
@@ -65,7 +67,7 @@ export const MAGIC_STONE_SCHEMA = pgTable("magic_stone", {
     .$type<{ [key in string]: { [key in string]: NFT_MAGIC_STONE } }>()
     .notNull(),
   active_deck: text("active_deck"),
-});
+})
 
 export const MYSTICAL_PIECE_SCHEMA = pgTable("mystical_piece", {
   id: serial("id").primaryKey(),
@@ -73,16 +75,16 @@ export const MYSTICAL_PIECE_SCHEMA = pgTable("mystical_piece", {
     .$type<{ [key in string]: { [key in string]: NFT_MYSTICAL_PIECE } }>()
     .notNull(),
   active_deck: text("active_deck"),
-});
+})
 
 export const INVENTORY_SCHEMA = pgTable("inventory", {
   id: serial("id").primaryKey(),
   inventory: jsonb("inventory").$type<NFT_INVENTORY_ITEM[]>().notNull(),
-});
+})
 
 export const SUCCESSION_SCHEMA = pgTable("succession", {
   id: serial("id").primaryKey(),
   succession: jsonb("succession")
     .$type<{ [key in string]: NFT_SUCCESSION_ITEM }>()
     .notNull(),
-});
+})

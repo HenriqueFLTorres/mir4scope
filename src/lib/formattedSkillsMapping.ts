@@ -83,6 +83,6 @@ const formattedSkillsMapping: { [key in string]: NFT_SKILLS_ENUM } = {
   rampant: "Rampant",
   "barbaric-charge": "Barbaric Charge",
   "unbreakable-stance": "Unbreakable Stance",
-};
+}
 
-export default formattedSkillsMapping;
+export default formattedSkillsMapping

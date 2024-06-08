@@ -1,12 +1,12 @@
-import Power from "@/components/icon/Power";
+import { FileText } from "lucide-react"
+import Image from "next/image"
+import Power from "@/components/icon/Power"
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { FileText } from "lucide-react";
-import Image from "next/image";
+} from "@/components/ui/tooltip"
 
 export default function ItemDetailTooltip({
   children,
@@ -18,22 +18,22 @@ export default function ItemDetailTooltip({
   disable_background = false,
   no_detail = false,
 }: {
-  children: React.ReactNode;
-  item_name: string;
-  item_path: string;
-  power_score?: number;
-  options: NFT_EQUIP_ITEM["options"];
-  add_option: NFT_EQUIP_ITEM["add_option"];
-  disable_background?: boolean;
-  no_detail?: boolean;
+  children: React.ReactNode
+  item_name: string
+  item_path: string
+  power_score?: number
+  options: NFT_EQUIP_ITEM["options"]
+  add_option: NFT_EQUIP_ITEM["add_option"]
+  disable_background?: boolean
+  no_detail?: boolean
 }) {
   return (
-    <TooltipProvider disableHoverableContent={true} delayDuration={0}>
+    <TooltipProvider delayDuration={0} disableHoverableContent={true}>
       <Tooltip>
         <TooltipTrigger>{children}</TooltipTrigger>
         <TooltipContent
-          collisionPadding={16}
           className="flex flex-col items-center justify-center gap-6"
+          collisionPadding={16}
         >
           <h2 className="w-full text-xl font-semibold drop-shadow-md">
             {item_name}
@@ -41,9 +41,9 @@ export default function ItemDetailTooltip({
 
           {no_detail ? null : (
             <ItemDetail
-              power_score={power_score}
               add_option={add_option}
               options={options}
+              power_score={power_score}
             />
           )}
 
@@ -51,17 +51,17 @@ export default function ItemDetailTooltip({
             <></>
           ) : (
             <Image
-              src={item_path}
               alt=""
-              width={64}
-              height={64}
               className="pointer-events-none absolute z-[-1] scale-[3] object-contain opacity-60 blur-md"
+              height={64}
+              src={item_path}
+              width={64}
             />
           )}
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
-  );
+  )
 }
 
 function ItemDetail({
@@ -69,9 +69,9 @@ function ItemDetail({
   options,
   add_option,
 }: {
-  power_score?: number;
-  options: NFT_EQUIP_ITEM["options"];
-  add_option: NFT_EQUIP_ITEM["add_option"];
+  power_score?: number
+  options: NFT_EQUIP_ITEM["options"]
+  add_option: NFT_EQUIP_ITEM["add_option"]
 }) {
   return (
     <>
@@ -114,5 +114,5 @@ function ItemDetail({
         </div>
       )}
     </>
-  );
+  )
 }

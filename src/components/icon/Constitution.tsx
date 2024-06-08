@@ -1,14 +1,14 @@
-import type { SVGProps } from "react";
+import type { SVGProps } from "react"
 
 const Constitution = (props: SVGProps<SVGSVGElement>) => (
   <svg
-    width="1em"
-    height="1em"
-    viewBox="0 0 26 24"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
     aria-label="Constitution Icon"
+    fill="none"
+    height="1em"
     role="img"
+    viewBox="0 0 26 24"
+    width="1em"
+    xmlns="http://www.w3.org/2000/svg"
     {...props}
   >
     <path
@@ -40,6 +40,6 @@ const Constitution = (props: SVGProps<SVGSVGElement>) => (
       fill="white"
     />
   </svg>
-);
+)
 
-export default Constitution;
+export default Constitution

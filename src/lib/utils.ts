@@ -1,118 +1,118 @@
-import Accuracy from "@/components/icon/Accuracy";
-import EVA from "@/components/icon/EVA";
-import PHYSATK from "@/components/icon/PHYSATK";
-import PHYSDEF from "@/components/icon/PHYSDEF";
-import SpellATK from "@/components/icon/SpellATK";
-import SPELLDEF from "@/components/icon/SpellDEF";
-import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
+import { type ClassValue, clsx } from "clsx"
+import { twMerge } from "tailwind-merge"
+import Accuracy from "@/components/icon/Accuracy"
+import EVA from "@/components/icon/EVA"
+import PHYSATK from "@/components/icon/PHYSATK"
+import PHYSDEF from "@/components/icon/PHYSDEF"
+import SpellATK from "@/components/icon/SpellATK"
+import SPELLDEF from "@/components/icon/SpellDEF"
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
+  return twMerge(clsx(inputs))
 }
 
 export function getNumber(input: string | number) {
-  let newValue = input;
-  newValue = newValue.toString();
-  newValue = newValue.replace(/\D/g, "");
-  newValue = Number(newValue);
+  let newValue = input
+  newValue = newValue.toString()
+  newValue = newValue.replace(/\D/g, "")
+  newValue = Number(newValue)
 
-  const validNumber = Number.isInteger(newValue);
+  const validNumber = Number.isInteger(newValue)
 
-  return validNumber ? newValue : null;
+  return validNumber ? newValue : null
 }
 
 export const getReadableNumber = (number: number) =>
-  Math.round(number).toLocaleString("en", { useGrouping: true });
+  Math.round(number).toLocaleString("en", { useGrouping: true })
 
 export function classIndexToName(index: number) {
   switch (index) {
     case 1:
-      return "Warrior";
+      return "Warrior"
     case 2:
-      return "Sorcerer";
+      return "Sorcerer"
     case 3:
-      return "Taoist";
+      return "Taoist"
     case 4:
-      return "Arbalist";
+      return "Arbalist"
     case 5:
-      return "Lancer";
+      return "Lancer"
     case 6:
-      return "Darkist";
+      return "Darkist"
     default:
       throw new Error(
-        `Unknown class index given to classIndexToName function: ${index}`,
-      );
+        `Unknown class index given to classIndexToName function: ${index}`
+      )
   }
 }
 
 export function getStatIcon(stat: NFT_STATS_ENUM) {
   switch (stat) {
     case "PHYS ATK":
-      return PHYSATK;
+      return PHYSATK
     case "PHYS DEF":
-      return PHYSDEF;
+      return PHYSDEF
     case "Spell ATK":
-      return SpellATK;
+      return SpellATK
     case "Spell DEF":
-      return SPELLDEF;
+      return SPELLDEF
     case "EVA":
-      return EVA;
+      return EVA
     case "Accuracy":
-      return Accuracy;
+      return Accuracy
     default:
-      throw new Error(`Unknown stat type: ${stat}`);
+      throw new Error(`Unknown stat type: ${stat}`)
   }
 }
 
 export function gradeToRarity(grade: number | string) {
   switch (Number(grade)) {
     case 5:
-      return "legendary";
+      return "legendary"
     case 4:
-      return "epic";
+      return "epic"
     case 3:
-      return "rare";
+      return "rare"
     case 2:
-      return "uncommon";
+      return "uncommon"
     default:
-      return "common";
+      return "common"
   }
 }
 
 export function completeArray<T extends {}>(
   array: T[],
-  size: number,
+  size: number
 ): (T | null)[] {
-  if (array.length === size) return array;
-  const newArray: (T | null)[] = [...array];
+  if (array.length === size) return array
+  const newArray: (T | null)[] = [...array]
 
-  while (newArray.length < size) newArray.push(null);
+  while (newArray.length < size) newArray.push(null)
 
-  return newArray;
+  return newArray
 }
 
 export function getRelativePercentage(
   firstNumber: number | string,
-  secondNumber: string | number,
+  secondNumber: string | number
 ) {
-  const numberA = Number(firstNumber);
-  const numberB = Number(secondNumber);
-  if (Number.isNaN(numberA) || Number.isNaN(numberB)) return 0;
+  const numberA = Number(firstNumber)
+  const numberB = Number(secondNumber)
+  if (Number.isNaN(numberA) || Number.isNaN(numberB)) return 0
 
-  const result = (numberA / numberB) * 100;
+  const result = (numberA / numberB) * 100
 
-  return result;
+  return result
 }
 
 export function capitalizeString(input: string) {
-  const words = input.split(" ");
+  const words = input.split(" ")
 
   const capitalizedWords = words.map((word) => {
-    return word.charAt(0).toUpperCase() + word.slice(1);
-  });
+    return word.charAt(0).toUpperCase() + word.slice(1)
+  })
 
-  return capitalizedWords.join(" ");
+  return capitalizedWords.join(" ")
 }
 
 export const ALL_MIR4_SERVERS = {
@@ -262,4 +262,4 @@ export const ALL_MIR4_SERVERS = {
       "NA083",
     ],
   },
-};
+}

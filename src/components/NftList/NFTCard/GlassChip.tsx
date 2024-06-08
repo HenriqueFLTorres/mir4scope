@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils"
 
 export default function GlassChip({
   className,
@@ -9,11 +9,11 @@ export default function GlassChip({
     <div
       className={cn(
         "flex items-center gap-2 rounded border border-black/10 bg-black/40 p-1 text-sm font-medium text-white drop-shadow-sm backdrop-blur-md",
-        className,
+        className
       )}
       {...props}
     >
       {children}
     </div>
-  );
+  )
 }

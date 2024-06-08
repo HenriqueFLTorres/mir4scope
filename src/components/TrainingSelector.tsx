@@ -1,30 +1,30 @@
-"use client";
+"use client"
 
-import { ChevronsUpDown } from "lucide-react";
+import { ChevronsUpDown } from "lucide-react"
 
-import type { ListFiltersType } from "@/atom/ListFilters";
+import Image from "next/image"
+import type { ChangeEvent } from "react"
+import { type Control, useController } from "react-hook-form"
+import Constitution from "./icon/Constitution"
+import InnerForce from "./icon/InnerForce"
+import { Input } from "./ui/input"
+import { Label } from "./ui/label"
+import type { ListFiltersType } from "@/atom/ListFilters"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
-import { getNumber } from "@/lib/utils";
-import Image from "next/image";
-import type { ChangeEvent } from "react";
-import { useController, type Control } from "react-hook-form";
-import Constitution from "./icon/Constitution";
-import InnerForce from "./icon/InnerForce";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
+} from "@/components/ui/popover"
+import { getNumber } from "@/lib/utils"
 
 export function TrainingSelector({
   control,
 }: {
-  control: Control<ListFiltersType>;
+  control: Control<ListFiltersType>
 }) {
   return (
     <Popover>
-      <PopoverTrigger role="combobox" className="w-72 justify-between" noIcon>
+      <PopoverTrigger className="w-72 justify-between" role="combobox" noIcon>
         <InnerForce className="h-5 w-5" />
         Training
         <ChevronsUpDown className="ml-auto h-4 w-4 opacity-60 transition-[opacity] group-data-[state=open]:opacity-100" />
@@ -32,15 +32,15 @@ export function TrainingSelector({
       <PopoverContent align="start" className="flex w-96 flex-col gap-4 p-3">
         {TRAINING_LIST.map(({ name, max }) => (
           <TrainingFragment
-            key={name}
-            name={name}
-            max={max}
             control={control}
+            key={name}
+            max={max}
+            name={name}
           />
         ))}
       </PopoverContent>
     </Popover>
-  );
+  )
 }
 
 function TrainingFragment({
@@ -48,37 +48,37 @@ function TrainingFragment({
   max,
   control,
 }: {
-  name: TrainingType;
-  max: number;
-  control: Control<ListFiltersType>;
+  name: TrainingType
+  max: number
+  control: Control<ListFiltersType>
 }) {
   const {
     field: { value, onChange },
   } = useController({
     name: `training.${name}`,
     control,
-  });
+  })
 
-  const minValue = value[0];
-  const maxValue = value[1];
+  const minValue = value[0]
+  const maxValue = value[1]
 
   const onBlurMin = (e: ChangeEvent<HTMLInputElement>) => {
-    const newMinValue = getNumber(e.currentTarget.value);
-    if (!newMinValue) return onChange([0, maxValue]);
-    if (newMinValue > maxValue) return onChange([maxValue, maxValue]);
+    const newMinValue = getNumber(e.currentTarget.value)
+    if (!newMinValue) return onChange([0, maxValue])
+    if (newMinValue > maxValue) return onChange([maxValue, maxValue])
 
-    onChange([newMinValue, maxValue]);
-  };
+    onChange([newMinValue, maxValue])
+  }
 
   const onBlurMax = (e: ChangeEvent<HTMLInputElement>) => {
-    const newMaxValue = getNumber(e.currentTarget.value);
-    if (!newMaxValue) return onChange([minValue, max]);
-    if (newMaxValue < minValue) return onChange([minValue, minValue]);
+    const newMaxValue = getNumber(e.currentTarget.value)
+    if (!newMaxValue) return onChange([minValue, max])
+    if (newMaxValue < minValue) return onChange([minValue, minValue])
 
-    if (newMaxValue > max) return onChange([minValue, max]);
+    if (newMaxValue > max) return onChange([minValue, max])
 
-    onChange([minValue, newMaxValue]);
-  };
+    onChange([minValue, newMaxValue])
+  }
 
   return (
     <Label className="flex h-8 w-full items-center justify-end gap-2 text-sm font-medium">
@@ -87,37 +87,37 @@ function TrainingFragment({
 
       <Input
         className="h-8 w-10 px-1 text-center"
-        wrapperClass="ml-auto"
         value={minValue}
-        onChange={(e) => onChange([getNumber(e.target.value), maxValue])}
+        wrapperClass="ml-auto"
         onBlur={onBlurMin}
+        onChange={(e) => onChange([getNumber(e.target.value), maxValue])}
       />
       <Input
         className="h-8 w-10 px-1 text-center"
         defaultValue={max}
         value={maxValue}
-        onChange={(e) => onChange([minValue, getNumber(e.target.value)])}
         onBlur={onBlurMax}
+        onChange={(e) => onChange([minValue, getNumber(e.target.value)])}
       />
     </Label>
-  );
+  )
 }
 
 const TrainingIcon = ({ training }: { training: TrainingType }) => {
-  if (training === "Constitution") return <Constitution className="h-8 w-12" />;
+  if (training === "Constitution") return <Constitution className="h-8 w-12" />
 
-  const formattedName = training.toLowerCase().replace(/\s/g, "_");
+  const formattedName = training.toLowerCase().replace(/\s/g, "_")
 
   return (
     <Image
-      src={`/training/${formattedName}.webp`}
       alt={training}
-      height={32}
-      width={48}
       className="h-8 object-contain"
+      height={32}
+      src={`/training/${formattedName}.webp`}
+      width={48}
     />
-  );
-};
+  )
+}
 
 const TRAINING_LIST: { name: TrainingType; max: number }[] = [
   { name: "Constitution", max: 21 },
@@ -127,4 +127,4 @@ const TRAINING_LIST: { name: TrainingType; max: number }[] = [
   { name: "Violet Mist Art", max: 12 },
   { name: "Northern Profound Art", max: 12 },
   { name: "Toad Stance", max: 12 },
-];
+]

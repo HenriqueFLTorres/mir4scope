@@ -1,5 +1,5 @@
-import NFTCard from "@/components/NftList/NFTCard";
-import type { NFTForDisplay } from "@/types/schema";
+import NFTCard from "@/components/NftList/NFTCard"
+import type { NFTForDisplay } from "@/types/schema"
 
 const NFTDisplay = ({ nft_list }: { nft_list: NFTForDisplay[] }) => {
   return (
@@ -8,7 +8,7 @@ const NFTDisplay = ({ nft_list }: { nft_list: NFTForDisplay[] }) => {
         <NFTCard key={data.seq} {...data} />
       ))}
     </section>
-  );
-};
+  )
+}
 
-export default NFTDisplay;
+export default NFTDisplay

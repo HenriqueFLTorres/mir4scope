@@ -1,14 +1,14 @@
-import type { SVGProps } from "react";
+import type { SVGProps } from "react"
 
 const EXP = (props: SVGProps<SVGSVGElement>) => (
   <svg
-    width="1em"
-    height="1em"
-    viewBox="0 0 17 20"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
     aria-label="EXP Icon"
+    fill="none"
+    height="1em"
     role="img"
+    viewBox="0 0 17 20"
+    width="1em"
+    xmlns="http://www.w3.org/2000/svg"
     {...props}
   >
     <path
@@ -31,6 +31,6 @@ const EXP = (props: SVGProps<SVGSVGElement>) => (
     <path d="M4.78656 17.4071H11.701V18.2714H4.78656V17.4071Z" fill="white" />
     <path d="M4.78656 19.1357H11.701V20H4.78656V19.1357Z" fill="white" />
   </svg>
-);
+)
 
-export default EXP;
+export default EXP

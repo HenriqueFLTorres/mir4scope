@@ -1,20 +1,20 @@
-import NFTContainer from "@/components/NFTModal/NFTContainer";
-import Skill from "@/components/icon/Skill";
-import Image from "next/image";
+import Image from "next/image"
+import Skill from "@/components/icon/Skill"
+import NFTContainer from "@/components/NFTModal/NFTContainer"
 
 export default function NFTPotentials({
   potentials,
 }: {
-  potentials: NFT_POTENTIAL;
+  potentials: NFT_POTENTIAL
 }) {
   return (
     <NFTContainer className="relative items-center justify-center gap-4 overflow-hidden">
       <Image
-        src={"/potential/background.webp"}
         alt=""
-        width={768}
-        height={768}
         className="absolute z-[-1] object-cover opacity-30"
+        height={768}
+        src={"/potential/background.webp"}
+        width={768}
       />
 
       <header className="flex w-full items-center justify-between gap-4">
@@ -35,11 +35,11 @@ export default function NFTPotentials({
         <div className="flex w-full justify-around gap-4 px-4">
           <div className="flex flex-col items-center">
             <Image
-              src={"/potential/hunt.webp"}
               alt=""
-              width={96}
-              height={96}
               className="translate-y-6 object-contain"
+              height={96}
+              src={"/potential/hunt.webp"}
+              width={96}
             />
             <p className="flex flex-col justify-center text-center text-sm font-medium">
               Hunt
@@ -51,11 +51,11 @@ export default function NFTPotentials({
 
           <div className="flex flex-col items-center">
             <Image
-              src={"/potential/pvp.webp"}
               alt=""
-              width={96}
-              height={96}
               className="translate-y-6 object-contain"
+              height={96}
+              src={"/potential/pvp.webp"}
+              width={96}
             />
             <p className="flex flex-col justify-center text-center text-sm font-medium">
               PvP
@@ -67,11 +67,11 @@ export default function NFTPotentials({
 
           <div className="flex flex-col items-center">
             <Image
-              src={"/potential/secondary.webp"}
               alt=""
-              width={96}
-              height={96}
               className="translate-y-6 object-contain"
+              height={96}
+              src={"/potential/secondary.webp"}
+              width={96}
             />
             <p className="flex flex-col justify-center text-center text-sm font-medium">
               Secondary
@@ -83,5 +83,5 @@ export default function NFTPotentials({
         </div>
       </div>
     </NFTContainer>
-  );
+  )
 }

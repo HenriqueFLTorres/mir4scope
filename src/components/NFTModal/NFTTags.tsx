@@ -1,9 +1,9 @@
-import Codex from "@/components/icon/Codex";
-import EXP from "@/components/icon/EXP";
-import Globe from "@/components/icon/Globe";
-import Power from "@/components/icon/Power";
-import { getReadableNumber } from "@/lib/utils";
-import type { NFTSelectAll } from "@/types/schema";
+import Codex from "@/components/icon/Codex"
+import EXP from "@/components/icon/EXP"
+import Globe from "@/components/icon/Globe"
+import Power from "@/components/icon/Power"
+import { getReadableNumber } from "@/lib/utils"
+import type { NFTSelectAll } from "@/types/schema"
 
 export default function NFTTags({
   lvl,
@@ -25,7 +25,7 @@ export default function NFTTags({
         <Globe className="h-6 w-6" /> {worldName}
       </NFTChips>
     </ul>
-  );
+  )
 }
 
 function NFTChips({ children }: { children: React.ReactNode }) {
@@ -33,5 +33,5 @@ function NFTChips({ children }: { children: React.ReactNode }) {
     <span className="flex w-max items-center gap-2 rounded-md border border-black/20 bg-black/10 px-3 py-1.5 text-lg font-medium">
       {children}
     </span>
-  );
+  )
 }

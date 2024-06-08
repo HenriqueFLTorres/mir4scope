@@ -1,26 +1,26 @@
-import { SPECIAL_ABILITIES_NAMES } from "@/lib/contants";
-import { gradeToRarity } from "@/lib/utils";
-import Image from "next/image";
+import Image from "next/image"
 
-import { equip_order } from "@/components/NFTModal/NFTEquipmentDisplay";
-import type { NFTForDisplay } from "@/types/schema";
-import { memo } from "react";
-import { toRoman } from "typescript-roman-numbers-converter";
-import { getCardRarity, getNFTColor } from ".";
-import SkillFragment from "./SkillFragment";
+import { memo } from "react"
+import { toRoman } from "typescript-roman-numbers-converter"
+import SkillFragment from "./SkillFragment"
+import { getCardRarity, getNFTColor } from "."
+import { equip_order } from "@/components/NFTModal/NFTEquipmentDisplay"
+import { SPECIAL_ABILITIES_NAMES } from "@/lib/contants"
+import { gradeToRarity } from "@/lib/utils"
+import type { NFTForDisplay } from "@/types/schema"
 
-const artifacts_order = [11, 12, 13, 14, 15];
+const artifacts_order = [11, 12, 13, 14, 15]
 
 function CardBack({ power_score, skills, inven, equip_items }: NFTForDisplay) {
   const skills_without_special = (
     Object.entries(skills) as Entries<typeof skills>
-  ).filter(([name]) => !SPECIAL_ABILITIES_NAMES.includes(name));
+  ).filter(([name]) => !SPECIAL_ABILITIES_NAMES.includes(name))
 
-  const orderedSpiritsInven = inven.sort((a, b) => b.grade - a.grade);
+  const orderedSpiritsInven = inven.sort((a, b) => b.grade - a.grade)
 
   const special_skill = (Object.entries(skills) as Entries<typeof skills>).find(
-    ([name]) => SPECIAL_ABILITIES_NAMES.includes(name),
-  );
+    ([name]) => SPECIAL_ABILITIES_NAMES.includes(name)
+  )
 
   return (
     <div
@@ -28,40 +28,40 @@ function CardBack({ power_score, skills, inven, equip_items }: NFTForDisplay) {
       style={{ borderColor: getNFTColor(power_score) }}
     >
       <Image
-        fill
-        src={`/${getCardRarity(power_score)}-card.webp`}
         alt=""
         className="pointer-events-none absolute z-[-1] h-[22rem] w-72 object-cover opacity-20 blur-md group-hover:h-[42rem] group-hover:w-96"
+        src={`/${getCardRarity(power_score)}-card.webp`}
+        fill
       />
 
       <section className="flex flex-col gap-2">
         <h3 className="mx-4 w-max text-xs uppercase">Equipment</h3>
         <ul className="grid w-max grid-cols-5 items-center gap-3 p-1">
           {[...equip_order, ...artifacts_order].map((key) => {
-            if (!equip_items || !(key in equip_items)) return null;
+            if (!equip_items || !(key in equip_items)) return null
 
             const { enhance, grade, item_path, item_name, tier, item_idx } =
-              equip_items[key];
+              equip_items[key]
 
             return (
               <li
-                key={item_idx}
                 className="relative flex h-10 w-10 items-center gap-2 p-1 text-sm font-bold text-white [&>span]:drop-shadow-[0_0_2px_rgb(0,0,0)]"
+                key={item_idx}
               >
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center">
                   <Image
-                    width={40}
-                    height={40}
-                    src={`/item-bg-${gradeToRarity(grade)}.webp`}
                     alt=""
                     className="absolute object-contain"
+                    height={40}
+                    src={`/item-bg-${gradeToRarity(grade)}.webp`}
+                    width={40}
                   />
                   <Image
-                    width={32}
-                    height={32}
-                    src={item_path}
                     alt={item_name}
                     className="absolute object-contain"
+                    height={32}
+                    src={item_path}
+                    width={32}
                   />
                 </div>
                 {Number(enhance) > 0 && (
@@ -75,7 +75,7 @@ function CardBack({ power_score, skills, inven, equip_items }: NFTForDisplay) {
                   </span>
                 )}
               </li>
-            );
+            )
           })}
         </ul>
       </section>
@@ -107,23 +107,23 @@ function CardBack({ power_score, skills, inven, equip_items }: NFTForDisplay) {
           {orderedSpiritsInven.map(
             ({ grade, icon_path, pet_name, transcend }) => (
               <li
-                key={pet_name}
                 className="relative flex h-10 w-10 items-center gap-2 p-1 text-sm font-bold text-white [&>span]:drop-shadow-[0_0_2px_rgb(0,0,0)]"
+                key={pet_name}
               >
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center">
                   <Image
-                    width={40}
-                    height={40}
-                    src={`/item-bg-${gradeToRarity(grade)}.webp`}
                     alt=""
                     className="absolute object-contain"
+                    height={40}
+                    src={`/item-bg-${gradeToRarity(grade)}.webp`}
+                    width={40}
                   />
                   <Image
-                    width={32}
-                    height={32}
-                    src={icon_path}
                     alt={pet_name}
                     className="absolute object-contain"
+                    height={32}
+                    src={icon_path}
+                    width={32}
                   />
                 </div>
                 {transcend > 1 ? (
@@ -132,14 +132,14 @@ function CardBack({ power_score, skills, inven, equip_items }: NFTForDisplay) {
                   </span>
                 ) : null}
               </li>
-            ),
+            )
           )}
         </ul>
       </section>
     </div>
-  );
+  )
 }
 
-const NFTCardBack = memo(CardBack);
+const NFTCardBack = memo(CardBack)
 
-export default NFTCardBack;
+export default NFTCardBack

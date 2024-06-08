@@ -1,8 +1,8 @@
-import "dotenv/config";
-import type { Config } from "drizzle-kit";
+import "dotenv/config"
+import type { Config } from "drizzle-kit"
 
 if (!process.env.DATABASE_URL) {
-  throw new Error("DATABASE_URL environment variable is required.");
+  throw new Error("DATABASE_URL environment variable is required.")
 }
 
 export default {
@@ -12,4 +12,4 @@ export default {
   dbCredentials: {
     connectionString: process.env.DATABASE_URL,
   },
-} satisfies Config;
+} satisfies Config

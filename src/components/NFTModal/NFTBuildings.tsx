@@ -1,8 +1,8 @@
-import NFTContainer from "@/components/NFTModal/NFTContainer";
-import Conquest from "@/components/icon/Conquest";
-import { cn } from "@/lib/utils";
-import type { NFTSelectAll } from "@/types/schema";
-import Image from "next/image";
+import Image from "next/image"
+import Conquest from "@/components/icon/Conquest"
+import NFTContainer from "@/components/NFTModal/NFTContainer"
+import { cn } from "@/lib/utils"
+import type { NFTSelectAll } from "@/types/schema"
 
 const BUILDING_POSITIONS = {
   Mine: { left: "3rem", top: "10rem" },
@@ -15,7 +15,7 @@ const BUILDING_POSITIONS = {
   "Tower of Victory": { left: "45.5rem", top: "15rem" },
   "Training Sanctum": { left: "50.75rem", top: "17rem" },
   "Holy Shrine": { left: "57.7rem", top: "13rem" },
-};
+}
 
 export default function NFTBuildings({
   buildings,
@@ -30,23 +30,23 @@ export default function NFTBuildings({
       </header>
 
       <Image
-        src={"/conquest.webp"}
         alt=""
-        height={1080}
-        width={1920}
         className="w-full rounded-xl object-contain"
+        height={1080}
+        src={"/conquest.webp"}
+        width={1920}
       />
 
       {Object.entries(buildings).map(([name, tier]) => (
         <BuildingFragment
           key={name}
           name={name}
-          tier={tier}
           style={BUILDING_POSITIONS[name as NFT_BUILDINGS_ENUM]}
+          tier={tier}
         />
       ))}
     </NFTContainer>
-  );
+  )
 }
 
 function BuildingFragment({
@@ -55,8 +55,8 @@ function BuildingFragment({
   className,
   ...props
 }: {
-  tier: number | string;
-  name: string;
+  tier: number | string
+  name: string
 } & React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
@@ -65,11 +65,11 @@ function BuildingFragment({
     >
       <div className="flex h-14 w-14 shrink-0 items-center justify-center">
         <Image
-          src={"/training-frame.webp"}
           alt=""
-          width={56}
-          height={56}
           className="absolute"
+          height={56}
+          src={"/training-frame.webp"}
+          width={56}
         />
 
         <p className="absolute mb-8 translate-x-[0.125rem] text-center text-xs font-medium tracking-[0.3em] drop-shadow-[0px_0px_2px_rgba(0,0,0,150)]">
@@ -83,5 +83,5 @@ function BuildingFragment({
         {name}
       </h4>
     </div>
-  );
+  )
 }

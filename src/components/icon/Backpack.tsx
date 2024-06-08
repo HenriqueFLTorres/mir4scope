@@ -1,14 +1,14 @@
-import type { SVGProps } from "react";
+import type { SVGProps } from "react"
 
 const Backpack = (props: SVGProps<SVGSVGElement>) => (
   <svg
-    width="1em"
-    height="1em"
-    viewBox="0 0 27 33"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
     aria-label="Backpack Icon"
+    fill="none"
+    height="1em"
     role="img"
+    viewBox="0 0 27 33"
+    width="1em"
+    xmlns="http://www.w3.org/2000/svg"
     {...props}
   >
     <path
@@ -16,6 +16,6 @@ const Backpack = (props: SVGProps<SVGSVGElement>) => (
       fill="white"
     />
   </svg>
-);
+)
 
-export default Backpack;
+export default Backpack

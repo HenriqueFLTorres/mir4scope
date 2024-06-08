@@ -1,14 +1,14 @@
-import type { SVGProps } from "react";
+import type { SVGProps } from "react"
 
 const Wemix = (props: SVGProps<SVGSVGElement>) => (
   <svg
-    width="1em"
-    height="1em"
-    viewBox="0 0 20 20"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
     aria-label="Wemix Icon"
+    fill="none"
+    height="1em"
     role="img"
+    viewBox="0 0 20 20"
+    width="1em"
+    xmlns="http://www.w3.org/2000/svg"
     {...props}
   >
     <g>
@@ -36,6 +36,6 @@ const Wemix = (props: SVGProps<SVGSVGElement>) => (
       />
     </g>
   </svg>
-);
+)
 
-export default Wemix;
+export default Wemix

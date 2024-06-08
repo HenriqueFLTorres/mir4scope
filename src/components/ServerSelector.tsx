@@ -1,8 +1,8 @@
-"use client";
+"use client"
 
-import type { ListFiltersType } from "@/atom/ListFilters";
-import { ALL_MIR4_SERVERS } from "@/lib/utils";
-import { useController, useWatch, type Control } from "react-hook-form";
+import { Trash, Trash2 } from "lucide-react"
+import { type Control, useController, useWatch } from "react-hook-form"
+import Globe from "./icon/Globe"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,21 +15,21 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
-import Globe from "./icon/Globe";
-import { Trash, Trash2 } from "lucide-react";
+} from "./ui/dropdown-menu"
+import type { ListFiltersType } from "@/atom/ListFilters"
+import { ALL_MIR4_SERVERS } from "@/lib/utils"
 
 export function ServerSelector({
   control,
 }: {
-  control: Control<ListFiltersType>;
+  control: Control<ListFiltersType>
 }) {
   const {
     field: { value: worldName, onChange },
   } = useController({
     name: "world_name",
     control,
-  });
+  })
 
   return (
     <DropdownMenu>
@@ -81,22 +81,22 @@ export function ServerSelector({
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
-  );
+  )
 }
 
 function ServerList({
   serverList,
   control,
 }: {
-  serverList: { [key in string]: string[] };
-  control: Control<ListFiltersType>;
+  serverList: { [key in string]: string[] }
+  control: Control<ListFiltersType>
 }) {
   const {
     field: { value, onChange },
   } = useController({
     name: "world_name",
     control,
-  });
+  })
 
   return Object.entries(serverList).map(([cluster, serverList]) => (
     <DropdownMenuSub key={cluster}>
@@ -105,10 +105,10 @@ function ServerList({
         <DropdownMenuSubContent>
           {serverList.map((serverName) => (
             <DropdownMenuItem
+              key={serverName}
               onSelect={() =>
                 onChange(value === serverName ? undefined : serverName)
               }
-              key={serverName}
             >
               {serverName}
             </DropdownMenuItem>
@@ -116,5 +116,5 @@ function ServerList({
         </DropdownMenuSubContent>
       </DropdownMenuPortal>
     </DropdownMenuSub>
-  ));
+  ))
 }

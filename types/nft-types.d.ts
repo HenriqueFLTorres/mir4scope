@@ -64,7 +64,7 @@ type NFT_STATS_ENUM =
   | "Equipment Enhancement Success Chance Boost (R)"
   | "Energy Gain Boost"
   | "Dragon Artifact Enhancement Success Chance Boost (All)"
-  | "CRIT DMG Reduction";
+  | "CRIT DMG Reduction"
 
 type NFT_SKILLS_ENUM =
   // Warrior
@@ -155,105 +155,105 @@ type NFT_SKILLS_ENUM =
   | "Annihilation"
   | "Backflow"
   | "Terrify"
-  | "Soul Dispersing Mist";
+  | "Soul Dispersing Mist"
 
 type NFT_EQUIP_ITEM = {
-  item_idx: string;
-  enhance: string;
-  refine_step: string;
-  grade: string;
-  tier: string;
-  item_type: string;
-  item_name: string;
-  item_path: string;
-  power_score: number;
-  options: ITEM_DETAIL[];
-  add_option: ITEM_DETAIL[];
-};
+  item_idx: string
+  enhance: string
+  refine_step: string
+  grade: string
+  tier: string
+  item_type: string
+  item_name: string
+  item_path: string
+  power_score: number
+  options: ITEM_DETAIL[]
+  add_option: ITEM_DETAIL[]
+}
 
 type ITEM_DETAIL = {
-  name: string;
-  value: number;
-  format: string;
-};
+  name: string
+  value: number
+  format: string
+}
 
 type NFT_SPIRIT = {
-  transcend: number;
-  grade: number;
-  pet_name: SpiritsType;
-  icon_path: string;
-};
+  transcend: number
+  grade: number
+  pet_name: SpiritsType
+  icon_path: string
+}
 
 type NFT_MAGIC_ORB = {
-  item_idx: string;
-  item_level: number;
-  item_exp: number;
-  grade: string;
-  tier: string;
-  item_name: string;
-  item_path: string;
-};
+  item_idx: string
+  item_level: number
+  item_exp: number
+  grade: string
+  tier: string
+  item_name: string
+  item_path: string
+}
 
 type NFT_MAGIC_STONE = {
-  item_idx: string;
-  trance_step: number;
-  refine_step: number;
-  grade: string;
-  tier: string;
-  item_name: string;
-  item_path: string;
-  power_score: number;
-  options: ITEM_DETAIL[];
-  add_option: ITEM_DETAIL[];
-};
+  item_idx: string
+  trance_step: number
+  refine_step: number
+  grade: string
+  tier: string
+  item_name: string
+  item_path: string
+  power_score: number
+  options: ITEM_DETAIL[]
+  add_option: ITEM_DETAIL[]
+}
 
-type NFT_MYSTICAL_PIECE = NFT_MAGIC_STONE;
+type NFT_MYSTICAL_PIECE = NFT_MAGIC_STONE
 
 type NFT_INVENTORY_ITEM = {
-  item_uid: string;
-  item_id: string;
-  enhance: number;
-  stack: number;
-  trance_step: number;
-  refine_step: number;
-  grade: string;
-  main_type: number;
-  sub_type: number;
-  tab_category: number;
-  tier: string;
-  item_name: string;
-  item_path: string;
-  power_score?: number;
-  options?: ITEM_DETAIL[];
-  add_option?: ITEM_DETAIL[];
-  is_tradable: boolean;
-};
+  item_uid: string
+  item_id: string
+  enhance: number
+  stack: number
+  trance_step: number
+  refine_step: number
+  grade: string
+  main_type: number
+  sub_type: number
+  tab_category: number
+  tier: string
+  item_name: string
+  item_path: string
+  power_score?: number
+  options?: ITEM_DETAIL[]
+  add_option?: ITEM_DETAIL[]
+  is_tradable: boolean
+}
 
 type NFT_SUCCESSION_ITEM = {
-  item_idx: string;
-  trance_step: number;
-  refine_step: number;
-  enhance: number;
-  grade: string;
-  tier: string;
-  item_name: string;
-  item_path: string;
-  power_score: number;
-  options: ITEM_DETAIL[];
-  add_option: ITEM_DETAIL[];
-};
+  item_idx: string
+  trance_step: number
+  refine_step: number
+  enhance: number
+  grade: string
+  tier: string
+  item_name: string
+  item_path: string
+  power_score: number
+  options: ITEM_DETAIL[]
+  add_option: ITEM_DETAIL[]
+}
 
 type NFT_TRAINING = {
-  "Nine Yang Manual": string;
-  "Muscle Strength Manual": string;
-  "Toad Stance": string;
-  "Northern Profound Art": string;
-  "Violet Mist Art": string;
-  "Nine Yin Manual": string;
-  Constitution: number;
-  collect_name: string;
-  collect_level: number;
-};
+  "Nine Yang Manual": string
+  "Muscle Strength Manual": string
+  "Toad Stance": string
+  "Northern Profound Art": string
+  "Violet Mist Art": string
+  "Nine Yin Manual": string
+  Constitution: number
+  collect_name: string
+  collect_level: number
+}
 
 type NFT_ASSETS_ENUM =
   | "acientcoins"
@@ -262,7 +262,7 @@ type NFT_ASSETS_ENUM =
   | "dragonjade"
   | "dragonsteel"
   | "energy"
-  | "speedups";
+  | "speedups"
 
 type NFT_BUILDINGS_ENUM =
   | "Mine"
@@ -274,40 +274,40 @@ type NFT_BUILDINGS_ENUM =
   | "Portal"
   | "Tower of Victory"
   | "Training Sanctum"
-  | "Holy Shrine";
+  | "Holy Shrine"
 
 type NFT_MYSTIQUE =
   | "Unicorn Lion Mystique"
   | "Vermilion Bird Mystique"
   | "Black Tortoise Mystique"
   | "White Tiger Mystique"
-  | "Blue Dragon Mystique";
+  | "Blue Dragon Mystique"
 
 type NFT_POTENTIAL = {
-  total: number;
-  total_max: number;
-  hunting: number;
-  hunting_max: number;
-  pvp: number;
-  pvp_max: number;
-  secondary: number;
-  secondary_max: number;
-};
+  total: number
+  total_max: number
+  hunting: number
+  hunting_max: number
+  pvp: number
+  pvp_max: number
+  secondary: number
+  secondary_max: number
+}
 
 type NFT_CODEX_OBJECT = {
   data: {
     [key in string]: {
-      codex_name: number;
-      total_count: number;
-      completed: number;
-      in_progress: number;
-    };
-  };
-  completed: number;
-  in_progress: number;
-};
+      codex_name: number
+      total_count: number
+      completed: number
+      in_progress: number
+    }
+  }
+  completed: number
+  in_progress: number
+}
 
 type NFT_CODEX = { [key in string]: NFT_CODEX_OBJECT } & {
-  completed: number;
-  in_progress: number;
-};
+  completed: number
+  in_progress: number
+}

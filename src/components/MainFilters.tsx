@@ -1,21 +1,5 @@
-"use client";
+"use client"
 
-import type { ListFiltersType } from "@/atom/ListFilters";
-import FilterChips from "@/components/FilterChips";
-import { SpiritSelector } from "@/components/SpiritSelector";
-import EXP from "@/components/icon/EXP";
-import Search from "@/components/icon/Search";
-import Skill from "@/components/icon/Skill";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { SelectRange } from "@/components/ui/select-range";
-import { SkillsListByClass } from "@/lib/skillsByClass";
 import { classIndexToName } from "@/lib/utils";
 import { SelectIcon } from "@radix-ui/react-select";
 import Image from "next/image";
@@ -44,6 +28,22 @@ import PHYSDEF from "./icon/PHYSDEF";
 import Power from "./icon/Power";
 import SpellATK from "./icon/SpellATK";
 import SPELLDEF from "./icon/SpellDEF";
+import type { ListFiltersType } from "@/atom/ListFilters";
+import FilterChips from "@/components/FilterChips";
+import EXP from "@/components/icon/EXP";
+import Search from "@/components/icon/Search";
+import Skill from "@/components/icon/Skill";
+import { SpiritSelector } from "@/components/SpiritSelector"
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { SelectRange } from "@/components/ui/select-range";
+import { SkillsListByClass } from "@/lib/skillsByClass";
 
 const mir4Classes: Mir4Classes[] = [
   "Arbalist",
@@ -52,7 +52,7 @@ const mir4Classes: Mir4Classes[] = [
   "Sorcerer",
   "Taoist",
   "Warrior",
-];
+]
 
 const classToKey: { [key in Mir4Classes]: number } = {
   Arbalist: 4,
@@ -61,7 +61,7 @@ const classToKey: { [key in Mir4Classes]: number } = {
   Sorcerer: 2,
   Taoist: 3,
   Warrior: 1,
-};
+}
 
 function MainFilters({
   register,
@@ -69,57 +69,57 @@ function MainFilters({
   setFocus,
   setValue,
 }: {
-  register: UseFormRegister<ListFiltersType>;
-  control: Control<ListFiltersType>;
-  setFocus: UseFormSetFocus<ListFiltersType>;
-  setValue: UseFormSetValue<ListFiltersType>;
+  register: UseFormRegister<ListFiltersType>
+  control: Control<ListFiltersType>
+  setFocus: UseFormSetFocus<ListFiltersType>
+  setValue: UseFormSetValue<ListFiltersType>
 }) {
   return (
     <>
       <section className="flex w-full flex-wrap items-center justify-center gap-4">
         <Input
-          prefix={<Search className="absolute bottom-2 left-2 h-6 w-6" />}
-          placeholder="Search by player name"
           maxLength={12}
+          placeholder="Search by player name"
+          prefix={<Search className="absolute bottom-2 left-2 h-6 w-6" />}
           wrapperClass="w-full"
           {...register("search")}
         />
 
         <Controller
-          name="class"
           control={control}
+          name="class"
           render={({ field: { value, onChange, disabled, ...fieldProps } }) => (
             <Select
               defaultValue={"0"}
+              disabled={disabled}
+              value={String(value)}
               onValueChange={(value) => {
-                const newClass = Number(value) as ListFiltersType["class"];
+                const newClass = Number(value) as ListFiltersType["class"]
 
-                onChange(newClass);
-                if (newClass === 0) return setValue("skills", undefined);
+                onChange(newClass)
+                if (newClass === 0) return setValue("skills", undefined)
 
-                const newSkillsValue: ListFiltersType["skills"] = {};
+                const newSkillsValue: ListFiltersType["skills"] = {}
                 for (const skill of SkillsListByClass[newClass]) {
                   const formattedName = skill
                     .toLowerCase()
                     .replace(/\'/g, "")
-                    .replace(/\s/g, "-");
+                    .replace(/\s/g, "-")
 
-                  newSkillsValue[formattedName] = 0;
+                  newSkillsValue[formattedName] = 0
                 }
 
-                setValue("skills", newSkillsValue);
+                setValue("skills", newSkillsValue)
               }}
-              value={String(value)}
-              disabled={disabled}
             >
               <SelectTrigger className="w-48" {...fieldProps}>
                 {value ? (
                   <Image
+                    alt=""
                     className="object-contain"
-                    width={20}
                     height={20}
                     src={`/icon/${classIndexToName(value).toLowerCase()}.webp`}
-                    alt=""
+                    width={20}
                   />
                 ) : (
                   <Skill className="h-5 w-5" />
@@ -136,20 +136,20 @@ function MainFilters({
                 </SelectItem>
                 {mir4Classes.map((mir4Class) => (
                   <SelectItem
-                    key={mir4Class}
                     className="gap-2 capitalize"
-                    value={String(classToKey[mir4Class])}
                     Icon={
                       <SelectIcon asChild>
                         <Image
+                          alt=""
                           className="object-contain"
-                          width={20}
                           height={20}
                           src={`/icon/${mir4Class}.webp`}
-                          alt=""
+                          width={20}
                         />
                       </SelectIcon>
                     }
+                    key={mir4Class}
+                    value={String(classToKey[mir4Class])}
                   >
                     {mir4Class}
                   </SelectItem>
@@ -160,14 +160,14 @@ function MainFilters({
         />
 
         <Controller
-          name="level"
           control={control}
+          name="level"
           render={({ field: { value, onChange, ...fieldProps } }) => (
             <SelectRange
               defaultValue={[90, 130]}
-              min={60}
-              max={170}
               Icon={<EXP className="h-5 w-5" />}
+              max={170}
+              min={60}
               value={value}
               onValueChange={onChange}
               {...fieldProps}
@@ -178,33 +178,33 @@ function MainFilters({
         />
 
         <Controller
-          name="power"
           control={control}
+          name="power"
           render={({ field: { value, onChange, ...fieldProps } }) => (
             <SelectRange
               defaultValue={[1e5, 9e5]}
-              min={1e5}
-              max={6e5}
               Icon={<Power className="h-5 w-5" />}
+              max={6e5}
+              min={1e5}
               value={value}
               onValueChange={onChange}
               {...fieldProps}
               label="Power"
-              step={5000}
               showInput={false}
+              step={5000}
             />
           )}
         />
 
         <Controller
-          name="codex"
           control={control}
+          name="codex"
           render={({ field: { value, onChange, ...fieldProps } }) => (
             <SelectRange
               defaultValue={[100, 2000]}
-              min={100}
-              max={2000}
               Icon={<Codex className="h-5 w-5" />}
+              max={2000}
+              min={100}
               value={value}
               onValueChange={onChange}
               {...fieldProps}
@@ -215,10 +215,10 @@ function MainFilters({
         />
 
         <Controller
-          name="max_price"
           control={control}
+          name="max_price"
           render={({ field: { value, onChange, ...fieldProps } }) => (
-            <PriceRange value={value} setValue={onChange} {...fieldProps} />
+            <PriceRange setValue={onChange} value={value} {...fieldProps} />
           )}
         />
 
@@ -229,39 +229,39 @@ function MainFilters({
 
       <section className="flex w-full flex-wrap items-center gap-4">
         <StatusRange
-          label="PHYS ATK"
+          control={control}
           Icon={<PHYSATK className="h-5 w-5" />}
-          control={control}
+          label="PHYS ATK"
         />
 
         <StatusRange
-          label="Spell ATK"
+          control={control}
           Icon={<SpellATK className="h-5 w-5" />}
-          control={control}
+          label="Spell ATK"
         />
 
         <StatusRange
-          label="PHYS DEF"
+          control={control}
           Icon={<PHYSDEF className="h-5 w-5" />}
-          control={control}
+          label="PHYS DEF"
         />
 
         <StatusRange
-          label="Spell DEF"
+          control={control}
           Icon={<SPELLDEF className="h-5 w-5" />}
-          control={control}
+          label="Spell DEF"
         />
 
         <StatusRange
-          label="EVA"
+          control={control}
           Icon={<EVA className="h-5 w-5" />}
-          control={control}
+          label="EVA"
         />
 
         <StatusRange
-          label="Accuracy"
-          Icon={<Accuracy className="h-5 w-5" />}
           control={control}
+          Icon={<Accuracy className="h-5 w-5" />}
+          label="Accuracy"
         />
       </section>
 
@@ -287,7 +287,7 @@ function MainFilters({
 
       <FilterChips />
     </>
-  );
+  )
 }
 
-export default MainFilters;
+export default MainFilters

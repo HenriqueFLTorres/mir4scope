@@ -12,7 +12,7 @@ export const WarriorSkills: NFT_SKILLS_ENUM[] = [
   "Rampant",
   "Barbaric Charge",
   "Unbreakable Stance",
-];
+]
 export const SorcererSkills: NFT_SKILLS_ENUM[] = [
   "Dragon Tornado",
   "Flame Orb",
@@ -27,7 +27,7 @@ export const SorcererSkills: NFT_SKILLS_ENUM[] = [
   "Immolate",
   "Vermilion Bird Embrace",
   "Frozen Block",
-];
+]
 export const TaoistSkills: NFT_SKILLS_ENUM[] = [
   "Ray of Light",
   "Moonlight Wave",
@@ -42,7 +42,7 @@ export const TaoistSkills: NFT_SKILLS_ENUM[] = [
   "Soaring Slash",
   "Expulsion Circle",
   "Greater Heal",
-];
+]
 export const ArbalistSkills: NFT_SKILLS_ENUM[] = [
   "Arrow Rain",
   "Quick Shot",
@@ -57,7 +57,7 @@ export const ArbalistSkills: NFT_SKILLS_ENUM[] = [
   "Venom Mist Shell",
   "Seeking Bolt",
   "Cloaking",
-];
+]
 export const LancerSkills: NFT_SKILLS_ENUM[] = [
   "Dragon Spear",
   "Ravaging Blow",
@@ -72,7 +72,7 @@ export const LancerSkills: NFT_SKILLS_ENUM[] = [
   "Piercing Spear",
   "Absorption",
   "Blitz Strike",
-];
+]
 
 export const DarkistSkills: NFT_SKILLS_ENUM[] = [
   "Asura",
@@ -88,14 +88,15 @@ export const DarkistSkills: NFT_SKILLS_ENUM[] = [
   "Backflow",
   "Terrify",
   "Soul Dispersing Mist",
-];
+]
 
-export const SkillsListByClass: { [key in 1 | 2 | 3 | 4 | 5 | 6]: NFT_SKILLS_ENUM[] } =
-  {
-    1: WarriorSkills,
-    2: SorcererSkills,
-    3: TaoistSkills,
-    4: ArbalistSkills,
-    5: LancerSkills,
-    6: DarkistSkills,
-  };
+export const SkillsListByClass: {
+  [key in 1 | 2 | 3 | 4 | 5 | 6]: NFT_SKILLS_ENUM[]
+} = {
+  1: WarriorSkills,
+  2: SorcererSkills,
+  3: TaoistSkills,
+  4: ArbalistSkills,
+  5: LancerSkills,
+  6: DarkistSkills,
+}

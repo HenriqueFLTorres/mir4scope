@@ -1,11 +1,11 @@
-import NFTContainer from "@/components/NFTModal/NFTContainer";
-import Skill from "@/components/icon/Skill";
-import Image from "next/image";
+import Image from "next/image"
+import Skill from "@/components/icon/Skill"
+import NFTContainer from "@/components/NFTModal/NFTContainer"
 
 export default function NFTMystique({
   holy_stuff,
 }: {
-  holy_stuff: { [key in NFT_MYSTIQUE]: string };
+  holy_stuff: { [key in NFT_MYSTIQUE]: string }
 }) {
   return (
     <NFTContainer className="gap-12">
@@ -22,36 +22,36 @@ export default function NFTMystique({
             <li key={name}>
               <MystiqueFragment name={name} tier={tier} />
             </li>
-          ),
+          )
         )}
       </ul>
     </NFTContainer>
-  );
+  )
 }
 
 function MystiqueFragment({
   tier,
   name,
 }: {
-  tier: number | string;
-  name: NFT_MYSTIQUE;
+  tier: number | string
+  name: NFT_MYSTIQUE
 }) {
   return (
     <div className="flex w-full flex-col items-center gap-4">
       <div className="flex h-20 w-20 shrink-0 items-center justify-center">
         <Image
-          src={"/training-frame.webp"}
           alt=""
-          width={80}
-          height={80}
           className="absolute"
+          height={80}
+          src={"/training-frame.webp"}
+          width={80}
         />
         <Image
-          src={`/mystique/${name.toLowerCase().replace(/\s/g, "_")}.webp`}
           alt=""
-          width={80}
-          height={80}
           className="absolute mb-8"
+          height={80}
+          src={`/mystique/${name.toLowerCase().replace(/\s/g, "_")}.webp`}
+          width={80}
         />
         <p className="absolute mb-12 translate-x-[0.125rem] text-center font-medium tracking-[0.3em] drop-shadow-[0px_0px_2px_rgba(0,0,0,150)]">
           TIER
@@ -62,5 +62,5 @@ function MystiqueFragment({
       </div>
       <h4 className="text-center text-sm font-bold">{name}</h4>
     </div>
-  );
+  )
 }

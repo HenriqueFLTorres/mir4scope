@@ -1,16 +1,16 @@
-import Enhance from "@/components/NFTModal/Enhance";
-import ItemDetailTooltip from "@/components/NFTModal/ItemDetailTooltip";
-import ItemPlaceholder from "@/components/NFTModal/ItemPlaceholder";
-import NFTContainer from "@/components/NFTModal/NFTContainer";
-import Transcend from "@/components/NFTModal/Transcend";
-import Spirit from "@/components/icon/Spirit";
-import { completeArray, gradeToRarity } from "@/lib/utils";
-import Image from "next/image";
+import Image from "next/image"
+import Spirit from "@/components/icon/Spirit"
+import Enhance from "@/components/NFTModal/Enhance"
+import ItemDetailTooltip from "@/components/NFTModal/ItemDetailTooltip"
+import ItemPlaceholder from "@/components/NFTModal/ItemPlaceholder"
+import NFTContainer from "@/components/NFTModal/NFTContainer"
+import Transcend from "@/components/NFTModal/Transcend"
+import { completeArray, gradeToRarity } from "@/lib/utils"
 
 export default function NFTTransferenceEquipment({
   succession,
 }: {
-  succession: { [key in string]: NFT_SUCCESSION_ITEM };
+  succession: { [key in string]: NFT_SUCCESSION_ITEM }
 }) {
   return (
     <NFTContainer>
@@ -25,7 +25,7 @@ export default function NFTTransferenceEquipment({
         {(
           completeArray(
             Object.values(succession),
-            5,
+            5
           ) as (NFT_SUCCESSION_ITEM | null)[]
         ).map((successionItem) =>
           successionItem ? (
@@ -35,11 +35,11 @@ export default function NFTTransferenceEquipment({
             />
           ) : (
             <ItemPlaceholder key={"asdfasdf"} />
-          ),
+          )
         )}
       </div>
     </NFTContainer>
-  );
+  )
 }
 
 function TransferenceItem({
@@ -57,25 +57,25 @@ function TransferenceItem({
   return (
     <ItemDetailTooltip
       add_option={add_option}
-      options={options}
       item_name={item_name}
       item_path={item_path}
+      options={options}
       power_score={power_score}
     >
       <div className="relative flex h-20 w-20 items-center justify-center">
         <Image
-          src={`/bg-${gradeToRarity(grade)}.webp`}
           alt=""
           className="object-contain"
-          width={80}
           height={80}
+          src={`/bg-${gradeToRarity(grade)}.webp`}
+          width={80}
         />
         <Image
-          src={item_path}
           alt={item_name}
           className="absolute object-contain"
-          width={50}
           height={50}
+          src={item_path}
+          width={50}
         />
 
         <Transcend value={tier} />
@@ -83,5 +83,5 @@ function TransferenceItem({
         <Enhance value={enhance} />
       </div>
     </ItemDetailTooltip>
-  );
+  )
 }

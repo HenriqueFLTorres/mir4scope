@@ -1,4 +1,5 @@
-import { db } from "@/drizzle/index";
+import { eq } from "drizzle-orm"
+import { db } from "@/drizzle/index"
 import {
   INVENTORY_SCHEMA,
   MAGIC_ORB_SCHEMA,
@@ -7,9 +8,8 @@ import {
   NFT_SCHEMA,
   SPIRITS_SCHEMA,
   SUCCESSION_SCHEMA,
-} from "@/drizzle/schema";
-import type { NFTSelectAll } from "@/types/schema";
-import { eq } from "drizzle-orm";
+} from "@/drizzle/schema"
+import type { NFTSelectAll } from "@/types/schema"
 
 export const getNft = async (seq: string) => {
   try {
@@ -19,9 +19,9 @@ export const getNft = async (seq: string) => {
         .from(NFT_SCHEMA)
         .where(eq(NFT_SCHEMA.seq, Number(seq)))
         .limit(1)
-    ).at(0);
+    ).at(0)
 
-    if (!nft) throw new Error("NFT not found.");
+    if (!nft) throw new Error("NFT not found.")
 
     const spirits = (
       await db
@@ -29,7 +29,7 @@ export const getNft = async (seq: string) => {
         .from(SPIRITS_SCHEMA)
         .where(eq(SPIRITS_SCHEMA.id, nft.spiritsId))
         .limit(1)
-    ).at(0);
+    ).at(0)
 
     const magicOrb = (
       await db
@@ -37,7 +37,7 @@ export const getNft = async (seq: string) => {
         .from(MAGIC_ORB_SCHEMA)
         .where(eq(MAGIC_ORB_SCHEMA.id, nft.magicOrbId))
         .limit(1)
-    ).at(0);
+    ).at(0)
 
     const magicStone = (
       await db
@@ -45,7 +45,7 @@ export const getNft = async (seq: string) => {
         .from(MAGIC_STONE_SCHEMA)
         .where(eq(MAGIC_STONE_SCHEMA.id, nft.magicStoneId))
         .limit(1)
-    ).at(0);
+    ).at(0)
 
     const mysticalPiece = (
       await db
@@ -53,7 +53,7 @@ export const getNft = async (seq: string) => {
         .from(MYSTICAL_PIECE_SCHEMA)
         .where(eq(MYSTICAL_PIECE_SCHEMA.id, nft.mysticalPieceId))
         .limit(1)
-    ).at(0);
+    ).at(0)
 
     const inventory = (
       await db
@@ -61,7 +61,7 @@ export const getNft = async (seq: string) => {
         .from(INVENTORY_SCHEMA)
         .where(eq(INVENTORY_SCHEMA.id, nft.inventoryId))
         .limit(1)
-    ).at(0);
+    ).at(0)
 
     const succession = (
       await db
@@ -69,7 +69,7 @@ export const getNft = async (seq: string) => {
         .from(SUCCESSION_SCHEMA)
         .where(eq(SUCCESSION_SCHEMA.id, nft.successionId))
         .limit(1)
-    ).at(0);
+    ).at(0)
 
     return {
       ...nft,
@@ -79,8 +79,8 @@ export const getNft = async (seq: string) => {
       mysticalPiece,
       inventory: inventory?.inventory,
       succession: succession?.succession,
-    } as NFTSelectAll;
+    } as NFTSelectAll
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
-};
+}

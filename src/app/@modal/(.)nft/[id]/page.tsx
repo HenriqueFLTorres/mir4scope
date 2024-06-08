@@ -1,33 +1,33 @@
-import { Modal } from "./modal";
+import { useAtom, useAtomValue } from "jotai"
+import { Link } from "lucide-react"
+import { Modal } from "./modal"
 
-import NFTAssets from "@/components/NFTModal/NFTAssets";
-import NFTBuildings from "@/components/NFTModal/NFTBuildings";
-import NFTCodex from "@/components/NFTModal/NFTCodex";
-import NFTDragonArtifact from "@/components/NFTModal/NFTDragonArtifact";
-import NFTEquipmentDisplay from "@/components/NFTModal/NFTEquipmentDisplay";
-import NFTInventory from "@/components/NFTModal/NFTInventory";
-import NFTMagicSoulOrb from "@/components/NFTModal/NFTMagicSoulOrb";
-import NFTMagicStone from "@/components/NFTModal/NFTMagicStone";
-import NFTMysticalPiece from "@/components/NFTModal/NFTMysticalPiece";
-import NFTMystique from "@/components/NFTModal/NFTMystique";
-import NFTPotentials from "@/components/NFTModal/NFTPotentials";
-import NFTSpirit from "@/components/NFTModal/NFTSpirit";
-import NFTTags from "@/components/NFTModal/NFTTags";
-import NFTTraining from "@/components/NFTModal/NFTTraining";
-import NFTTransferenceEquipment from "@/components/NFTModal/NFTTransferenceEquipment";
-import Wemix from "@/components/icon/Wemix";
-import { getNft } from "@/lib/get-nft";
-import { getReadableNumber } from "@/lib/utils";
-import { Link } from "lucide-react";
-import { useAtom, useAtomValue } from "jotai";
-import { UsdPriceAtom } from "@/atom/Price";
-import NFTPrice from "@/components/NFTModal/NFTPrice";
+import { UsdPriceAtom } from "@/atom/Price"
+import Wemix from "@/components/icon/Wemix"
+import NFTAssets from "@/components/NFTModal/NFTAssets"
+import NFTBuildings from "@/components/NFTModal/NFTBuildings"
+import NFTCodex from "@/components/NFTModal/NFTCodex"
+import NFTDragonArtifact from "@/components/NFTModal/NFTDragonArtifact"
+import NFTEquipmentDisplay from "@/components/NFTModal/NFTEquipmentDisplay"
+import NFTInventory from "@/components/NFTModal/NFTInventory"
+import NFTMagicSoulOrb from "@/components/NFTModal/NFTMagicSoulOrb"
+import NFTMagicStone from "@/components/NFTModal/NFTMagicStone"
+import NFTMysticalPiece from "@/components/NFTModal/NFTMysticalPiece"
+import NFTMystique from "@/components/NFTModal/NFTMystique"
+import NFTPotentials from "@/components/NFTModal/NFTPotentials"
+import NFTPrice from "@/components/NFTModal/NFTPrice"
+import NFTSpirit from "@/components/NFTModal/NFTSpirit"
+import NFTTags from "@/components/NFTModal/NFTTags"
+import NFTTraining from "@/components/NFTModal/NFTTraining"
+import NFTTransferenceEquipment from "@/components/NFTModal/NFTTransferenceEquipment"
+import { getNft } from "@/lib/get-nft"
+import { getReadableNumber } from "@/lib/utils"
 
 export default async function NFTModal({ params }: { params: { id: string } }) {
-  const seq = params.id;
-  const nft = await getNft(seq);
-  
-  if (!nft) return null;
+  const seq = params.id
+  const nft = await getNft(seq)
+
+  if (!nft) return null
 
   return (
     <Modal>
@@ -41,10 +41,10 @@ export default async function NFTModal({ params }: { params: { id: string } }) {
 
           <footer className="mt-auto flex flex-col gap-4">
             <a
-              href={`https://xdraco.com/nft/trade/${nft.seq}`}
-              target="_blank"
               className="flex h-14 w-full items-center justify-center gap-4 rounded-lg border border-black/20 bg-black/10 px-3 py-1.5 text-lg font-medium transition-colors hover:border-black/40 hover:bg-black/20"
+              href={`https://xdraco.com/nft/trade/${nft.seq}`}
               rel="noreferrer"
+              target="_blank"
             >
               <Link /> Open Link
             </a>
@@ -80,5 +80,5 @@ export default async function NFTModal({ params }: { params: { id: string } }) {
         <NFTInventory inventory={nft?.inventory} />
       </section>
     </Modal>
-  );
+  )
 }

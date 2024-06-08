@@ -4,22 +4,22 @@ type Mir4Classes =
   | "Taoist"
   | "Arbalist"
   | "Lancer"
-  | "Darkist";
+  | "Darkist"
 
 type MaterialsType =
   | "Dragon Scale"
   | "Dragon Claw"
   | "Dragon Leather"
   | "Dragon Horn"
-  | "Dragon Eye";
+  | "Dragon Eye"
 
 type CraftingMaterialType = {
-  [key in MaterialsType]: { Legendary: number; Epic: number };
-};
+  [key in MaterialsType]: { Legendary: number; Epic: number }
+}
 
 type SkillsValueType = {
-  [key in SkillsType]: number;
-};
+  [key in SkillsType]: number
+}
 
 type TicketsType =
   | "Raid Ticket"
@@ -27,7 +27,7 @@ type TicketsType =
   | "Hell Raid Ticket"
   | "Magic Square Ticket"
   | "Secret Peak Ticket"
-  | "Wayfarer Travel Pass";
+  | "Wayfarer Travel Pass"
 
 type TrainingType =
   | "Constitution"
@@ -36,7 +36,7 @@ type TrainingType =
   | "Nine Yang Manual"
   | "Violet Mist Art"
   | "Northern Profound Art"
-  | "Toad Stance";
+  | "Toad Stance"
 
 type SpiritsType =
   | "Alluring Spirit Cat Lulu"
@@ -81,7 +81,7 @@ type SpiritsType =
   | "Spring Messenger Yobi"
   | "Thunder Beast Baratan"
   | "Verdant Watcher Gargas"
-  | "White Peacock Crystalglass";
+  | "White Peacock Crystalglass"
 
 type BuildingType =
   | "Mine"
@@ -93,12 +93,12 @@ type BuildingType =
   | "Training Sanctum"
   | "Tower of Conquest"
   | "Sanctuary of Hydra"
-  | "Tower of Quintessence";
+  | "Tower of Quintessence"
 
-type PotentialType = "Hunting" | "PvP" | "Secondary";
+type PotentialType = "Hunting" | "PvP" | "Secondary"
 
-type Keys = (keyof typeof data)[] & {};
+type Keys = (keyof typeof data)[] & {}
 
 type Entries<T> = {
-  [K in keyof T]: [K, T[K]];
-}[keyof T][];
+  [K in keyof T]: [K, T[K]]
+}[keyof T][]

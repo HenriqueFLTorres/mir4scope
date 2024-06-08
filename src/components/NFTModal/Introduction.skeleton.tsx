@@ -1,4 +1,4 @@
-import { equip_order, equip_slot_position } from "./NFTEquipmentDisplay";
+import { equip_order, equip_slot_position } from "./NFTEquipmentDisplay"
 
 export default function NFTModalIntroductionSkeleton() {
   return (
@@ -8,8 +8,8 @@ export default function NFTModalIntroductionSkeleton() {
           {equip_order.map((_, index) => (
             <li
               // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-              key={index}
               className="absolute z-[100] h-20 w-20 rounded-full bg-black/50"
+              key={index}
               style={equip_slot_position[index]}
             />
           ))}
@@ -35,5 +35,5 @@ export default function NFTModalIntroductionSkeleton() {
         </footer>
       </div>
     </section>
-  );
+  )
 }

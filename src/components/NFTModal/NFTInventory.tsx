@@ -1,19 +1,19 @@
-"use client";
+"use client"
 
-import Enhance from "@/components/NFTModal/Enhance";
-import ItemDetailTooltip from "@/components/NFTModal/ItemDetailTooltip";
-import NFTContainer from "@/components/NFTModal/NFTContainer";
-import Backpack from "@/components/icon/Backpack";
-import Crafting from "@/components/icon/Crafting";
-import Spirit from "@/components/icon/Spirit";
-import { gradeToRarity } from "@/lib/utils";
-import { ArrowDownWideNarrow, Gem, Layers, Plus, Search } from "lucide-react";
-import Image from "next/image";
-import { useMemo, useState } from "react";
-import { toRoman } from "typescript-roman-numbers-converter";
-import { Input } from "../ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger } from "../ui/select";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+import { ArrowDownWideNarrow, Gem, Layers, Plus, Search } from "lucide-react"
+import Image from "next/image"
+import { useMemo, useState } from "react"
+import { toRoman } from "typescript-roman-numbers-converter"
+import { Input } from "../ui/input"
+import { Select, SelectContent, SelectItem, SelectTrigger } from "../ui/select"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs"
+import Backpack from "@/components/icon/Backpack"
+import Crafting from "@/components/icon/Crafting"
+import Spirit from "@/components/icon/Spirit"
+import Enhance from "@/components/NFTModal/Enhance"
+import ItemDetailTooltip from "@/components/NFTModal/ItemDetailTooltip"
+import NFTContainer from "@/components/NFTModal/NFTContainer"
+import { gradeToRarity } from "@/lib/utils"
 
 type InventoryTabs =
   | "Equipment"
@@ -22,7 +22,7 @@ type InventoryTabs =
   | "Spirit"
   | "Sundry"
   | "Secondary Equipment"
-  | "Tradable Items";
+  | "Tradable Items"
 
 const INVENTORY_TABS = [
   "Equipment",
@@ -32,7 +32,7 @@ const INVENTORY_TABS = [
   "Sundry",
   "Secondary Equipment",
   "Tradable Items",
-] as const;
+] as const
 
 type InventorySortingTypes =
   | "RARITY_ASC"
@@ -42,22 +42,22 @@ type InventorySortingTypes =
   | "ENHANCE_ASC"
   | "ENHANCE_DESC"
   | "QUANTITY_ASC"
-  | "QUANTITY_DESC";
+  | "QUANTITY_DESC"
 
 export default function NFTInventory({
   inventory,
 }: {
-  inventory: NFT_INVENTORY_ITEM[];
+  inventory: NFT_INVENTORY_ITEM[]
 }) {
-  const [itemSearch, setItemSearch] = useState("");
-  const [currentTab, setCurrentTab] = useState("equipment");
+  const [itemSearch, setItemSearch] = useState("")
+  const [currentTab, setCurrentTab] = useState("equipment")
   const [inventorySorting, setInventorySorting] =
-    useState<InventorySortingTypes>("RARITY_DESC");
+    useState<InventorySortingTypes>("RARITY_DESC")
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const formattedInventory = useMemo(() => {
     const countingObject: {
-      [key in InventoryTabs]: { count: number; items: NFT_INVENTORY_ITEM[] };
+      [key in InventoryTabs]: { count: number; items: NFT_INVENTORY_ITEM[] }
     } = {
       Equipment: {
         count: 0,
@@ -87,29 +87,29 @@ export default function NFTInventory({
         count: 0,
         items: [],
       },
-    };
+    }
 
     for (const item of inventory) {
       if (item.is_tradable) {
-        countingObject["Tradable Items"].count += 1;
+        countingObject["Tradable Items"].count += 1
         countingObject["Tradable Items"].items.push(item)
       }
 
-      const itemTab = getItemTab(item.main_type);
+      const itemTab = getItemTab(item.main_type)
 
-      countingObject[itemTab].count += 1;
-      countingObject[itemTab].items.push(item);
+      countingObject[itemTab].count += 1
+      countingObject[itemTab].items.push(item)
     }
 
     for (const tab of Object.values(countingObject)) {
       tab.items.sort((itemA, itemB) =>
-        getSortingComparasion(inventorySorting, itemA, itemB),
-      );
+        getSortingComparasion(inventorySorting, itemA, itemB)
+      )
     }
 
-    return countingObject;
+    return countingObject
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inventorySorting]);
+  }, [inventorySorting])
 
   return (
     <NFTContainer className="col-span-2">
@@ -121,25 +121,25 @@ export default function NFTInventory({
       </header>
 
       <Tabs
+        className="flex flex-col items-start"
+        defaultValue="equipment"
         value={currentTab}
         onValueChange={setCurrentTab}
-        defaultValue="equipment"
-        className="flex flex-col items-start"
       >
         <TabsList className="mb-6 flex-wrap justify-start gap-4">
           {INVENTORY_TABS.map((tab) => {
-            const Icon = getTabIcon(tab);
+            const Icon = getTabIcon(tab)
 
             return (
               <TabsTrigger
+                className="items-center gap-4 p-3 text-xs"
                 key={tab}
                 value={tab.toLowerCase().replace(/\s/g, "_")}
-                className="items-center gap-4 p-3 text-xs"
               >
                 <Icon className="h-4 w-4" /> {tab}
                 <strong>{formattedInventory[tab].count}</strong>
               </TabsTrigger>
-            );
+            )
           })}
 
           <Select
@@ -152,7 +152,7 @@ export default function NFTInventory({
               <ArrowDownWideNarrow className="h-5 w-5" />
               Sort By
             </SelectTrigger>
-            <SelectContent className="w-52" align="end">
+            <SelectContent align="end" className="w-52">
               <SelectItem
                 className="gap-2"
                 Icon={<Gem className="h-5 w-5" />}
@@ -212,8 +212,8 @@ export default function NFTInventory({
             </SelectContent>
           </Select>
           <Input
-            prefix={<Search className="absolute bottom-2 left-2 h-6 w-6" />}
             placeholder="Search by item name"
+            prefix={<Search className="absolute bottom-2 left-2 h-6 w-6" />}
             spellCheck={false}
             value={itemSearch}
             onChange={(e) => setItemSearch(e.target.value)}
@@ -221,8 +221,8 @@ export default function NFTInventory({
         </TabsList>
         {INVENTORY_TABS.map((tab) => (
           <TabsContent
-            key={tab}
             className="items-start data-[state=active]:min-h-[30rem]"
+            key={tab}
             value={tab.toLowerCase().replace(/\s/g, "_")}
           >
             <ul className="flex flex-wrap gap-3">
@@ -230,14 +230,14 @@ export default function NFTInventory({
                 .filter((item) =>
                   itemSearch
                     ? item.item_name.toLowerCase().includes(itemSearch)
-                    : true,
+                    : true
                 )
                 .map((item) => (
                   <ItemDetailTooltip
-                    key={item.item_uid}
                     add_option={item?.add_option ?? []}
                     item_name={item.item_name}
                     item_path={item.item_path}
+                    key={item.item_uid}
                     options={item?.options ?? []}
                     power_score={item?.power_score}
                     no_detail
@@ -250,7 +250,7 @@ export default function NFTInventory({
         ))}
       </Tabs>
     </NFTContainer>
-  );
+  )
 }
 
 function InventoryItem({
@@ -265,18 +265,18 @@ function InventoryItem({
   return (
     <li className="relative flex h-24 w-24 items-center justify-center">
       <Image
-        src={`/inventory/bg-${gradeToRarity(grade)}.webp`}
         alt=""
-        width={96}
-        height={96}
         className="absolute z-[-1] object-contain"
+        height={96}
+        src={`/inventory/bg-${gradeToRarity(grade)}.webp`}
+        width={96}
       />
       <Image
-        src={item_path}
         alt={item_name}
-        width={82}
-        height={82}
         className="absolute z-[0] object-contain"
+        height={82}
+        src={item_path}
+        width={82}
       />
 
       {stack > 0 && (
@@ -296,23 +296,23 @@ function InventoryItem({
         </p>
       )}
     </li>
-  );
+  )
 }
 
 function getTabIcon(tab: InventoryTabs) {
   switch (tab) {
     case "Spirit":
-      return Spirit;
+      return Spirit
     case "Equipment":
     case "Magic Stone":
     case "Material":
     case "Secondary Equipment":
     case "Sundry":
-      return Crafting;
+      return Crafting
     case "Tradable Items":
-      return Crafting;
+      return Crafting
     default:
-      throw new Error(`Unknown inventory tab: ${tab}`);
+      throw new Error(`Unknown inventory tab: ${tab}`)
   }
 }
 
@@ -323,50 +323,50 @@ function getItemTab(main_type: number): InventoryTabs {
     case 4: // Accessories
     case 20: // Legendary weapon
     case 22: // Artifact
-      return "Equipment";
+      return "Equipment"
     case 5: // Pills, enhancement, crafting materials
     case 7: // Constitution upgrade materials
     case 9: // BUNCH OF RANDOM MATERIALS
     case 12: // Skill tomes
-      return "Material";
+      return "Material"
     case 17: // Treasuers
-      return "Spirit";
+      return "Spirit"
     case 8: // Magic Stone
-      return "Magic Stone";
+      return "Magic Stone"
     case 6: // Buff potions, scrolls, boxes, tickets
     case 11: // Costumes?
     case 13: // Gear codex
     case 14: // Badges, crystal and tickets
     case 18: // Tickets, summoning tickets and badges
-      return "Sundry";
+      return "Sundry"
     case 21: // Mystical Piece
     case 23: // Soul orb
     case 24: // Transference equipment
-      return "Secondary Equipment";
+      return "Secondary Equipment"
     default:
-      return "Secondary Equipment";
+      return "Secondary Equipment"
   }
 }
 
 function getSortingComparasion(
   inventorySorting: InventorySortingTypes,
   itemA: NFT_INVENTORY_ITEM,
-  itemB: NFT_INVENTORY_ITEM,
+  itemB: NFT_INVENTORY_ITEM
 ) {
-  const RARITY_ASC = Number(itemA.grade) - Number(itemB.grade);
-  const RARITY_DESC = Number(itemB.grade) - Number(itemA.grade);
+  const RARITY_ASC = Number(itemA.grade) - Number(itemB.grade)
+  const RARITY_DESC = Number(itemB.grade) - Number(itemA.grade)
 
-  const ENHANCE_ASC = itemA.enhance - itemB.enhance;
-  const ENHANCE_DESC = itemB.enhance - itemA.enhance;
+  const ENHANCE_ASC = itemA.enhance - itemB.enhance
+  const ENHANCE_DESC = itemB.enhance - itemA.enhance
 
-  const TIER_ASC = Number(itemA.tier) - Number(itemB.tier);
-  const TIER_DESC = Number(itemB.tier) - Number(itemA.tier);
+  const TIER_ASC = Number(itemA.tier) - Number(itemB.tier)
+  const TIER_DESC = Number(itemB.tier) - Number(itemA.tier)
 
   switch (inventorySorting) {
     case "RARITY_ASC":
-      return RARITY_ASC + TIER_ASC * 0.1 + ENHANCE_ASC * 0.1;
+      return RARITY_ASC + TIER_ASC * 0.1 + ENHANCE_ASC * 0.1
     case "RARITY_DESC":
-      return RARITY_DESC + TIER_DESC * 0.1 + ENHANCE_DESC * 0.1;
+      return RARITY_DESC + TIER_DESC * 0.1 + ENHANCE_DESC * 0.1
     case "QUANTITY_ASC":
       return (
         itemA.stack -
@@ -374,7 +374,7 @@ function getSortingComparasion(
         RARITY_ASC * 0.5 +
         ENHANCE_ASC * 0.1 +
         TIER_ASC * 0.1
-      );
+      )
     case "QUANTITY_DESC":
       return (
         itemB.stack -
@@ -382,16 +382,16 @@ function getSortingComparasion(
         RARITY_DESC * 0.5 +
         ENHANCE_DESC * 0.1 +
         TIER_DESC * 0.1
-      );
+      )
     case "ENHANCE_ASC":
-      return ENHANCE_ASC + RARITY_ASC * 0.1 + TIER_ASC * 0.1;
+      return ENHANCE_ASC + RARITY_ASC * 0.1 + TIER_ASC * 0.1
     case "ENHANCE_DESC":
-      return ENHANCE_DESC + RARITY_DESC * 0.1 + TIER_DESC * 0.1;
+      return ENHANCE_DESC + RARITY_DESC * 0.1 + TIER_DESC * 0.1
     case "TIER_ASC":
-      return TIER_ASC + RARITY_ASC * 0.1 + ENHANCE_ASC * 0.1;
+      return TIER_ASC + RARITY_ASC * 0.1 + ENHANCE_ASC * 0.1
     case "TIER_DESC":
-      return TIER_DESC + RARITY_DESC * 0.1 + ENHANCE_DESC * 0.1;
+      return TIER_DESC + RARITY_DESC * 0.1 + ENHANCE_DESC * 0.1
     default:
-      throw new Error(`Unknown inventory sorting type: ${inventorySorting}`);
+      throw new Error(`Unknown inventory sorting type: ${inventorySorting}`)
   }
 }

@@ -5,4 +5,4 @@ export const SPECIAL_ABILITIES_NAMES = [
   "Dragon Tornado",
   "Dragon Spear",
   "Asura",
-];
+]

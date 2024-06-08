@@ -1,22 +1,22 @@
+import type * as LabelPrimitive from "@radix-ui/react-label"
+import { useAtom } from "jotai"
+import { X } from "lucide-react"
+import millify from "millify"
+import Image from "next/image"
 import {
   LIST_FILTER_DEFAULT,
   ListFilterAtom,
   type ListFiltersType,
-} from "@/atom/ListFilters";
-import { SPIRIT_LIST } from "@/components/SpiritSelector";
-import Codex from "@/components/icon/Codex";
-import EXP from "@/components/icon/EXP";
-import Power from "@/components/icon/Power";
-import Search from "@/components/icon/Search";
-import Skill from "@/components/icon/Skill";
-import Spirit from "@/components/icon/Spirit";
-import { Label } from "@/components/ui/label";
-import { classIndexToName, cn } from "@/lib/utils";
-import type * as LabelPrimitive from "@radix-ui/react-label";
-import { useAtom } from "jotai";
-import { X } from "lucide-react";
-import millify from "millify";
-import Image from "next/image";
+} from "@/atom/ListFilters"
+import Codex from "@/components/icon/Codex"
+import EXP from "@/components/icon/EXP"
+import Power from "@/components/icon/Power"
+import Search from "@/components/icon/Search"
+import Skill from "@/components/icon/Skill"
+import Spirit from "@/components/icon/Spirit"
+import { SPIRIT_LIST } from "@/components/SpiritSelector"
+import { Label } from "@/components/ui/label"
+import { classIndexToName, cn } from "@/lib/utils"
 
 function FilterChip({
   className,
@@ -27,30 +27,30 @@ function FilterChip({
     <Label
       className={cn(
         "flex h-10 cursor-pointer items-center gap-2 rounded-full border border-black/20 bg-black/10 p-1 px-3 pr-2 text-sm font-medium text-white drop-shadow-md transition-colors focus-within:border-error-400/30 focus-within:bg-error-400/10 focus-within:ring-2 focus-within:ring-error-400 hover:border-error-400/30 hover:bg-error-400/10",
-        className,
+        className
       )}
       {...props}
     >
       {children}
-      <button type="button" className="rounded p-0.5 outline-none">
+      <button className="rounded p-0.5 outline-none" type="button">
         <X className="h-4 w-4" />
       </button>
     </Label>
-  );
+  )
 }
 
 export const isRangeDifferent = (
   value1: (number | undefined)[],
-  value2: (number | undefined)[],
+  value2: (number | undefined)[]
 ) => {
-  if (value1.length !== value2.length) return true;
+  if (value1.length !== value2.length) return true
 
   for (let i = 0; i < value1.length; i++) {
-    if (value1[i] !== value2[i]) return true;
+    if (value1[i] !== value2[i]) return true
   }
 
-  return false;
-};
+  return false
+}
 
 // function StatusChips() {
 //   const [{ status }, setListFilter] = useAtom(ListFilterAtom);
@@ -97,7 +97,7 @@ export const isRangeDifferent = (
 // }
 
 function SpiritChips() {
-  return <></>;
+  return <></>
 
   return (
     <FilterChip
@@ -112,8 +112,8 @@ function SpiritChips() {
 
       <div className="flex items-center gap-1">
         {spirits.slice(0, 3).map((spirit) => {
-          const rarity = SPIRIT_LIST[spirit] as "Legendary" | "Epic";
-          const formattedName = spirit.toLowerCase().replace(/\s/g, "-");
+          const rarity = SPIRIT_LIST[spirit] as "Legendary" | "Epic"
+          const formattedName = spirit.toLowerCase().replace(/\s/g, "-")
 
           return (
             <div
@@ -121,34 +121,34 @@ function SpiritChips() {
               key={spirit}
             >
               <Image
-                className="object-contain"
-                width={28}
-                height={28}
                 alt={""}
+                className="object-contain"
+                height={28}
                 src={`/bg-${rarity.toLowerCase()}.webp`}
+                width={28}
               />
               <Image
-                className="absolute object-contain"
-                width={24}
-                height={24}
                 alt={spirit}
+                className="absolute object-contain"
+                height={24}
                 src={`/spirit/${formattedName}.webp`}
+                width={24}
               />
             </div>
-          );
+          )
         })}
       </div>
 
       {spirits.length > 3 && `+${spirits.length - 3}`}
     </FilterChip>
-  );
+  )
 }
 
 const FilterChips = () => {
   return <></>
 
   function handleClear(key: keyof ListFiltersType) {
-    setListFilter((prev) => ({ ...prev, [key]: LIST_FILTER_DEFAULT[key] }));
+    setListFilter((prev) => ({ ...prev, [key]: LIST_FILTER_DEFAULT[key] }))
   }
 
   return (
@@ -195,7 +195,7 @@ const FilterChips = () => {
 
       <SpiritChips />
     </section>
-  );
-};
+  )
+}
 
-export default FilterChips;
+export default FilterChips

@@ -1,14 +1,14 @@
-import type { SVGProps } from "react";
+import type { SVGProps } from "react"
 
 const Power = (props: SVGProps<SVGSVGElement>) => (
   <svg
-    width="1em"
-    height="1em"
-    viewBox="0 0 19 20"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
     aria-label="Power Icon"
+    fill="none"
+    height="1em"
     role="img"
+    viewBox="0 0 19 20"
+    width="1em"
+    xmlns="http://www.w3.org/2000/svg"
     {...props}
   >
     <path
@@ -116,6 +116,6 @@ const Power = (props: SVGProps<SVGSVGElement>) => (
       fill="white"
     />
   </svg>
-);
+)
 
-export default Power;
+export default Power

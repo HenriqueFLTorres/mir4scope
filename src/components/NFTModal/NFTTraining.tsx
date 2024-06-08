@@ -1,8 +1,8 @@
-"use client";
+"use client"
 
-import NFTContainer from "@/components/NFTModal/NFTContainer";
-import Skill from "@/components/icon/Skill";
-import Image from "next/image";
+import Image from "next/image"
+import Skill from "@/components/icon/Skill"
+import NFTContainer from "@/components/NFTModal/NFTContainer"
 
 const chi = [
   "Muscle Strength Manual",
@@ -11,7 +11,7 @@ const chi = [
   "Violet Mist Art",
   "Northern Profound Art",
   "Toad Stance",
-] as const;
+] as const
 
 export default function NFTTraining({ training }: { training: NFT_TRAINING }) {
   return (
@@ -39,7 +39,7 @@ export default function NFTTraining({ training }: { training: NFT_TRAINING }) {
         />
       </div>
     </NFTContainer>
-  );
+  )
 }
 
 function TrainingFragment({
@@ -47,27 +47,27 @@ function TrainingFragment({
   name,
   isChi = false,
 }: {
-  tier: number | string;
-  name: string;
-  isChi?: boolean;
+  tier: number | string
+  name: string
+  isChi?: boolean
 }) {
   return (
     <div className="flex w-full flex-col items-center gap-4">
       <div className="flex h-20 w-20 shrink-0 items-center justify-center">
         <Image
-          src={"/training-frame.webp"}
           alt=""
-          width={80}
-          height={80}
           className="absolute"
+          height={80}
+          src={"/training-frame.webp"}
+          width={80}
         />
         {isChi && (
           <Image
-            src={`/training/${name.replace(/\s/g, "_").toLowerCase()}.webp`}
             alt=""
-            width={80}
-            height={80}
             className="absolute opacity-50"
+            height={80}
+            src={`/training/${name.replace(/\s/g, "_").toLowerCase()}.webp`}
+            width={80}
           />
         )}
         <p className="absolute mb-12 translate-x-[0.125rem] text-center font-medium tracking-[0.3em] drop-shadow-[0px_0px_2px_rgba(0,0,0,150)]">
@@ -79,5 +79,5 @@ function TrainingFragment({
       </div>
       <h4 className="text-center text-base font-bold">{name}</h4>
     </div>
-  );
+  )
 }

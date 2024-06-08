@@ -1,12 +1,12 @@
-import { cn } from "@/lib/utils";
-import React from "react";
-import { Label } from "./label";
+import React from "react"
+import { Label } from "./label"
+import { cn } from "@/lib/utils"
 
 export interface InputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "prefix"> {
-  prefix?: JSX.Element;
-  wrapperClass?: string;
-  label?: string;
+  prefix?: JSX.Element
+  wrapperClass?: string
+  label?: string
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
@@ -22,9 +22,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       id = name,
       ...props
     },
-    ref,
+    ref
   ) => {
-    const PrefixIcon = prefix;
+    const PrefixIcon = prefix
 
     return (
       <div className={cn("relative flex flex-col gap-2", wrapperClass)}>
@@ -43,20 +43,20 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             "flex h-10 w-full rounded-md border border-black/20 bg-transparent bg-gradient-to-b from-black/10 to-black/0 px-3 py-2 text-sm text-white transition-[box-shadow,_opacity]",
             "placeholder:text-white/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white disabled:cursor-not-allowed disabled:opacity-50",
             { "pl-10": PrefixIcon },
-            className,
+            className
           )}
+          disabled={disabled}
           id={id}
           name={name}
           ref={ref}
           spellCheck={spellCheck}
-          disabled={disabled}
           {...props}
         />
       </div>
-    );
-  },
-);
+    )
+  }
+)
 
-Input.displayName = "Input";
+Input.displayName = "Input"
 
-export { Input };
+export { Input }

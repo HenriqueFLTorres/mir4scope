@@ -16,5 +16,5 @@ export default function NFTContainerSkeleton() {
         <div className="h-20 w-20 rounded-full bg-black/50" />
       </div>
     </div>
-  );
+  )
 }

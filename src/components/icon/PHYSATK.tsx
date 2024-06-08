@@ -1,14 +1,14 @@
-import type { SVGProps } from "react";
+import type { SVGProps } from "react"
 
 const PHYSATK = (props: SVGProps<SVGSVGElement>) => (
   <svg
-    width="1em"
-    height="1em"
-    viewBox="0 0 20 20"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
     aria-label="PHYS ATK Icon"
+    fill="none"
+    height="1em"
     role="img"
+    viewBox="0 0 20 20"
+    width="1em"
+    xmlns="http://www.w3.org/2000/svg"
     {...props}
   >
     <path
@@ -36,12 +36,12 @@ const PHYSATK = (props: SVGProps<SVGSVGElement>) => (
       fill="white"
     />
     <path
-      fillRule="evenodd"
       clipRule="evenodd"
       d="M8.88058 13.5792H11.0407C11.1468 13.5792 11.2327 13.4934 11.2327 13.3876V4.09184C11.1737 3.28153 10.7661 1.43023 9.6182 0.0647836C9.50924 -0.0648213 9.30212 0.0133096 9.28679 0.181809C9.19138 1.23055 8.81677 2.98353 7.83285 4.20642C7.77398 4.27959 7.77301 4.38411 7.82716 4.46083C8.16396 4.93796 8.68857 6.02309 8.68857 7.44597V13.3887C8.68857 13.4946 8.77453 13.5792 8.88058 13.5792ZM9.9027 12.1558L9.66236 11.9159C9.65355 11.9071 9.64851 11.8952 9.64831 11.8828L9.55261 5.91266C9.55261 5.60919 9.50461 4.92558 9.3126 4.61892C9.07258 4.23559 8.97658 4.04393 9.07258 3.9481C9.16859 3.85226 9.26459 3.85226 9.55261 4.18768C9.84064 4.52309 9.88865 4.66684 9.93665 5.38558C9.97505 5.96057 9.98465 6.83904 9.98464 7.20639V12.1219C9.98464 12.1646 9.93294 12.186 9.9027 12.1558Z"
       fill="white"
+      fillRule="evenodd"
     />
   </svg>
-);
+)
 
-export default PHYSATK;
+export default PHYSATK

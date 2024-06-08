@@ -1,11 +1,11 @@
-import { atom } from "jotai";
+import { atom } from "jotai"
 
 export type ListSortType =
   | "latest"
   | "pricehigh"
   | "pricelow"
   | "lvhigh"
-  | "pshigh";
+  | "pshigh"
 
 export type ListStatusEnum =
   | "PHYS ATK"
@@ -13,49 +13,49 @@ export type ListStatusEnum =
   | "Spell ATK"
   | "Spell DEF"
   | "EVA"
-  | "Accuracy";
+  | "Accuracy"
 
-export type ListMinMaxType = [undefined | number, undefined | number];
+export type ListMinMaxType = [undefined | number, undefined | number]
 
 export type ListFiltersType = {
-  search: string;
-  sort: ListSortType;
-  class: 0 | 1 | 2 | 3 | 4 | 5 | 6;
-  level: number[];
-  power: number[];
-  codex: number[];
-  spirits: SpiritsType[];
-  max_price: undefined;
-  world_name: string | undefined;
+  search: string
+  sort: ListSortType
+  class: 0 | 1 | 2 | 3 | 4 | 5 | 6
+  level: number[]
+  power: number[]
+  codex: number[]
+  spirits: SpiritsType[]
+  max_price: undefined
+  world_name: string | undefined
   stats: {
-    [key in ListStatusEnum]: ListMinMaxType;
-  };
+    [key in ListStatusEnum]: ListMinMaxType
+  }
   training: {
-    [key in TrainingType]: [number, number];
-  };
+    [key in TrainingType]: [number, number]
+  }
   building: {
-    [key in BuildingType]: number | undefined;
-  };
+    [key in BuildingType]: number | undefined
+  }
   skills:
     | {
-        [key in string]: number;
+        [key in string]: number
       }
-    | undefined;
+    | undefined
   mystique: {
-    [key in NFT_MYSTIQUE]: number | undefined;
-  };
+    [key in NFT_MYSTIQUE]: number | undefined
+  }
   potentials: {
-    [key in PotentialType]: number | undefined;
-  };
+    [key in PotentialType]: number | undefined
+  }
   tickets: {
-    [key in TicketsType]: number | undefined;
-  };
+    [key in TicketsType]: number | undefined
+  }
   materials:
     | {
-        [key in string]: { Legendary: number; Epic: number };
+        [key in string]: { Legendary: number; Epic: number }
       }
-    | undefined;
-};
+    | undefined
+}
 
 export const LIST_FILTER_DEFAULT: ListFiltersType = {
   search: "",
@@ -118,6 +118,6 @@ export const LIST_FILTER_DEFAULT: ListFiltersType = {
     "Wayfarer Travel Pass": undefined,
   },
   materials: undefined,
-};
+}
 
-export const ListFilterAtom = atom<ListFiltersType>(LIST_FILTER_DEFAULT);
+export const ListFilterAtom = atom<ListFiltersType>(LIST_FILTER_DEFAULT)

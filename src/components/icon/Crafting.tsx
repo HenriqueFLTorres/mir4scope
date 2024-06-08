@@ -1,14 +1,14 @@
-import type { SVGProps } from "react";
+import type { SVGProps } from "react"
 
 const Crafting = (props: SVGProps<SVGSVGElement>) => (
   <svg
-    width="1em"
-    height="1em"
-    viewBox="0 0 20 20"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
     aria-label="Crafting Icon"
+    fill="none"
+    height="1em"
     role="img"
+    viewBox="0 0 20 20"
+    width="1em"
+    xmlns="http://www.w3.org/2000/svg"
     {...props}
   >
     <path
@@ -40,16 +40,16 @@ const Crafting = (props: SVGProps<SVGSVGElement>) => (
       fill="white"
     />
     <path
-      fillRule="evenodd"
       clipRule="evenodd"
       d="M19.7211 7.82064C19.8832 7.91065 19.9384 8.11699 19.843 8.27593L19.2126 9.32666C19.1156 9.48834 18.9025 9.53508 18.7468 9.42887L11.9639 4.80419C11.8743 4.74311 11.8207 4.64171 11.8207 4.53329V4.18664C11.8207 4.09969 11.8553 4.01629 11.9168 3.95481L12.0053 3.86625C12.0931 3.77844 12.223 3.74777 12.3408 3.78705L12.6115 3.87727C12.6307 3.88368 12.6493 3.89186 12.667 3.9017L19.7211 7.82064ZM16.2857 6.67378C16.1737 6.67378 16.083 6.76451 16.083 6.87642C16.083 6.95317 16.1264 7.02333 16.195 7.05766L16.6695 7.29491C16.7151 7.31767 16.766 7.33236 16.8155 7.3205C16.8936 7.30177 16.9608 7.2551 17.006 7.19164C17.078 7.09048 16.9965 6.96657 16.8854 6.91103L16.4669 6.70179C16.4301 6.68337 16.3895 6.67378 16.3483 6.67378H16.2857Z"
       fill="white"
+      fillRule="evenodd"
     />
     <path
       d="M5.41803 10.8197H0.5C2.33606 13.4426 4.54371 13.8798 5.41803 13.7705V10.8197Z"
       fill="white"
     />
   </svg>
-);
+)
 
-export default Crafting;
+export default Crafting
