@@ -31,16 +31,19 @@ const StatusRange = ({ label, Icon, control }: StatusRangeProps) => {
   })
 
   const getLabel = () => {
-    const firstValue = Number(value[0])
-    const secondValue = Number(value[1])
+    const firstValue = Number(minValue)
+    const secondValue = Number(maxValue)
 
-    if (firstValue && secondValue)
+    if (Number.isInteger(firstValue) && Number.isInteger(secondValue))
       return `${millify(firstValue)} - ${millify(secondValue)}`
-    if (firstValue) return `>= ${millify(firstValue)}`
-    if (secondValue) return `<= ${millify(secondValue)}`
+    if (Number.isInteger(firstValue)) return `>= ${millify(firstValue)}`
+    if (Number.isInteger(secondValue)) return `<= ${millify(secondValue)}`
 
     return "Any"
   }
+
+  const minValue = value[0]
+  const maxValue = value[1]
 
   return (
     <Popover>
@@ -62,20 +65,20 @@ const StatusRange = ({ label, Icon, control }: StatusRangeProps) => {
             className="h-max w-full px-2 py-1"
             label="Min"
             name="min"
-            value={value[0] ? value[0] : ""}
+            value={typeof minValue === "number" && minValue > 0 ? minValue : ""}
             wrapperClass="w-full"
             onChange={(e) => {
               const newValue = getNumber(e.currentTarget.value)
-              if (newValue === null) return onChange([undefined, value[1]])
+              if (newValue === null) return onChange([undefined, maxValue])
 
-              onChange([newValue, value[1]])
+              onChange([newValue, maxValue])
             }}
           />
 
           <button
             className="h-[1.875rem] w-[1.875rem] shrink-0 rounded border border-black/20 bg-black/10 hover:bg-black/20"
             type="button"
-            onClick={() => onChange([undefined, value[1]])}
+            onClick={() => onChange([undefined, maxValue])}
           >
             <X className="h-5 w-5" />
           </button>
@@ -87,20 +90,20 @@ const StatusRange = ({ label, Icon, control }: StatusRangeProps) => {
             className="h-max w-full px-2 py-1"
             label="Max"
             name="max"
-            value={value[1] ? value[1] : ""}
+            value={typeof maxValue === "number" && maxValue > 0 ? maxValue : ""}
             wrapperClass="w-full"
             onChange={(e) => {
               const newValue = getNumber(e.currentTarget.value)
-              if (newValue === null) return onChange([value[0], undefined])
+              if (newValue === null) return onChange([minValue, undefined])
 
-              onChange([value[0], newValue])
+              onChange([minValue, newValue])
             }}
           />
 
           <button
             className="h-[1.875rem] w-[1.875rem] shrink-0 rounded border border-black/20 bg-black/10 hover:bg-black/20"
             type="button"
-            onClick={() => onChange([value[0], undefined])}
+            onClick={() => onChange([minValue, undefined])}
           >
             <X className="h-5 w-5" />
           </button>

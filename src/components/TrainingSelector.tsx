@@ -64,7 +64,7 @@ function TrainingFragment({
 
   const onBlurMin = (e: ChangeEvent<HTMLInputElement>) => {
     const newMinValue = getNumber(e.currentTarget.value)
-    if (!newMinValue) return onChange([0, maxValue])
+    if (newMinValue == null) return onChange([0, maxValue])
     if (newMinValue > maxValue) return onChange([maxValue, maxValue])
 
     onChange([newMinValue, maxValue])
@@ -72,7 +72,7 @@ function TrainingFragment({
 
   const onBlurMax = (e: ChangeEvent<HTMLInputElement>) => {
     const newMaxValue = getNumber(e.currentTarget.value)
-    if (!newMaxValue) return onChange([minValue, max])
+    if (newMaxValue == null) return onChange([minValue, max])
     if (newMaxValue < minValue) return onChange([minValue, minValue])
 
     if (newMaxValue > max) return onChange([minValue, max])

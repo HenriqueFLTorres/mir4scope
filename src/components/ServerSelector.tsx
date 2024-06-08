@@ -1,7 +1,7 @@
 "use client"
 
-import { Trash, Trash2 } from "lucide-react"
-import { type Control, useController, useWatch } from "react-hook-form"
+import { Trash2 } from "lucide-react"
+import { type Control, useController } from "react-hook-form"
 import Globe from "./icon/Globe"
 import {
   DropdownMenu,
@@ -34,7 +34,8 @@ export function ServerSelector({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="flex h-10 min-w-52 select-none items-center justify-start gap-3 rounded-md border border-black/20 bg-gradient-to-b from-black/10 to-black/0 px-3 py-2 text-sm font-medium text-white transition-[box-shadow] focus:outline-none focus:ring-2 focus:ring-white">
-        <Globe className="h-6 w-6" /> Server {worldName ? `(${worldName})` : ""}
+        <Globe className="h-6 w-6" /> Server{" "}
+        {worldName == null ? "" : `(${worldName})`}
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownMenuGroup>

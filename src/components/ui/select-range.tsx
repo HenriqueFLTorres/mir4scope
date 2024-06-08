@@ -1,14 +1,17 @@
-import * as SliderPrimitive from "@radix-ui/react-slider"
+import {
+  Range,
+  Root,
+  type SliderProps,
+  Thumb,
+  Track,
+} from "@radix-ui/react-slider"
 import millify from "millify"
 import { Input } from "./input"
 import { Popover, PopoverContent, PopoverTrigger } from "./popover"
 import { getNumber } from "@/lib/utils"
 
 export interface SelectRangeProps
-  extends Omit<
-    SliderPrimitive.SliderProps,
-    "defaultValue" | "min" | "max" | "step"
-  > {
+  extends Omit<SliderProps, "defaultValue" | "min" | "max" | "step"> {
   label: string
   Icon: JSX.Element
   defaultValue: number[]
@@ -70,7 +73,7 @@ const SelectRange = ({
           />
         )}
 
-        <SliderPrimitive.Root
+        <Root
           className={
             "relative flex h-5 w-full touch-none select-none items-center"
           }
@@ -82,13 +85,13 @@ const SelectRange = ({
           onValueChange={(val) => onValueChange(val)}
           {...props}
         >
-          <SliderPrimitive.Track className="relative h-2 w-full grow overflow-x-hidden rounded-full bg-white/20">
-            <SliderPrimitive.Range className="absolute h-full bg-white" />
-          </SliderPrimitive.Track>
+          <Track className="relative h-2 w-full grow overflow-x-hidden rounded-full bg-white/20">
+            <Range className="absolute h-full bg-white" />
+          </Track>
 
-          <SliderPrimitive.Thumb className={thumbStyling} />
-          <SliderPrimitive.Thumb className={thumbStyling} />
-        </SliderPrimitive.Root>
+          <Thumb className={thumbStyling} />
+          <Thumb className={thumbStyling} />
+        </Root>
 
         {showInput && (
           <Input

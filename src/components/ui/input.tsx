@@ -1,15 +1,15 @@
-import React from "react"
+import { type InputHTMLAttributes, forwardRef } from "react"
 import { Label } from "./label"
 import { cn } from "@/lib/utils"
 
 export interface InputProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "prefix"> {
+  extends Omit<InputHTMLAttributes<HTMLInputElement>, "prefix"> {
   prefix?: JSX.Element
   wrapperClass?: string
   label?: string
 }
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(
+const Input = forwardRef<HTMLInputElement, InputProps>(
   (
     {
       className,
@@ -28,7 +28,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
     return (
       <div className={cn("relative flex flex-col gap-2", wrapperClass)}>
-        {label && (
+        {label === undefined ? null : (
           <Label
             className={cn("transition-opacity", { "opacity-50": disabled })}
             htmlFor={name}

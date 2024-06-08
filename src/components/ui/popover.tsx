@@ -1,23 +1,27 @@
 "use client"
 
-import * as PopoverPrimitive from "@radix-ui/react-popover"
+import { Content, Portal, Root, Trigger } from "@radix-ui/react-popover"
 import { Icon } from "@radix-ui/react-select"
 import { ChevronDown } from "lucide-react"
-import * as React from "react"
+import {
+  type ComponentPropsWithoutRef,
+  type ElementRef,
+  forwardRef,
+} from "react"
 
 import { cn } from "@/lib/utils"
 
-const Popover = PopoverPrimitive.Root
+const Popover = Root
 
 const PopoverTrigger = ({
   className,
   children,
   noIcon = false,
   ...props
-}: React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Trigger> & {
+}: ComponentPropsWithoutRef<typeof Trigger> & {
   noIcon?: boolean
 }) => (
-  <PopoverPrimitive.Trigger
+  <Trigger
     className={cn(
       "group flex h-10 w-full select-none items-center gap-3 rounded-md border border-black/20 bg-gradient-to-b from-black/10 to-black/0 px-3 py-2 text-sm font-medium text-white transition-[box-shadow] placeholder:text-white/60 [&>span]:line-clamp-1",
       "focus:outline-none focus:ring-2 focus:ring-white disabled:cursor-not-allowed disabled:opacity-50",
@@ -33,15 +37,15 @@ const PopoverTrigger = ({
         <ChevronDown className="ml-auto h-4 w-4 opacity-60 transition-[opacity,_transform] group-data-[state=open]:rotate-180 group-data-[state=open]:opacity-100" />
       </Icon>
     )}
-  </PopoverPrimitive.Trigger>
+  </Trigger>
 )
 
-const PopoverContent = React.forwardRef<
-  React.ElementRef<typeof PopoverPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Content>
->(({ className, align = "center", sideOffset = 4, ...props }, ref) => (
-  <PopoverPrimitive.Portal>
-    <PopoverPrimitive.Content
+const PopoverContent = forwardRef<
+  ElementRef<typeof Content>,
+  ComponentPropsWithoutRef<typeof Content>
+>(({ className, align = "center", sideOffset = 12, ...props }, ref) => (
+  <Portal>
+    <Content
       align={align}
       className={cn(
         "relative z-50 max-h-96 w-[--radix-popover-trigger-width] border-collapse overflow-hidden rounded-md border border-black/20 bg-gradient-to-b from-black/10 to-black/0 text-white shadow-md backdrop-blur-md",
@@ -49,11 +53,11 @@ const PopoverContent = React.forwardRef<
         className
       )}
       ref={ref}
-      sideOffset={12}
+      sideOffset={sideOffset}
       {...props}
     />
-  </PopoverPrimitive.Portal>
+  </Portal>
 ))
-PopoverContent.displayName = PopoverPrimitive.Content.displayName
+PopoverContent.displayName = Content.displayName
 
 export { Popover, PopoverContent, PopoverTrigger }

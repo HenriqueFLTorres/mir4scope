@@ -3,7 +3,6 @@
 import { ChevronsUpDown } from "lucide-react"
 
 import Image from "next/image"
-import { useState } from "react"
 import { type Control, useController } from "react-hook-form"
 import Skill from "./icon/Skill"
 import { Input } from "./ui/input"
@@ -80,7 +79,7 @@ function PotentialFragment({
         defaultValue={0}
         prefix={<span className="absolute bottom-2 left-3 font-bold">+</span>}
         type="number"
-        value={value ? value : "0"}
+        value={typeof value === "number" && value > 0 ? value : "0"}
         wrapperClass="ml-auto"
         onChange={(e) => {
           const newValue = getNumber(e.currentTarget.value)

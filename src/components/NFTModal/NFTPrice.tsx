@@ -13,9 +13,10 @@ interface NftPriceProps {
 export default function NFTPrice(props: NftPriceProps) {
   const price = useAtomValue(UsdPriceAtom)
 
-  const formattedPrice = price
-    ? (Number(price) * props.nft_price).toFixed(2)
-    : 0
+  const formattedPrice =
+    typeof price === "number" && price > 0
+      ? (Number(price) * props.nft_price).toFixed(2)
+      : 0
 
   return (
     <a

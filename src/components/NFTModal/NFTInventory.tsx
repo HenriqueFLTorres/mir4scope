@@ -228,7 +228,7 @@ export default function NFTInventory({
             <ul className="flex flex-wrap gap-3">
               {formattedInventory[tab].items
                 .filter((item) =>
-                  itemSearch
+                  itemSearch.length > 0
                     ? item.item_name.toLowerCase().includes(itemSearch)
                     : true
                 )
@@ -258,7 +258,6 @@ function InventoryItem({
   grade,
   item_name,
   item_path,
-  refine_step,
   stack,
   tier,
 }: NFT_INVENTORY_ITEM) {

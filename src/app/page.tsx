@@ -1,7 +1,7 @@
 "use client"
 
 import { useQuery } from "@tanstack/react-query"
-import { useAtom } from "jotai"
+import { useSetAtom } from "jotai"
 import { FilterX, Search } from "lucide-react"
 import { useEffect } from "react"
 import { type SubmitHandler, useForm } from "react-hook-form"
@@ -15,7 +15,7 @@ import { getNfts } from "@/lib/get-nfts"
 import { getPrice } from "@/lib/get-price"
 
 export default function Home() {
-  const [usdPrice, setUsdPriceAtom] = useAtom(UsdPriceAtom)
+  const setUsdPriceAtom = useSetAtom(UsdPriceAtom)
 
   const {
     register,
@@ -52,7 +52,7 @@ export default function Home() {
     }
   }, [isSuccess, price, setUsdPriceAtom])
 
-  const onSubmit: SubmitHandler<ListFiltersType> = (data) => console.log(data)
+  const onSubmit: SubmitHandler<ListFiltersType> = (data) => console.debug(data)
 
   return (
     <main className="flex min-h-screen flex-col items-center gap-6 p-24">
@@ -90,7 +90,7 @@ export default function Home() {
         </pre>
       </form>
 
-      {!nft_list || isLoading || isFetching || isRefetching ? (
+      {isLoading || isFetching || isRefetching ? (
         <NFTDisplaySkeleton />
       ) : (
         <NFTDisplay nft_list={nft_list} />

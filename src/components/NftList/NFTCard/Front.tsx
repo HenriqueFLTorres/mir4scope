@@ -34,7 +34,8 @@ function CardFront({
   const mir4Class = classIndexToName(classIndex)
 
   const usdPrice = useAtomValue(UsdPriceAtom)
-  const formattedPrice = usdPrice ? (Number(usdPrice) * price).toFixed(2) : 0
+  const formattedPrice =
+    usdPrice == null ? 0 : (Number(usdPrice) * price).toFixed(2)
 
   return (
     <div

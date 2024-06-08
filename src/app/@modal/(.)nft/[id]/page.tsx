@@ -1,9 +1,6 @@
-import { useAtom, useAtomValue } from "jotai"
 import { Link } from "lucide-react"
 import { Modal } from "./modal"
 
-import { UsdPriceAtom } from "@/atom/Price"
-import Wemix from "@/components/icon/Wemix"
 import NFTAssets from "@/components/NFTModal/NFTAssets"
 import NFTBuildings from "@/components/NFTModal/NFTBuildings"
 import NFTCodex from "@/components/NFTModal/NFTCodex"
@@ -21,7 +18,6 @@ import NFTTags from "@/components/NFTModal/NFTTags"
 import NFTTraining from "@/components/NFTModal/NFTTraining"
 import NFTTransferenceEquipment from "@/components/NFTModal/NFTTransferenceEquipment"
 import { getNft } from "@/lib/get-nft"
-import { getReadableNumber } from "@/lib/utils"
 
 export default async function NFTModal({ params }: { params: { id: string } }) {
   const seq = params.id

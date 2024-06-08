@@ -18,7 +18,10 @@ const PriceRange = ({
     <Popover>
       <PopoverTrigger className="w-72">
         <Wemix className="h-5 w-5" />
-        Price {value ? `(Max: ${millify(value)})` : "(Any)"}
+        Price{" "}
+        {typeof value === "number" && value > 0
+          ? `(Max: ${millify(value)})`
+          : "(Any)"}
       </PopoverTrigger>
       <PopoverContent className="flex flex-row items-end gap-2 px-3 py-4">
         <Input
@@ -26,7 +29,7 @@ const PriceRange = ({
           label="Max value"
           name="max value"
           prefix={<Wemix className="absolute bottom-2 left-2 h-4 w-4" />}
-          value={value ? value : ""}
+          value={typeof value === "number" && value > 0 ? value : ""}
           wrapperClass="w-full"
           onChange={(e) => {
             const newValue = getNumber(e.currentTarget.value)

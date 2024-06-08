@@ -80,7 +80,7 @@ export function gradeToRarity(grade: number | string) {
   }
 }
 
-export function completeArray<T extends {}>(
+export function completeArray<T extends string[]>(
   array: T[],
   size: number
 ): (T | null)[] {
@@ -113,6 +113,19 @@ export function capitalizeString(input: string) {
   })
 
   return capitalizedWords.join(" ")
+}
+
+export const isRangeDifferent = (
+  value1: (number | undefined)[],
+  value2: (number | undefined)[]
+) => {
+  if (value1.length !== value2.length) return true
+
+  for (let i = 0; i < value1.length; i++) {
+    if (value1[i] !== value2[i]) return true
+  }
+
+  return false
 }
 
 export const ALL_MIR4_SERVERS = {

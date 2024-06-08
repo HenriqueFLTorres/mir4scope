@@ -1,31 +1,36 @@
 "use client"
 
-import * as TabsPrimitive from "@radix-ui/react-tabs"
-import * as React from "react"
+import { Content, List, Root, Trigger } from "@radix-ui/react-tabs"
+import {
+  type ComponentPropsWithoutRef,
+  type ElementRef,
+  type ReactNode,
+  forwardRef,
+} from "react"
 
 import { cn } from "@/lib/utils"
 
-const Tabs = TabsPrimitive.Root
+const Tabs = Root
 
-const TabsList = React.forwardRef<
-  React.ElementRef<typeof TabsPrimitive.List>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>
+const TabsList = forwardRef<
+  ElementRef<typeof List>,
+  ComponentPropsWithoutRef<typeof List>
 >(({ className, ...props }, ref) => (
-  <TabsPrimitive.List
+  <List
     className={cn("inline-flex items-center justify-center gap-1", className)}
     ref={ref}
     {...props}
   />
 ))
-TabsList.displayName = TabsPrimitive.List.displayName
+TabsList.displayName = List.displayName
 
-const TabsTrigger = React.forwardRef<
-  React.ElementRef<typeof TabsPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger> & {
-    children: React.ReactNode | React.ReactNode[]
+const TabsTrigger = forwardRef<
+  ElementRef<typeof Trigger>,
+  ComponentPropsWithoutRef<typeof Trigger> & {
+    children: ReactNode | ReactNode[]
   }
 >(({ className, ...props }, ref) => (
-  <TabsPrimitive.Trigger
+  <Trigger
     className={cn(
       "inline-flex items-center justify-center whitespace-nowrap rounded border border-transparent px-1.5 py-1 text-xs font-medium ring-offset-white transition-colors",
       "bg-black/10 data-[state=active]:border-black/40 data-[state=active]:bg-black/20",
@@ -36,13 +41,13 @@ const TabsTrigger = React.forwardRef<
     {...props}
   />
 ))
-TabsTrigger.displayName = TabsPrimitive.Trigger.displayName
+TabsTrigger.displayName = Trigger.displayName
 
-const TabsContent = React.forwardRef<
-  React.ElementRef<typeof TabsPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>
+const TabsContent = forwardRef<
+  ElementRef<typeof Content>,
+  ComponentPropsWithoutRef<typeof Content>
 >(({ className, ...props }, ref) => (
-  <TabsPrimitive.Content
+  <Content
     className={cn(
       "flex flex-row gap-4 rounded ring-offset-neutral-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2",
       className
@@ -51,6 +56,6 @@ const TabsContent = React.forwardRef<
     {...props}
   />
 ))
-TabsContent.displayName = TabsPrimitive.Content.displayName
+TabsContent.displayName = Content.displayName
 
 export { Tabs, TabsContent, TabsList, TabsTrigger }

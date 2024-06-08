@@ -22,7 +22,7 @@ export default function SkillFragment({
         className="object-contain"
         height={large ? 56 : 40}
         src={`/skills/${name
-          .replace(/\'/g, "")
+          .replace(/'/g, "")
           .toLowerCase()
           .replace(/\s/g, "-")}.webp`}
         width={large ? 56 : 40}

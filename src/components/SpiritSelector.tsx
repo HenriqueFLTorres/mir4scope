@@ -32,7 +32,7 @@ export function SpiritSelector({
     <Popover>
       <PopoverTrigger className="w-72 justify-between" role="combobox" noIcon>
         <Spirit className="h-5 w-5" />
-        Spirits ({fields ? `${fields.length} selected` : "Any"})
+        Spirits ({fields.length > 0 ? `${fields.length} selected` : "Any"})
         <ChevronsUpDown className="ml-auto h-4 w-4 opacity-60 transition-[opacity] group-data-[state=open]:opacity-100" />
       </PopoverTrigger>
       <PopoverContent align="start" className="w-96">

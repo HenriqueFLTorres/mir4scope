@@ -69,7 +69,6 @@ function MysticalPieceItem({
   item_name,
   item_path,
   tier,
-  refine_step,
   trance_step,
   power_score,
   options,

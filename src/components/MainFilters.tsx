@@ -1,49 +1,48 @@
 "use client"
 
-import { classIndexToName } from "@/lib/utils";
-import { SelectIcon } from "@radix-ui/react-select";
-import Image from "next/image";
+import { SelectIcon } from "@radix-ui/react-select"
+import Image from "next/image"
 import {
   type Control,
   Controller,
   type UseFormRegister,
   type UseFormSetFocus,
   type UseFormSetValue,
-} from "react-hook-form";
-import { BuildingSelector } from "./BuildingSelector";
-import { CraftingMaterialSelector } from "./CraftingMaterials";
-import { MystiqueSelector } from "./MystiqueSelector";
-import { PotentialsSelector } from "./PotentialsSelector";
-import { PriceRange } from "./PriceRange";
-import { ServerSelector } from "./ServerSelector";
-import { SkillsSelector } from "./SkillsSelector";
-import { StatusRange } from "./StatusRange";
-import { TicketsSelector } from "./TicketsSelector";
-import { TrainingSelector } from "./TrainingSelector";
-import Accuracy from "./icon/Accuracy";
-import Codex from "./icon/Codex";
-import EVA from "./icon/EVA";
-import PHYSATK from "./icon/PHYSATK";
-import PHYSDEF from "./icon/PHYSDEF";
-import Power from "./icon/Power";
-import SpellATK from "./icon/SpellATK";
-import SPELLDEF from "./icon/SpellDEF";
-import type { ListFiltersType } from "@/atom/ListFilters";
-import FilterChips from "@/components/FilterChips";
-import EXP from "@/components/icon/EXP";
-import Search from "@/components/icon/Search";
-import Skill from "@/components/icon/Skill";
+} from "react-hook-form"
+import { BuildingSelector } from "./BuildingSelector"
+import { CraftingMaterialSelector } from "./CraftingMaterials"
+import Accuracy from "./icon/Accuracy"
+import Codex from "./icon/Codex"
+import EVA from "./icon/EVA"
+import PHYSATK from "./icon/PHYSATK"
+import PHYSDEF from "./icon/PHYSDEF"
+import Power from "./icon/Power"
+import SpellATK from "./icon/SpellATK"
+import SPELLDEF from "./icon/SpellDEF"
+import { MystiqueSelector } from "./MystiqueSelector"
+import { PotentialsSelector } from "./PotentialsSelector"
+import { PriceRange } from "./PriceRange"
+import { ServerSelector } from "./ServerSelector"
+import { SkillsSelector } from "./SkillsSelector"
+import { StatusRange } from "./StatusRange"
+import { TicketsSelector } from "./TicketsSelector"
+import { TrainingSelector } from "./TrainingSelector"
+import type { ListFiltersType } from "@/atom/ListFilters"
+import EXP from "@/components/icon/EXP"
+import Search from "@/components/icon/Search"
+import Skill from "@/components/icon/Skill"
 import { SpiritSelector } from "@/components/SpiritSelector"
-import { Input } from "@/components/ui/input";
+import { Input } from "@/components/ui/input"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { SelectRange } from "@/components/ui/select-range";
-import { SkillsListByClass } from "@/lib/skillsByClass";
+} from "@/components/ui/select"
+import { SelectRange } from "@/components/ui/select-range"
+import { SkillsListByClass } from "@/lib/skillsByClass"
+import { classIndexToName } from "@/lib/utils"
 
 const mir4Classes: Mir4Classes[] = [
   "Arbalist",
@@ -103,7 +102,7 @@ function MainFilters({
                 for (const skill of SkillsListByClass[newClass]) {
                   const formattedName = skill
                     .toLowerCase()
-                    .replace(/\'/g, "")
+                    .replace(/'/g, "")
                     .replace(/\s/g, "-")
 
                   newSkillsValue[formattedName] = 0
@@ -113,7 +112,9 @@ function MainFilters({
               }}
             >
               <SelectTrigger className="w-48" {...fieldProps}>
-                {value ? (
+                {value === 0 ? (
+                  <Skill className="h-5 w-5" />
+                ) : (
                   <Image
                     alt=""
                     className="object-contain"
@@ -121,8 +122,6 @@ function MainFilters({
                     src={`/icon/${classIndexToName(value).toLowerCase()}.webp`}
                     width={20}
                   />
-                ) : (
-                  <Skill className="h-5 w-5" />
                 )}
                 <SelectValue placeholder="All Classes" />
               </SelectTrigger>
@@ -284,8 +283,6 @@ function MainFilters({
 
         <PotentialsSelector control={control} />
       </section>
-
-      <FilterChips />
     </>
   )
 }

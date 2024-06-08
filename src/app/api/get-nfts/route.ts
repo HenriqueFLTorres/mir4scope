@@ -5,10 +5,9 @@ import {
   type ListFiltersType,
   type ListSortType,
 } from "@/atom/ListFilters"
-import { isRangeDifferent } from "@/components/FilterChips"
 import { db } from "@/drizzle/index"
 import formattedSkillsMapping from "@/lib/formattedSkillsMapping"
-import { capitalizeString } from "@/lib/utils"
+import { capitalizeString, isRangeDifferent } from "@/lib/utils"
 
 const NON_NULL_SPIRITS = "spirits.inven is not null"
 
@@ -86,7 +85,6 @@ export async function POST(request: NextRequest) {
       LIMIT
         20;
     `
-    console.log(SQL_QUERY)
 
     const allNfts = await db.execute(sql.raw(SQL_QUERY))
 
@@ -102,13 +100,13 @@ function statsToSQL(stats: ListFiltersType["stats"], filters: string[]) {
     const firstValue = Number(value[0])
     const secondValue = Number(value[1])
 
-    if (firstValue && secondValue)
+    if (Number.isInteger(firstValue) && Number.isInteger(secondValue))
       filters.push(
         `(nft.stats ->> '${statName}')::float between ${firstValue} and ${secondValue}`
       )
-    else if (firstValue)
+    else if (Number.isInteger(firstValue))
       filters.push(`(nft.stats ->> '${statName}')::float >= ${firstValue}`)
-    else if (secondValue)
+    else if (Number.isInteger(secondValue))
       filters.push(`(nft.stats ->> '${statName}')::float <= ${secondValue}`)
   }
 }
@@ -129,14 +127,16 @@ function sortToSQL(sort: ListSortType) {
 }
 
 function getMainFilters(
-  { search, class: mir4Class, level, power, codex, max_price }: ListFiltersType,
+  { search, class: mir4Class, level, power, max_price }: ListFiltersType,
   filters: string[]
 ) {
-  if (search) filters.push(`"nft"."character_name" ilike '%${search}%'`)
+  if (search.length > 0)
+    filters.push(`"nft"."character_name" ilike '%${search}%'`)
   if (mir4Class !== 0) filters.push(`"nft"."class" = ${mir4Class}`)
   if (isRangeDifferent(level, LIST_FILTER_DEFAULT.level))
     filters.push(`"nft"."lvl" between ${level[0]} and ${level[1]}`)
-  if (max_price) filters.push(`WHERE "nft"."price" <= ${max_price}`)
+  if (max_price != null && max_price > 0)
+    filters.push(`WHERE "nft"."price" <= ${max_price}`)
   if (isRangeDifferent(power, LIST_FILTER_DEFAULT.power))
     filters.push(`"nft"."power_score" between ${power[0]} and ${power[1]}`)
 }
@@ -165,7 +165,8 @@ function getBasicFilters(
     filters.push(
       `(codex ->> 'completed')::int between ${codex[0]} and ${codex[1]}`
     )
-  if (world_name) filters.push(`world_name = '${world_name}'`)
+  if (typeof world_name === "string" && world_name?.length > 0)
+    filters.push(`world_name = '${world_name}'`)
 }
 
 function getTrainingFilters(

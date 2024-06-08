@@ -25,7 +25,7 @@ export type ListFiltersType = {
   power: number[]
   codex: number[]
   spirits: SpiritsType[]
-  max_price: undefined
+  max_price: number | undefined
   world_name: string | undefined
   stats: {
     [key in ListStatusEnum]: ListMinMaxType

@@ -55,12 +55,9 @@ export default function NFTMagicSoulOrb({
 
 function MagicOrbItem({
   grade,
-  item_exp,
-  item_idx,
   item_level,
   item_name,
   item_path,
-  tier,
 }: NFT_MAGIC_ORB) {
   return (
     <div

@@ -48,8 +48,6 @@ function TransferenceItem({
   item_path,
   tier,
   enhance,
-  refine_step,
-  trance_step,
   add_option,
   options,
   power_score,

@@ -1,5 +1,4 @@
-import eslintPlugin from "@eslint/js"
-import eslint from "@eslint/js"
+import { default as eslint, default as eslintPlugin } from "@eslint/js"
 import nextPlugin from "@next/eslint-plugin-next"
 import stylisticPlugin from "@stylistic/eslint-plugin"
 import importPlugin from "eslint-plugin-import"
@@ -46,6 +45,9 @@ const config = tseslint.config(
           allowNullableObject: true,
         },
       ],
+      "no-undef": "off",
+      "no-unused-vars": "off",
+      "no-console": ["error", { allow: ["warn", "error"] }],
     },
   },
   {

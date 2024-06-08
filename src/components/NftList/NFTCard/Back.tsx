@@ -38,7 +38,7 @@ function CardBack({ power_score, skills, inven, equip_items }: NFTForDisplay) {
         <h3 className="mx-4 w-max text-xs uppercase">Equipment</h3>
         <ul className="grid w-max grid-cols-5 items-center gap-3 p-1">
           {[...equip_order, ...artifacts_order].map((key) => {
-            if (!equip_items || !(key in equip_items)) return null
+            if (equip_items.length === 0 || !(key in equip_items)) return null
 
             const { enhance, grade, item_path, item_name, tier, item_idx } =
               equip_items[key]

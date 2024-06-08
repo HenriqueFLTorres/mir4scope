@@ -97,7 +97,7 @@ type BuildingType =
 
 type PotentialType = "Hunting" | "PvP" | "Secondary"
 
-type Keys = (keyof typeof data)[] & {}
+type Keys = (keyof typeof data)[]
 
 type Entries<T> = {
   [K in keyof T]: [K, T[K]]
