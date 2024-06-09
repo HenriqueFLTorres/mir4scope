@@ -1,6 +1,9 @@
 import { useAtomValue } from "jotai/index"
 import Image from "next/image"
 
+import { memo } from "react"
+import GlassChip from "./GlassChip"
+import { getCardRarity, getNFTColor } from "."
 import { UsdPriceAtom } from "@/atom/Price"
 import {
   Accuracy,
@@ -16,9 +19,6 @@ import {
 } from "@/components/other"
 import { classIndexToName, getReadableNumber } from "@/lib/utils"
 import type { NFTForDisplay } from "@/types/schema"
-import { memo } from "react"
-import { getCardRarity, getNFTColor } from "."
-import GlassChip from "./GlassChip"
 
 const STATS_TO_DISPLAY: NFT_STATS_ENUM[] = [
   "PHYS ATK",

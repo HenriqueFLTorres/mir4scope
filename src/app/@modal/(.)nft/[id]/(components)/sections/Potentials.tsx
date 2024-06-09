@@ -1,6 +1,6 @@
+import Image from "next/image"
 import NFTContainer from "@/app/@modal/(.)nft/[id]/(components)/container"
 import { Skill } from "@/components/other"
-import Image from "next/image"
 
 export default function NFTPotentials({
   potentials,
@@ -33,7 +33,7 @@ export default function NFTPotentials({
         </div>
 
         <div className="flex w-full justify-around gap-4 px-4">
-          <div className="flex flex-col items-center min-w-24 gap-4">
+          <div className="flex min-w-24 flex-col items-center gap-4">
             <Image
               alt=""
               className="object-contain"
@@ -49,7 +49,7 @@ export default function NFTPotentials({
             </p>
           </div>
 
-          <div className="flex flex-col items-center min-w-24 gap-4">
+          <div className="flex min-w-24 flex-col items-center gap-4">
             <Image
               alt=""
               className="object-contain"
@@ -65,7 +65,7 @@ export default function NFTPotentials({
             </p>
           </div>
 
-          <div className="flex flex-col items-center min-w-24 gap-4">
+          <div className="flex min-w-24 flex-col items-center gap-4">
             <Image
               alt=""
               className="object-contain"

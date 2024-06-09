@@ -1,10 +1,5 @@
 "use client"
 
-import Enhance from "@/app/@modal/(.)nft/[id]/(components)/Enhance"
-import ItemDetailTooltip from "@/app/@modal/(.)nft/[id]/(components)/ItemDetailTooltip"
-import NFTContainer from "@/app/@modal/(.)nft/[id]/(components)/container"
-import { Backpack, Crafting, Spirit, Traddable } from "@/components/other"
-import { gradeToRarity } from "@/lib/utils"
 import { ArrowDownWideNarrow, Gem, Layers, Plus, Search } from "lucide-react"
 import Image from "next/image"
 import { useMemo, useState } from "react"
@@ -22,6 +17,11 @@ import {
   TabsList,
   TabsTrigger,
 } from "../../../../../../components/ui/elements/tabs"
+import NFTContainer from "@/app/@modal/(.)nft/[id]/(components)/container"
+import Enhance from "@/app/@modal/(.)nft/[id]/(components)/Enhance"
+import ItemDetailTooltip from "@/app/@modal/(.)nft/[id]/(components)/ItemDetailTooltip"
+import { Backpack, Crafting, Spirit, Traddable } from "@/components/other"
+import { gradeToRarity } from "@/lib/utils"
 
 type InventoryTabs =
   | "Equipment"

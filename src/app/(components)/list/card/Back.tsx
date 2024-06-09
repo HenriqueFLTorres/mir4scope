@@ -16,7 +16,8 @@ function CardBack({ power_score, skills, inven, equip_items }: NFTForDisplay) {
     Object.entries(skills) as Entries<typeof skills>
   ).filter(([name]) => !SPECIAL_ABILITIES_NAMES.includes(name))
 
-  const orderedSpiritsInven = inven.sort((a, b) => b.grade - a.grade)
+  const orderedSpiritsInven =
+    inven == null ? [] : inven.sort((a, b) => b.grade - a.grade)
 
   const special_skill = (Object.entries(skills) as Entries<typeof skills>).find(
     ([name]) => SPECIAL_ABILITIES_NAMES.includes(name)
@@ -104,8 +105,9 @@ function CardBack({ power_score, skills, inven, equip_items }: NFTForDisplay) {
       <section className="flex flex-col justify-center gap-1">
         <h3 className="ml-4 mr-auto w-max text-xs uppercase">spirits</h3>
         <ul className="flex flex-wrap items-center justify-center gap-2 p-1">
-          {orderedSpiritsInven.map(
-            ({ grade, icon_path, pet_name, transcend }) => (
+          {orderedSpiritsInven
+            .filter((spirit) => spirit.grade >= 4)
+            .map(({ grade, icon_path, pet_name, transcend }) => (
               <li
                 className="relative flex h-10 w-10 items-center gap-2 p-1 text-sm font-bold text-white [&>span]:drop-shadow-[0_0_2px_rgb(0,0,0)]"
                 key={pet_name}
@@ -132,8 +134,7 @@ function CardBack({ power_score, skills, inven, equip_items }: NFTForDisplay) {
                   </span>
                 ) : null}
               </li>
-            )
-          )}
+            ))}
         </ul>
       </section>
     </div>

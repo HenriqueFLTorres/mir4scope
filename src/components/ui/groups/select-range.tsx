@@ -1,16 +1,16 @@
 "use client"
 
-import { getNumber } from "@/lib/utils"
 import {
   Range,
   Root,
+  type SliderProps,
   Thumb,
   Track,
-  type SliderProps,
 } from "@radix-ui/react-slider"
 import millify from "millify"
 import { Input } from "../elements/input"
 import { Popover, PopoverContent, PopoverTrigger } from "../elements/popover"
+import { getNumber } from "@/lib/utils"
 
 export interface SelectRangeProps
   extends Omit<SliderProps, "defaultValue" | "min" | "max" | "step"> {

@@ -58,7 +58,7 @@ export default function Home() {
   const onSubmit: SubmitHandler<ListFiltersType> = (data) => console.debug(data)
 
   return (
-    <main className="flex min-h-screen flex-col items-center gap-6 p-24">
+    <main className="flex min-h-screen flex-col items-center gap-6 p-24 pb-48">
       <form className="flex flex-col gap-6" onSubmit={handleSubmit(onSubmit)}>
         <MainFilters
           control={control}

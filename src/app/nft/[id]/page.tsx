@@ -1,3 +1,6 @@
+import { ArrowLeft, LinkIcon } from "lucide-react"
+import Link from "next/link"
+import { redirect } from "next/navigation"
 import {
   NFTAssets,
   NFTBuildings,
@@ -17,9 +20,6 @@ import {
   NFTTransferenceEquipment,
 } from "@/app/@modal/(.)nft/[id]/(components)/sections"
 import { getNft } from "@/lib/get-nft"
-import { ArrowLeft, LinkIcon } from "lucide-react"
-import Link from "next/link"
-import { redirect } from "next/navigation"
 
 export default async function NFTModalPage({
   params,

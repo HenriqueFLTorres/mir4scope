@@ -21,7 +21,7 @@ export type NFTForDisplay = {
   class: number
   codex: NFT_CODEX
   equip_items: NFT_EQUIP_ITEM[]
-  inven: SelectSpirit["inven"]
+  inven: SelectSpirit["inven"] | null
   lvl: number
   power_score: number
   price: number

@@ -5,7 +5,6 @@ import importPlugin from "eslint-plugin-import"
 import prettierPlugin from "eslint-plugin-prettier"
 import reactPlugin from "eslint-plugin-react"
 import hooksPlugin from "eslint-plugin-react-hooks"
-import unusedImportsPlugin from "eslint-plugin-unused-imports"
 import globals from "globals"
 import tseslint from "typescript-eslint"
 
@@ -15,7 +14,6 @@ const plugins = {
   eslint: eslint.configs.recommended,
   react: reactPlugin,
   "react-hooks": hooksPlugin,
-  "unused-imports": unusedImportsPlugin,
   import: importPlugin,
   "@next/next": nextPlugin,
   "@stylistic": stylisticPlugin,

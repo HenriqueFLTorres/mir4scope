@@ -1,3 +1,5 @@
+import { sql } from "drizzle-orm"
+import { type NextRequest, NextResponse } from "next/server"
 import {
   LIST_FILTER_DEFAULT,
   type ListFiltersType,
@@ -6,8 +8,6 @@ import {
 import { db } from "@/drizzle/index"
 import formattedSkillsMapping from "@/lib/formattedSkillsMapping"
 import { capitalizeString, isRangeDifferent } from "@/lib/utils"
-import { sql } from "drizzle-orm"
-import { NextResponse, type NextRequest } from "next/server"
 
 const NON_NULL_SPIRITS = "spirits.inven is not null"
 
@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
     const jsonbAggFilter: string[] = []
     if (spirits.length > 0) whereFilter.push(NON_NULL_SPIRITS)
 
-    getMainFilters(mainFilters, filters)
+    getMainFilters(mainFilters, whereFilter)
     getSpiritsFilters(spirits, filters)
     getBasicFilters(mainFilters, whereFilter)
     statsToSQL(stats, whereFilter)
@@ -73,11 +73,7 @@ export async function POST(request: NextRequest) {
         spirits.inven
       FROM
         nft
-      LEFT JOIN LATERAL (
-        SELECT jsonb_agg(obj) AS inven
-        FROM jsonb_array_elements((SELECT spirits.inven FROM spirits WHERE spirits.id = nft.spirits_id)) AS obj
-        WHERE (obj ->> 'grade')::int >= 4
-      ) AS spirits(inven) ON true
+      LEFT JOIN spirits ON nft.spirits_id = spirits.id
       ${JOINED_JSONB_AGG}
       ${JOINED_FILTERS}
       ${JOINED_WHERE}
@@ -103,13 +99,13 @@ function statsToSQL(stats: ListFiltersType["stats"], filters: string[]) {
     const firstValue = Number(value[0])
     const secondValue = Number(value[1])
 
-    if (Number.isInteger(firstValue) && Number.isInteger(secondValue))
+    if (firstValue > 0 && secondValue > 0)
       filters.push(
         `(nft.stats ->> '${statName}')::float between ${firstValue} and ${secondValue}`
       )
-    else if (Number.isInteger(firstValue))
+    else if (firstValue > 0)
       filters.push(`(nft.stats ->> '${statName}')::float >= ${firstValue}`)
-    else if (Number.isInteger(secondValue))
+    else if (secondValue > 0)
       filters.push(`(nft.stats ->> '${statName}')::float <= ${secondValue}`)
   }
 }
@@ -139,7 +135,7 @@ function getMainFilters(
   if (isRangeDifferent(level, LIST_FILTER_DEFAULT.level))
     filters.push(`"nft"."lvl" between ${level[0]} and ${level[1]}`)
   if (max_price != null && max_price > 0)
-    filters.push(`WHERE "nft"."price" <= ${max_price}`)
+    filters.push(`"nft"."price" <= ${max_price}`)
   if (isRangeDifferent(power, LIST_FILTER_DEFAULT.power))
     filters.push(`"nft"."power_score" between ${power[0]} and ${power[1]}`)
 }
