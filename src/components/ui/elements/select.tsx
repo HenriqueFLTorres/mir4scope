@@ -122,7 +122,10 @@ const SelectLabel = forwardRef<
   ComponentPropsWithoutRef<typeof Label>
 >(({ className, ...props }, ref) => (
   <Label
-    className={cn("py-1.5 pl-8 pr-2 text-sm font-semibold", className)}
+    className={cn(
+      "py-1.5 pl-8 pr-2 text-sm font-semibold text-white",
+      className
+    )}
     ref={ref}
     {...props}
   />

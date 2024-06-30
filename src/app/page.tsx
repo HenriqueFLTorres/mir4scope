@@ -13,7 +13,7 @@ import { useQuery } from "@tanstack/react-query"
 import { useSetAtom } from "jotai"
 import { FilterX } from "lucide-react"
 import { useEffect } from "react"
-import { useForm, type SubmitHandler } from "react-hook-form"
+import { type SubmitHandler, useForm } from "react-hook-form"
 import { FilterBadges } from "./(components)/form/FilterBadges"
 
 export default function Home() {
@@ -39,7 +39,7 @@ export default function Home() {
     isRefetching,
   } = useQuery({
     queryKey: ["nft_list"],
-    queryFn: () => getNfts(watch()),
+    queryFn: () => getNfts({ ...watch(), wemix_price: price }),
     refetchOnWindowFocus: false,
   })
 
@@ -51,7 +51,7 @@ export default function Home() {
 
   useEffect(() => {
     if (isSuccess) {
-      setUsdPriceAtom(price)
+      setUsdPriceAtom(price.USD)
     }
   }, [isSuccess, price, setUsdPriceAtom])
 

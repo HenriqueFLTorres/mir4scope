@@ -1,20 +1,36 @@
+import type { ListFiltersType } from "@/atom/ListFilters"
+import { Wemix } from "@/components/other"
+import { Input } from "@/components/ui"
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/elements/select"
+import { getNumber } from "@/lib/utils"
 import { X } from "lucide-react"
 import millify from "millify"
+import { type Control, useController, useWatch } from "react-hook-form"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "../../../components/ui/elements/popover"
-import { Wemix } from "@/components/other"
-import { Input } from "@/components/ui"
-import { getNumber } from "@/lib/utils"
+
+const CURRENCIES = ["WEMIX", "USD", "BRL"] as const
 
 const PriceRange = ({
   value,
   setValue,
+
+  control,
 }: {
   value: number | undefined
   setValue: (value: number | undefined) => void
+  control: Control<ListFiltersType>
 }) => {
   const removeValue = () => setValue(undefined)
 
@@ -35,7 +51,7 @@ const PriceRange = ({
           prefix={<Wemix className="absolute bottom-2 left-2 h-4 w-4" />}
           value={typeof value === "number" && value > 0 ? value : ""}
           wrapperClass="w-full"
-          onChange={(e) => {
+          onChange={async (e) => {
             const newValue = getNumber(e.currentTarget.value)
             if (newValue === null) return removeValue()
 
@@ -55,4 +71,35 @@ const PriceRange = ({
   )
 }
 
-export { PriceRange }
+const SelectCurrency = ({
+  currency,
+  setCurrency,
+}: {
+  currency: string | undefined
+  setCurrency: (value: string | undefined) => void
+}) => {
+  return (
+    <Select onValueChange={setCurrency}>
+      <SelectTrigger className="w-[180px] text-white">
+        <SelectValue placeholder="Select a currency" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectGroup>
+          <SelectLabel>Currencies</SelectLabel>
+          {CURRENCIES.map((currency) => (
+            <SelectItem
+              value={currency}
+              key={currency}
+              Icon={<Wemix className="size-4" />}
+              className="gap-2"
+            >
+              {currency}
+            </SelectItem>
+          ))}
+        </SelectGroup>
+      </SelectContent>
+    </Select>
+  )
+}
+
+export { PriceRange, SelectCurrency }

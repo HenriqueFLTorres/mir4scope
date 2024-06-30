@@ -25,8 +25,14 @@ export type ListFiltersType = {
   power: number[]
   codex: number[]
   spirits: SpiritsType[]
+  currency: string | undefined
   max_price: number | undefined
   world_name: string | undefined
+  wemix_price:
+    | {
+        [key in string]: number
+      }
+    | undefined
   stats: Partial<{
     [key in NFT_STATS_ENUM]: ListMinMaxType
   }>
@@ -65,8 +71,10 @@ export const LIST_FILTER_DEFAULT: ListFiltersType = {
   power: [100e3, 600e3],
   codex: [100, 2000],
   spirits: [],
+  currency: "WEMIX",
   max_price: undefined,
   world_name: undefined,
+  wemix_price: undefined,
   stats: {
     "PHYS ATK": [undefined, undefined],
     "PHYS DEF": [undefined, undefined],
