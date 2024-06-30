@@ -13,7 +13,7 @@ import { BuildingSelector } from "./BuildingSelector"
 import { CraftingMaterialSelector } from "./CraftingMaterials"
 import { MystiqueSelector } from "./MystiqueSelector"
 import { PotentialsSelector } from "./PotentialsSelector"
-import { PriceRange } from "./PriceRange"
+import { PriceRange, SelectCurrency } from "./PriceRange"
 import { ServerSelector } from "./ServerSelector"
 import { SkillsSelector } from "./SkillsSelector"
 import { StatusRange } from "./StatusRange"
@@ -45,6 +45,7 @@ import {
 } from "@/components/ui"
 import { SkillsListByClass } from "@/lib/skillsByClass"
 import { classIndexToName } from "@/lib/utils"
+import React from "react"
 
 const mir4Classes: Mir4Classes[] = [
   "Arbalist",
@@ -217,9 +218,26 @@ function MainFilters({
 
         <Controller
           control={control}
+          name="currency"
+          render={({ field: { value, onChange, ...fieldProps } }) => (
+            <SelectCurrency
+              setCurrency={onChange}
+              currency={value}
+              {...fieldProps}
+            />
+          )}
+        />
+
+        <Controller
+          control={control}
           name="max_price"
           render={({ field: { value, onChange, ...fieldProps } }) => (
-            <PriceRange setValue={onChange} value={value} {...fieldProps} />
+            <PriceRange
+              control={control}
+              setValue={onChange}
+              value={value}
+              {...fieldProps}
+            />
           )}
         />
 

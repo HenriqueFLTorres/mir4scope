@@ -97,6 +97,8 @@ type BuildingType =
 
 type PotentialType = "Hunting" | "PvP" | "Secondary"
 
+type CurrencyPriceType = "WEMIX" | "USD" | "BRL"
+
 type Keys = (keyof typeof data)[]
 
 type Entries<T> = {

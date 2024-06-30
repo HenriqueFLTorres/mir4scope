@@ -1,13 +1,14 @@
-import { sql } from "drizzle-orm"
-import { type NextRequest, NextResponse } from "next/server"
 import {
   LIST_FILTER_DEFAULT,
   type ListFiltersType,
   type ListSortType,
 } from "@/atom/ListFilters"
+
 import { db } from "@/drizzle/index"
 import formattedSkillsMapping from "@/lib/formattedSkillsMapping"
 import { capitalizeString, isRangeDifferent } from "@/lib/utils"
+import { sql } from "drizzle-orm"
+import { type NextRequest, NextResponse } from "next/server"
 
 const NON_NULL_SPIRITS = "spirits.inven is not null"
 
@@ -126,7 +127,15 @@ function sortToSQL(sort: ListSortType) {
 }
 
 function getMainFilters(
-  { search, class: mir4Class, level, power, max_price }: ListFiltersType,
+  {
+    search,
+    class: mir4Class,
+    level,
+    power,
+    max_price,
+    currency,
+    wemix_price,
+  }: ListFiltersType,
   filters: string[]
 ) {
   if (search.length > 0)
@@ -134,8 +143,15 @@ function getMainFilters(
   if (mir4Class !== 0) filters.push(`"nft"."class" = ${mir4Class}`)
   if (isRangeDifferent(level, LIST_FILTER_DEFAULT.level))
     filters.push(`"nft"."lvl" between ${level[0]} and ${level[1]}`)
-  if (max_price != null && max_price > 0)
-    filters.push(`"nft"."price" <= ${max_price}`)
+  if (
+    max_price != null &&
+    max_price > 0 &&
+    wemix_price != null &&
+    currency !== undefined
+  ) {
+    const price = max_price / wemix_price[currency]
+    filters.push(`"nft"."price" <= ${price.toFixed(2)}`)
+  }
   if (isRangeDifferent(power, LIST_FILTER_DEFAULT.power))
     filters.push(`"nft"."power_score" between ${power[0]} and ${power[1]}`)
 }
