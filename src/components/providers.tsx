@@ -1,9 +1,9 @@
-"use client";
+"use client"
 
-import NextAuthProvider from "@/app/_providers/NextAuthProvider";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { useState } from "react";
+import NextAuthProvider from "@/app/_providers/NextAuthProvider"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
+import { useState } from "react"
 
 export const Providers = ({ children }: { children: React.ReactNode }) => {
   const [queryClient] = useState(
@@ -14,8 +14,8 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
             staleTime: 60 * 1000,
           },
         },
-      }),
-  );
+      })
+  )
 
   return (
     <NextAuthProvider>
@@ -24,5 +24,5 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </NextAuthProvider>
-  );
-};
+  )
+}

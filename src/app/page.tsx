@@ -1,23 +1,23 @@
-"use client";
+"use client"
 
-import MainFilters from "@/app/(components)/form/MainFilters";
-import SortList from "@/app/(components)/form/SortList";
-import NFTDisplay from "@/app/(components)/list";
-import NFTDisplaySkeleton from "@/app/(components)/list/skeleton";
-import { LIST_FILTER_DEFAULT, type ListFiltersType } from "@/atom/ListFilters";
-import { UsdPriceAtom } from "@/atom/Price";
-import { Search } from "@/components/other";
-import { getNfts } from "@/lib/get-nfts";
-import { getPrice } from "@/lib/get-price";
-import { useQuery } from "@tanstack/react-query";
-import { useSetAtom } from "jotai";
-import { FilterX } from "lucide-react";
-import { useEffect } from "react";
-import { type SubmitHandler, useForm } from "react-hook-form";
-import { FilterBadges } from "./(components)/form/FilterBadges";
+import MainFilters from "@/app/(components)/form/MainFilters"
+import SortList from "@/app/(components)/form/SortList"
+import NFTDisplay from "@/app/(components)/list"
+import NFTDisplaySkeleton from "@/app/(components)/list/skeleton"
+import { LIST_FILTER_DEFAULT, type ListFiltersType } from "@/atom/ListFilters"
+import { UsdPriceAtom } from "@/atom/Price"
+import { Search } from "@/components/other"
+import { getNfts } from "@/lib/get-nfts"
+import { getPrice } from "@/lib/get-price"
+import { useQuery } from "@tanstack/react-query"
+import { useSetAtom } from "jotai"
+import { FilterX } from "lucide-react"
+import { useEffect } from "react"
+import { type SubmitHandler, useForm } from "react-hook-form"
+import { FilterBadges } from "./(components)/form/FilterBadges"
 
 export default function Home() {
-  const setUsdPriceAtom = useSetAtom(UsdPriceAtom);
+  const setUsdPriceAtom = useSetAtom(UsdPriceAtom)
 
   const {
     register,
@@ -29,7 +29,7 @@ export default function Home() {
     reset,
     setFocus,
     resetField,
-  } = useForm<ListFiltersType>({ defaultValues: LIST_FILTER_DEFAULT });
+  } = useForm<ListFiltersType>({ defaultValues: LIST_FILTER_DEFAULT })
 
   const {
     data: nft_list = [],
@@ -41,22 +41,21 @@ export default function Home() {
     queryKey: ["nft_list"],
     queryFn: () => getNfts({ ...watch(), wemix_price: price }),
     refetchOnWindowFocus: false,
-  });
+  })
 
   const { data: price, isSuccess } = useQuery({
     queryKey: ["price"],
     queryFn: () => getPrice(),
     refetchOnWindowFocus: false,
-  });
+  })
 
   useEffect(() => {
     if (isSuccess) {
-      setUsdPriceAtom(price.USD);
+      setUsdPriceAtom(price.USD)
     }
-  }, [isSuccess, price, setUsdPriceAtom]);
+  }, [isSuccess, price, setUsdPriceAtom])
 
-  const onSubmit: SubmitHandler<ListFiltersType> = (data) =>
-    console.debug(data);
+  const onSubmit: SubmitHandler<ListFiltersType> = (data) => console.debug(data)
 
   return (
     <main className="flex min-h-screen flex-col items-center gap-6 p-24 py-0">
@@ -106,5 +105,5 @@ export default function Home() {
         <NFTDisplay nft_list={nft_list} />
       )}
     </main>
-  );
+  )
 }

@@ -1,11 +1,11 @@
-import { insertUser, selectUserByEmail } from "@/drizzle/schema";
-import NextAuth from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
+import { insertUser, selectUserByEmail } from "@/drizzle/schema"
+import NextAuth from "next-auth"
+import GoogleProvider from "next-auth/providers/google"
 
 if (process.env.GOOGLE_CLIENT_ID == null)
-  throw new Error("GOOGLE_CLIENT_ID is not set");
+  throw new Error("GOOGLE_CLIENT_ID is not set")
 if (process.env.GOOGLE_CLIENT_SECRET == null)
-  throw new Error("GOOGLE_CLIENT_SECRET is not set");
+  throw new Error("GOOGLE_CLIENT_SECRET is not set")
 
 const handler = NextAuth({
   providers: [
@@ -20,23 +20,23 @@ const handler = NextAuth({
         name: user.name,
         email: user.email,
         is_premium: false,
-      };
+      }
 
       if (user.email == null) {
-        return false;
+        return false
       }
 
-      const userInDb = await selectUserByEmail(user.email);
+      const userInDb = await selectUserByEmail(user.email)
 
       if (userInDb.length >= 1) {
-        return true;
+        return true
       }
 
-      insertUser(userToSave);
+      insertUser(userToSave)
 
-      return true;
+      return true
     },
   },
-});
+})
 
-export { handler as GET, handler as POST };
+export { handler as GET, handler as POST }
